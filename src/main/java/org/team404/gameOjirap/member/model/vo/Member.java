@@ -7,7 +7,7 @@ import java.sql.Date;
 //@ToString
 //@NoArgsConstructor
 //@AllArgsConstructor
-public class User implements java.io.Serializable {	
+public class Member implements java.io.Serializable {	
 	private static final long serialVersionUID = -7412802581401323354L;
 	
 	//스프링에서 데이터베이스 테이블 컬럼명과 vo 클래스의 필드명을
@@ -26,11 +26,11 @@ public class User implements java.io.Serializable {
 	private String admin;		//관리자 여부
 	private String login_ok;		//로그인 가능 여부
 	
-	public User() {
+	public Member() {
 		super();
 	}
 
-	public User(String userid, String userpwd, String username, String gender, int age, String phone, String email,
+	public Member(String userid, String userpwd, String username, String gender, int age, String phone, String email,
 			Date enroll_date, Date lastmodified, String admin, String login_ok) {
 		super();
 		this.userid = userid;

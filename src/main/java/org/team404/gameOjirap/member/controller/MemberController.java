@@ -8,20 +8,20 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
-import org.team404.gameOjirap.member.model.service.UserService;
-import org.team404.gameOjirap.member.model.vo.User;
+import org.team404.gameOjirap.member.model.service.MemberService;
+import org.team404.gameOjirap.member.model.vo.Member;
 
 import javax.servlet.http.HttpSession;
 
 @Controller  //xml 에 클래스를 controller 로 자동 등록해 줌
-public class UserController {
+public class MemberController {
 	//이 컨트롤로 안의 메소드들이 구동되었는지 확인하는 로그를
 	//출력하기 위한 로그 객체를 생성
 	private static final Logger logger = 
-			LoggerFactory.getLogger(UserController.class);
+			LoggerFactory.getLogger(MemberController.class);
 	
 	@Autowired  //자동 의존성주입(DI) : 자동 객체 생성됨
-	private UserService memberService;
+	private MemberService memberService;
 	
 	//웹 서비스 요청 하나당 메소드 하나씩 작성하는 방식임 *****
 	//뷰 페이지 이동 처리용 ------------------------------------
@@ -64,13 +64,13 @@ public class UserController {
 	//서버로 전송 온 parameter 값을 저장하는 객체를 command 객체라고 함
 	//input 태그의 name 과 vo 객체의 필드명이 같으면 됨
 	@RequestMapping(value="login.do", method=RequestMethod.POST)
-	public String loginMethod(User member, 
+	public String loginMethod(Member member, 
 			HttpSession session, SessionStatus status, 
 			Model model) {
 		logger.info("login.do : " + member);
 		
 		//서비스 모델로 전달하고 결과 받기
-		User loginMember = memberService.selectLogin(member);
+		Member loginMember = memberService.selectLogin(member);
 		
 		if(loginMember != null) {
 			session.setAttribute("loginMember", loginMember);
