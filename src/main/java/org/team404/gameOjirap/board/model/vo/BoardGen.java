@@ -2,7 +2,7 @@ package org.team404.gameOjirap.board.model.vo;
 
 import java.sql.Date;
 
-public class Board implements java.io.Serializable{
+public class BoardGen implements java.io.Serializable{
 	private static final long serialVersionUID = -460279728058378628L;
 	
 	private String board_no;	//게시글 번호
@@ -17,11 +17,11 @@ public class Board implements java.io.Serializable{
 	private String user_id;		  //사용자 아이디
 	private String board_notice;  //공지글 제목
 	
-	public Board() {
+	public BoardGen() {
 		super();
 	}
 
-	public Board(String board_no, String board_title, String board_content, Date board_date, int board_count,
+	public BoardGen(String board_no, String board_title, String board_content, Date board_date, int board_count,
 			int board_like, String board_orifile, String board_refile, int appid, String user_id, String board_notice) {
 		super();
 		this.board_no = board_no;
