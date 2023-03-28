@@ -21,12 +21,11 @@ div {
 	margin: 0 auto;
 	width: 400px;
 	height: 170px;
-	border: 2px solid navy;
 	border-radius: 8px;	
     text-align: center;
 	position: relative;
+	border: 2px solid navy;
 	box-shadow: 1px 1px 5px rgb(0,0,0,  0.5);	 /* 박스 그림자 지정 */
-	
 }
 
 div form {
@@ -76,7 +75,7 @@ div#loginForm form input[type=submit] {
 
 
 <div id="loginForm">
-	<form action="login.do" method="post">
+	<form action="ulogin.do" method="post">
 		<label>아이디 : <input type="text" name="userid" class="pos"></label>
 		<br>
 		<label>암호 : <input type="password" name="userpwd" class="pos"></label>
