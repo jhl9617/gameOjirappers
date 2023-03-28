@@ -5,7 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.game.model.vo.Game;
 
-@Repository("gameDAO")
+@Repository("gameDao")
 public class GameDao {
 
     @Autowired
