@@ -11,52 +11,16 @@
 <html>
 <head>
     <title></title>
-  <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+  <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+
+
 
   <style type="text/css">
-    .sidebar-toggle {
-      position: fixed;
-      top: 5px;
-      left: 5px;
-      z-index: 50;
-      font-size: 12px;
-      cursor: pointer;
-      background-color: transparent;
-      border: none;
-      outline: none;
-    }
-    #sidebar {
-      padding-top: 50px;
-      width: 300px;
-      transition: transform 0.3s ease-in-out;
-    }
-    #sidebar.closed {
-      transform: translateX(-100%);
-    }
-    @media screen and (max-width: 767px) {
-      #sidebar {
-        width: 100%;
-      }
-      #sidebar.closed {
-        transform: translateX(-100%);
-      }
-    }
+
   </style>
   <script>
 
-    /*사이드바 여닫는 애니메이션 함수*/
-    $(document).ready(function() {
-      var isSidebarOpen = true;
 
-      $('#sidebarToggle').on('click', function() {
-        if (isSidebarOpen) {
-          $('#sidebar').addClass('closed');
-        } else {
-          $('#sidebar').removeClass('closed');
-        }
-        isSidebarOpen = !isSidebarOpen;
-      });
-    });
 
   </script>
 </head>
