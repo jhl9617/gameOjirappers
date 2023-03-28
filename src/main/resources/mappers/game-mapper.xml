@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="gameMapper">
+
+	<insert id="insertGameInfo" parameterType="Game">
+		insert into game (appid, name, developer, publisher, initialprice, finalprice,discountrate,description,platform,meta,category,genre,screenshot,movie,releasedate,achievement,positive,ccu)
+		values (#{appid},#{name},#{developer, jdbcType=VARCHAR},#{publisher, jdbcType=VARCHAR},#{initialprice, jdbcType=VARCHAR},
+		        #{finalprice, jdbcType=VARCHAR},#{discountrate},#{description, jdbcType=VARCHAR},#{platform, jdbcType=VARCHAR},
+		        #{meta},#{category, jdbcType=VARCHAR},#{genre, jdbcType=VARCHAR},#{screenshot, jdbcType=VARCHAR},#{movie, jdbcType=VARCHAR},
+		        #{releasedate, jdbcType=VARCHAR},#{achievement, jdbcType=VARCHAR},#{positive},#{ccu})
+	</insert>
+
+</mapper>
+
+
+
+
+
+
