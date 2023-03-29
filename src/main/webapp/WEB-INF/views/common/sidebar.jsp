@@ -29,7 +29,6 @@
 <!-- Sidebar -->
 <button id="sidebarToggle" class="sidebar-toggle">&#9776;</button>
 <div id="sidebar">
-
   <div class="inner">
 
     <!-- Search -->
@@ -49,6 +48,7 @@
         <li><a href="">Generic</a></li>
         <li><a href="">Elements</a></li>
         <li>
+
           <span class="opener">Submenu</span>
           <ul>
             <li><a href="#">Lorem Dolor</a></li>
