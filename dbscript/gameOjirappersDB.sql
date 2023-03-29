@@ -39,151 +39,148 @@ comment on column TB_GRADE.grade_mean IS '등급 평균';
 comment on column TB_GRADE.min_point IS '최소 점수';
 comment on column TB_GRADE.max_point IS '최대 점수';
 
-DROP TABLE TB_COMMUNITY_MEMBER cascade constraints;
+DROP TABLE TB_BAND_MEMBER cascade constraints;
 
-CREATE TABLE TB_COMMUNITY_MEMBER (
+CREATE TABLE TB_BAND_MEMBER (
         user_id	VARCHAR2(20)		NOT NULL,
-        communityID	NUMBER		NOT NULL,
+        band_id	NUMBER		NOT NULL,
         member_roll	char(1)		NOT NULL,
         member_date	Date		NOT NULL
 );
         
-comment on column TB_COMMUNITY_MEMBER.user_id IS '밴드 멤버 ID';
-comment on column TB_COMMUNITY_MEMBER.communityID IS '밴드 ID';
-comment on column TB_COMMUNITY_MEMBER.member_roll IS '멤버 역할';
-comment on column TB_COMMUNITY_MEMBER.member_date IS '멤버 가입일';
+comment on column TB_BAND_MEMBER.user_id IS '밴드 멤버 ID';
+comment on column TB_BAND_MEMBER.band_id IS '밴드 ID';
+comment on column TB_BAND_MEMBER.member_roll IS '멤버 역할';
+comment on column TB_BAND_MEMBER.member_date IS '멤버 가입일';
 
-DROP TABLE TB_Community cascade constraints;
+DROP TABLE TB_BAND cascade constraints;
 
-CREATE TABLE TB_Community (
-        communityId	NUMBER		NOT NULL,
-        communityName	VARCHAR2(100)		NOT NULL,
-        communityDate	DATE		,
+CREATE TABLE TB_BAND (
+        BAND_ID	NUMBER		NOT NULL,
+        BAND_NAME	VARCHAR2(100)		NOT NULL,
+        BAND_DATE	DATE		NOT NULL,
         user_id	VARCHAR2(20)		NOT NULL,
-        communityImgOri	VARCHAR2(100),
-        communityImgRename	VARCHAR2(100)
+        band_imgid	VARCHAR2(20)		NOT NULL
 );
         
-comment on column TB_Community.communityId IS '밴드 ID';
-comment on column TB_Community.communityName IS '밴드 이름';
-comment on column TB_Community.communityDate IS '밴드 생성일';
-comment on column TB_Community.user_id IS '밴드 생성자 ID';
-comment on column TB_Community.communityImgOri IS '밴드 이미지 원본이름';
-comment on column TB_Community.communityImgOri IS '밴드 이미지 바뀐이름';
+comment on column TB_BAND.BAND_ID IS '밴드 ID';
+comment on column TB_BAND.BAND_NAME IS '밴드 이름';
+comment on column TB_BAND.BAND_DATE IS '밴드 생성일';
+comment on column TB_BAND.user_id IS '밴드 생성자 ID';
+comment on column TB_BAND.band_imgid IS '밴드 이미지 ID';
 
 
-DROP TABLE TB_Community_BOARD cascade constraints;
+DROP TABLE TB_BAND_BOARD cascade constraints;
 
- CREATE TABLE TB_Community_BOARD (
-        cBoardNo	NUMBER		NOT NULL,
-        cBoardTitle	VARCHAR2(50)		NOT NULL,
-        cBoardContent	VARCHAR2(2000)		,
-        cBoardDate	Date		NOT NULL,
-        cBoardLike	number		NOT NULL,
-        cBoardOrifile	VARCHAR2(500)		,
-        cBoardRefile	VARCHAR2(500)		,
-        cBoardNotice	Char(5)		NOT NULL,
+ CREATE TABLE TB_BAND_BOARD (
+        bandboard_no	VARCHAR2(20)		NOT NULL,
+        bandboard_title	VARCHAR2(50)		NOT NULL,
+        bandboard_content	VARCHAR2(2000)		NULL,
+        bandboard_date	Date		NOT NULL,
+        bandboard_like	number		NOT NULL,
+        bandboard_orifile	VARCHAR2(500)		NOT NULL,
+        bandboard_refile	VARCHAR2(500)		NULL,
+        bandboard_notice	Char(5)		NOT NULL,
         user_id	VARCHAR2(20)		NOT NULL,
-        communityId	NUMBER		NOT NULL
+        band_id	NUMBER		NOT NULL
 );
         
-comment on column TB_Community_BOARD.cBoardNo is '밴드게시글 번호';
-comment on column TB_Community_BOARD.cBoardTitle is '밴드게시글 제목';
-comment on column TB_Community_BOARD.cBoardContent is '밴드게시글 내용';
-comment on column TB_Community_BOARD.cBoardDate is '밴드게시글 작성일';
-comment on column TB_Community_BOARD.cBoardLike is '밴드게시글 좋아요 수';
-comment on column TB_Community_BOARD.cBoardOrifile is '밴드게시글 원본 파일';
-comment on column TB_Community_BOARD.cBoardRefile is '밴드게시글 수정된 파일';
-comment on column TB_Community_BOARD.cBoardNotice is '밴드게시글 공지 여부';
-comment on column TB_Community_BOARD.user_id is '밴드게시글 작성자 ID';
-comment on column TB_Community_BOARD.communityId is '게시글이 속한 밴드 ID';
+comment on column TB_BAND_BOARD.bandboard_no is '밴드게시글 번호';
+comment on column TB_BAND_BOARD.bandboard_title is '밴드게시글 제목';
+comment on column TB_BAND_BOARD.bandboard_content is '밴드게시글 내용';
+comment on column TB_BAND_BOARD.bandboard_date is '밴드게시글 작성일';
+comment on column TB_BAND_BOARD.bandboard_like is '밴드게시글 좋아요 수';
+comment on column TB_BAND_BOARD.bandboard_orifile is '밴드게시글 원본 파일';
+comment on column TB_BAND_BOARD.bandboard_refile is '밴드게시글 수정된 파일';
+comment on column TB_BAND_BOARD.bandboard_notice is '밴드게시글 공지 여부';
+comment on column TB_BAND_BOARD.user_id is '밴드게시글 작성자 ID';
+comment on column TB_BAND_BOARD.band_id is '게시글이 속한 밴드 ID';
 
-DROP TABLE TB_Community_Comment cascade constraints;
+DROP TABLE TB_BAND_COM cascade constraints;
 
-CREATE TABLE TB_Community_Comment (
-        cComNo	NUMBER		NOT NULL,
-        cComContent	VARCHAR2(500)		,
-        cComDate	DATE		,
-        cComLvl	Number		NOT NULL,
+CREATE TABLE TB_BAND_COM (
+        bcom_no	NUMBER		NOT NULL,
+        bcom_contents	VARCHAR2(500)		NULL,
+        bcom_date	DATE		NOT NULL,
+        bcom_lev	Number		NOT NULL,
         user_id	VARCHAR2(20)		NOT NULL,
-        cBoardNo	VARCHAR2(20)		NOT NULL
+        bandboard_no	VARCHAR2(20)		NOT NULL
 );
 
-comment on column TB_Community_Comment.cComNo is '밴드 댓글 번호';
-comment on column TB_Community_Comment.cComContent is '밴드 댓글 내용';
-comment on column TB_Community_Comment.cComDate is '밴드 댓글 작성일';
-comment on column TB_Community_Comment.cComLvl is '밴드 댓글 깊이';
-comment on column TB_Community_Comment.user_id is '밴드 댓글 작성자 ID';
-comment on column TB_Community_Comment.cBoardNo is '밴드게시글 번호';
+comment on column TB_BAND_COM.bcom_no is '밴드 댓글 번호';
+comment on column TB_BAND_COM.bcom_contents is '밴드 댓글 내용';
+comment on column TB_BAND_COM.bcom_date is '밴드 댓글 작성일';
+comment on column TB_BAND_COM.bcom_lev is '밴드 댓글 깊이';
+comment on column TB_BAND_COM.user_id is '밴드 댓글 작성자 ID';
+comment on column TB_BAND_COM.bandboard_no is '밴드게시글 번호';
 
-DROP TABLE TB_Community_SCH cascade constraints;
+DROP TABLE TB_BAND_SCH cascade constraints;
 
-CREATE TABLE TB_Community_SCH (
-        schId	Number		NOT NULL,
-        schName	Varchar2(100)		NOT NULL,
-        schDes	Varchar2(500)		,
-        communityId NUMBER NOT NULL,
-        schStart	Date		,
-        schEnd	Date
+CREATE TABLE TB_BAND_SCH (
+        schedule_id	Number		NOT NULL,
+        schedule_name	Varchar2(100)		NOT NULL,
+        schedule_des	Varchar2(500)		NOT NULL,
+        schedule_start	Date		NOT NULL,
+        schedule_end	Date		NOT NULL
         );
-comment on column TB_Community_SCH.schId is '밴드 일정 ID';
-comment on column TB_Community_SCH.schName is '밴드 일정 이름';
-comment on column TB_Community_SCH.schDes is '밴드 일정 설명';
-comment on column TB_Community_SCH.schStart is '밴드 일정 시작일';
-comment on column TB_Community_SCH.schEnd is '밴드 일정 종료일';
+comment on column TB_BAND_SCH.schedule_id is '밴드 일정 ID';
+comment on column TB_BAND_SCH.schedule_name is '밴드 일정 이름';
+comment on column TB_BAND_SCH.schedule_des is '밴드 일정 설명';
+comment on column TB_BAND_SCH.schedule_start is '밴드 일정 시작일';
+comment on column TB_BAND_SCH.schedule_end is '밴드 일정 종료일';
 
-DROP TABLE TB_Community_VOTE cascade constraints;
+DROP TABLE TB_BAND_VOTE cascade constraints;
 
-CREATE TABLE TB_Community_VOTE (
-        schId	Number		NOT NULL,
-        votePart	VARCHAR2(50)		NOT NULL,
-        voteDate	Date		,
+CREATE TABLE TB_BAND_VOTE (
+        schedule_id	Number		NOT NULL,
+        vote_part	VARCHAR2(50)		NOT NULL,
+        vote_partdate	char(1)		NOT NULL,
         user_id	VARCHAR2(20)		NOT NULL
 );
-comment on column TB_Community_VOTE.schId is '밴드 일정 ID';
-comment on column TB_Community_VOTE.votePart is '밴드 일정 여부';
-comment on column TB_Community_VOTE.voteDate is '일정 투표 날짜';
-comment on column TB_Community_VOTE.user_id is '밴드투표자 ID';
+comment on column TB_BAND_VOTE.schedule_id is '밴드 일정 ID';
+comment on column TB_BAND_VOTE.vote_part is '밴드 일정 여부';  
+comment on column TB_BAND_VOTE.vote_partdate is '일정 투표 날짜';  
+comment on column TB_BAND_VOTE.user_id is '밴드투표자 ID';  
 
 
-DROP TABLE TB_Community_REPORT cascade constraints;
+DROP TABLE TB_BAND_REPORT cascade constraints;
 
-CREATE TABLE TB_Community_REPORT (
+CREATE TABLE TB_BAND_REPORT (
         user_id	VARCHAR2(20)		NOT NULL,
-        communityId	NUMBER		NOT NULL,
-        c_report_time	DATE		,
-        c_report_desc	VARCHAR2(500)
+        bandboard_no	VARCHAR2(20)		NOT NULL,
+        band_report_time	DATE		NOT NULL,
+        band_report_res	NUMBER		NOT NULL
 );
-comment on column TB_Community_REPORT.user_id is '사용자 ID';
-comment on column TB_Community_REPORT.communityId is '밴드 번호';
-comment on column TB_Community_REPORT.c_report_time is '밴드 신고 시간';
-comment on column TB_Community_REPORT.c_report_desc is '밴드 신고 내용';
+comment on column TB_BAND_REPORT.user_id is '사용자 ID';
+comment on column TB_BAND_REPORT.bandboard_no is '밴드게시글 번호';
+comment on column TB_BAND_REPORT.band_report_time is '밴드 신고 시간';
+comment on column TB_BAND_REPORT.band_report_res is '밴드 신고 내용';
 
-DROP TABLE TB_Community_LIKE cascade constraints;
+DROP TABLE TB_BAND_LIKE cascade constraints;
 
-CREATE TABLE TB_Community_LIKE (
+CREATE TABLE TB_BAND_LIKE (
         user_id	VARCHAR2(20)		NOT NULL,
-        cLiked_day	DATE		,
-        communityId	NUMBER		NOT NULL
-);
-
-comment on column TB_Community_LIKE.user_id is '사용자 ID';
-comment on column TB_Community_LIKE.cLiked_day is '밴드 좋아요 클릭 날짜';
-comment on column TB_Community_LIKE.communityId is '밴드 번호';
-
-DROP TABLE TB_Community_REQ cascade constraints;
-
-CREATE TABLE TB_Community_REQ (
-        user_id	VARCHAR2(20)		NOT NULL,
-        communityId	NUMBER NOT NULL,
-        requestDes	Varchar2(1000)		,
-        requestDate	Date
+        bboard_click_day	DATE		NOT NULL,
+        bandboard_no	VARCHAR2(20)		NOT NULL
 );
 
-comment on column TB_Community_REQ.user_id is '사용자 ID';
-comment on column TB_Community_REQ.communityId is '밴드 ID';
-comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
-comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
+comment on column TB_BAND_LIKE.user_id is '사용자 ID';
+comment on column TB_BAND_LIKE.bboard_click_day is '밴드 좋아요 클릭 날짜';
+comment on column TB_BAND_LIKE.bandboard_no is '밴드게시글 번호';
+
+DROP TABLE TB_BAND_REQ cascade constraints;
+
+CREATE TABLE TB_BAND_REQ (
+        user_id	VARCHAR2(20)		NOT NULL,
+        band_id	NUMBER NOT NULL,
+        request_des	Varchar2(1000)		NOT NULL,
+        request_date	Date		NOT NULL
+);
+
+comment on column TB_BAND_REQ.user_id is '사용자 ID';
+comment on column TB_BAND_REQ.band_id is '밴드 ID';
+comment on column TB_BAND_REQ.request_des is '밴드 가입 신청 내용';
+comment on column TB_BAND_REQ.request_date is '밴드 가입 신청 날짜';
 
 DROP TABLE TB_GAME cascade constraints;
 
@@ -325,18 +322,17 @@ comment on column TB_REPORT.report_res is '신고 사유';
 comment on column TB_REPORT.report_date is '신고 날짜';
 comment on column TB_REPORT.user_id2 is '게시글 작성자 아이디';
 
-DROP TABLE TB_COMMUNITY_IMG cascade constraints;
+DROP TABLE TB_BAND_IMG cascade constraints;
 
-CREATE TABLE TB_COMMUNITY_IMG (
-        communityId     NUMBER              NOT NULL ,
-        c_imgOriginal	VARCHAR2(100)		NOT NULL,
-        c_imgReplace	Varchar2(100)		NOT NULL,
+CREATE TABLE TB_BAND_IMG (
+        band_imgid	VARCHAR2(20)		NOT NULL,
+        band_img	Varchar2(100)		NOT NULL,
         user_id Varchar2(20) not null
 );
 
-comment on column TB_COMMUNITY_IMG.c_imgOriginal is '밴드 이미지 원본';
-comment on column TB_COMMUNITY_IMG.c_imgReplace is '밴드 이미지 바뀐이름';
-comment on column TB_COMMUNITY_IMG.user_id is '이미지를 등록한 사용자 아이디';
+comment on column TB_BAND_IMG.band_imgid is '밴드 이미지 번호';
+comment on column TB_BAND_IMG.band_img is '밴드 이미지';
+comment on column TB_BAND_IMG.user_id is '이미지를 등록한 사용자 아이디';
 
 DROP TABLE TB_BOARD_TAR cascade constraints;
 
@@ -405,46 +401,46 @@ ALTER TABLE TB_GRADE
 ADD CONSTRAINT PK_TB_GRADE 
 PRIMARY KEY (grade);
 
-        ALTER TABLE TB_Community_MEMBER
-        ADD CONSTRAINT PK_TB_Community_MEMBER
-        PRIMARY KEY (user_id,COMMUNITYID);
+        ALTER TABLE TB_BAND_MEMBER 
+        ADD CONSTRAINT PK_TB_BAND_MEMBER
+        PRIMARY KEY (user_id,band_id);
 
         ALTER TABLE TB_CHALLENGE 
         ADD CONSTRAINT PK_TB_CHALLENGE 
         PRIMARY KEY (challenge);
 
-        ALTER TABLE TB_Community
-        ADD CONSTRAINT PK_TB_Community
-        PRIMARY KEY (COMMUNITYID);
+        ALTER TABLE TB_BAND 
+        ADD CONSTRAINT PK_TB_BAND 
+        PRIMARY KEY (BAND_ID);
 
 
-        ALTER TABLE TB_Community_BOARD
-        ADD CONSTRAINT PK_TB_Community_BOARD
-        PRIMARY KEY (CBOARDNO);
+        ALTER TABLE TB_BAND_BOARD 
+        ADD CONSTRAINT PK_TB_BAND_BOARD 
+        PRIMARY KEY (bandboard_no);
 
-        ALTER TABLE TB_COMMUNITY_COMMENT
-        ADD CONSTRAINT PK_TB_COMMUNITY_COMMENT
-        PRIMARY KEY (CCOMNO);
+        ALTER TABLE TB_BAND_COM 
+        ADD CONSTRAINT PK_TB_BAND_COM
+        PRIMARY KEY (bcom_no);
 
-        ALTER TABLE TB_COMMUNITY_SCH
-        ADD CONSTRAINT PK_TB_COMMUNITY_SCH
-        PRIMARY KEY (SCHID);
+        ALTER TABLE TB_BAND_SCH 
+        ADD CONSTRAINT PK_TB_BAND_SCH 
+        PRIMARY KEY (schedule_id);
 
-        ALTER TABLE TB_COMMUNITY_VOTE
-        ADD CONSTRAINT PK_TB_COMMUNITY_VOTE
-        PRIMARY KEY (SCHID);
+        ALTER TABLE TB_BAND_VOTE
+        ADD CONSTRAINT PK_TB_BAND_VOTE 
+        PRIMARY KEY (schedule_id);
 
-        ALTER TABLE TB_COMMUNITY_REPORT
-        ADD CONSTRAINT PK_TB_COMMUNITY_REPORT
-        PRIMARY KEY (user_id,COMMUNITYID);
+        ALTER TABLE TB_BAND_REPORT 
+        ADD CONSTRAINT PK_TB_BAND_REPORT 
+        PRIMARY KEY (user_id,bandboard_no);
 
-        ALTER TABLE TB_COMMUNITY_LIKE
-        ADD CONSTRAINT PK_TB_COMMUNITY_LIKE
-        PRIMARY KEY (user_id, COMMUNITYID);
+        ALTER TABLE TB_BAND_LIKE 
+        ADD CONSTRAINT PK_TB_BAND_LIKE 
+        PRIMARY KEY (user_id);
 
-        ALTER TABLE TB_COMMUNITY_REQ
-        ADD CONSTRAINT PK_TB_COMMUNITY_REQ
-        PRIMARY KEY (user_id,COMMUNITYID);
+        ALTER TABLE TB_BAND_REQ 
+        ADD CONSTRAINT PK_TB_BAND_REQ 
+        PRIMARY KEY (user_id,band_id);
 
         ALTER TABLE TB_GAME 
         ADD CONSTRAINT PK_TB_GAME 
@@ -470,9 +466,9 @@ PRIMARY KEY (grade);
         ADD CONSTRAINT PK_TB_REPORT 
         PRIMARY KEY (board_no,user_id);
 
-        ALTER TABLE TB_COMMUNITY_IMG
-        ADD CONSTRAINT PK_TB_COMMUNITY_IMG
-        PRIMARY KEY (communityId);
+        ALTER TABLE TB_BAND_IMG 
+        ADD CONSTRAINT PK_TB_BAND_IMG 
+        PRIMARY KEY (band_imgid);
 
         ALTER TABLE TB_BOARD_TAR
         ADD CONSTRAINT PK_TB_BOARD_TAR 
@@ -488,42 +484,46 @@ PRIMARY KEY (grade);
 
 
 
-        ALTER TABLE TB_community_MEMBER
-        ADD CONSTRAINT FK_TB_USER_TO_TB_community_MEMBER_1
+        ALTER TABLE TB_BAND_MEMBER 
+        ADD CONSTRAINT FK_TB_USER_TO_TB_BAND_MEMBER_1 
         FOREIGN KEY (user_id)
         REFERENCES TB_USER (user_id);
 
-        ALTER TABLE TB_COMMUNITY_MEMBER
-        ADD CONSTRAINT FK_TB_COMMUNITY_TO_TB_COMMUNITY_MEMBER_1
-        FOREIGN KEY (COMMUNITYID)
-        REFERENCES TB_COMMUNITY (COMMUNITYID);
+        ALTER TABLE TB_BAND_MEMBER 
+        ADD CONSTRAINT FK_TB_BAND_TO_TB_BAND_MEMBER_1 
+        FOREIGN KEY (band_id)
+        REFERENCES TB_BAND (BAND_ID);
 
 
-        ALTER TABLE TB_COMMUNITY_VOTE
-        ADD CONSTRAINT FK_TB_COMMUNITY_SCH_TO_TB_COMMUNITY_VOTE_1
-        FOREIGN KEY (SCHID)
-        REFERENCES TB_COMMUNITY_SCH (SCHID);
+        ALTER TABLE TB_BAND_VOTE 
+        ADD CONSTRAINT FK_TB_BAND_SCH_TO_TB_BAND_VOTE_1 
+        FOREIGN KEY (schedule_id)
+        REFERENCES TB_BAND_SCH (schedule_id);
 
-        ALTER TABLE TB_COMMUNITY_REPORT
-        ADD CONSTRAINT FK_TB_USER_TO_TB_COMMUNITY_REPORT_1
-        FOREIGN KEY (user_id)
-        REFERENCES TB_COMMUNITY_REPORT (user_id);
-
-
-        ALTER TABLE TB_COMMUNITY_LIKE
-        ADD CONSTRAINT FK_TB_USER_TO_TB_COMMUNITY_LIKE_1
+        ALTER TABLE TB_BAND_REPORT 
+        ADD CONSTRAINT FK_TB_USER_TO_TB_BAND_REPORT_1 
         FOREIGN KEY (user_id)
         REFERENCES TB_USER (user_id);
 
-        ALTER TABLE TB_COMMUNITY_REQ
-        ADD CONSTRAINT FK_TB_USER_TO_TB_COMMUNITY_REQ_1
+        ALTER TABLE TB_BAND_REPORT 
+        ADD CONSTRAINT FK_TB_BAND_BOARD_TO_TB_BAND_REPORT_1 
+        FOREIGN KEY (bandboard_no)
+        REFERENCES TB_BAND_BOARD ( bandboard_no );
+
+        ALTER TABLE TB_BAND_LIKE 
+        ADD CONSTRAINT FK_TB_USER_TO_TB_BAND_LIKE_1 
         FOREIGN KEY (user_id)
         REFERENCES TB_USER (user_id);
 
-        ALTER TABLE TB_COMMUNITY_REQ
-        ADD CONSTRAINT FK_TB_COMMUNITY_TO_TB_COMMUNITY_REQ_1
-        FOREIGN KEY (communityId)
-        REFERENCES TB_COMMUNITY (communityId);
+        ALTER TABLE TB_BAND_REQ 
+        ADD CONSTRAINT FK_TB_USER_TO_TB_BAND_REQ_1 
+        FOREIGN KEY (user_id)
+        REFERENCES TB_USER (user_id);
+
+        ALTER TABLE TB_BAND_REQ 
+        ADD CONSTRAINT FK_TB_BAND_TO_TB_BAND_REQ_1 
+        FOREIGN KEY (band_id)
+        REFERENCES TB_BAND (band_id);
 
         ALTER TABLE TB_HOTLIST 
         ADD CONSTRAINT FK_TB_USER_TO_TB_HOTLIST_1 
@@ -592,28 +592,28 @@ PRIMARY KEY (grade);
         FOREIGN KEY (user_id2)
         REFERENCES tb_user (user_id);
 
-        ALTER TABLE tb_community_board
-        ADD CONSTRAINT FK_tb_user_tb_community_board
+        ALTER TABLE tb_band_board
+        ADD CONSTRAINT FK_tb_user_TO_band_board
         FOREIGN KEY (user_id)
         REFERENCES tb_user (user_id);
 
-        ALTER TABLE TB_COMMUNITY_COMMENT
-        ADD CONSTRAINT FK_tb_user_TO_TB_COMMUNITY_COMMENT2
+        ALTER TABLE tb_band_com
+        ADD CONSTRAINT FK_tb_user_TO_band_board_com2
         FOREIGN KEY (user_id)
         REFERENCES tb_user (user_id);
 
-        ALTER TABLE TB_COMMUNITY_IMG
-        ADD CONSTRAINT FK_tb_user_TO_TB_COMMUNITY_IMG
+        ALTER TABLE tb_band_img
+        ADD CONSTRAINT FK_tb_user_TO_band_img
         FOREIGN KEY (user_id)
         REFERENCES tb_user (user_id);
 
-        ALTER TABLE TB_COMMUNITY
-        ADD CONSTRAINT FK_tb_user_TO_TB_COMMUNITY
+        ALTER TABLE tb_band
+        ADD CONSTRAINT FK_tb_user_TO_band
         FOREIGN KEY (user_id)
         REFERENCES tb_user (user_id);
 
-        ALTER TABLE TB_COMMUNITY_VOTE
-        ADD CONSTRAINT FK_tb_user_TO_TB_COMMUNITY_VOTE
+        ALTER TABLE tb_band_vote
+        ADD CONSTRAINT FK_tb_user_TO_vote
         FOREIGN KEY (user_id)
         REFERENCES tb_user (user_id);
         
