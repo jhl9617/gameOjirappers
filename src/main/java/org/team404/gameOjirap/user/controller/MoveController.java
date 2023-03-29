@@ -1,9 +1,6 @@
 package org.team404.gameOjirap.user.controller;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,12 +11,9 @@ import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class MoveController {
-	private static final Logger logger = LoggerFactory.getLogger(MoveController.class);
 	
 	@Autowired 
 	private MoveService moveService;
-	@Autowired 
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//로그인 페이지 이동 처리용 --------------------------------------------------------------------------------
 	@RequestMapping(value="loginPage.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
