@@ -7,6 +7,7 @@
 
 <html>
 	<head>
+
 		<title>GameOjirap</title>
 		<meta charset="utf-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
@@ -21,6 +22,7 @@
 --%>
 
 
+
 <body class="is-preload">
 
 <!-- Wrapper -->
@@ -32,7 +34,7 @@
 
 			<!-- Header -->
 			<header id="header">
-				<a href="" class="logo"><strong>겜지라퍼</strong> by team 404</a>
+				<h1><a href="" class="logo"><strong>겜지라퍼</strong> by team 404</a></h1>
 				<ul class="icons">
 					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
 					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
@@ -328,6 +330,7 @@
 	
 
 	<!-- Sidebar -->
+
 	<div id="sidebar">
 		<div class="inner">
 
@@ -419,6 +422,7 @@
 
 		</div>
 	</div>
+
 
 </div>
 
