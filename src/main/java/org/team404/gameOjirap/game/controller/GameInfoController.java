@@ -1,5 +1,6 @@
 package org.team404.gameOjirap.game.controller;
 
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
@@ -26,11 +27,14 @@ public class GameInfoController {
 
 	@Autowired
 	private GameService gameService;
-	
+
 	@RequestMapping(value = "updateGameInfo.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
-	public void updateGameInfo() throws org.json.simple.parser.ParseException {
-		String url = "https://steamspy.com/api.php?request=all&page=1";
+	public void updateGameInfo() throws org.json.simple.parser.ParseException, InterruptedException {
+		// 초기 게임가격 표시 모양 포맷용
+		DecimalFormat df = new DecimalFormat("₩#,###");
+		// 스팀스파이 api 에 요청하는 url
+		String url = "https://steamspy.com/api.php?request=all&page=1";	
 		RestTemplate restTemplate = new RestTemplate();
 		JSONObject spjob = restTemplate.getForObject(url, JSONObject.class);
 		JSONObject job = null;
@@ -40,58 +44,68 @@ public class GameInfoController {
 		JSONObject gamedata = null;
 		JSONObject spydata = null;
 		int num = 0;
+		int requstTime = 3000;	// 요청횟수제한 피하기 위한 설정 시간
 		Set<String> keys = spjob.keySet();
 		for (String key : keys) {
-			String steamURL = "https://store.steampowered.com/api/appdetails?appids=" + key
+			// 스팀에 정보 요청하는 url
+			String steamURL = "https://store.steampowered.com/api/appdetails?appids=" + key	
 					+ "&l=korean&cc=kr&key=8EE98215F05201AEA92117741BBE3BAF";
+			// 스팀 스파이에 상세정보 요청하는 url
 			String spyURL = "https://steamspy.com/api.php?request=appdetails&appid=" + key;
 			Game g = new Game();
 			rest2 = new RestTemplate();
-			job = rest2.getForObject(steamURL, JSONObject.class);					
-			if (job == null) {
+			job = rest2.getForObject(steamURL, JSONObject.class);	// 스팀api 에서 정보 받아옴
+			Thread.sleep(requstTime);	// 위에서 설정한 시간 간격으로 요청
+			
+			// 받아온 객체가 없거나 이미 db에 게임정보가 있다면 넘어가기
+			if (job == null || gameService.selectGameCount(key) > 0) {
 				continue;
 			} else {
+				// 받아온 정보 추출하기 쉽게 map 객체로 변환
 				gamedata = new JSONObject();
-				gamedata.putAll((Map)parser.parse(job.toJSONString()));
+				gamedata.putAll((Map) parser.parse(job.toJSONString()));
 				spydata = restTemplate.getForObject(spyURL, JSONObject.class);
 				Map<String, Object> datamap = null;
-				
+					
 				String mapdata1 = "";
 				try {
-					datamap = new ObjectMapper().readValue(gamedata.get(key).toString(), Map.class);	
-				}catch(Exception e){
+					datamap = new ObjectMapper().readValue(gamedata.get(key).toString(), Map.class);
+				} catch (Exception e) {
 					e.printStackTrace();
 				}
 				// 앱 아이디
 				String appid = "";
-                try {
-                     appid = ((HashMap) datamap.get("data")).get("steam_appid").toString();
-                } catch (Exception e){
-                    continue;
-                }
+				try {
+					appid = ((HashMap) datamap.get("data")).get("steam_appid").toString();
+				} catch (Exception e) {
+					continue;
+				}
 				// 게임이름
 				String name = ((HashMap) datamap.get("data")).get("name").toString();
 				// 개발사
 				String developer = "";
 				try {
-					developer = ((HashMap) datamap.get("data")).get("developers").toString().split("\"")[1];
+					String d = ((HashMap) datamap.get("data")).get("developers").toString();
+					developer = d.substring(1, d.lastIndexOf("]"));
 				} catch (Exception e) {
 					developer = null;
 				}
 				// 배급사
 				String publisher = "";
 				try {
-					publisher = ((HashMap) datamap.get("data")).get("publishers").toString().split("\"")[1];
+					String p = ((HashMap) datamap.get("data")).get("publishers").toString();
+					publisher = p.substring(1, p.lastIndexOf("]"));
 				} catch (Exception e) {
 					publisher = null;
 				}
 				// 초기가
 				String initialPrice = "";
 				try {
-					initialPrice = ((HashMap)((HashMap) datamap.get("data")).get("price_overview"))
-									.get("initial_formatted").toString();
+					double dd = Double.parseDouble(((HashMap) ((HashMap) datamap.get("data")).get("price_overview"))
+							.get("initial").toString());
+					initialPrice = df.format(dd / 100);
 				} catch (Exception e) {
-					initialPrice = null;
+					initialPrice = "0";
 				}
 				// 최종가
 				String finalPrice = "";
@@ -99,14 +113,15 @@ public class GameInfoController {
 					finalPrice = ((HashMap) ((HashMap) datamap.get("data")).get("price_overview"))
 							.get("final_formatted").toString();
 				} catch (Exception e) {
-					finalPrice = null;
+					finalPrice = "0";
 				}
 				// 할인율(퍼센트)
 				int discountrate = 0;
 				try {
-					HashMap data = (HashMap) datamap.get("data");
-					HashMap priceOverviewMap = (HashMap)data.get("price_overview");
-					discountrate = ((Long)priceOverviewMap.get("discount_percent")).intValue();
+					System.out.println(((HashMap)((HashMap) datamap.get("data")).get("price_overview"))
+							.get("discount_percent").toString());
+					discountrate = Integer.parseInt(((HashMap)((HashMap) datamap.get("data")).get("price_overview"))
+							.get("discount_percent").toString());
 				} catch (Exception e) {
 					discountrate = 0;
 				}
@@ -127,53 +142,50 @@ public class GameInfoController {
 				// 메타크리틱점수
 				int meta = 0;
 				try {
-					HashMap data = (HashMap) datamap.get("data");
-					HashMap metaMap = (HashMap) data.get("metacritic");
-					meta = ((Long) metaMap.get("score")).intValue();
-
+					meta = Integer.parseInt(
+							((HashMap) ((HashMap) datamap.get("data")).get("metacritic")).get("score").toString());
 				} catch (Exception e) {
 					meta = 0;
 				}
-				
+
 				// 카테고리
-				ArrayList<String> categories = new ArrayList<String>();				
 				String category = "";
 				try {
-				categories = (ArrayList<String>)((HashMap)((HashMap)datamap.get("data"))
-							.get("categories")).get("description");
-				category = categories.get(0).toString();
+					String cate = ((HashMap)datamap.get("data")).get("categories").toString();
+					String[] splitcate = cate.substring(1, cate.lastIndexOf("]")).split("},");
+					 for(int ca = 0 ; ca < splitcate.length ; ca++){
+						 category += splitcate[ca].substring(splitcate[ca].indexOf("=")+1, splitcate[ca].lastIndexOf(",")) + "/";
+				        }
 				} catch (Exception e) {
 					category = null;
 				}
 
 				// 장르
-				ArrayList<String> genres = new ArrayList<String>();
 				String genre = "";
 				try {
-					genres = (ArrayList<String>)((HashMap)((HashMap)datamap.get("data"))
-							.get("genres")).get("description");
-					genre = genres.get(0).toString();
+					String cate = ((HashMap)datamap.get("data")).get("genres").toString();
+					String[] splitgenre = cate.substring(1, cate.lastIndexOf("]")).split("},");
+					 for(int ga = 0 ; ga < splitgenre.length ; ga++){
+						 genre += splitgenre[ga].substring(splitgenre[ga].indexOf("=")+1, splitgenre[ga].lastIndexOf(",")) + "/";
+				        }
 				} catch (Exception e) {
 					genre = null;
 				}
 
-				// 스크린샷 url
-				ArrayList<String> screenshots = new ArrayList<String>();
-				String screenshot = "";
+				// 대표이미지 url
+				String headerImg = "";	
 				try {
-					screenshots = (ArrayList<String>)((HashMap)((HashMap)datamap.get("data"))
-									.get("screenshots")).get("path_full");
-					screenshot = screenshots.get(0).toString();
+					headerImg = ((HashMap)datamap.get("data")).get("header_image").toString();
 				} catch (Exception e) {
-					screenshot = null;
+					headerImg = null;
 				}
 
 				// 동영상 url
-				ArrayList<String> movies = new ArrayList<String>();
 				String movie = "";
 				try {
-					movies = (ArrayList<String>)((HashMap) ((HashMap)((HashMap)datamap.get("data"))
-							.get("movies")).get("mp4")).get("max");
+					String moviet = ((HashMap)datamap.get("data")).get("movies").toString();
+					String[] splitgenre = moviet.substring(1, moviet.lastIndexOf("]")).split("},");
+					movie = "http"+splitgenre[0].substring(splitgenre[0].lastIndexOf(":"));
 				} catch (Exception e) {
 					movie = null;
 				}
@@ -181,7 +193,8 @@ public class GameInfoController {
 				// 출시일
 				String releasedate = "";
 				try {
-					releasedate = ((HashMap)((HashMap)datamap.get("data")).get("release_date")).get("date").toString();
+					releasedate = ((HashMap) ((HashMap) datamap.get("data")).get("release_date")).get("date")
+							.toString();
 				} catch (Exception e) {
 					releasedate = null;
 				}
@@ -189,8 +202,9 @@ public class GameInfoController {
 				// 도전과제
 				String achievement = "";
 				try {
-					achievement = ((HashMap)((HashMap)datamap.get("data")).get("achievements")).get("highlighted").toString();
-					
+					achievement = ((HashMap)((HashMap) datamap.get("data")).get("achievements")).get("highlighted")
+							.toString();
+
 				} catch (Exception e) {
 					achievement = null;
 				}
@@ -198,7 +212,7 @@ public class GameInfoController {
 				// 좋아요
 				int positive = 0;
 				try {
-					positive = ((Long)spydata.get("positive")).intValue();
+					positive = Integer.parseInt(spydata.get("positive").toString());
 				} catch (Exception e) {
 					positive = 0;
 				}
@@ -206,11 +220,48 @@ public class GameInfoController {
 				// 전날최대동접자
 				int ccu = 0;
 				try {
-					ccu = ((Long) spydata.get("ccu")).intValue();
+					ccu = Integer.parseInt(spydata.get("ccu").toString());
 				} catch (Exception e) {
 					ccu = 0;
 				}
-
+				
+				// 짧은 설명
+				//System.out.println("short_description : "+((HashMap)datamap.get("data")).get("short_description").toString());
+				String short_description = "";
+				try {
+					short_description = ((HashMap)datamap.get("data")).get("short_description").toString();
+				} catch(Exception e){
+					short_description = null;
+				}
+				// 지원 언어
+				//System.out.println("supported_languages : "+((HashMap)datamap.get("data")).get("supported_languages").toString());
+				String supported_languages = "";
+				try {
+					supported_languages = ((HashMap)datamap.get("data")).get("supported_languages").toString();
+				} catch(Exception e){
+					supported_languages = null;
+				}
+				// 사양 정보 
+				//System.out.println("최소사양 : " + ((HashMap)((HashMap)datamap.get("data")).get("pc_requirements")).get("minimum").toString());
+				//System.out.println("권장사양 : " + ((HashMap)((HashMap)datamap.get("data")).get("pc_requirements")).get("recommended").toString());
+				
+				// 최소사양
+				String pcminimum = "";
+				try {
+					pcminimum = ((HashMap)((HashMap)datamap.get("data")).get("pc_requirements")).get("minimum").toString();
+				} catch(Exception e){
+					pcminimum = null;
+				}
+				
+				// 권장사양
+				String pcrecommended = "";
+				try {
+					pcrecommended = ((HashMap)((HashMap)datamap.get("data")).get("pc_requirements")).get("recommended").toString();
+				} catch(Exception e){
+					pcrecommended = null;
+				}
+				
+				// 게임 객체에 값 담기
 				g.setAppid(appid);
 				g.setName(name);
 				g.setDeveloper(developer);
@@ -222,18 +273,23 @@ public class GameInfoController {
 				g.setMeta(meta);
 				g.setCategory(category);
 				g.setGenre(genre);
-				g.setScreenshots(screenshot);
+				g.setheaderImgs(headerImg);
 				g.setMovies(movie);
 				g.setreleasedate(releasedate);
 				g.setDescription(description);
 				g.setAchievement(achievement);
 				g.setPositive(positive);
 				g.setCcu(ccu);
+				g.setShort_description(short_description);
+				g.setSupported_languages(supported_languages);
+				g.setPcminimum(pcminimum);
+				g.setPcrecommended(pcrecommended);
+				
 				if (gameService.insertGameInfo(g) > 0) {
 					System.out.println(num + 1);
 					num++;
-				}							
-			}	
+				}
+			}
 		}
 	}
 }
