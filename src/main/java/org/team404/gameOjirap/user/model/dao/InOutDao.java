@@ -1,9 +1,13 @@
 package org.team404.gameOjirap.user.model.dao;
 
-import org.apache.catalina.User;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.team404.gameOjirap.user.model.vo.MyPage;
+import org.team404.gameOjirap.user.model.vo.User;
 
 @Repository("InOutDao")
 public class InOutDao {
@@ -15,39 +19,44 @@ public class InOutDao {
 
 
 	public User loginMethod(User user) {
-		// TODO Auto-generated method stub
-		return null;
+		return session.selectOne("userMapper.loginMethod", user);
+	}
+	
+	public ArrayList<User> selectList() {
+		List<User> list = session.selectList("userMapper.selectList");	
+		return (ArrayList<User>)list;
+	}
+	
+	public User selectUser(String user_id) {
+		return session.selectOne("userMapper.selectUser", user_id);	
+	}
+
+	
+	public int selectDupCheckId(String user_id) {
+		return session.selectOne("userMapper.selectDupCheckId", user_id);	
+	}
+	
+	public int selectDupCheckNick(String user_nickname) {
+		return session.selectOne("userMapper.selectDupCheckId", user_nickname);	
 	}
 
 	public int userDeleteMethod(String user_id) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.delete("deleteUser", user_id);
 	}
+
 
 	public int userInsertMethod(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+		return session.insert("userMapper.insertMember", user);
 	}
 
-	public int levelMethod(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int levelMethod(MyPage user_level) {
+		return session.insert("userMapper.levelMethod", user_level);
 	}
 
-	public int checkanswer(User user) {
-		// TODO Auto-generated method stub
-		return 0;
+	public int checkanswer(User confirm_answer) {
+		return session.insert("userMapper.checkanswer", confirm_answer);
 	}
 
-	public int selectDupCheckId(String user_id) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
-
-	public int selectDupCheckNick(String user_nickname) {
-		// TODO Auto-generated method stub
-		return 0;
-	}
 
 	public int checkanswer(String confirm_answer) {
 		// TODO Auto-generated method stub
@@ -58,6 +67,7 @@ public class InOutDao {
 		// TODO Auto-generated method stub
 		return 0;
 	}
+
 
 
 

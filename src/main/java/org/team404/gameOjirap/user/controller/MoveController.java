@@ -2,14 +2,24 @@ package org.team404.gameOjirap.user.controller;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.team404.gameOjirap.user.model.service.MoveService;
+import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class MoveController {
 	private static final Logger logger = LoggerFactory.getLogger(MoveController.class);
 	
+	@Autowired 
+	private MoveService moveService;
+	@Autowired 
+	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//로그인 페이지 이동 처리용 --------------------------------------------------------------------------------
 	@RequestMapping(value="loginPage.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
@@ -39,11 +49,18 @@ public class MoveController {
 	
 	
 	//회원정보수정페이지 이동 처리용 --------------------------------------------------------------------------------	
-	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.POST} )
-	public String moveUpdatePage()  {
-		return "user/moveUpdatePage";		
+	@RequestMapping(value="moveUpdatePage.do", method= RequestMethod.GET )
+	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model)  {
+		User user = moveService.selectUser(user_id);
+		
+		if(user != null) {
+			model.addAttribute("user", user);
+			return "user/moveUpdatePage";
+		}else {
+			model.addAttribute("message", user_id + " : 회원조회 실패!");
+			return "common/error";
+		}//if
 	}//method close
-	
 	
 	
 }//class close
