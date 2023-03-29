@@ -27,9 +27,7 @@ function showDiv(){
     }   // if 2
  }; // showDiv
  
- function memberBan() {
-	 
- }
+
 </script>
 <body>
 <h1>회원 관리 페이지</h1>
@@ -83,7 +81,12 @@ function showDiv(){
 				<fmt:formatDate value="${  }" 
 					pattern="yyyy-MM-dd"/>
 			</td>
-			<td><button onclick="memberBan();">활동정지</button></td>
+			<c:url var="mban" value="/mban.do">
+            	<c:param name="" value="${  }"/>
+            	<c:param name="" value="${  }"/>
+            	<c:param name="" value="${  }"/>
+         	</c:url>
+			<td><a href="mban">활동정지</a></td>
 		</tr>
 	</c:forEach>
 </table>

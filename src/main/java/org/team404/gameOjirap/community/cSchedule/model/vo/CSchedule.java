@@ -74,4 +74,5 @@ public class CSchedule implements Serializable {
                 ", schEnd=" + schEnd +
                 '}';
     }
+
 }

@@ -1,5 +1,6 @@
 package org.team404.gameOjirap.community.cSchedule.controller;
 
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.team404.gameOjirap.community.cSchedule.model.service.CScheduleService;
@@ -12,5 +13,6 @@ public class CScheduleController {
 
     @Autowired
     private CScheduleService cScheduleService;
+
 
 }

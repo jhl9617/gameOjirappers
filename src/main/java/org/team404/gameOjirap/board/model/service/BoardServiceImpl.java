@@ -3,26 +3,28 @@ package org.team404.gameOjirap.board.model.service;
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.board.model.dao.BoardDao;
-import org.team404.gameOjirap.board.model.vo.Board;
+import org.team404.gameOjirap.board.model.vo.BoardGen;
 
+@Service("boardService")
 public class BoardServiceImpl implements BoardService {
 
 	@Autowired
 	private BoardDao boardDao;
 	
 	@Override
-	public ArrayList<Board> selectList() {
+	public ArrayList<BoardGen> selectList() {
 		return boardDao.selectList();
 	}
 
 	@Override
-	public Board selectOne(int board_no) {
+	public BoardGen selectOne(int board_no) {
 		return boardDao.selectOne(board_no);
 	}
 
 	@Override
-	public ArrayList<Board> selectBoardByTitle(String keyword) {
+	public ArrayList<BoardGen> selectBoardByTitle(String keyword) {
 		return boardDao.selectBoardByTitle(keyword);
 	}
 
@@ -32,22 +34,22 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int insertBoard(Board board) {
+	public int insertBoard(BoardGen board) {
 		return boardDao.insertBoard(board);
 	}
 
 	@Override
-	public int updateBoard(Board board) {
+	public int updateBoard(BoardGen board) {
 		return boardDao.updateBoard(board);
 	}
 
 	@Override
-	public int deleteBoard(Board board) {
+	public int deleteBoard(BoardGen board) {
 		return boardDao.deleteBoard(board);
 	}
 
 	@Override
-	public ArrayList<Board> selectRankTop5() {
+	public ArrayList<BoardGen> selectRankTop5() {
 		return boardDao.selectRankTop5();
 	}
 

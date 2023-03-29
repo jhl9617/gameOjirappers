@@ -1,5 +1,6 @@
 package org.team404.gameOjirap.community.cboard.model.vo;
 
+
 import java.sql.Date;
 
 public class CBoard {
@@ -124,4 +125,5 @@ public class CBoard {
                 '}';
     }
 }
+
 
