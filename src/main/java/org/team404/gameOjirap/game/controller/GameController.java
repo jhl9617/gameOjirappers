@@ -1,5 +1,6 @@
 package org.team404.gameOjirap.game.controller;
 
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.team404.gameOjirap.game.model.service.GameService;
 
+
 @Controller("gameController")
 public class GameController {
 	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
@@ -16,15 +18,15 @@ public class GameController {
 	@Autowired
 	private GameService gameService;
 
-	// 이동 처리용 메소드    ---------------------------------------
-	
-	// 게임 상세정보 보기 사이트
+	// 이동 처리용 메소드
 	@RequestMapping("moveGameDetail.do")
 	public String moveGameInfoView(
 			//Model model, @RequestParam("appid") String appid
 			) {
 		//model.addAttribute("appid", appid);
 		return "game/gameDetailView";
+
+
 	}
 	
 	// 게임 도전과제 보기 사이트

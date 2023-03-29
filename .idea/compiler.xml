@@ -8,14 +8,17 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="gameOjirapp" />
+        <module name="gameOjirap" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="gameOjirap" target="11" />
       <module name="gameOjirapp" target="11" />
     </bytecodeTargetLevel>
   </component>
   <component name="JavacSettings">
     <option name="ADDITIONAL_OPTIONS_OVERRIDE">
+      <module name="gameOjirap" options="-Xlint:all" />
       <module name="gameOjirapp" options="-Xlint:all" />
     </option>
   </component>
