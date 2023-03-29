@@ -54,7 +54,7 @@
 					</header>
 					<p></p>
 					<ul class="actions">
-						<li><a href="#" class="button big">Learn More</a></li>
+						<li><a href="${pageContext.servletContext.contextPath}/moveGameDetail.do" class="button big">Learn More</a></li>
 					</ul>
 				</div>
 				<span class="image object">
