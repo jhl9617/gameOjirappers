@@ -191,27 +191,14 @@ public class Game implements Serializable {
         this.ccu = ccu;
     }
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "appid='" + appid + '\'' +
-                ", name='" + name + '\'' +
-                ", developer='" + developer + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", initialprice='" + initialprice + '\'' +
-                ", finalprice='" + finalprice + '\'' +
-                ", discountrate=" + discountrate +
-                ", description='" + description + '\'' +
-                ", platform='" + platform + '\'' +
-                ", meta=" + meta +
-                ", category='" + category + '\'' +
-                ", genre='" + genre + '\'' +
-                ", screenshot=" + screenshot +
-                ", movie=" + movie +
-                ", releasedate='" + releasedate + '\'' +
-                ", achievement='" + achievement + '\'' +
-                ", positive=" + positive +
-                ", ccu=" + ccu +
-                '}';
-    }
+	@Override
+	public String toString() {
+		return "Game [appid=" + appid + ", name=" + name + ", developer=" + developer + ", publisher=" + publisher
+				+ ", initialprice=" + initialprice + ", finalprice=" + finalprice + ", discountrate=" + discountrate
+				+ ", description=" + description + ", platform=" + platform + ", meta=" + meta + ", category="
+				+ category + ", genre=" + genre + ", screenshot=" + screenshot + ", movie=" + movie + ", releasedate="
+				+ releasedate + ", achievement=" + achievement + ", positive=" + positive + ", ccu=" + ccu + "]";
+	}
+
+    
 }
