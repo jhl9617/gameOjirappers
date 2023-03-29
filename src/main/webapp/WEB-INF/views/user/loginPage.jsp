@@ -75,7 +75,7 @@ div#loginForm form input[type=submit] {
 
 
 <div id="loginForm">
-	<form action="ulogin.do" method="post">
+	<form action="login.do" method="post">
 		<label>아이디 : <input type="text" name="userid" class="pos"></label>
 		<br>
 		<label>암호 : <input type="password" name="userpwd" class="pos"></label>

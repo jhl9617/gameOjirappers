@@ -187,7 +187,7 @@ a{text-decoration: none;}
 
 <body>
 
-	<form action="uenroll.do" method="post" onsubmit="return validate();">
+	<form action="enroll.do" method="post" onsubmit="return validate();">
 		<div>
 			<div class="container">
 				<h2 align="center">회원가입 <br></h2>

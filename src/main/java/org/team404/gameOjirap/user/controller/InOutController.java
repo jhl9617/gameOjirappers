@@ -14,12 +14,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class InOutController {
 	private static final Logger logger = LoggerFactory.getLogger(InOutController.class);
 	
-	
 			
-		
-	
 	//로그아웃 처리용 메소드
-	@RequestMapping(value="ulogout.do", method=RequestMethod.GET)	
+	@RequestMapping(value="logout.do", method=RequestMethod.GET)	
 	public String logoutMethod(HttpServletRequest request,Model model) {	
 		HttpSession session = request.getSession(false);
 		logger.info("ulogout.do : \n" + session);	
