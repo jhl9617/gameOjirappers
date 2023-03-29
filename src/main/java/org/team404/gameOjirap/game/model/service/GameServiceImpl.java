@@ -9,8 +9,19 @@ import org.team404.gameOjirap.game.model.vo.Game;
 public class GameServiceImpl implements GameService{
     @Autowired
     private GameDao gameDao;
+    
     @Override
     public int insertGameInfo(Game game) {
         return gameDao.insertGameInfo(game);
     }
+    
+	@Override
+	public int deleteGameInfo(String appid) {
+		return gameDao.deleteGameInfo(appid);
+	}
+
+	@Override
+	public int selectGameCount(String appid) {
+		return gameDao.selectGameCount(appid);
+	}
 }
