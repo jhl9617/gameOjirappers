@@ -10,7 +10,7 @@
 
 	<!-- 매퍼에서 사용할 vo 클래스에 대한 줄임말 선언 -->
 	<typeAliases>
-		<typeAlias type="org.team404.gameOjirap.member.model.vo.Member" alias="Member" />
+
 		<typeAlias type="org.team404.gameOjirap.board.model.vo.BoardGen" alias="BoardGen" />
 		<typeAlias type="org.team404.gameOjirap.common.Paging" alias="Paging" />
 		<typeAlias type="org.team404.gameOjirap.game.model.vo.Game" alias="Game"/>
@@ -29,7 +29,7 @@
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
 	<mappers>
 
-		<mapper resource="mappers/member-mapper.xml" />
+
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/game-mapper.xml"/>
 		<mapper resource="mappers/cboard-mapper.xml"/>
