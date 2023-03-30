@@ -20,10 +20,10 @@
 	<h1 id="litheader">GAMEJIRAPP</h1>
 	<div class="inset">
 			<p>
-				<input type="text" name="user_id" id="user_id" placeholder="ID">
+				<input type="text" name="login" id="user_id" placeholder="ID">
 			</p>
 			<p>
-				<input type="password" name="user_pwd" id="user_pwd"	placeholder="Password">
+				<input type="password" name="login" id="user_pwd"	placeholder="Password">
 			</p>
 	</div>
 	<p class="p-container">
@@ -35,3 +35,15 @@
 
 </body>
 </html>
+
+<!-- Jquery 포함 코드 -->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script>
+
+ // 엔터키 이벤트
+ $('[name=login]').on('keyup', function() {
+	 if (window.event.keyCode == 13) {
+		 location.href = 'login.do';
+	 }
+ });
+</script>
