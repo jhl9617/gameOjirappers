@@ -9,7 +9,7 @@
 
 <html>
 <head>
-<title>GameOjirap</title>
+<title>겜지라퍼</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>

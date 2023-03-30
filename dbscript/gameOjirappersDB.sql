@@ -64,12 +64,13 @@ comment on column TB_COMMUNITY_MEMBER.member_date IS '멤버 가입일';
 DROP TABLE TB_Community cascade constraints;
 
 CREATE TABLE TB_Community (
-                              communityId	NUMBER		NOT NULL,
+                              communityId	NUMBER	DEFAULT 0	NOT NULL,
                               communityName	VARCHAR2(100)		NOT NULL,
                               communityDate	DATE		,
                               user_id	VARCHAR2(20)		NOT NULL,
                               communityImgOri	VARCHAR2(100),
-                              communityImgRename	VARCHAR2(100)
+                              communityImgRename	VARCHAR2(100),
+                                communityDesc	VARCHAR2(500)
 );
 
 comment on column TB_Community.communityId IS '밴드 ID';
@@ -78,6 +79,7 @@ comment on column TB_Community.communityDate IS '밴드 생성일';
 comment on column TB_Community.user_id IS '밴드 생성자 ID';
 comment on column TB_Community.communityImgOri IS '밴드 이미지 원본이름';
 comment on column TB_Community.communityImgOri IS '밴드 이미지 바뀐이름';
+comment on column TB_Community.communityDesc IS '밴드 설명';
 
 
 DROP TABLE TB_Community_BOARD cascade constraints;
@@ -642,5 +644,8 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
     ('emily888', 'emily888', 'EmilyGray', 'Emily Gray', '666-666-6666', 'emily.gray@example.com', TO_DATE('1987-07-07', 'YYYY-MM-DD'), '나무', 'pause', 300, SYSDATE-7, '기본', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
+
+INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
+VALUES (1, '샘플', SYSDATE, 'admin', '예제임');
 
 commit;

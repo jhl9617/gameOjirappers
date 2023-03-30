@@ -35,6 +35,7 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/" class="button"><span class="label">즐겨찾기</span></a></li>
 		</ul>
 	</c:if>
+	<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do" class="button"><span class="label">밴드</span></a></li> <%--임시--%>
 </header>
 </body>
 </html>

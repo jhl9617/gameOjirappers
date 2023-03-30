@@ -11,7 +11,6 @@ public class CMember implements Serializable {
 
     private String user_id;
     private int communityId;
-    private String member_roll;
     private Date member_date;
 
     public CMember() {
@@ -20,7 +19,7 @@ public class CMember implements Serializable {
     public CMember(String user_id, int communityId, String member_roll) {
         this.user_id = user_id;
         this.communityId = communityId;
-        this.member_roll = member_roll;
+
     }
 
     public String getUser_id() {
@@ -39,13 +38,6 @@ public class CMember implements Serializable {
         this.communityId = communityId;
     }
 
-    public String getMember_roll() {
-        return member_roll;
-    }
-
-    public void setMember_roll(String member_roll) {
-        this.member_roll = member_roll;
-    }
 
     public Date getMember_date() {
         return member_date;
@@ -60,7 +52,6 @@ public class CMember implements Serializable {
         return "CMember{" +
                 "user_id='" + user_id + '\'' +
                 ", communityId=" + communityId +
-                ", member_roll='" + member_roll + '\'' +
                 ", member_date=" + member_date +
                 '}';
     }
