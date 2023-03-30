@@ -144,7 +144,7 @@
 				<thead>
 				<tr>
 					<th class="table-title">
-						<a href="">번호
+						<a href="">번호</a>
 					</th>
 					<th>제목</th>
 					<th>조회수</th>
