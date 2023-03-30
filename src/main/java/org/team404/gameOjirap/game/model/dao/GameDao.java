@@ -15,5 +15,15 @@ public class GameDao {
     public int insertGameInfo(Game game) {
         return session.insert("gameMapper.insertGameInfo", game);
     }
+
+
+	public int deleteGameInfo(String appid) {
+		return session.insert("gameMapper.deleteGameInfo", appid);
+	}
+
+
+	public int selectGameCount(String appid) {
+		return session.selectOne("gameMapper.selectGameCount", appid);
+	}
 }
 

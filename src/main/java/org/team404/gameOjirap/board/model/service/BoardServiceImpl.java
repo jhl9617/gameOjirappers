@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.board.model.dao.BoardDao;
 import org.team404.gameOjirap.board.model.vo.BoardGen;
+import org.team404.gameOjirap.common.Paging;
 
 @Service("boardService")
 public class BoardServiceImpl implements BoardService {
@@ -14,8 +15,8 @@ public class BoardServiceImpl implements BoardService {
 	private BoardDao boardDao;
 	
 	@Override
-	public ArrayList<BoardGen> selectList() {
-		return boardDao.selectList();
+	public ArrayList<BoardGen> selectList(Paging page) {
+		return boardDao.selectList(page);
 	}
 
 	@Override
@@ -61,6 +62,11 @@ public class BoardServiceImpl implements BoardService {
 	@Override
 	public int deleteBoardLike(int board_no) {
 		return boardDao.deleteBoardLike(board_no);
+	}
+
+	@Override
+	public int updateBoardReadCount(int board_no) {
+		return boardDao.updateBoardReadCount(board_no);
 	}
 
 }

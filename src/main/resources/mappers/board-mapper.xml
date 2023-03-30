@@ -4,7 +4,7 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="boardMapper">
 
-	<resultMap type="Board" id="resultBoard">
+	<resultMap type="BoardGen" id="resultBoard">
 		<result column="board_no" property="board_no"/>
 		<result column="board_title" property="board_title"/>
 		<result column="board_content" property="board_content"/>
@@ -18,5 +18,44 @@
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>
 	
+	
+	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
+		<![CDATA[
+		select *  
+		from (select rownum rnum, board_no, board_title, board_content,
+		            board_date, board_count, board_like, board_orifile,
+		            board_refile, appid, user_id, board_notice
+		    from (select * from tb_board_gen
+		              order by board_no desc))
+		where rnum >= #{ startRow } and rnum <= #{ endRow }
+		]]>
+	</select>
+	
+	<select id="selectOne"></select>
+	
+	<select id="selectBoardByTitle"></select>
+	
+	<select id="selectListCount" resultType="_int">
+		select count(*) from tb_board_gen
+	</select>
+	
+	<select id="selectRankTop5"></select>
+	
+	<insert id="insertBoard"></insert>
+	
+	<insert id="insertBoardLike"></insert>
+	
+	<update id="updateBoard"></update>
+	
+	<update id="updateBoardReadCount"></update>
+	
+	<delete id="deleteBoard"></delete>
+	
+	<delete id="deleteBoardLike"></delete>
 
 </mapper>
+
+
+
+
+
