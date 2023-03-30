@@ -47,6 +47,10 @@ public class GameInfoController {
 		int requstTime = 3000;	// 요청횟수제한 피하기 위한 설정 시간
 		Set<String> keys = spjob.keySet();
 		for (String key : keys) {
+			// 이미 db에 게임정보가 있다면 넘어가기 
+			if(gameService.selectGameCount(key) > 0) {
+				continue;
+			}
 			// 스팀에 정보 요청하는 url
 			String steamURL = "https://store.steampowered.com/api/appdetails?appids=" + key	
 					+ "&l=korean&cc=kr&key=8EE98215F05201AEA92117741BBE3BAF";
@@ -57,8 +61,8 @@ public class GameInfoController {
 			job = rest2.getForObject(steamURL, JSONObject.class);	// 스팀api 에서 정보 받아옴
 			Thread.sleep(requstTime);	// 위에서 설정한 시간 간격으로 요청
 			
-			// 받아온 객체가 없거나 이미 db에 게임정보가 있다면 넘어가기
-			if (job == null || gameService.selectGameCount(key) > 0) {
+			// 받아온 객체가 없으면 넘어가기
+			if (job == null) {
 				continue;
 			} else {
 				// 받아온 정보 추출하기 쉽게 map 객체로 변환
