@@ -2,48 +2,39 @@
     pageEncoding="UTF-8"%>
 <%-- <%@ page import="vo.model.member.org.team404.gameOjirap.Member" %> --%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%-- <%
-	Member loginMember = (Member)session.getAttribute("loginMember");
-%> --%>
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-	<style>
-		#main-container {
-			position: fixed;
-			top: 0;
-			left: 0;
-			width: 100%;
-			z-index: 1000;
-			background-color: white; /* or any color you want */
-		}
-		body {
-			margin-top: 60px; /* Adjust this value according to the height of your menubar */
-		}
-
-	</style>
-
-
-
-<link rel="stylesheet" href="${ pageContext.servletContext.contextPath }/resources/css/main.css" />
-
 </head>
 <body>
-<header>
-	<ul id="menubar">
-
-		<li><a href="${ pageContext.servletContext.contextPath }/nlist.do">게임정보</a></li>
-		<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do">밴드</a></li>
-		<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do">마이페이지</a></li>
-		<li><a href="${ pageContext.servletContext.contextPath }/testLogin.do">..</a></li>
-		<li><a href="${ pageContext.servletContext.contextPath }/moveAOP.do">..</a></li>
-	</ul>
-
+<header id="header">
+	<h3><a href="#" class="logo"><strong>겜지라퍼</strong> by team 404</a></h3>
+	<!-- 로그인 안 한 경우 -->
+	<%-- <% if(loginMember == null){ %> --%>
+	<c:if test="${ empty sessionScope.loginMember }">
+		<ul class="icons">
+			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/enrollPage.do" class="button"><span class="label">회원가입</span></a></li>
+		</ul>	
+	</c:if>	
+	<%-- <% } %> --%>
+	<!-- 로그인한 경우 : 관리자인 경우 -->
+	<c:if test="${ !empty sessionScope.loginMember and loginMember.admin eq 'Y' }">
+		<ul class="icons">
+			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/userDatailPage.do" class="button"><span class="label">마이페이지</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/userDatailPage.do" class="button"><span class="label">마이페이지</span></a></li>
+		</ul>
+	</c:if>
+	<!-- 로그인한 경우 : 일반회원인 경우 -->
+	<c:if test="${ !empty sessionScope.loginMember and loginMember.admin ne 'Y' }">
+		<ul class="icons">
+			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/userDatailPage.do" class="button"><span class="label">마이페이지</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/" class="button"><span class="label">즐겨찾기</span></a></li>
+		</ul>
+	</c:if>
 </header>
-
-
-
 </body>
 </html>

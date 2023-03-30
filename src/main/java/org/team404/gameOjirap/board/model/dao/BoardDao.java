@@ -7,6 +7,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.board.model.vo.BoardGen;
+import org.team404.gameOjirap.common.Paging;
 
 @Repository("boardDao")
 public class BoardDao {
@@ -14,8 +15,8 @@ public class BoardDao {
 	@Autowired
 	private SqlSessionTemplate session;
 	
-	public ArrayList<BoardGen> selectList() {
-		List<BoardGen> list = session.selectList("boardMapper.selectList");
+	public ArrayList<BoardGen> selectList(Paging page) {
+		List<BoardGen> list = session.selectList("boardMapper.selectList", page);
 		return (ArrayList<BoardGen>)list;
 	}
 
@@ -55,6 +56,10 @@ public class BoardDao {
 
 	public int deleteBoardLike(int board_no) {
 		return session.delete("boardMapper.deleteBoardLike", board_no);
+	}
+
+	public int updateBoardReadCount(int board_no) {
+		return session.update("boardMapper.updateBoardReadCount", board_no);
 	}
 
 }
