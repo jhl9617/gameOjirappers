@@ -21,12 +21,11 @@ div {
 	margin: 0 auto;
 	width: 400px;
 	height: 170px;
-	border: 2px solid navy;
 	border-radius: 8px;	
     text-align: center;
 	position: relative;
+	border: 2px solid navy;
 	box-shadow: 1px 1px 5px rgb(0,0,0,  0.5);	 /* 박스 그림자 지정 */
-	
 }
 
 div form {

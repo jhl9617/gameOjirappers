@@ -6,7 +6,6 @@ import javax.servlet.http.HttpSession;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -22,8 +21,8 @@ public class InoutController {
 	
 	@Autowired 									
 	private InoutService InoutService;	
-	@Autowired 
-	private BCryptPasswordEncoder bcryptPasswordEncoder;
+//	@Autowired 
+//	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 			
 	//로그아웃 처리용 메소드
@@ -46,8 +45,6 @@ public class InoutController {
 	public String loginMethod(User user, HttpSession session, SessionStatus status,Model model) {
 		logger.info("login.do : \n" + user.toString());
 //		User loginUser = InoutService.selectUser(user_id);
-		
-		
 		return "common/error";
 		
 		

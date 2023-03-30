@@ -5,7 +5,7 @@ import java.util.ArrayList;
 
 import org.team404.gameOjirap.user.model.vo.MyPage;
 import org.team404.gameOjirap.user.model.vo.User;
-
+ 
 
 public interface InoutService {
 

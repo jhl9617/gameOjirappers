@@ -36,7 +36,7 @@
 
 		<li><a href="${ pageContext.servletContext.contextPath }/nlist.do">게임정보</a></li>
 		<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do">밴드</a></li>
-		<li><a href="${ pageContext.servletContext.contextPath }/test.do">마이페이지</a></li>
+		<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do">마이페이지</a></li>
 		<li><a href="${ pageContext.servletContext.contextPath }/testLogin.do">..</a></li>
 		<li><a href="${ pageContext.servletContext.contextPath }/moveAOP.do">..</a></li>
 	</ul>
