@@ -16,38 +16,56 @@ public class Game implements Serializable {
     private int meta;
     private String category;
     private String genre;
-    private String screenshot;
+    private String headerImg;
     private String movie;
     private String releasedate;
     private String achievement;
     private int positive;
     private int ccu;
+    private String short_description;
+    private String supported_languages;
+    private String pcminimum;
+    private String pcrecommended;
+    
+    
 
     public Game() {
     }
 
-    public Game(String appid, String name, String developer, String publisher, String initialprice, String finalprice, int discountrate, String description, String platform, int meta, String category, String genre, String screenshot, String movie, String releasedate, String achievement, int positive, int ccu) {
-        this.appid = appid;
-        this.name = name;
-        this.developer = developer;
-        this.publisher = publisher;
-        this.initialprice = initialprice;
-        this.finalprice = finalprice;
-        this.discountrate = discountrate;
-        this.description = description;
-        this.platform = platform;
-        this.meta = meta;
-        this.category = category;
-        this.genre = genre;
-        this.screenshot = screenshot;
-        this.movie = movie;
-        this.releasedate = releasedate;
-        this.achievement = achievement;
-        this.positive = positive;
-        this.ccu = ccu;
-    }
+    
 
-    public String getAppid() {
+    public Game(String appid, String name, String developer, String publisher, String initialprice, String finalprice,
+			int discountrate, String description, String platform, int meta, String category, String genre,
+			String headerImg, String movie, String releasedate, String achievement, int positive, int ccu,
+			String short_description, String supported_languages, String pcminimum, String pcrecommended) {
+		super();
+		this.appid = appid;
+		this.name = name;
+		this.developer = developer;
+		this.publisher = publisher;
+		this.initialprice = initialprice;
+		this.finalprice = finalprice;
+		this.discountrate = discountrate;
+		this.description = description;
+		this.platform = platform;
+		this.meta = meta;
+		this.category = category;
+		this.genre = genre;
+		this.headerImg = headerImg;
+		this.movie = movie;
+		this.releasedate = releasedate;
+		this.achievement = achievement;
+		this.positive = positive;
+		this.ccu = ccu;
+		this.short_description = short_description;
+		this.supported_languages = supported_languages;
+		this.pcminimum = pcminimum;
+		this.pcrecommended = pcrecommended;
+	}
+
+
+
+	public String getAppid() {
         return appid;
     }
 
@@ -143,12 +161,12 @@ public class Game implements Serializable {
         this.genre = genre;
     }
 
-    public String getScreenshots() {
-        return screenshot;
+    public String getheaderImgs() {
+        return headerImg;
     }
 
-    public void setScreenshots(String screenshot) {
-        this.screenshot = screenshot;
+    public void setheaderImgs(String headerImg) {
+        this.headerImg = headerImg;
     }
 
     public String getMovies() {
@@ -190,28 +208,69 @@ public class Game implements Serializable {
     public void setCcu(int ccu) {
         this.ccu = ccu;
     }
+    
 
-    @Override
-    public String toString() {
-        return "Game{" +
-                "appid='" + appid + '\'' +
-                ", name='" + name + '\'' +
-                ", developer='" + developer + '\'' +
-                ", publisher='" + publisher + '\'' +
-                ", initialprice='" + initialprice + '\'' +
-                ", finalprice='" + finalprice + '\'' +
-                ", discountrate=" + discountrate +
-                ", description='" + description + '\'' +
-                ", platform='" + platform + '\'' +
-                ", meta=" + meta +
-                ", category='" + category + '\'' +
-                ", genre='" + genre + '\'' +
-                ", screenshot=" + screenshot +
-                ", movie=" + movie +
-                ", releasedate='" + releasedate + '\'' +
-                ", achievement='" + achievement + '\'' +
-                ", positive=" + positive +
-                ", ccu=" + ccu +
-                '}';
-    }
+
+	public String getShort_description() {
+		return short_description;
+	}
+
+
+
+	public void setShort_description(String short_description) {
+		this.short_description = short_description;
+	}
+
+
+
+	public String getSupported_languages() {
+		return supported_languages;
+	}
+
+
+
+	public void setSupported_languages(String supported_languages) {
+		this.supported_languages = supported_languages;
+	}
+
+
+
+	public String getPcminimum() {
+		return pcminimum;
+	}
+
+
+
+	public void setPcminimum(String pcminimum) {
+		this.pcminimum = pcminimum;
+	}
+
+
+
+	public String getPcrecommended() {
+		return pcrecommended;
+	}
+
+
+
+	public void setPcrecommended(String pcrecommended) {
+		this.pcrecommended = pcrecommended;
+	}
+
+
+
+	@Override
+	public String toString() {
+		return "Game [appid=" + appid + ", name=" + name + ", developer=" + developer + ", publisher=" + publisher
+				+ ", initialprice=" + initialprice + ", finalprice=" + finalprice + ", discountrate=" + discountrate
+				+ ", description=" + description + ", platform=" + platform + ", meta=" + meta + ", category="
+				+ category + ", genre=" + genre + ", headerImg=" + headerImg + ", movie=" + movie + ", releasedate="
+				+ releasedate + ", achievement=" + achievement + ", positive=" + positive + ", ccu=" + ccu
+				+ ", short_description=" + short_description + ", supported_languages=" + supported_languages
+				+ ", pcminimum=" + pcminimum + ", pcrecommended=" + pcrecommended + "]";
+	}
+
+	
+
+    
 }
