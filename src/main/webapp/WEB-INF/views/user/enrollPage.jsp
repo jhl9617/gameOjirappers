@@ -1,0 +1,338 @@
+<%@ page language="java" contentType="text/html; charset=UTF-8"
+    pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>  <%--core라이브러리 사용하겠다는 선언 --%>
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+<meta charset="UTF-8">
+<title>enrollPage</title>
+<style type="text/css">
+
+div {
+    /* 바로 상위 태그인 body를 기준으로 맞춰주게끔 */
+    /* position의 absolute라는것이, 설정하게 되면
+    바로 직계부모 태그의 영향아래 놓이게 된다는 말이다.
+    더불어서 네모를 영역으로 봤을때 왼쪽 상단 꼭지점을
+    기준으로 움직이게 된다. */
+    position: absolute;
+
+    left: 50%;
+    top: 50%;
+    transform: translate(-50%, -50%);
+    width: 670px;
+    height: 1300px;
+    background: #FFFFFF;
+    border: 1px solid #AACDFF;
+    border-radius: 20px;
+	box-shadow: 7px 7px 39px rgb(0,0,0,  0.5);	 /* 박스 그림자 지정 */
+    /* 이것의 의미는 타겟팅된 영역에 대해 
+    지정된 만큼 움직여주는 거라고 한다. */
+    /* justify-content: space-evenly;
+    align-content: column; */
+
+    margin: 0px;
+    padding: 100px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    flex-wrap: nowrap;
+}
+
+h2 {
+    width: 466px;
+    height: 94px;
+    left: 725px;
+    top: 50px;
+
+    font-family: 'Noto Sans CJK KR';
+    font-style: normal;
+    font-weight: 700;
+    font-size: 30px;
+
+    color: Midnightblue;
+    justify-content: space-evenly;
+}
+
+
+button {
+    width: 400px;
+    height: 50px;
+    left: 725px;
+    top: 875px;
+    background-color: #FFFFFF;
+    color: royalblue;
+    border-radius: 8px;
+    border: #0068FF solid 1px;
+}
+
+input {
+    padding: 0px;
+    border: none;
+    border-bottom: 1px solid #CFCFCF;
+    width: 466px;
+    height: 30px;
+}
+
+label {
+    color: lightgrey;
+}
+
+.radio {
+    align-items: center;
+    font-size: 20pt;
+    width: 15px;
+    height: 15px;
+}
+
+
+
+joinForm{width: 450px;margin: 0 auto;}
+ul.join_box{border: 1px solid #ddd;background-color: #fff;}
+.checkBox,.checkBox>ul{position: relative;}
+.checkBox>ul>li{float: left;}
+.checkBox>ul>li:first-child{width: 85%;padding: 15px; font-weight: 600;color: #888;}
+.checkBox>ul>li:nth-child(2){position: absolute; top: 50%; right: 165px; margin-top: -12px;}
+.checkBox textarea{width: 96%; height: 90px; margin: 0 2%; background-color: #f7f7f7; color: #888; border: none;}
+.footBtwrap{margin-top: 15px;}
+.footBtwrap>li{float: left;width: 50%;height: 60px;}
+.footBtwrap>li>button{display: block; width: 100%; height: 100%; font-size: 20px; text-align: center; line-height: 60px;}
+.fpmgBt1{background-color: #fff;color:#888}
+.fpmgBt2{background-color: lightsalmon;color: #fff}
+form{margin: 0;padding: 0;box-sizing: border-box}
+body{background-color: #f7f7f7;}
+ul>li{list-style: none}
+a{text-decoration: none;}
+.clearfix::after{content: "";display: block;clear: both;}
+</style>
+
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+
+
+//★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
+	function validate(){
+		//암호와 암호확인이 일치하는지 체크함 (밑에 두개 중 편한걸로 쓰면 됨)
+		var pwd1 = document.getElementById("upwd1").value;		//자바코드임
+		var pwd2 = $("#upwd2").val();											//jQuery코드임
+		
+		if(pwd1 !== pwd2) {		//pwd1과 pwd2 값이 다르다면,
+			alert ("암호와 암호확인이 일치하지 않습니다.\n다시 입력해주세요(ﾉ›_‹)ﾉ");
+			document.getElementById("upwd1").select();			//다시 입력하도록 함
+			return false;				//false로 끝내서, 입력값을 DB로 전송 X
+		}//if
+		return true;			//pwd1과 pwd2 값이 맞다면 DB로 전송함
+	}//close
+	
+	
+	
+	
+	//아이디 중복을 확인하기위한 ajax 요청 처리용 함수
+	function CheckId() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
+		$.ajax({
+			url: "idchek.do",
+			type: "post",   	
+			data: { userid: $("#user_id").val()},		
+
+			success: function (data){		
+				console.log("success : " + data);		
+				if(data == "ok"){
+					alert("사용 가능한 아이디입니다! (*●⁰ꈊ⁰●)ﾉ");
+					$("#pwd1").focus();		//다음칸인 비번 입력칸으로 포커스 옮김
+				}else{
+					alert("이미 사용중인 아이디입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
+					$("#user_id").select();		
+				}	//if
+			},	//success close
+			error: function(jqXHR, textStatus, errorThrown){	
+				console.log("error발생!ʅ(｡◔︎‸◔︎｡)ʃ : " + jqXHR + ", " + textStatus + ", " + errorThrown);		
+			}	//error close
+		});		//ajax close
+		return false; 		
+	}// CheckId close
+	
+	
+	
+	
+	
+	//닉네임 중복을 확인하기위한 ajax 요청 처리용 함수
+	function CheckNickname() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
+		$.ajax({
+			url: "nickchk.do",
+			type: "post",   	
+			data: { user_nickname: $("#user_nickname").val()},		
+
+			success: function (data){		
+				console.log("success : " + data);		
+				if(data == "ok" ){
+					alert("사용 가능한 아이디입니다! (*●⁰ꈊ⁰●)ﾉ");
+					$("#user_name").focus();		
+				}else{
+					alert("이미 사용중인 아이디입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
+					$("#user_nickname").select();		//다음칸인 닉네임 입력칸으로 포커스 옮김
+				}	//if
+			},	//success close
+			error: function(jqXHR, textStatus, errorThrown){	
+				console.log("error발생!ʅ(｡◔︎‸◔︎｡)ʃ : " + jqXHR + ", " + textStatus + ", " + errorThrown);		
+			}	//error close
+		});		//ajax close
+		return false; 		
+	}// CheckId close
+	
+	
+	
+</script>
+</head>
+
+
+<body>
+
+	<form action="enroll.do" method="post" onsubmit="return validate();">
+		<div>
+			<div class="container">
+				<h2 align="center">회원가입 <br></h2>
+
+				<label for="id" style="padding: 2px">* 아이디<br>
+					<input type="text" id="user_id" required> 
+					<input type="button"	value="아이디 중복확인" onclick="return CheckId()">
+					<br><br>
+				</label> 
+				
+				<label for="pwd1">* 비밀번호<br> 
+					<input class="pw" id="pwd1" type="password" required><br>
+					<br><br>
+				</label> 
+				<label for="pwd2">* 비밀번호 확인<br> 
+					<input class="pw" id="pwd2" type="password" required><br>
+					<br><br>
+				</label> 
+				
+				<label for="nickname">* 닉네임<br> 
+				<input type="text" id="user_nickname" required>
+					<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()"><br>
+					<br><br>
+				</label> 
+				
+				<label for="name">* 이 름<br> 
+					<input type="text" id="user_name" required><br>
+					<br><br>
+				</label> 
+				
+				<label for="phone">* 전화번호(-제외하고 입력)<br> 
+					<input type="tel" id="user_phone" required><br>
+					<br> <!-- placeholder="-빼고 입력" -->
+				</label> 
+				
+				<label for="email">* 이메일<br> 
+					<input type="text" id="user_email" required><br>
+					<br><br>
+				</label> 
+				
+				<label for="date">생일<br>
+					<input type="date" id="user_birth" required><br>
+					<br><br>
+				</label> 
+				<label for="answer">본인확인 질문
+					<select id ="onfirm_answer_select" style="background:Oldlace; color:gray; font-size: 13pt; ">
+					    <option value="">선택</option>
+						<option value="1">당신의 이름은 무엇입니까?</option>
+						<option value="2">당신의 생년월일은 언제입니까?</option>
+						<option value="3">당신의 최고 학력은 무엇입니까?</option>
+						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option>
+						<option value="5">당신이 태어난 도시는 어디입니까?</option>
+						<input type="text" id="onfirm_answer" placeholder="답변 입력" required ><br>
+						<br><br>
+					</select>
+				</label>
+				<br>
+				<form action="" id="joinForm">
+					<ul class="join_box">
+						<li class="checkBox check01">
+							<ul class="clearfix">
+								<li>이용약관, 개인정보 수집 및 이용에 모두 동의</li>
+								<li class="checkAllBtn"><input type="checkbox"
+									name="chkAll" id="chk" class="chkAll"></li>
+							</ul>
+						</li>
+						<li class="checkBox check02">
+							<ul class="clearfix">
+								<li>(필수)이용약관 동의</li>
+								<li class="checkBtn"><input type="checkbox" name="chk"></li>
+							</ul> 
+							<textarea name="" id="">
+							제 1장 총칙
+							제 1 조 (목적)
+							본 약관은 (주)겜지라퍼(이하 "회사"라 함)이 제공하는 인터넷 서비스(이하 "서비스"라 함)의 이용과 관련하여 회사와 회원의 권리, 의무 및 기타 필요한 사항을 규정함을 목적으로 합니다.
+							제 2 조 (용어의 정의)
+							본 약관에서 사용하는 주요한 용어의 정의는 다음과 같습니다.
+							①회원 : 회사와 서비스 이용 계약을 체결하고 회원 아이디(ID)를 부여 받은 자를 말합니다.
+							②아이디 : 회원의 식별과 회원의 서비스 이용을 위하여 회원이 선정하고 회사가 승인하는 문자나 숫자 혹은 그 조합을 말합니다(이하"ID"라 합니다).
+							③비밀번호 : 회원이 부여 받은 ID와 일치된 회원임을 확인하고, 회원 자신의 비밀을 보호하기 위하여 회원이 정한 문자와 숫자의 조합을 말합니다.
+							④닉네임 : 서비스 이용을 위하여 회원이 선정하고 회사가 승인한 문자나 숫자 혹은 그 조합으로 서비스 이용 시 회원을 구분하고 지칭하고 나타내는 명칭을 말합니다.
+							⑤이용제한 : 회사가 약관에 의거하여 회원의 서비스 이용을 제한하는 것을 말하며, 일정 기간 서비스 이용 중지, 영구적인 서비스 이용 중지, 서비스 중 일부에 대한 이용 중지를 포함합니다.
+							⑥포인트 : 각 회원에게 부여되는 점수로 서비스 내에서의 활동 정도 및 서비스의 이용에 따라 증감되는 수치를 말합니다.
+							제 3 조 (약관의 효력 및 변경)
+							①본 약관의 내용은 회원이 쉽게 알 수 있도록 서비스 화면에 게시합니다.
+							②회사는 필요하다고 인정되는 경우 본 약관을 변경할 수 있으며, 회사가 약관을 변경할 경우에는 적용일 및 변경 내용을 명시하여 제1항의 방법으로 그 적용일의 최소 7일 전부터 공지합니다. 다만, 회원에게 불리한 약관의 변경인 경우에는 최소 30일 전부터 공지합니다. 회사는 회원에게 불리한 약관 변경의 경우 회원 정보에 기재된 이메일로 개별 통지합니다.
+							③회사가 제2항에 따라 약관의 변경을 공지 또는 통지하면서 변경 약관의 적용일까지 거부 의사를 표시하지 않으면 약관 변경에 동의한 것으로 간주한다는 내용을 공지 또는 통지하였음에도 불구하고 회원이 명시적인 거부 의사를 표시하지 않은 경우 변경 약관에 동의한 것으로 봅니다. 회원은 변경된 약관에 동의하지 않는 경우 이용 계약을 해지할 수 있습니다.
+							제 4 조 (약관 외 준칙)
+							본 약관에 명시되지 아니한 사항에 대해서는 전기통신기본법, 전기통신사업법, 정보통신망 이용촉진 및 정보보호 등에 관한 법률 및 기타 관련 법령의 규정에 따릅니다.
+							
+							제 2장 서비스 이용 계약
+							제 5 조 (이용 계약의 성립)
+							이용계약은 회원이 되고자 하는 자 (이하 “가입신청자”라 합니다.)가 본 약관 및 개인정보처리방침에 동의한 다음 회원가입신청을 하고 회사가 이러한 신청을 승낙함으로써 체결됩니다.
+							
+							본 약관은 2023년 3월 28일부터 적용됩니다.
+							</textarea>
+						</li>
+						<li class="checkBox check03">
+							<ul class="clearfix">
+								<li>(필수)개인정보 수집 및 이용 동의</li>
+								<li class="checkBtn"><input type="checkbox" name="chk"></li>
+							</ul>
+							 <textarea name="" id="">
+							회사는 회원 가입시 다음과 같이 개인정보를 수집에 대한 동의를 받고 있습니다. 가입자가 아래 내용을 읽고 동의를 선택하여 클릭하면 개인정보 수집에 대해 동의한 것으로 간주합니다.
+							아래 내용은 수집하는 개인정보의 항목, 수집 및 이용 목적, 보유 및 이용 기간에 대한 안내이며 자세히 읽어보신 후 동의하여 주시기 바랍니다.
+							1. 수집하는 개인정보 및 이용 목적
+							회사는 이용자가 게시물 작성, 이벤트 참여, 상담 등의 서비스를 이용하기 위하여 회원가입을 신청할 경우, 회사는 서비스 이용을 위해 필요한 최소한의 개인정보를 수집합니다.
+							- 수집 항목: ID, 비밀번호, 이메일 주소, 핸드폰 번호
+							- 수집 목적: 회원제 서비스 이용, 본인 확인 및 개인 식별, 부정 이용 방지 등 회원 관리
+							- 수집 항목: 이름, 생일, 핸드폰 번호, CI, DI
+							- 수집 목적: 중복 가입 방지, 부정 이용 방지, 이벤트 당첨 경품 배송
+							- 수집 항목: 클라이언트 정보, IP
+							- 수집 목적: 회원관리, 부정 이용 방지, 오류 상황 확인, 통계활용
+							2. 개인정보의 보유 및 이용기간
+							회사는 회원이 회사가 제공하는 서비스를 받는 동안 회원의 개인정보를 보유합니다. 이용자의 개인정보는 원칙적으로 개인정보의 수집 및 이용 목적이 달성된 시점에서 지체없이 파기합니다.
+							▶ 수집 및 이용 목적이 달성된 시점
+							• 회원 가입 정보 : 회원을 탈퇴하거나 이용 계약을 해지할 때
+							• 대금 지급 정보 : 대금의 완제일 또는 채권의 소멸시효기간이 만료된 때
+							• 배송 정보 : 당해 설문조사나 이벤트 등이 종료한 때
+							• 본인 확인 정보 : 본인임을 확인한 때
+							회원이 서비스 이용 계약을 해지하거나 제명당한 경우라고 할지라도 서비스 이용의 혼선 방지, 권리남용 및 악용 방지, 명예훼손 등 권리 침해와 관련한 분쟁 및 수사 협조 의뢰에 대비하기 위한 목적으로 약관에 명시된 60일동안 이용자의 개인정보를 보유합니다. 이때에 해당 회원의 개인정보는 개인정보 보호를 위하여 별도로 분리하여 보관, 관리합니다.
+							※ 더 자세한 내용에 대해서는 사이트 하단의 개인정보처리방침을 참고하시기 바랍니다.
+			    			 </textarea>
+						</li>
+						<button>가입하기</button>
+			</div>
+		</div>
+	</form>
+
+
+
+	<br><br><br><br><br><br><br><br><br>
+<%-- <c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
