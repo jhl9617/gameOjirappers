@@ -18,6 +18,20 @@
 		<result column="user_id" property="user_id"/>
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>-->
+
+
+    <resultMap type="CBoard" id="resultCBoard">
+        <result column="cBoardNo" property="cBoardNo"/>
+        <result column="cBoardTitle" property="cBoardTitle"/>
+        <result column="user_Id" property="user_Id"/>
+        <result column="cBoardContent" property="cBoardContent"/>
+        <result column="cBoardDate" property="cBoardDate"/>
+        <result column="communityId" property="communityId"/>
+        <result column="cBoardLike" property="cBoardLike"/>
+        <result column="cBoardOrifile" property="cBoardOrifile"/>
+        <result column="cBoardRefile" property="cBoardRefile"/>
+        <result column="cBoardNotice" property="cBoardNotice"/>
+    </resultMap>
 	
 
 </mapper>

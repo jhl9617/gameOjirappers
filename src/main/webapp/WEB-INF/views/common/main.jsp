@@ -2,17 +2,18 @@
 		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 
+<c:set var="currentPage" value="${requestScope.currentPage }" />
+
 
 <!DOCTYPE HTML>
 
 <html>
-	<head>
-
-		<title>GameOjirap</title>
-		<meta charset="utf-8" />
-		<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
-		<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
-	</head>
+<head>
+<title>GameOjirap</title>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
+</head>
 	<!-- Scripts -->
 <%--	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.6.3.min.js">"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/browser.min.js">"></script>
@@ -20,31 +21,15 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/util.js">"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/main.js">"></script>
 --%>
-
-
-
 <body class="is-preload">
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
-
 <!-- Wrapper -->
 <div id="wrapper">
 
 	<!-- Main -->
 	<div id="main">
 		<div class="inner">
-
 			<!-- Header -->
-			<header id="header">
-				<h1><a href="" class="logo"><strong>겜지라퍼</strong> by team 404</a></h1>
-				<ul class="icons">
-					<li><a href="#" class="icon brands fa-twitter"><span class="label">Twitter</span></a></li>
-					<li><a href="#" class="icon brands fa-facebook-f"><span class="label">Facebook</span></a></li>
-					<li><a href="#" class="icon brands fa-snapchat-ghost"><span class="label">Snapchat</span></a></li>
-					<li><a href="#" class="icon brands fa-instagram"><span class="label">Instagram</span></a></li>
-					<li><a href="#" class="icon brands fa-medium-m"><span class="label">Medium</span></a></li>
-				</ul>
-			</header>
-
+			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 			<!-- Banner -->
 			<section id="banner">
 				<div class="content">
@@ -281,6 +266,8 @@
 
 				</div>
 				
+				</section>
+				
 				
 				
 	<!-- 유저게시판  -->				
@@ -292,7 +279,6 @@
 				<table class="table-products table-hover">
 				<colgroup>
 					<col style="width:119px">
-					<col>
 					<col style="width:120px">
 					<col style="width:100px">
 				</colgroup>
@@ -315,10 +301,6 @@
 				</tbody>
 				</table>
 				</div>
-				
-
-
-			
 			
 			</section>
 			
@@ -326,22 +308,9 @@
 
 
 		</div>
+<hr>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 	</div>
-	
-	
-	
-	
-
-	<!-- Sidebar -->
-	<c:import url="/WEB-INF/views/common/sidebar.jsp" />
-
-
-
 </div>
-
 </body>
-
-
-
-
 </html>
