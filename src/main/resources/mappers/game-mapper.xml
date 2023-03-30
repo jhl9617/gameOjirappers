@@ -8,10 +8,10 @@
 		insert into game (appid, name, developer, publisher, initialprice, finalprice,
 		discountrate,description,platform,meta,category,genre,headerImg,movie,releasedate,
 		achievement,positive,ccu,short_description, supported_languages, pcminimum, pcrecommended)
-		values (#{appid},#{name},#{developer, jdbcType=VARCHAR},#{publisher, jdbcType=VARCHAR},#{initialprice, jdbcType=VARCHAR},
-		        #{finalprice, jdbcType=VARCHAR},#{discountrate},#{description, jdbcType=VARCHAR},#{platform, jdbcType=VARCHAR},
-		        #{meta},#{category, jdbcType=VARCHAR},#{genre, jdbcType=VARCHAR},#{headerImg, jdbcType=VARCHAR},#{movie, jdbcType=VARCHAR},
-		        #{releasedate, jdbcType=VARCHAR},#{achievement, jdbcType=VARCHAR},#{positive},#{ccu},
+		values (#{appid},#{name},#{developer},#{publisher},#{initialprice},
+		        #{finalprice},#{discountrate},#{description},#{platform},
+		        #{meta},#{category},#{genre},#{headerImg},#{movie},
+		        #{releasedate},#{achievement},#{positive},#{ccu},
 		        #{short_description},#{supported_languages},#{pcminimum},#{pcrecommended})
 	</insert>
 	
@@ -25,6 +25,7 @@
 		delete from game
 		where appid = #{appid}
 	</delete>
+
 
 </mapper>
 
