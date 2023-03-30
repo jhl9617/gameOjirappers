@@ -15,6 +15,10 @@
 	<div class="background"></div>
 </div>
 
+<form id="User_Info">
+	<input type="hidden" id="login_id" />
+	<input type="hidden" id="login_pwd" />
+</form>
 
 <form id="accesspanel" method="get">
 	<h1 id="litheader">GAMEJIRAPP</h1>
@@ -40,10 +44,22 @@
 <script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
 <script>
 
+
  // 엔터키 이벤트
  $('[name=login]').on('keyup', function() {
+	 
+ 	//폼에 데이터 셋팅
+ 	$('#login_id').val( $('.user_id').val() );
+ 	$('#login_pwd').val( $('.user_pwd').val() );
+ 	
+ 	$('#User_Info').submit();
+	 
+	 
 	 if (window.event.keyCode == 13) {
 		 location.href = 'login.do';
 	 }
  });
 </script>
+
+
+
