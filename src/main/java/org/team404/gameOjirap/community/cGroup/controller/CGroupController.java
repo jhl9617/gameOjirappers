@@ -10,9 +10,11 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.servlet.ModelAndView;
+import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
-
+import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -71,10 +73,34 @@ public String commuMainList() throws UnsupportedEncodingException {
 
     //커뮤니티 메인 화면으로 이동하는 method
     @RequestMapping(value = "commuMain.do", method={ RequestMethod.GET, RequestMethod.POST })
-    public String moveCommuMain(HttpSession session, Model model) {
+    public ModelAndView moveCommuMain(@RequestParam(name = "page", required = false) String page, ModelAndView mv) {
 
+        int currentPage = 1;
+        if(page != null) {
+            currentPage = Integer.parseInt(page);
+        }
 
-        return "community/commuMain";
+// 한 페이지에 게시글 10개씩 출력되게 하는 경우 :
+        // 페이징 계산 처리 - 별도의 클래스로 작성해서 이용해도 됨
+        int limit = 10; // 한 페이지에 출력할 목록 갯수
+        // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+        int listCount = cGroupService.selectListCount();
+        Paging paging = new Paging(listCount, currentPage, limit);
+        paging.calculator();
+        System.out.println(paging);
+
+        ArrayList<CGroup> list = cGroupService.selectList(paging);
+
+        if (list != null && list.size() > 0) {
+            mv.addObject("list", list);
+            mv.addObject("paging", paging);
+
+            mv.setViewName("community/commuMain");
+        } else {
+            mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
+            mv.setViewName("common/error");
+        }
+        return mv;
     }
 
 
@@ -97,17 +123,31 @@ public String commuMainList() throws UnsupportedEncodingException {
 
         //유저 아이디 임시로 입력
         cGroup.setUser_id("admin");
-        System.out.println(cGroup);
+
         //이미지 첨부 미구현
-        if (cGroupService.insertCGroup(cGroup) > 0) {
+        if (cGroupService.selectCGroup(cGroup.getCommunityname()) < 1 && cGroupService.insertCGroup(cGroup) > 0) {
+
+            //커뮤 생성자 멤버 추가
+            CMember cMember = new CMember(cGroup.getUser_id(), cGroup.getCommunityid(), "Y");
+            System.out.println(cGroup);
+            System.out.println(cMember);
+
+            int check = cGroupService.insertCMember(cMember, cGroup);
             // 게시글 등록 성공시 목록 보기 페이지로 이동
-            /*cGroupService.insertCMember();    유저 id가져와야함*/
-            return "redirect:commuMain.do";
+            if(check == -1){
+                model.addAttribute("message", "이름이 중복되는 커뮤니티가 이미 존재합니다.");
+                return "common/error";
+            }else{
+                return "redirect:commuMain.do";
+            }
+
         } else {
             model.addAttribute("message", "새 커뮤니티 생성 실패");
             return "common/error";
         }
     }
+
+
 
 
 

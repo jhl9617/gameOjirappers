@@ -10,16 +10,17 @@ import java.sql.Date;
 public class CMember implements Serializable {
 
     private String user_id;
-    private int communityId;
+    private int communityid;
     private Date member_date;
+    private String member_roll;
 
     public CMember() {
     }
 
-    public CMember(String user_id, int communityId, String member_roll) {
+    public CMember(String user_id, int communityid, String member_roll) {
         this.user_id = user_id;
-        this.communityId = communityId;
-
+        this.communityid = communityid;
+        this.member_roll = member_roll;
     }
 
     public String getUser_id() {
@@ -30,14 +31,13 @@ public class CMember implements Serializable {
         this.user_id = user_id;
     }
 
-    public int getCommunityId() {
-        return communityId;
+    public int getCommunityid() {
+        return communityid;
     }
 
-    public void setCommunityId(int communityId) {
-        this.communityId = communityId;
+    public void setCommunityid(int communityid) {
+        this.communityid = communityid;
     }
-
 
     public Date getMember_date() {
         return member_date;
@@ -47,12 +47,21 @@ public class CMember implements Serializable {
         this.member_date = member_date;
     }
 
+    public String getMember_roll() {
+        return member_roll;
+    }
+
+    public void setMember_roll(String member_roll) {
+        this.member_roll = member_roll;
+    }
+
     @Override
     public String toString() {
         return "CMember{" +
                 "user_id='" + user_id + '\'' +
-                ", communityId=" + communityId +
+                ", communityid=" + communityid +
                 ", member_date=" + member_date +
+                ", member_roll='" + member_roll + '\'' +
                 '}';
     }
 }
