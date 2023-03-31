@@ -16,7 +16,7 @@ public class Game implements Serializable {
     private int meta;
     private String category;
     private String genre;
-    private String headerImg;
+    private String headerimg;
     private String movie;
     private String releasedate;
     private String achievement;
@@ -36,7 +36,7 @@ public class Game implements Serializable {
 
     public Game(String appid, String name, String developer, String publisher, String initialprice, String finalprice,
 			int discountrate, String description, String platform, int meta, String category, String genre,
-			String headerImg, String movie, String releasedate, String achievement, int positive, int ccu,
+			String headerimg, String movie, String releasedate, String achievement, int positive, int ccu,
 			String short_description, String supported_languages, String pcminimum, String pcrecommended) {
 		super();
 		this.appid = appid;
@@ -51,7 +51,7 @@ public class Game implements Serializable {
 		this.meta = meta;
 		this.category = category;
 		this.genre = genre;
-		this.headerImg = headerImg;
+		this.headerimg = headerimg;
 		this.movie = movie;
 		this.releasedate = releasedate;
 		this.achievement = achievement;
@@ -161,12 +161,12 @@ public class Game implements Serializable {
         this.genre = genre;
     }
 
-    public String getheaderImgs() {
-        return headerImg;
+    public String getheaderimgs() {
+        return headerimg;
     }
 
-    public void setheaderImgs(String headerImg) {
-        this.headerImg = headerImg;
+    public void setheaderimgs(String headerimg) {
+        this.headerimg = headerimg;
     }
 
     public String getMovies() {
@@ -264,7 +264,7 @@ public class Game implements Serializable {
 		return "Game [appid=" + appid + ", name=" + name + ", developer=" + developer + ", publisher=" + publisher
 				+ ", initialprice=" + initialprice + ", finalprice=" + finalprice + ", discountrate=" + discountrate
 				+ ", description=" + description + ", platform=" + platform + ", meta=" + meta + ", category="
-				+ category + ", genre=" + genre + ", headerImg=" + headerImg + ", movie=" + movie + ", releasedate="
+				+ category + ", genre=" + genre + ", headerimg=" + headerimg + ", movie=" + movie + ", releasedate="
 				+ releasedate + ", achievement=" + achievement + ", positive=" + positive + ", ccu=" + ccu
 				+ ", short_description=" + short_description + ", supported_languages=" + supported_languages
 				+ ", pcminimum=" + pcminimum + ", pcrecommended=" + pcrecommended + "]";
