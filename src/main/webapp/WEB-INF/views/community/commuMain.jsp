@@ -5,32 +5,33 @@
 <html>
 <head>
     <meta charset="UTF-8">
-    <title>Group Hub</title>
+    <title>커뮤니티 허브</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 </head>
 <body>
 <div class="container">
-    <h1 class="my-4">Welcome to the Group Hub</h1>
+    <h1 class="my-4">커뮤니티 허브</h1>
 
-    <h2>Create a New Group</h2>
-    <form action="createGroup" method="post">
+    <h2>나만의 커뮤니티 생성</h2>
+    <form action="commuCreate.do" method="post">
         <div class="form-group">
-            <label for="groupName">Group Name:</label>
-            <input type="text" class="form-control" id="groupName" name="groupName" required>
+            <label for="communityname">Group Name:</label>
+            <input type="text" class="pos" id="communityname" name="communityname" required>
         </div>
-        <button type="submit" class="btn btn-primary">Create Group</button>
+        <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
     </form>
 
-    <h2 class="my-4">Existing Groups</h2>
+    <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">
         <thead>
         <tr>
-            <th scope="col">Group Name</th>
-            <th scope="col">Members</th>
-            <th scope="col">Actions</th>
+            <th scope="col">커뮤니티 이름</th>
+            <th scope="col">회원 수</th>
+            <th scope="col">커뮤 마스터</th>
         </tr>
         </thead>
         <tbody>

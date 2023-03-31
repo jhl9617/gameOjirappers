@@ -10,16 +10,16 @@
 		<result column="board_content" property="board_content"/>
 		<result column="board_date" property="board_date"/>
 		<result column="board_count" property="board_count"/>
-		<result column="appid" property="appid"/>
 		<result column="board_like" property="board_like"/>
 		<result column="board_orifile" property="board_orifile"/>
 		<result column="board_refile" property="board_refile"/>
+		<result column="appid" property="appid"/>
 		<result column="user_id" property="user_id"/>
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>
 	
 	
-	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
+	<select id="selectList" resultMap="resultBoard">
 		<![CDATA[
 		select *  
 		from (select rownum rnum, board_no, board_title, board_content,
@@ -27,11 +27,14 @@
 		            board_refile, appid, user_id, board_notice
 		    from (select * from tb_board_gen
 		              order by board_no desc))
-		where rnum >= #{ startRow } and rnum <= #{ endRow }
+		where rnum >= 1 and rnum <= 10
 		]]>
 	</select>
 	
-	<select id="selectOne"></select>
+	<select id="selectOne" parameterType="BoardGen" resultMap="resultBoard">
+		select * from tb_board_gen
+		where user_id = #{ user_id }
+	</select>
 	
 	<select id="selectBoardByTitle"></select>
 	
