@@ -1,5 +1,8 @@
 package org.team404.gameOjirap.game.model.dao;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -25,5 +28,14 @@ public class GameDao {
 	public int selectGameCount(String appid) {
 		return session.selectOne("gameMapper.selectGameCount", appid);
 	}
+
+
+	public ArrayList<Game> selectgameTop5() {
+		List<Game> list = session.selectList("gameMapper.selectgameTop5");
+		return (ArrayList<Game>)list;
+	}
+
+
+
 }
 

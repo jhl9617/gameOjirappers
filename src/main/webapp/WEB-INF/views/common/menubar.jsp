@@ -6,10 +6,16 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <header id="header">
-	<h3><a href="#" class="logo"><strong>겜지라퍼</strong> by team 404</a></h3>
+	<h3><a href="${ pageContext.servletContext.contextPath }/main.do" class="lll">
+	<img src="<c:url value="/resources/images/gggggg.png"/>" width="100px" height="100px" alt="로그" />
+	<strong></a>
+</strong> by team 404</a></h3>
 	<!-- 로그인 안 한 경우 -->
 	<%-- <% if(loginMember == null){ %> --%>
 	<c:if test="${ empty sessionScope.loginMember }">
