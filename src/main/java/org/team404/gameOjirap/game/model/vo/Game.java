@@ -4,6 +4,7 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
     private static final long serialVersionUID = 6963064484999333664L;
+
     private String appid;					//게임 ID
     private String name;					//게임 이름
     private String developer;				//게임 개발자
@@ -27,7 +28,7 @@ public class Game implements Serializable {
     private String pcminimum;				//게임컴퓨터 환경 최소 사양
     private String pcrecommended;			//적정사양
     
-    
+
 
     public Game() {
     }
@@ -166,6 +167,7 @@ public class Game implements Serializable {
     }
 
     public void setHeaderimgs(String headerimg) {
+
         this.headerimg = headerimg;
     }
 
