@@ -12,7 +12,9 @@ $(function() {
 	$('#delete').css('display','block');
  }); 
 
+
 function showDecP(){
+
      $('#').css('display','none');
  }; 
  
@@ -29,7 +31,9 @@ function showp(){
 <h2 align="left">${ username } 님</h2>
 <br>
 <h3>회원등급 : ${ usergrade }</h3><br>
+
 <h3>포인트 : ${ point }</h3> &nbsp; <button id="" onclick="showDecP();">포인트차감</button>
+
 <form action="adminUDecPoint.do" id="depppoint" onsubmit="return confirm('${ username }(${ userid })님의 포인트를 $(#selectp option:checked)만큼 차감하시겠습니까?');">
 차감할 포인트 : 
 <select id="selectp">

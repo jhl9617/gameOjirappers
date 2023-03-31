@@ -34,7 +34,7 @@ public class MoveController {
 	
 	
 	//마이페이지 이동 처리용 ---------------------------------------------------------------------------------------	
-	@RequestMapping(value="userDatailPage.do", method= {RequestMethod.POST} )
+	@RequestMapping(value="userDatailPage.do", method= {RequestMethod.GET, RequestMethod.POST} )
 	public String moveUserDatailPage()  {
 		return "user/userDatailPage";		
 	}//method close
@@ -43,7 +43,7 @@ public class MoveController {
 	
 	
 	//회원정보수정페이지 이동 처리용 --------------------------------------------------------------------------------	
-	@RequestMapping(value="moveUpdatePage.do", method= RequestMethod.GET )
+	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.GET, RequestMethod.POST })
 	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model)  {
 		User user = moveService.selectUser(user_id);
 		

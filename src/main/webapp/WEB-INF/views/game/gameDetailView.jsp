@@ -26,7 +26,7 @@
 		<!-- Main -->
 		<div id="main">
 			<div class="inner">
-
+<a href="${ pageContext.servletContext.contextPath }/updateGameInfo.do" class="button"><span class="label">게임정보 갖고오기</span></a>
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 				<!-- Content -->

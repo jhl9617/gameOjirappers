@@ -4,30 +4,31 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
     private static final long serialVersionUID = 6963064484999333664L;
-    private String appid;
-    private String name;
-    private String developer;
-    private String publisher;
-    private String initialprice;
-    private String finalprice;
-    private int discountrate;
-    private String description;
-    private String platform;
-    private int meta;
-    private String category;
-    private String genre;
-    private String headerImg;
-    private String movie;
-    private String releasedate;
-    private String achievement;
-    private int positive;
-    private int ccu;
-    private String short_description;
-    private String supported_languages;
-    private String pcminimum;
-    private String pcrecommended;
+
+    private String appid;					//게임 ID
+    private String name;					//게임 이름
+    private String developer;				//게임 개발자
+    private String publisher;				//게임 배급사
+    private String initialprice;			//게임 초기가격
+    private String finalprice;				//게임 최종가격
+    private int discountrate;				//할인율
+    private String description;				//게임 설명
+    private String platform;				//게임 플랫폼
+    private int meta;						//메타크리틱 게임 평점
+    private String category;				//카테고리 ID
+    private String genre;					//게임 장르
+    private String headerimg;				//게임 이미지
+    private String movie;					//게임 동영상
+    private String releasedate;				//게임 출시일
+    private String achievement;				//게임 도전과제
+    private int positive;					//게임 긍정평점
+    private int ccu;						//전날 최고 동시 접속사
+    private String short_description;		//게임설명 축약
+    private String supported_languages;		//지원하는 언어
+    private String pcminimum;				//게임컴퓨터 환경 최소 사양
+    private String pcrecommended;			//적정사양
     
-    
+
 
     public Game() {
     }
@@ -36,7 +37,7 @@ public class Game implements Serializable {
 
     public Game(String appid, String name, String developer, String publisher, String initialprice, String finalprice,
 			int discountrate, String description, String platform, int meta, String category, String genre,
-			String headerImg, String movie, String releasedate, String achievement, int positive, int ccu,
+			String headerimg, String movie, String releasedate, String achievement, int positive, int ccu,
 			String short_description, String supported_languages, String pcminimum, String pcrecommended) {
 		super();
 		this.appid = appid;
@@ -51,7 +52,7 @@ public class Game implements Serializable {
 		this.meta = meta;
 		this.category = category;
 		this.genre = genre;
-		this.headerImg = headerImg;
+		this.headerimg = headerimg;
 		this.movie = movie;
 		this.releasedate = releasedate;
 		this.achievement = achievement;
@@ -161,12 +162,13 @@ public class Game implements Serializable {
         this.genre = genre;
     }
 
-    public String getheaderImgs() {
-        return headerImg;
+    public String getHeaderimgs() {
+        return headerimg;
     }
 
-    public void setheaderImgs(String headerImg) {
-        this.headerImg = headerImg;
+    public void setHeaderimgs(String headerimg) {
+
+        this.headerimg = headerimg;
     }
 
     public String getMovies() {
@@ -264,7 +266,7 @@ public class Game implements Serializable {
 		return "Game [appid=" + appid + ", name=" + name + ", developer=" + developer + ", publisher=" + publisher
 				+ ", initialprice=" + initialprice + ", finalprice=" + finalprice + ", discountrate=" + discountrate
 				+ ", description=" + description + ", platform=" + platform + ", meta=" + meta + ", category="
-				+ category + ", genre=" + genre + ", headerImg=" + headerImg + ", movie=" + movie + ", releasedate="
+				+ category + ", genre=" + genre + ", headerimg=" + headerimg + ", movie=" + movie + ", releasedate="
 				+ releasedate + ", achievement=" + achievement + ", positive=" + positive + ", ccu=" + ccu
 				+ ", short_description=" + short_description + ", supported_languages=" + supported_languages
 				+ ", pcminimum=" + pcminimum + ", pcrecommended=" + pcrecommended + "]";

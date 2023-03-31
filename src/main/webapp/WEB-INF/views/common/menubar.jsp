@@ -6,16 +6,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
+<style type="text/css">
+
+</style>
 </head>
 <body>
 <header id="header">
-	<h3><a href="#" class="logo"><strong>겜지라퍼</strong> by team 404</a></h3>
+	<h3><a href="${ pageContext.servletContext.contextPath }/main.do" class="lll">
+	<img src="<c:url value="/resources/images/gggggg.png"/>" width="100px" height="100px" alt="로그" />
+	<strong></a>
+</strong> by team 404</a></h3>
 	<!-- 로그인 안 한 경우 -->
 	<%-- <% if(loginMember == null){ %> --%>
 	<c:if test="${ empty sessionScope.loginMember }">
 		<ul class="icons">
 			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/enrollPage.do" class="button"><span class="label">회원가입</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
 		</ul>	
 	</c:if>	
 	<%-- <% } %> --%>
@@ -35,6 +42,7 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/" class="button"><span class="label">즐겨찾기</span></a></li>
 		</ul>
 	</c:if>
+	<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do" class="button"><span class="label">밴드</span></a></li> <%--임시--%>
 </header>
 </body>
 </html>
