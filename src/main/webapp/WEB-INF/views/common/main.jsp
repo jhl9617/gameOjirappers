@@ -7,44 +7,132 @@
 <head>
 <meta charset="utf-8" />
 <title>GameOjirap</title>
-<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function(){
 $.ajax({
-    url: "gametop5.do",
+    url: "gametop6.do",
     type: "post",
     dataType: "json",
     success: function(data){
        console.log("success : " + data);    // Object 로 출력
-       
+//		select * 
+//		from ( select rownum rnum, name, headerimg, short_description , releasedate,ccu,meta
+//				from ( select * from game order by ccu desc ))
+//		where rnum >= 1 and rnum <=6
        // 받은 Object => string 으로 바꿈
        var jsonStr = JSON.stringify(data);
        // sting => json 객체로 바꿈
        var json = JSON.parse(jsonStr);
        
        // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
-       var gvalues = $('#toplist').html();
-       for(var i in json.list){
+       var gtvalues = $('#toplist').html();
 
-    	  gvalues += "<tr><td>" + json.list[i].name
-//                + "</td><td><a href='bdetail.do?board_num="
-		+"</td><td>"
-                + json.list[i].headerimg +"</td><td>"
-                + decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")
-                + "</a></td><td>" + json.list[i].releasedate
-                + "</td></tr>";
+		for(var i in json.list){
+			
+			gtvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
+                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
+                +"<h3>"+json.list[i].name+"</h3><p>"
+                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
+                +json.list[i].ccu+"</p>"
+                +"<ul class='actions'><li><a href='#' class='button'>More</a></li></ul></article>";
+			
+			
+		}
 
-       }   // for in 
        
-       $('#toplist').html(gvalues);
+       $('#toplist').html(gtvalues);
     	},
     	error: function(jqXHR, textStatus, errorThrown){
-       	console.log("gametop5.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+       	console.log("gametop6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
     	}
  	});
 });
+
+$(function(){
+	$.ajax({
+	    url: "gamenew6.do",
+	    type: "post",
+	    dataType: "json",
+	    success: function(data){
+	       console.log("success : " + data);    // Object 로 출력
+//			select * 
+//			from ( select rownum rnum, name, headerimg, short_description , releasedate
+//					from ( select * from game where releasedate is not null order by releasedate desc  ))
+//			where rnum >= 1 and rnum <=6
+	       // 받은 Object => string 으로 바꿈
+	       var jsonStr = JSON.stringify(data);
+	       // sting => json 객체로 바꿈
+	       var json = JSON.parse(jsonStr);
+	       
+	       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+	       var gnvalues = $('#newlist').html();
+
+			for(var i in json.list){
+				
+				gnvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
+	                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
+	                +"<h3>"+json.list[i].name+"</h3><p>"
+	                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
+	                +json.list[i].releasedate+"</p>"
+	                +"<ul class='actions'><li><a href='#' class='button'>More</a></li></ul></article>";
+				
+				
+			}
+
+	       
+	       $('#newlist').html(gnvalues);
+	    	},
+	    	error: function(jqXHR, textStatus, errorThrown){
+	       	console.log("gamenew6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+	    	}
+	 	});
+	});
+	
+$(function(){
+	$.ajax({
+	    url: "gamedisctop.do",
+	    type: "post",
+	    dataType: "json",
+	    success: function(data){
+	       console.log("success : " + data);    // Object 로 출력
+//			select * 
+//			from ( select rownum rnum, name, initialprice, finalprice ,ccu ,discountrate
+//					from ( select * from game where discountrate is not null order by discountrate desc  ))
+//			where rnum >= 1 and rnum <=10
+	       var jsonStr = JSON.stringify(data);
+	       // sting => json 객체로 바꿈
+	       var json = JSON.parse(jsonStr);
+	       
+	       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+	       var gdvalues = $('#disclist').html();
+	       /* job.put("name", game.getName());
+			job.put("initialprice", game.getInitialprice());
+			job.put("finalprice", game.getFinalprice());
+			job.put("ccu", game.getCcu());
+			job.put("discountrate", game.getDiscountrate()); */
+			for(var i in json.list){
+				//decodeURIComponent(json.list[i].finalprice)
+				gdvalues += "<tr><td><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
+						+json.list[i].name
+						+"</td><td>" + decodeURIComponent(json.list[i].initialprice)
+	                     +"</td><td>" + decodeURIComponent(json.list[i].finalprice).replace(/\+/gi, " ")
+	                     +"</td><td>" + json.list[i].ccu
+	                     +"</td><td>" + json.list[i].discountrate
+	                     +"</td></tr>";
+				
+				
+			}
+
+	       
+	       $('#disclist').html(gdvalues);
+	    	},
+	    	error: function(jqXHR, textStatus, errorThrown){
+	       	console.log("gamedisctop.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+	    	}
+	 	});
+	});
 
 </script>
 
@@ -89,73 +177,27 @@ $.ajax({
 				</span>
 			</section>
 			
-			<!-- 인기게임 출력 : ajax-->
-			<section>
-				<div style="float:left; border:1px solid navy; padding:5px; margin:5px">
-		<h4>인기 게임</h4>
-		<table id="toplist" border="1" cellspacing="0">
-			<tr>
-				<th>이름</th>
-				<th>이미지</th>
-				<th>축약 내용</th>
-				<th>출시일</th>
-			</tr>
-		</table>
-	</div>
-			
-			</section>
-
 
 			<!-- Section -->
 			<section>
 				<header class="major">
 					<h2>Best Game</h2>
 				</header>
-				<div class="posts">
-					<article>
-						<a href="#" class="image"><img src="<c:url value="/resources/images/1.jpg"/>" alt="" /></a>
-						<h3>게임이름 넣을것</h3>
-						<!-- <p>게임 요약 없음</p> -->
-						<ul class="actions">
-							<li><a href="#" class="button">More</a></li>
-						</ul>
-					</article>
-					<article>
-						<a href="#" class="image"><img src="<c:url value="/resources/images/1.jpg"/>" alt="" /></a>
-						<h3>게임이름 넣을것</h3>
-						<!-- <p>게임 요약 없음</p> -->
-						<ul class="actions">
-							<li><a href="#" class="button">More</a></li>
-						</ul>
-					</article>
+				<div id="toplist" class="posts">
+					
 				</div>
 				
 				<!-- 페이징 처리 -->
 				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
+			
 			<!-- Section -->
 			<section>
+			
 				<header class="major">
 					<h2> New Game </h2>
 				</header>
-<!--  				<div class="features"> -->
-				<div class="posts">
-					<article>
-						<a href="#" class="image"><img src="<c:url value="/resources/images/1.jpg"/>" alt="" /></a>
-						<h3>게임이름 넣을것</h3>
-						<!-- <p>게임 요약 없음</p> -->
-						<ul class="actions">
-							<li><a href="#" class="button">More</a></li>
-						</ul>
-					</article>
-					<article>
-						<a href="#" class="image"><img src="<c:url value="/resources/images/1.jpg"/>" alt="" /></a>
-						<h3>게임이름 넣을것</h3>
-						<!-- <p>게임 요약 없음</p> -->
-						<ul class="actions">
-							<li><a href="#" class="button">More</a></li>
-						</ul>
-					</article>
+					<div id="newlist" class="posts">
 					
 				</div>
 					<!-- 페이징 처리 -->
@@ -188,20 +230,26 @@ $.ajax({
 						</a>
 					</th>
 					<th>Peak Today</th>
+					<th>Peak Today</th>
+					<th>Peak Today</th>
 					<th><img src="" class="flag" alt="" width="18" height="18"> Price</th>
 				</tr>
 				</thead>
 				<tbody>
+				<table id="disclist" border="1" cellspacing="0">
 				<tr class="app" data-appid="2050650" data-cache="1679986748">
-					<td class="applogo">
+					<!-- <td class="applogo">
 					<a href="/app/2050650/charts/" tabindex="-1" aria-hidden="true">
 					<img src="" alt="">
 					</a>
-					</td>
-					<td><a href="" class="css-truncate">게임제목</a></td>
-					<td class="text-center green">접속유저</td>
-					<td class="text-center">할인율</td>
+					</td> -->
+					<th><a href="" class="css-truncate">GameName</a></th>
+					<th class="text-center green">초기 가격</th>
+					<th class="text-center">최종가격</th>
+					<th class="text-center">전날 최고 동시 접속사</th>
+					<th class="text-center">할인율</th>
 				</tr>
+				</table>
 				</tbody>
 				</table>
 
@@ -211,7 +259,7 @@ $.ajax({
 				
 				
 				
-	<!-- 유저게시판  -->				
+<%-- 	<!-- 유저게시판  -->				
 			<section>
 				<header class="major">
 					<h2> 유저게시판 </h2>
@@ -243,7 +291,7 @@ $.ajax({
 				</table>
 				</div>
 			
-			</section>
+			</section> --%>
 			
 
 

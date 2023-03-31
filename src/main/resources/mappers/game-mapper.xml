@@ -4,10 +4,30 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gameMapper">
 	<resultMap type="Game" id="resultgmaeTop">
+		<result property="appid" column="appid"/>
 		<result property="name" column="name"/>
 		<result property="headerimg" column="headerimg"/>
 		<result property="short_description" column="short_description"/>
 		<result property="releasedate" column="releasedate"/>
+		<result property="cuu" column="cuu"/>
+		<result property="meta" column="meta"/>
+	</resultMap>
+	
+	<resultMap type="Game" id="resultgmaeNew">
+		<result property="appid" column="appid"/>
+		<result property="name" column="name"/>
+		<result property="headerimg" column="headerimg"/>
+		<result property="short_description" column="short_description"/>
+		<result property="releasedate" column="releasedate"/>
+	</resultMap>
+	
+	<resultMap type="Game" id="resultgmaeDiscount">
+		<result property="appid" column="appid"/>
+		<result property="name" column="name"/>
+		<result property="initialprice" column="initialprice"/>
+		<result property="finalprice" column="finalprice"/>
+		<result property="ccu" column="ccu"/>
+		<result property="discountrate" column="discountrate"/>
 	</resultMap>
 
 
@@ -33,13 +53,33 @@
 		where appid = #{appid}
 	</delete>
 	
-	 <select id="selectgameTop5" resultMap='resultgmaeTop'>
+	 <select id="selectgameTop6" resultMap='resultgmaeTop'>
 	 	<![CDATA[
 	 	select * 
-		from (select rownum rnum, name, headerimg, short_description , releasedate
-				from game )
-		where rnum >= 1 and rnum <=5
+		from ( select rownum rnum, name, headerimg, short_description , releasedate,ccu,meta
+				from ( select * from game order by ccu desc ))
+		where rnum >= 1 and rnum <=6
 	 	]]>
 	 </select>
+	 
+	 <select id="selectgameNew6" resultMap='resultgmaeNew'>
+	 	<![CDATA[
+	 	select * 
+		from ( select rownum rnum, name, headerimg, short_description , releasedate
+				from ( select * from game where releasedate is not null order by releasedate desc  ))
+		where rnum >= 1 and rnum <=6
+	 	]]>
+	 </select>
+	 
+	 <select id="selectgameDiscTop" resultMap='resultgmaeDiscount'>
+	 	<![CDATA[
+	 	select * 
+		from ( select rownum rnum, appid ,name, initialprice, finalprice ,ccu ,discountrate
+				from ( select * from game where discountrate is not null order by discountrate desc  ))
+		where rnum >= 1 and rnum <=10
+	 	]]>
+	 </select>
+
+
 
 </mapper>
