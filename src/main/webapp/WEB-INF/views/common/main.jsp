@@ -5,6 +5,9 @@
 
 <html>
 <head>
+
+<title>겜지라퍼</title>
+
 <meta charset="utf-8" />
 <title>GameOjirap</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
