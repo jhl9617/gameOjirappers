@@ -15,10 +15,6 @@
    <div class="background"></div>
 </div>
 
-<form id="User_Info" action="login.do" method="get">
-   <input type="hidden" name="login_id" id="login_id" />
-   <input type="hidden" name="login_pwd" id="login_pwd" />
-</form>
 
 <form id="accesspanel" method="get">
    <h1 id="litheader">GAMEJIRAPP</h1>
@@ -34,6 +30,12 @@
       <input type="button" name="Login" id="go" onclick="goLogin()" value="로그인">
       <input type="button" onclick="location.href = 'enrollPage.do'"  value="회원가입">
    </p>
+</form>
+
+
+<form id="User_Info" action="login.do" method="get">
+   <input type="hidden" name="login_id" id="login_id" />
+   <input type="hidden" name="login_pwd" id="login_pwd" />
 </form>
 
 </body>
@@ -56,7 +58,7 @@
  });
  
  //로그인 버튼 이벤트 (로그인 기능이 여러번(아이디에서 엔터, 비번에서 엔터, 로그인버튼 클릭) 호출되므로 함수로 묶어줌)
-  function goLogin() {
+ var goLogin = function() {
     // form 버전--------------------------------------------------------------------------------------------------------------------------
    //action은 상수이므로 태그에 직접 설정
     

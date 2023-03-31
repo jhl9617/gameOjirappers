@@ -28,6 +28,12 @@ public class InoutServiceImpl implements InoutService{
 		return inoutDao.selectUserList();
 	}
 
+	@Override
+	public int userInsertMethod(User user) {
+		return inoutDao.userInsertMethod(user);
+	}
+
+	
 	
 	
 	
@@ -36,10 +42,6 @@ public class InoutServiceImpl implements InoutService{
 		return inoutDao.userDeleteMethod(user_id);
 	}
 
-	@Override
-	public int userInsertMethod(User user) {
-		return inoutDao.userInsertMethod(user);
-	}
 
 	@Override
 	public int levelMethod(User user_level) {

@@ -35,23 +35,26 @@ public class InoutDao {
 	}
 	
 
-	
 	public int selectDupCheckId(String user_id) {
 		return session.selectOne("userMapper.selectDupCheckId", user_id);	
 	}
 	
 	public int selectDupCheckNick(String user_nickname) {
-		return session.selectOne("userMapper.selectDupCheckId", user_nickname);	
+		return session.selectOne("userMapper.selectDupCheckNick", user_nickname);	
 	}
 
+	public int userInsertMethod(User user) {
+		return session.insert("userMapper.insertMember", user);
+	}
+	
+	
+	
+	
 	public int userDeleteMethod(String user_id) {
 		return session.delete("deleteUser", user_id);
 	}
 
 
-	public int userInsertMethod(User user) {
-		return session.insert("userMapper.insertMember", user);
-	}
 
 	public int levelMethod(User user_level) {
 		return session.insert("userMapper.levelMethod", user_level);
