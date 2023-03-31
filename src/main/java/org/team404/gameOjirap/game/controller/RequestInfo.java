@@ -237,7 +237,7 @@ public class RequestInfo {
 		g.setMeta(meta);
 		g.setCategory(category);
 		g.setGenre(genre);
-		g.setheaderimgs(headerimg);
+		g.setHeaderimgs(headerimg);
 		g.setMovies(movie);
 		g.setreleasedate(releasedate);
 		g.setDescription(description);

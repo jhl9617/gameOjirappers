@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.user.model.dao.InoutDao;
-import org.team404.gameOjirap.user.model.vo.MyPage;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Service("inoutService")	
@@ -43,7 +42,7 @@ public class InoutServiceImpl implements InoutService{
 	}
 
 	@Override
-	public int levelMethod(MyPage user_level) {
+	public int levelMethod(User user_level) {
 		return inoutDao.levelMethod(user_level);
 	}
 

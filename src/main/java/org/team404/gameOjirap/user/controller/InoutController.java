@@ -13,12 +13,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.support.SessionStatus;
 import org.team404.gameOjirap.user.model.service.InoutService;
-import org.team404.gameOjirap.user.model.vo.MyPage;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class InoutController {
-	private static final Logger logger = LoggerFactory.getLogger(InoutController.class);
+	private final Logger logger = LoggerFactory.getLogger(InoutController.class);
 	
 	@Autowired 									
 	private InoutService InoutService;	
@@ -30,6 +29,7 @@ public class InoutController {
 	@RequestMapping(value="logout.do", method= {RequestMethod.GET, RequestMethod.POST })	
 	public String logoutMethod(HttpServletRequest request,Model model) {	
 		HttpSession session = request.getSession(false);
+		
 		logger.info("ulogout.do : \n" + session);	
 		if(session != null) {	
 			session.invalidate();		

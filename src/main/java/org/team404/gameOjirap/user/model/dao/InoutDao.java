@@ -6,7 +6,6 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.team404.gameOjirap.user.model.vo.MyPage;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Repository("InoutDao")
@@ -19,6 +18,7 @@ public class InoutDao {
 
 	//로그인요청처리용
 	public User loginMethod(User user) {
+		
 		return session.selectOne("userMapper.loginMethod", user);
 	}
 	
@@ -53,7 +53,7 @@ public class InoutDao {
 		return session.insert("userMapper.insertMember", user);
 	}
 
-	public int levelMethod(MyPage user_level) {
+	public int levelMethod(User user_level) {
 		return session.insert("userMapper.levelMethod", user_level);
 	}
 
