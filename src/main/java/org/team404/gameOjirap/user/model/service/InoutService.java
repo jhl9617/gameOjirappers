@@ -11,7 +11,7 @@ public interface InoutService {
 
 	User loginMethod(User user);     									 // 로그인 요청처리용	//객체정보 1개 받아서 리턴시킴
 	User selectUser(String user_id);									//회원 1명 조회
-	ArrayList<User> selectList();										//회원 리스트 조회
+	ArrayList<User> selectUserList();										//회원 리스트 조회
 	
 	int userDeleteMethod(String user_id);  						// 회원탈퇴 요청처리용
 	int userInsertMethod(User user);    								// 회원가입 요청처리용
