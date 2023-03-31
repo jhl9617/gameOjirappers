@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC
+"-//mybatis.org//DTD Mapper 3.0//EN"
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="userMapper">
+	<!-- 마이바티스 mybatis-config.xml 에 등록해야 별칭으로 사용할 수 있음 => 등록안할꺼면 사용구문을 모두 적으면 됨 -->
+
+	<!-- 유저정보 저장용 -->
+	<resultMap id="resultUser" type="User">
+	   <id column="user_id" property="user_id"/>
+	   <result column="admin_id" property="admin_id"/>
+	   <result column="user_pwd" property="user_pwd"/>
+	   <result column="user_nickname" property="user_nickname"/>
+	   <result column="user_name" property="user_name"/>
+	   <result column="user_phone" property="user_phone"/>
+	   <result column="user_email" property="user_email"/>
+	   <result column="user_birth" property="user_birth"/>
+	   <result column="confirm_answer" property="confirm_answer"/>
+	   <result column="login_ok" property="login_ok"/>
+	   <result column="admin" property="admin"/>
+	</resultMap>
+	
+	<!--마이페이지용  -->
+	<resultMap id="Mypage" type="User">
+	   <result column="user_level" property="user_level"/>
+	   <result column="user_status" property="user_status"/>
+	   <result column="user_point" property="user_point"/>
+	   <result column="user_access" property="user_access"/>
+	   <result column="user_original_profile" property="user_original_profile"/>
+	   <result column="bname" property="bname"/>
+	   <result column="com_contents" property="com_contents"/>
+	   <result column="board_title" property="board_title"/>
+	</resultMap>
+
+
+	<!-- 즐겨찾기용  -->
+	<resultMap id="resultHotList" type="HotList">
+	   <id column="user_id" property="user_id"/>
+	   <result column="game_id" property="game_id"/>
+	   <result column="board_click_day" property="board_click_day"/>
+	</resultMap>
+
+
+<!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
+	<!-- 로그인 처리용 -->
+	<select id="loginMethod" parameterType="java.util.Map" resultType="String" resultMap="resultUser">		
+		select * 
+		from tb_user
+		where user_id = #{ user_id } 
+		  and user_pwd = #{ user_pwd }			
+		  and user_status = 'run'
+	</select>
+
+
+	<!-- 아이디로 회원정보 조회용 -->
+	<!-- resultMap방식으로 연결하는 방법임 -->
+	<select id="selectUser" parameterType="string" resultMap="resultUser">
+	   select * 
+	   from tb_user
+	   where user_id = #{ user_id }
+	</select>
+	
+	
+	<!-- 회원 전체 조회용 -->
+	<select id = "selectUserList" resultMap="User">
+		select *
+		from tb_user
+	</select>
+	
+	
+	
+
+</mapper>
+
+
+
+
+
+
+

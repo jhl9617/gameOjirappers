@@ -12,24 +12,28 @@ import org.team404.gameOjirap.user.model.vo.User;
 @Repository("InoutDao")
 public class InoutDao {
 	//★★★★★★MemberServiceImpl로부터 받은 값을 처리해서 Controller로 넘기는 파트임!
+//	String NAMESPACE = "userMapper";
 
-	//마이바티스 연결
-	@Autowired		//@Autowired를 통해 의존성(DI)주입됨 => root-context.xml 에서 생성한 객체와 자동 연결됨=> mapper, config, DB까지 모두 연결됨
+	@Autowired	
 	private SqlSessionTemplate session;	
 
-
+	//로그인요청처리용
 	public User loginMethod(User user) {
 		return session.selectOne("userMapper.loginMethod", user);
-	}
-	
-	public ArrayList<User> selectList() {
-		List<User> list = session.selectList("userMapper.selectList");	
-		return (ArrayList<User>)list;
 	}
 	
 	public User selectUser(String user_id) {
 		return session.selectOne("userMapper.selectUser", user_id);	
 	}
+
+	
+	
+	public ArrayList<User> selectUserList() {
+		List<User> list = session.selectList("userMapper.selectUserList");	
+		
+		return (ArrayList<User>)list;
+	}
+	
 
 	
 	public int selectDupCheckId(String user_id) {

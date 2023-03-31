@@ -1,5 +1,5 @@
 DROP TABLE TB_USER cascade constraints;
--- ¼Ò¼È·Î±×ÀÎ½Ã È¸¿ø°¡ÀÔÀ» ÀÌ¿ëÇÒ °æ¿ìÀÇ È¸¿ø Å×ÀÌºí
+-- ì†Œì…œë¡œê·¸ì¸ì‹œ íšŒì›ê°€ì…ì„ ì´ìš©í•  ê²½ìš°ì˜ íšŒì› í…Œì´ë¸”
 CREATE TABLE TB_USER (
                          USER_ID 		 VARCHAR2(50) 				NOT NULL,
                          ADMIN_ID 		VARCHAR2(20) DEFAULT 'N' 		NOT NULL,
@@ -9,29 +9,29 @@ CREATE TABLE TB_USER (
                          USER_PHONE 		VARCHAR2(13) 			NOT NULL,
                          USER_EMAIL 		VARCHAR2(100) 			NOT NULL,
                          USER_BIRTH 		DATE 	NULL,
-                         USER_LEVEL 		VARCHAR2(20)	DEFAULT '»õ½Ï'	NOT NULL,
+                         USER_LEVEL 		VARCHAR2(20)	DEFAULT 'ìƒˆì‹¹'	NOT NULL,
                          USER_STATUS		VARCHAR2(30) 	DEFAULT 'run'	NOT NULL,
                          USER_POINT 		NUMBER		DEFAULT 0		NOT NULL,
                          USER_ACCESS 		DATE 		DEFAULT SYSDATE,
-                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '±âº»'		NULL,
+                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT 'ê¸°ë³¸'		NULL,
                          CONFIRM_ANSWER 	VARCHAR2(100) 			NULL
 );
 
 
-comment on column TB_USER.user_id is 'È¸¿ø¾ÆÀÌµğ';
-comment on column TB_USER.admin_id is '°ü¸®ÀÚ¾ÆÀÌµğ';
-comment on column TB_USER.user_pwd is 'È¸¿øºñ¹Ğ¹øÈ£';
-comment on column TB_USER.user_nickname is 'È¸¿ø´Ğ³×ÀÓ';
-comment on column TB_USER.user_name is 'È¸¿øÀÌ¸§';
-comment on column TB_USER.user_phone is 'È¸¿øÀüÈ­¹øÈ£';
-comment on column TB_USER.user_email is 'È¸¿øÀÌ¸ŞÀÏ';
-comment on column TB_USER.user_birth is 'È¸¿ø»ıÀÏ';
-comment on column TB_USER.user_level is 'È¸¿øµî±Ş';
-comment on column TB_USER.user_status is 'È¸¿ø È°µ¿»óÅÂ';
-comment on column TB_USER.user_point is 'º¸À¯Æ÷ÀÎÆ®';
-comment on column TB_USER.user_access is 'Á¢¼Ó±â·Ï';
-comment on column TB_USER.user_original_profile is 'ÇÁ·ÎÇÊÀÌ¹ÌÁö';
-comment on column TB_USER.confirm_answer is 'º»ÀÎÈ®ÀÎ¿ë ´äº¯';
+comment on column TB_USER.user_id is 'íšŒì›ì•„ì´ë””';
+comment on column TB_USER.admin_id is 'ê´€ë¦¬ìì•„ì´ë””';
+comment on column TB_USER.user_pwd is 'íšŒì›ë¹„ë°€ë²ˆí˜¸';
+comment on column TB_USER.user_nickname is 'íšŒì›ë‹‰ë„¤ì„';
+comment on column TB_USER.user_name is 'íšŒì›ì´ë¦„';
+comment on column TB_USER.user_phone is 'íšŒì›ì „í™”ë²ˆí˜¸';
+comment on column TB_USER.user_email is 'íšŒì›ì´ë©”ì¼';
+comment on column TB_USER.user_birth is 'íšŒì›ìƒì¼';
+comment on column TB_USER.user_level is 'íšŒì›ë“±ê¸‰';
+comment on column TB_USER.user_status is 'íšŒì› í™œë™ìƒíƒœ';
+comment on column TB_USER.user_point is 'ë³´ìœ í¬ì¸íŠ¸';
+comment on column TB_USER.user_access is 'ì ‘ì†ê¸°ë¡';
+comment on column TB_USER.user_original_profile is 'í”„ë¡œí•„ì´ë¯¸ì§€';
+comment on column TB_USER.confirm_answer is 'ë³¸ì¸í™•ì¸ìš© ë‹µë³€';
 
 
 DROP TABLE TB_GRADE cascade constraints;
@@ -42,10 +42,10 @@ CREATE TABLE TB_GRADE (
                           min_point	number		NOT NULL,
                           max_point	number		NOT NULL
 );
-comment on column TB_GRADE.grade IS 'µî±Ş';
-comment on column TB_GRADE.grade_mean IS 'µî±Ş Æò±Õ';
-comment on column TB_GRADE.min_point IS 'ÃÖ¼Ò Á¡¼ö';
-comment on column TB_GRADE.max_point IS 'ÃÖ´ë Á¡¼ö';
+comment on column TB_GRADE.grade IS 'ë“±ê¸‰';
+comment on column TB_GRADE.grade_mean IS 'ë“±ê¸‰ í‰ê· ';
+comment on column TB_GRADE.min_point IS 'ìµœì†Œ ì ìˆ˜';
+comment on column TB_GRADE.max_point IS 'ìµœëŒ€ ì ìˆ˜';
 
 DROP TABLE TB_COMMUNITY_MEMBER cascade constraints;
 
@@ -56,10 +56,10 @@ CREATE TABLE TB_COMMUNITY_MEMBER (
                                      member_date	Date		NOT NULL
 );
 
-comment on column TB_COMMUNITY_MEMBER.user_id IS '¹êµå ¸â¹ö ID';
-comment on column TB_COMMUNITY_MEMBER.communityID IS '¹êµå ID';
-comment on column TB_COMMUNITY_MEMBER.member_roll IS '¸â¹ö ¿ªÇÒ';
-comment on column TB_COMMUNITY_MEMBER.member_date IS '¸â¹ö °¡ÀÔÀÏ';
+comment on column TB_COMMUNITY_MEMBER.user_id IS 'ë°´ë“œ ë©¤ë²„ ID';
+comment on column TB_COMMUNITY_MEMBER.communityID IS 'ë°´ë“œ ID';
+comment on column TB_COMMUNITY_MEMBER.member_roll IS 'ë©¤ë²„ ì—­í• ';
+comment on column TB_COMMUNITY_MEMBER.member_date IS 'ë©¤ë²„ ê°€ì…ì¼';
 
 DROP TABLE TB_Community cascade constraints;
 
@@ -72,12 +72,12 @@ CREATE TABLE TB_Community (
                               communityImgRename	VARCHAR2(100)
 );
 
-comment on column TB_Community.communityId IS '¹êµå ID';
-comment on column TB_Community.communityName IS '¹êµå ÀÌ¸§';
-comment on column TB_Community.communityDate IS '¹êµå »ı¼ºÀÏ';
-comment on column TB_Community.user_id IS '¹êµå »ı¼ºÀÚ ID';
-comment on column TB_Community.communityImgOri IS '¹êµå ÀÌ¹ÌÁö ¿øº»ÀÌ¸§';
-comment on column TB_Community.communityImgOri IS '¹êµå ÀÌ¹ÌÁö ¹Ù²ïÀÌ¸§';
+comment on column TB_Community.communityId IS 'ë°´ë“œ ID';
+comment on column TB_Community.communityName IS 'ë°´ë“œ ì´ë¦„';
+comment on column TB_Community.communityDate IS 'ë°´ë“œ ìƒì„±ì¼';
+comment on column TB_Community.user_id IS 'ë°´ë“œ ìƒì„±ì ID';
+comment on column TB_Community.communityImgOri IS 'ë°´ë“œ ì´ë¯¸ì§€ ì›ë³¸ì´ë¦„';
+comment on column TB_Community.communityImgOri IS 'ë°´ë“œ ì´ë¯¸ì§€ ë°”ë€ì´ë¦„';
 
 
 DROP TABLE TB_Community_BOARD cascade constraints;
@@ -95,16 +95,16 @@ CREATE TABLE TB_Community_BOARD (
                                     communityId	NUMBER		NOT NULL
 );
 
-comment on column TB_Community_BOARD.cBoardNo is '¹êµå°Ô½Ã±Û ¹øÈ£';
-comment on column TB_Community_BOARD.cBoardTitle is '¹êµå°Ô½Ã±Û Á¦¸ñ';
-comment on column TB_Community_BOARD.cBoardContent is '¹êµå°Ô½Ã±Û ³»¿ë';
-comment on column TB_Community_BOARD.cBoardDate is '¹êµå°Ô½Ã±Û ÀÛ¼ºÀÏ';
-comment on column TB_Community_BOARD.cBoardLike is '¹êµå°Ô½Ã±Û ÁÁ¾Æ¿ä ¼ö';
-comment on column TB_Community_BOARD.cBoardOrifile is '¹êµå°Ô½Ã±Û ¿øº» ÆÄÀÏ';
-comment on column TB_Community_BOARD.cBoardRefile is '¹êµå°Ô½Ã±Û ¼öÁ¤µÈ ÆÄÀÏ';
-comment on column TB_Community_BOARD.cBoardNotice is '¹êµå°Ô½Ã±Û °øÁö ¿©ºÎ';
-comment on column TB_Community_BOARD.user_id is '¹êµå°Ô½Ã±Û ÀÛ¼ºÀÚ ID';
-comment on column TB_Community_BOARD.communityId is '°Ô½Ã±ÛÀÌ ¼ÓÇÑ ¹êµå ID';
+comment on column TB_Community_BOARD.cBoardNo is 'ë°´ë“œê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_Community_BOARD.cBoardTitle is 'ë°´ë“œê²Œì‹œê¸€ ì œëª©';
+comment on column TB_Community_BOARD.cBoardContent is 'ë°´ë“œê²Œì‹œê¸€ ë‚´ìš©';
+comment on column TB_Community_BOARD.cBoardDate is 'ë°´ë“œê²Œì‹œê¸€ ì‘ì„±ì¼';
+comment on column TB_Community_BOARD.cBoardLike is 'ë°´ë“œê²Œì‹œê¸€ ì¢‹ì•„ìš” ìˆ˜';
+comment on column TB_Community_BOARD.cBoardOrifile is 'ë°´ë“œê²Œì‹œê¸€ ì›ë³¸ íŒŒì¼';
+comment on column TB_Community_BOARD.cBoardRefile is 'ë°´ë“œê²Œì‹œê¸€ ìˆ˜ì •ëœ íŒŒì¼';
+comment on column TB_Community_BOARD.cBoardNotice is 'ë°´ë“œê²Œì‹œê¸€ ê³µì§€ ì—¬ë¶€';
+comment on column TB_Community_BOARD.user_id is 'ë°´ë“œê²Œì‹œê¸€ ì‘ì„±ì ID';
+comment on column TB_Community_BOARD.communityId is 'ê²Œì‹œê¸€ì´ ì†í•œ ë°´ë“œ ID';
 
 DROP TABLE TB_Community_Comment cascade constraints;
 
@@ -117,12 +117,12 @@ CREATE TABLE TB_Community_Comment (
                                       cBoardNo	VARCHAR2(20)		NOT NULL
 );
 
-comment on column TB_Community_Comment.cComNo is '¹êµå ´ñ±Û ¹øÈ£';
-comment on column TB_Community_Comment.cComContent is '¹êµå ´ñ±Û ³»¿ë';
-comment on column TB_Community_Comment.cComDate is '¹êµå ´ñ±Û ÀÛ¼ºÀÏ';
-comment on column TB_Community_Comment.cComLvl is '¹êµå ´ñ±Û ±íÀÌ';
-comment on column TB_Community_Comment.user_id is '¹êµå ´ñ±Û ÀÛ¼ºÀÚ ID';
-comment on column TB_Community_Comment.cBoardNo is '¹êµå°Ô½Ã±Û ¹øÈ£';
+comment on column TB_Community_Comment.cComNo is 'ë°´ë“œ ëŒ“ê¸€ ë²ˆí˜¸';
+comment on column TB_Community_Comment.cComContent is 'ë°´ë“œ ëŒ“ê¸€ ë‚´ìš©';
+comment on column TB_Community_Comment.cComDate is 'ë°´ë“œ ëŒ“ê¸€ ì‘ì„±ì¼';
+comment on column TB_Community_Comment.cComLvl is 'ë°´ë“œ ëŒ“ê¸€ ê¹Šì´';
+comment on column TB_Community_Comment.user_id is 'ë°´ë“œ ëŒ“ê¸€ ì‘ì„±ì ID';
+comment on column TB_Community_Comment.cBoardNo is 'ë°´ë“œê²Œì‹œê¸€ ë²ˆí˜¸';
 
 DROP TABLE TB_Community_SCH cascade constraints;
 
@@ -134,11 +134,11 @@ CREATE TABLE TB_Community_SCH (
                                   schStart	Date		,
                                   schEnd	Date
 );
-comment on column TB_Community_SCH.schId is '¹êµå ÀÏÁ¤ ID';
-comment on column TB_Community_SCH.schName is '¹êµå ÀÏÁ¤ ÀÌ¸§';
-comment on column TB_Community_SCH.schDes is '¹êµå ÀÏÁ¤ ¼³¸í';
-comment on column TB_Community_SCH.schStart is '¹êµå ÀÏÁ¤ ½ÃÀÛÀÏ';
-comment on column TB_Community_SCH.schEnd is '¹êµå ÀÏÁ¤ Á¾·áÀÏ';
+comment on column TB_Community_SCH.schId is 'ë°´ë“œ ì¼ì • ID';
+comment on column TB_Community_SCH.schName is 'ë°´ë“œ ì¼ì • ì´ë¦„';
+comment on column TB_Community_SCH.schDes is 'ë°´ë“œ ì¼ì • ì„¤ëª…';
+comment on column TB_Community_SCH.schStart is 'ë°´ë“œ ì¼ì • ì‹œì‘ì¼';
+comment on column TB_Community_SCH.schEnd is 'ë°´ë“œ ì¼ì • ì¢…ë£Œì¼';
 
 DROP TABLE TB_Community_VOTE cascade constraints;
 
@@ -148,10 +148,10 @@ CREATE TABLE TB_Community_VOTE (
                                    voteDate	Date		,
                                    user_id	VARCHAR2(20)		NOT NULL
 );
-comment on column TB_Community_VOTE.schId is '¹êµå ÀÏÁ¤ ID';
-comment on column TB_Community_VOTE.votePart is '¹êµå ÀÏÁ¤ ¿©ºÎ';
-comment on column TB_Community_VOTE.voteDate is 'ÀÏÁ¤ ÅõÇ¥ ³¯Â¥';
-comment on column TB_Community_VOTE.user_id is '¹êµåÅõÇ¥ÀÚ ID';
+comment on column TB_Community_VOTE.schId is 'ë°´ë“œ ì¼ì • ID';
+comment on column TB_Community_VOTE.votePart is 'ë°´ë“œ ì¼ì • ì—¬ë¶€';
+comment on column TB_Community_VOTE.voteDate is 'ì¼ì • íˆ¬í‘œ ë‚ ì§œ';
+comment on column TB_Community_VOTE.user_id is 'ë°´ë“œíˆ¬í‘œì ID';
 
 
 DROP TABLE TB_Community_REPORT cascade constraints;
@@ -162,10 +162,10 @@ CREATE TABLE TB_Community_REPORT (
                                      c_report_time	DATE		,
                                      c_report_desc	VARCHAR2(500)
 );
-comment on column TB_Community_REPORT.user_id is '»ç¿ëÀÚ ID';
-comment on column TB_Community_REPORT.communityId is '¹êµå ¹øÈ£';
-comment on column TB_Community_REPORT.c_report_time is '¹êµå ½Å°í ½Ã°£';
-comment on column TB_Community_REPORT.c_report_desc is '¹êµå ½Å°í ³»¿ë';
+comment on column TB_Community_REPORT.user_id is 'ì‚¬ìš©ì ID';
+comment on column TB_Community_REPORT.communityId is 'ë°´ë“œ ë²ˆí˜¸';
+comment on column TB_Community_REPORT.c_report_time is 'ë°´ë“œ ì‹ ê³  ì‹œê°„';
+comment on column TB_Community_REPORT.c_report_desc is 'ë°´ë“œ ì‹ ê³  ë‚´ìš©';
 
 DROP TABLE TB_Community_LIKE cascade constraints;
 
@@ -175,9 +175,9 @@ CREATE TABLE TB_Community_LIKE (
                                    communityId	NUMBER		NOT NULL
 );
 
-comment on column TB_Community_LIKE.user_id is '»ç¿ëÀÚ ID';
-comment on column TB_Community_LIKE.cLiked_day is '¹êµå ÁÁ¾Æ¿ä Å¬¸¯ ³¯Â¥';
-comment on column TB_Community_LIKE.communityId is '¹êµå ¹øÈ£';
+comment on column TB_Community_LIKE.user_id is 'ì‚¬ìš©ì ID';
+comment on column TB_Community_LIKE.cLiked_day is 'ë°´ë“œ ì¢‹ì•„ìš” í´ë¦­ ë‚ ì§œ';
+comment on column TB_Community_LIKE.communityId is 'ë°´ë“œ ë²ˆí˜¸';
 
 DROP TABLE TB_Community_REQ cascade constraints;
 
@@ -188,10 +188,10 @@ CREATE TABLE TB_Community_REQ (
                                   requestDate	Date
 );
 
-comment on column TB_Community_REQ.user_id is '»ç¿ëÀÚ ID';
-comment on column TB_Community_REQ.communityId is '¹êµå ID';
-comment on column TB_Community_REQ.requestDes is '¹êµå °¡ÀÔ ½ÅÃ» ³»¿ë';
-comment on column TB_Community_REQ.requestDate is '¹êµå °¡ÀÔ ½ÅÃ» ³¯Â¥';
+comment on column TB_Community_REQ.user_id is 'ì‚¬ìš©ì ID';
+comment on column TB_Community_REQ.communityId is 'ë°´ë“œ ID';
+comment on column TB_Community_REQ.requestDes is 'ë°´ë“œ ê°€ì… ì‹ ì²­ ë‚´ìš©';
+comment on column TB_Community_REQ.requestDate is 'ë°´ë“œ ê°€ì… ì‹ ì²­ ë‚ ì§œ';
 
 DROP TABLE TB_GAME cascade constraints;
 
@@ -215,24 +215,24 @@ CREATE TABLE TB_GAME (
                          game_rank	Number		NULL,
                          game_like	Number		NULL
 );
-comment on column TB_GAME.appid is '°ÔÀÓ ID';
-comment on column TB_GAME.name is '°ÔÀÓ ÀÌ¸§';
-comment on column TB_GAME.releasedate is '°ÔÀÓ Ãâ½ÃÀÏ';
-comment on column TB_GAME.metacritic is '¸ŞÅ¸Å©¸®Æ½ °ÔÀÓ ÆòÁ¡';
-comment on column TB_GAME.initialprice is '°ÔÀÓ ÃÊ±â°¡°İ';
-comment on column TB_GAME.finalprice is '°ÔÀÓ ÃÖÁ¾°¡°İ';
-comment on column TB_GAME.discountrate is 'ÇÒÀÎÀ²';
-comment on column TB_GAME.developer is '°ÔÀÓ °³¹ßÀÚ';
-comment on column TB_GAME.publisher is '°ÔÀÓ ¹è±Ş»ç';
-comment on column TB_GAME.platform is '°ÔÀÓ ÇÃ·§Æû';
-comment on column TB_GAME.screenshots is '°ÔÀÓ ÀÌ¹ÌÁö';
-comment on column TB_GAME.movies is '°ÔÀÓ µ¿¿µ»ó';
-comment on column TB_GAME.genre is '°ÔÀÓ Àå¸£';
-comment on column TB_GAME.challenge is 'Ä«Å×°í¸® ID';
-comment on column TB_GAME.description is '°ÔÀÓ ¼³¸í';
-comment on column TB_GAME.game_updateinfo is '°ÔÀÓ ¾÷µ¥ÀÌÆ® Á¤º¸';
-comment on column TB_GAME.game_rank is 'ÀüÀÏ °ÔÀÓÁ¢¼Ó»ç ¼ö';
-comment on column TB_GAME.game_like is '°ÔÀÓ ÁÁ¾Æ¿ä¼ö';
+comment on column TB_GAME.appid is 'ê²Œì„ ID';
+comment on column TB_GAME.name is 'ê²Œì„ ì´ë¦„';
+comment on column TB_GAME.releasedate is 'ê²Œì„ ì¶œì‹œì¼';
+comment on column TB_GAME.metacritic is 'ë©”íƒ€í¬ë¦¬í‹± ê²Œì„ í‰ì ';
+comment on column TB_GAME.initialprice is 'ê²Œì„ ì´ˆê¸°ê°€ê²©';
+comment on column TB_GAME.finalprice is 'ê²Œì„ ìµœì¢…ê°€ê²©';
+comment on column TB_GAME.discountrate is 'í• ì¸ìœ¨';
+comment on column TB_GAME.developer is 'ê²Œì„ ê°œë°œì';
+comment on column TB_GAME.publisher is 'ê²Œì„ ë°°ê¸‰ì‚¬';
+comment on column TB_GAME.platform is 'ê²Œì„ í”Œë«í¼';
+comment on column TB_GAME.screenshots is 'ê²Œì„ ì´ë¯¸ì§€';
+comment on column TB_GAME.movies is 'ê²Œì„ ë™ì˜ìƒ';
+comment on column TB_GAME.genre is 'ê²Œì„ ì¥ë¥´';
+comment on column TB_GAME.challenge is 'ì¹´í…Œê³ ë¦¬ ID';
+comment on column TB_GAME.description is 'ê²Œì„ ì„¤ëª…';
+comment on column TB_GAME.game_updateinfo is 'ê²Œì„ ì—…ë°ì´íŠ¸ ì •ë³´';
+comment on column TB_GAME.game_rank is 'ì „ì¼ ê²Œì„ì ‘ì†ì‚¬ ìˆ˜';
+comment on column TB_GAME.game_like is 'ê²Œì„ ì¢‹ì•„ìš”ìˆ˜';
 
 
 DROP TABLE TB_CHALLENGE cascade constraints;
@@ -243,10 +243,10 @@ CREATE TABLE TB_CHALLENGE (
                               achievement_name	Varchar2(100)		NOT NULL,
                               achievement_path	Varchar2(100)		NULL
 );
-comment on column TB_CHALLENGE.appid IS '°ÔÀÓ ID';
-comment on column TB_CHALLENGE.challenge IS 'µµÀü °úÁ¦ ID';
-comment on column TB_CHALLENGE.achievement_name IS 'µµÀü °úÁ¦ ÀÌ¸§';
-comment on column TB_CHALLENGE.achievement_path IS 'µµÀü °úÁ¦ ÀÌ¹ÌÁö';
+comment on column TB_CHALLENGE.appid IS 'ê²Œì„ ID';
+comment on column TB_CHALLENGE.challenge IS 'ë„ì „ ê³¼ì œ ID';
+comment on column TB_CHALLENGE.achievement_name IS 'ë„ì „ ê³¼ì œ ì´ë¦„';
+comment on column TB_CHALLENGE.achievement_path IS 'ë„ì „ ê³¼ì œ ì´ë¯¸ì§€';
 
 
 DROP TABLE TB_BOARD_GEN cascade constraints;
@@ -256,23 +256,25 @@ CREATE TABLE TB_BOARD_GEN (
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
-                              board_count	number		NOT NULL,
-                              board_like	number		NOT NULL,
-                              board_orifile	VARCHAR2(500)		NOT NULL,
+                              board_count	number		,
+                              board_like	number		,
+                              board_orifile	VARCHAR2(500),		
                               board_refile	VARCHAR2(500)		NULL,
                               appid	Number		NOT NULL,
-                              user_id	VARCHAR2(20)		NOT NULL
+                              user_id	VARCHAR2(20)		NOT NULL,
+					board_notice VARCHAR2(50)
 );
-comment on column TB_BOARD_GEN.board_no is '°Ô½Ã±Û ¹øÈ£';
-comment on column TB_BOARD_GEN.board_title is '°Ô½Ã±Û Á¦¸ñ';
-comment on column TB_BOARD_GEN.board_content is '°Ô½Ã±Û ³»¿ë';
-comment on column TB_BOARD_GEN.board_date is '°Ô½Ã±Û ÀÛ¼º ³¯Â¥';
-comment on column TB_BOARD_GEN.board_count is '°Ô½Ã±Û Á¶È¸¼ö';
-comment on column TB_BOARD_GEN.board_like is '°Ô½Ã±Û ÁÁ¾Æ¿ä ¼ö';
-comment on column TB_BOARD_GEN.board_orifile is '°Ô½Ã±Û ¿øº» ÆÄÀÏ';
-comment on column TB_BOARD_GEN.board_refile is '°Ô½Ã±Û º¯È¯ ÆÄÀÏ';
-comment on column TB_BOARD_GEN.appid is '°ÔÀÓ ID';
-comment on column TB_BOARD_GEN.user_id is '»ç¿ëÀÚ ID';
+comment on column TB_BOARD_GEN.board_no is 'ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_BOARD_GEN.board_title is 'ê²Œì‹œê¸€ ì œëª©';
+comment on column TB_BOARD_GEN.board_content is 'ê²Œì‹œê¸€ ë‚´ìš©';
+comment on column TB_BOARD_GEN.board_date is 'ê²Œì‹œê¸€ ì‘ì„± ë‚ ì§œ';
+comment on column TB_BOARD_GEN.board_count is 'ê²Œì‹œê¸€ ì¡°íšŒìˆ˜';
+comment on column TB_BOARD_GEN.board_like is 'ê²Œì‹œê¸€ ì¢‹ì•„ìš” ìˆ˜';
+comment on column TB_BOARD_GEN.board_orifile is 'ê²Œì‹œê¸€ ì›ë³¸ íŒŒì¼';
+comment on column TB_BOARD_GEN.board_refile is 'ê²Œì‹œê¸€ ë³€í™˜ íŒŒì¼';
+comment on column TB_BOARD_GEN.appid is 'ê²Œì„ ID';
+comment on column TB_BOARD_GEN.user_id is 'ì‚¬ìš©ì ID';
+comment on column TB_BOARD_GEN.board_notice is 'ê³µì§€ê¸€ ì œëª©';
 
 
 
@@ -283,8 +285,8 @@ CREATE TABLE TB_HOTLIST (
                             appid	Number		NOT NULL
 );
 
-comment on column TB_HOTLIST.user_id is '»ç¿ëÀÚ ID';
-comment on column TB_HOTLIST.appid is '°ÔÀÓ ID';
+comment on column TB_HOTLIST.user_id is 'ì‚¬ìš©ì ID';
+comment on column TB_HOTLIST.appid is 'ê²Œì„ ID';
 
 DROP TABLE TB_USER_LIKE cascade constraints;
 
@@ -294,9 +296,9 @@ CREATE TABLE TB_USER_LIKE (
                               board_click_day	DATE		NOT NULL
 );
 
-comment on column TB_USER_LIKE.user_id is '»ç¿ëÀÚ ¾ÆÀÌµğ';
-comment on column TB_USER_LIKE.board_no is '°Ô½Ã±Û ¹øÈ£';
-comment on column TB_USER_LIKE.board_click_day is '°Ô½Ã±Û ÁÁ¾Æ¿ä¸¦ ´©¸¥ ³¯Â¥';
+comment on column TB_USER_LIKE.user_id is 'ì‚¬ìš©ì ì•„ì´ë””';
+comment on column TB_USER_LIKE.board_no is 'ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_USER_LIKE.board_click_day is 'ê²Œì‹œê¸€ ì¢‹ì•„ìš”ë¥¼ ëˆ„ë¥¸ ë‚ ì§œ';
 
 DROP TABLE TB_COMMENT cascade constraints;
 
@@ -310,13 +312,13 @@ CREATE TABLE TB_COMMENT (
                             user_id	VARCHAR2(20)		NOT NULL
 );
 
-comment on column TB_COMMENT.com_no is '´ñ±Û ¹øÈ£';
-comment on column TB_COMMENT.com_contents is '´ñ±Û ³»¿ë';
-comment on column TB_COMMENT.com_date is '´ñ±Û ÀÛ¼º ³¯Â¥';
-comment on column TB_COMMENT.com_lev is '´ñ±Û ·¹º§';
-comment on column TB_COMMENT.com_no2 is '´ë´ñ±Û ¹øÈ£';
-comment on column TB_COMMENT.board_no is '°Ô½Ã±Û ¹øÈ£';
-comment on column TB_COMMENT.user_id is 'ÀÛ¼ºÀÚ ¾ÆÀÌµğ';
+comment on column TB_COMMENT.com_no is 'ëŒ“ê¸€ ë²ˆí˜¸';
+comment on column TB_COMMENT.com_contents is 'ëŒ“ê¸€ ë‚´ìš©';
+comment on column TB_COMMENT.com_date is 'ëŒ“ê¸€ ì‘ì„± ë‚ ì§œ';
+comment on column TB_COMMENT.com_lev is 'ëŒ“ê¸€ ë ˆë²¨';
+comment on column TB_COMMENT.com_no2 is 'ëŒ€ëŒ“ê¸€ ë²ˆí˜¸';
+comment on column TB_COMMENT.board_no is 'ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_COMMENT.user_id is 'ì‘ì„±ì ì•„ì´ë””';
 
 DROP TABLE TB_REPORT cascade constraints;
 
@@ -327,11 +329,11 @@ CREATE TABLE TB_REPORT (
                            report_date	DATE		NOT NULL,
                            user_id2  VARCHAR2(20)		NOT NULL
 );
-comment on column TB_REPORT.board_no is '½Å°íÇÑ °Ô½Ã±Û ¹øÈ£';
-comment on column TB_REPORT.user_id is '½Å°íÇÑ »ç¿ëÀÚ ¾ÆÀÌµğ';
-comment on column TB_REPORT.report_res is '½Å°í »çÀ¯';
-comment on column TB_REPORT.report_date is '½Å°í ³¯Â¥';
-comment on column TB_REPORT.user_id2 is '°Ô½Ã±Û ÀÛ¼ºÀÚ ¾ÆÀÌµğ';
+comment on column TB_REPORT.board_no is 'ì‹ ê³ í•œ ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_REPORT.user_id is 'ì‹ ê³ í•œ ì‚¬ìš©ì ì•„ì´ë””';
+comment on column TB_REPORT.report_res is 'ì‹ ê³  ì‚¬ìœ ';
+comment on column TB_REPORT.report_date is 'ì‹ ê³  ë‚ ì§œ';
+comment on column TB_REPORT.user_id2 is 'ê²Œì‹œê¸€ ì‘ì„±ì ì•„ì´ë””';
 
 DROP TABLE TB_COMMUNITY_IMG cascade constraints;
 
@@ -342,9 +344,9 @@ CREATE TABLE TB_COMMUNITY_IMG (
                                   user_id Varchar2(20) not null
 );
 
-comment on column TB_COMMUNITY_IMG.c_imgOriginal is '¹êµå ÀÌ¹ÌÁö ¿øº»';
-comment on column TB_COMMUNITY_IMG.c_imgReplace is '¹êµå ÀÌ¹ÌÁö ¹Ù²ïÀÌ¸§';
-comment on column TB_COMMUNITY_IMG.user_id is 'ÀÌ¹ÌÁö¸¦ µî·ÏÇÑ »ç¿ëÀÚ ¾ÆÀÌµğ';
+comment on column TB_COMMUNITY_IMG.c_imgOriginal is 'ë°´ë“œ ì´ë¯¸ì§€ ì›ë³¸';
+comment on column TB_COMMUNITY_IMG.c_imgReplace is 'ë°´ë“œ ì´ë¯¸ì§€ ë°”ë€ì´ë¦„';
+comment on column TB_COMMUNITY_IMG.user_id is 'ì´ë¯¸ì§€ë¥¼ ë“±ë¡í•œ ì‚¬ìš©ì ì•„ì´ë””';
 
 DROP TABLE TB_BOARD_TAR cascade constraints;
 
@@ -353,23 +355,25 @@ CREATE TABLE TB_BOARD_TAR (
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
-                              board_count	NUMBER		NOT NULL,
+                              board_count	NUMBER		,
                               appid	NUMBER		NOT NULL,
-                              board_like	NUMBER		NOT NULL,
-                              board_orifile	VARCHAR2(500)		NOT NULL,
+                              board_like	NUMBER		,
+                              board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
-                              user_id	VARCHAR2(20)		NOT NULL
+                              user_id	VARCHAR2(20)		NOT NULL,
+					board_notice VARCHAR2(50)
 );
 
-comment on column TB_BOARD_TAR.board_no is '°Ô½Ã±Û ¹øÈ£';
-comment on column TB_BOARD_TAR.board_title is '°Ô½Ã±Û Á¦¸ñ';
-comment on column TB_BOARD_TAR.board_content is '°Ô½Ã±Û ³»¿ë';
-comment on column TB_BOARD_TAR.board_date is '°Ô½Ã±Û ÀÛ¼º ³¯Â¥';
-comment on column TB_BOARD_TAR.board_count is 'Á¶È¸¼ö';
-comment on column TB_BOARD_TAR.board_like is 'ÁÁ¾Æ¿ä ¼ö';
-comment on column TB_BOARD_TAR.board_orifile is '¿øº» ÆÄÀÏ¸í';
-comment on column TB_BOARD_TAR.board_refile is 'º¯È¯µÈ ÆÄÀÏ¸í';
-comment on column TB_BOARD_TAR.user_id is '°Ô½Ã±Û ÀÛ¼ºÀÚ ¾ÆÀÌµğ';
+comment on column TB_BOARD_TAR.board_no is 'ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_BOARD_TAR.board_title is 'ê²Œì‹œê¸€ ì œëª©';
+comment on column TB_BOARD_TAR.board_content is 'ê²Œì‹œê¸€ ë‚´ìš©';
+comment on column TB_BOARD_TAR.board_date is 'ê²Œì‹œê¸€ ì‘ì„± ë‚ ì§œ';
+comment on column TB_BOARD_TAR.board_count is 'ì¡°íšŒìˆ˜';
+comment on column TB_BOARD_TAR.board_like is 'ì¢‹ì•„ìš” ìˆ˜';
+comment on column TB_BOARD_TAR.board_orifile is 'ì›ë³¸ íŒŒì¼ëª…';
+comment on column TB_BOARD_TAR.board_refile is 'ë³€í™˜ëœ íŒŒì¼ëª…';
+comment on column TB_BOARD_TAR.user_id is 'ê²Œì‹œê¸€ ì‘ì„±ì ì•„ì´ë””';
+comment on column TB_BOARD_TAR.board_notice is 'ê³µì§€ê¸€ ì œëª©';
 
 DROP TABLE TB_BOARD_QNA cascade constraints;
 
@@ -378,23 +382,26 @@ CREATE TABLE TB_BOARD_QNA (
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
-                              board_count	NUMBER		NOT NULL,
-                              appid	NUMBER		NOT NULL,
-                              board_like	NUMBER		NOT NULL,
-                              board_orifile	VARCHAR2(500)		NOT NULL,
+                              board_count	NUMBER		,
+                              appid	NUMBER		,
+                              board_like	NUMBER		,
+                              board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
-                              user_id	VARCHAR2(20)		NOT NULL
+                              user_id	VARCHAR2(20)		NOT NULL,
+					board_notice VARCHAR2(50)
 );
 
-comment on column TB_BOARD_QNA.board_no is '°Ô½Ã±Û ¹øÈ£';
-comment on column TB_BOARD_QNA.board_title is '°Ô½Ã±Û Á¦¸ñ';
-comment on column TB_BOARD_QNA.board_content is '°Ô½Ã±Û ³»¿ë';
-comment on column TB_BOARD_QNA.board_date is '°Ô½Ã±Û ÀÛ¼º ³¯Â¥';
-comment on column TB_BOARD_QNA.board_count is 'Á¶È¸¼ö';
-comment on column TB_BOARD_QNA.board_like is 'ÁÁ¾Æ¿ä ¼ö';
-comment on column TB_BOARD_QNA.board_orifile is '¿øº» ÆÄÀÏ¸í';
-comment on column TB_BOARD_QNA.board_refile is 'º¯È¯µÈ ÆÄÀÏ¸í';
-comment on column TB_BOARD_QNA.user_id is '°Ô½Ã±Û ÀÛ¼ºÀÚ ¾ÆÀÌµğ';
+comment on column TB_BOARD_QNA.board_no is 'ê²Œì‹œê¸€ ë²ˆí˜¸';
+comment on column TB_BOARD_QNA.board_title is 'ê²Œì‹œê¸€ ì œëª©';
+comment on column TB_BOARD_QNA.board_content is 'ê²Œì‹œê¸€ ë‚´ìš©';
+comment on column TB_BOARD_QNA.board_date is 'ê²Œì‹œê¸€ ì‘ì„± ë‚ ì§œ';
+comment on column TB_BOARD_QNA.board_count is 'ì¡°íšŒìˆ˜';
+comment on column TB_BOARD_QNA.appid is 'ê²Œì„ ID';
+comment on column TB_BOARD_QNA.board_like is 'ì¢‹ì•„ìš” ìˆ˜';
+comment on column TB_BOARD_QNA.board_orifile is 'ì›ë³¸ íŒŒì¼ëª…';
+comment on column TB_BOARD_QNA.board_refile is 'ë³€í™˜ëœ íŒŒì¼ëª…';
+comment on column TB_BOARD_QNA.user_id is 'ê²Œì‹œê¸€ ì‘ì„±ì ì•„ì´ë””';
+comment on column TB_BOARD_QNA.board_notice is 'ê³µì§€ê¸€ ì œëª©';
 
 DROP TABLE TB_RECORD cascade constraints;
 
@@ -402,8 +409,8 @@ CREATE TABLE TB_RECORD (
                            login_date	date		NOT NULL,
                            user_id	VARCHAR2(20)		NOT NULL
 );
-comment on column TB_RECORD.user_id IS '»ç¿ëÀÚ ½Äº°ÀÚ';
-comment on column TB_RECORD.login_date IS '·Î±×ÀÎ ³¯Â¥';
+comment on column TB_RECORD.user_id IS 'ì‚¬ìš©ì ì‹ë³„ì';
+comment on column TB_RECORD.login_date IS 'ë¡œê·¸ì¸ ë‚ ì§œ';
 
 ALTER TABLE TB_USER
     ADD CONSTRAINT PK_TB_USER
@@ -625,22 +632,22 @@ ALTER TABLE TB_COMMUNITY_VOTE
 
 
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('john123', 'john123', 'JohnDoe', 'John Doe', '123-456-7890', 'john.doe@example.com', TO_DATE('1990-01-01', 'YYYY-MM-DD'), '»õ½Ï', 'run', 0, SYSDATE, '±âº»', NULL);
+    ('john123', 'john123', 'JohnDoe', 'John Doe', '123-456-7890', 'john.doe@example.com', TO_DATE('1990-01-01', 'YYYY-MM-DD'), 'ìƒˆì‹¹', 'run', 0, SYSDATE, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('jane456', 'jane456', 'JaneDoe', 'Jane Doe', '987-654-3210', 'jane.doe@example.com', TO_DATE('1992-05-21', 'YYYY-MM-DD'), '½Ï', 'run', 500, SYSDATE-1, '±âº»', NULL);
+    ('jane456', 'jane456', 'JaneDoe', 'Jane Doe', '987-654-3210', 'jane.doe@example.com', TO_DATE('1992-05-21', 'YYYY-MM-DD'), 'ì‹¹', 'run', 500, SYSDATE-1, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('sam789', 'sam789', 'SamSmith', 'Sam Smith', '555-555-5555', 'sam.smith@example.com', TO_DATE('1985-12-15', 'YYYY-MM-DD'), '½Ï', 'stop', 1000, SYSDATE-2, '±âº»', NULL);
+    ('sam789', 'sam789', 'SamSmith', 'Sam Smith', '555-555-5555', 'sam.smith@example.com', TO_DATE('1985-12-15', 'YYYY-MM-DD'), 'ì‹¹', 'stop', 1000, SYSDATE-2, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('amy321', 'amy321', 'AmyBrown', 'Amy Brown', '111-111-1111', 'amy.brown@example.com', TO_DATE('1988-08-08', 'YYYY-MM-DD'), 'ÁÙ±â', 'run', 250, SYSDATE-3, '±âº»', NULL);
+    ('amy321', 'amy321', 'AmyBrown', 'Amy Brown', '111-111-1111', 'amy.brown@example.com', TO_DATE('1988-08-08', 'YYYY-MM-DD'), 'ì¤„ê¸°', 'run', 250, SYSDATE-3, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('peter444', 'peter444', 'PeterGreen', 'Peter Green', '222-222-2222', 'peter.green@example.com', TO_DATE('1995-03-25', 'YYYY-MM-DD'), 'ÁÙ±â', 'pause', 750, SYSDATE-4, '±âº»', NULL);
+    ('peter444', 'peter444', 'PeterGreen', 'Peter Green', '222-222-2222', 'peter.green@example.com', TO_DATE('1995-03-25', 'YYYY-MM-DD'), 'ì¤„ê¸°', 'pause', 750, SYSDATE-4, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('lisa777', 'lisa777', 'LisaBlack', 'Lisa Black', '333-333-3333', 'lisa.black@example.com', TO_DATE('1999-11-11', 'YYYY-MM-DD'), '³ª¹«', 'run', 1500, SYSDATE-5, '±âº»', NULL);
+    ('lisa777', 'lisa777', 'LisaBlack', 'Lisa Black', '333-333-3333', 'lisa.black@example.com', TO_DATE('1999-11-11', 'YYYY-MM-DD'), 'ë‚˜ë¬´', 'run', 1500, SYSDATE-5, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('bob555', 'bob555', 'BobWhite', 'Bob White', '444-444-4444', 'bob.white@example.com', TO_DATE('1993-02-28', 'YYYY-MM-DD'), '³ª¹«', 'run', 100, SYSDATE-6, '±âº»', NULL);
+    ('bob555', 'bob555', 'BobWhite', 'Bob White', '444-444-4444', 'bob.white@example.com', TO_DATE('1993-02-28', 'YYYY-MM-DD'), 'ë‚˜ë¬´', 'run', 100, SYSDATE-6, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER) VALUES
-    ('emily888', 'emily888', 'EmilyGray', 'Emily Gray', '666-666-6666', 'emily.gray@example.com', TO_DATE('1987-07-07', 'YYYY-MM-DD'), '³ª¹«', 'pause', 300, SYSDATE-7, '±âº»', NULL);
+    ('emily888', 'emily888', 'EmilyGray', 'Emily Gray', '666-666-6666', 'emily.gray@example.com', TO_DATE('1987-07-07', 'YYYY-MM-DD'), 'ë‚˜ë¬´', 'pause', 300, SYSDATE-7, 'ê¸°ë³¸', NULL);
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
-    ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '¸¶½ºÅÍ', 'run', 2000, SYSDATE-8, '±âº»', NULL, 'Y');
+    ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), 'ë§ˆìŠ¤í„°', 'run', 2000, SYSDATE-8, 'ê¸°ë³¸', NULL, 'Y');
 
 commit;
