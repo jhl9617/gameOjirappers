@@ -24,17 +24,22 @@
 		<typeAlias type="org.team404.gameOjirap.community.cGroup.model.vo.CReport" alias="CReport"/>
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.CSchedule" alias="CSchedule"/>
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.CVote" alias="CVote"/>
+		<typeAlias type="org.team404.gameOjirap.user.model.vo.User" alias="User" />
+		<typeAlias type="org.team404.gameOjirap.user.model.vo.MyPage" alias="MyPage" />
+		<typeAlias type="org.team404.gameOjirap.user.model.vo.HotList" alias="HotList" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
 	<mappers>
 
 
+		<mapper resource="mappers/user-mapper.xml" />
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/game-mapper.xml"/>
 		<mapper resource="mappers/cboard-mapper.xml"/>
 		<mapper resource="mappers/cGroup-mapper.xml"/>
 		<mapper resource="mappers/cSchedule-mapper.xml"/>
+		
 
 	</mappers>
 </configuration>

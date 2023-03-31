@@ -7,104 +7,8 @@
 <head>
 <meta charset="UTF-8">
 <title>enrollPage</title>
-<style type="text/css">
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/enrollCss.css" />
 
-div {
-    /* 바로 상위 태그인 body를 기준으로 맞춰주게끔 */
-    /* position의 absolute라는것이, 설정하게 되면
-    바로 직계부모 태그의 영향아래 놓이게 된다는 말이다.
-    더불어서 네모를 영역으로 봤을때 왼쪽 상단 꼭지점을
-    기준으로 움직이게 된다. */
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-    transform: translate(-50%, -50%);
-    width: 670px;
-    height: 1300px;
-    background: #FFFFFF;
-    border: 1px solid #AACDFF;
-    border-radius: 20px;
-	box-shadow: 7px 7px 39px rgb(0,0,0,  0.5);	 /* 박스 그림자 지정 */
-    /* 이것의 의미는 타겟팅된 영역에 대해 
-    지정된 만큼 움직여주는 거라고 한다. */
-    /* justify-content: space-evenly;
-    align-content: column; */
-
-    margin: 0px;
-    padding: 100px;
-    box-sizing: border-box;
-    display: flex;
-    flex-direction: column;
-    flex-wrap: nowrap;
-}
-
-h2 {
-    width: 466px;
-    height: 94px;
-    left: 725px;
-    top: 50px;
-
-    font-family: 'Noto Sans CJK KR';
-    font-style: normal;
-    font-weight: 700;
-    font-size: 30px;
-
-    color: Midnightblue;
-    justify-content: space-evenly;
-}
-
-
-button {
-    width: 400px;
-    height: 50px;
-    left: 725px;
-    top: 875px;
-    background-color: #FFFFFF;
-    color: royalblue;
-    border-radius: 8px;
-    border: #0068FF solid 1px;
-}
-
-input {
-    padding: 0px;
-    border: none;
-    border-bottom: 1px solid #CFCFCF;
-    width: 466px;
-    height: 30px;
-}
-
-label {
-    color: lightgrey;
-}
-
-.radio {
-    align-items: center;
-    font-size: 20pt;
-    width: 15px;
-    height: 15px;
-}
-
-
-
-joinForm{width: 450px;margin: 0 auto;}
-ul.join_box{border: 1px solid #ddd;background-color: #fff;}
-.checkBox,.checkBox>ul{position: relative;}
-.checkBox>ul>li{float: left;}
-.checkBox>ul>li:first-child{width: 85%;padding: 15px; font-weight: 600;color: #888;}
-.checkBox>ul>li:nth-child(2){position: absolute; top: 50%; right: 165px; margin-top: -12px;}
-.checkBox textarea{width: 96%; height: 90px; margin: 0 2%; background-color: #f7f7f7; color: #888; border: none;}
-.footBtwrap{margin-top: 15px;}
-.footBtwrap>li{float: left;width: 50%;height: 60px;}
-.footBtwrap>li>button{display: block; width: 100%; height: 100%; font-size: 20px; text-align: center; line-height: 60px;}
-.fpmgBt1{background-color: #fff;color:#888}
-.fpmgBt2{background-color: lightsalmon;color: #fff}
-form{margin: 0;padding: 0;box-sizing: border-box}
-body{background-color: #f7f7f7;}
-ul>li{list-style: none}
-a{text-decoration: none;}
-.clearfix::after{content: "";display: block;clear: both;}
-</style>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
@@ -154,7 +58,6 @@ a{text-decoration: none;}
 	
 	
 	
-	
 	//닉네임 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckNickname() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({
@@ -179,8 +82,6 @@ a{text-decoration: none;}
 		return false; 		
 	}// CheckId close
 	
-	
-	
 </script>
 </head>
 
@@ -198,8 +99,8 @@ a{text-decoration: none;}
 					<br><br>
 				</label> 
 				
-				<label for="pwd1">* 비밀번호<br> 
-					<input class="pw" id="pwd1" type="password" required><br>
+				<label for="pwd">* 비밀번호<br> 
+					<input class="pw" id="pwd" type="password" required><br>
 					<br><br>
 				</label> 
 				<label for="pwd2">* 비밀번호 확인<br> 
@@ -220,7 +121,7 @@ a{text-decoration: none;}
 				
 				<label for="phone">* 전화번호(-제외하고 입력)<br> 
 					<input type="tel" id="user_phone" required><br>
-					<br> <!-- placeholder="-빼고 입력" -->
+				<br><br>
 				</label> 
 				
 				<label for="email">* 이메일<br> 
@@ -240,11 +141,15 @@ a{text-decoration: none;}
 						<option value="3">당신의 최고 학력은 무엇입니까?</option>
 						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option>
 						<option value="5">당신이 태어난 도시는 어디입니까?</option>
-						<input type="text" id="onfirm_answer" placeholder="답변 입력" required ><br>
-						<br><br>
 					</select>
+						<input type="text" id="onfirm_answer" placeholder="답변 입력" required > <br>
 				</label>
 				<br>
+			</div>
+		</div>
+	</form>
+				
+<%-- 				
 				<form action="" id="joinForm">
 					<ul class="join_box">
 						<li class="checkBox check01">
@@ -313,10 +218,8 @@ a{text-decoration: none;}
 			    			 </textarea>
 						</li>
 						<button>가입하기</button>
-			</div>
-		</div>
-	</form>
 
+ --%> 
 
 
 	<br><br><br><br><br><br><br><br><br>

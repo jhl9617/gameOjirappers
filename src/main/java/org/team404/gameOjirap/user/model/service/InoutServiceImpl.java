@@ -18,17 +18,20 @@ public class InoutServiceImpl implements InoutService{
 	public User loginMethod(User user) {
 		return inoutDao.loginMethod(user);
 	}
-
+	
 	@Override
 	public User selectUser(String user_id) {
 		return inoutDao.selectUser(user_id);
 	}
 
 	@Override
-	public ArrayList<User> selectList() {
-		return inoutDao.selectList();
+	public ArrayList<User> selectUserList() {
+		return inoutDao.selectUserList();
 	}
 
+	
+	
+	
 	@Override
 	public int userDeleteMethod(String user_id) {
 		return inoutDao.userDeleteMethod(user_id);

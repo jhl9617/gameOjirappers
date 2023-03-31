@@ -1,18 +1,56 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 		 pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<c:set var="currentPage" value="${requestScope.currentPage }" />
-
-
 <!DOCTYPE HTML>
 
 <html>
 <head>
+
 <title>겜지라퍼</title>
+
 <meta charset="utf-8" />
+<title>GameOjirap</title>
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript">
+$(function(){
+$.ajax({
+    url: "gametop5.do",
+    type: "post",
+    dataType: "json",
+    success: function(data){
+       console.log("success : " + data);    // Object 로 출력
+       
+       // 받은 Object => string 으로 바꿈
+       var jsonStr = JSON.stringify(data);
+       // sting => json 객체로 바꿈
+       var json = JSON.parse(jsonStr);
+       
+       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+       var gvalues = $('#toplist').html();
+       for(var i in json.list){
+
+    	  gvalues += "<tr><td>" + json.list[i].name
+//                + "</td><td><a href='bdetail.do?board_num="
+		+"</td><td>"
+                + json.list[i].headerimg +"</td><td>"
+                + decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")
+                + "</a></td><td>" + json.list[i].releasedate
+                + "</td></tr>";
+
+       }   // for in 
+       
+       $('#toplist').html(gvalues);
+    	},
+    	error: function(jqXHR, textStatus, errorThrown){
+       	console.log("gametop5.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+    	}
+ 	});
+});
+
+</script>
+
 </head>
 	<!-- Scripts -->
 <%--	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.6.3.min.js">"></script>
@@ -22,6 +60,12 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/main.js">"></script>
 --%>
 <body class="is-preload">
+<c:if test="${!empty message}">
+   <script>
+      alert("${message}");
+      location.href = "main.do";
+   </script>
+</c:if>
 <!-- Wrapper -->
 <div id="wrapper">
 
@@ -47,7 +91,22 @@
 				<img src="<c:url value="/resources/images/main1.webp"/>" alt="" />
 				</span>
 			</section>
-
+			
+			<!-- 인기게임 출력 : ajax-->
+			<section>
+				<div style="float:left; border:1px solid navy; padding:5px; margin:5px">
+		<h4>인기 게임</h4>
+		<table id="toplist" border="1" cellspacing="0">
+			<tr>
+				<th>이름</th>
+				<th>이미지</th>
+				<th>축약 내용</th>
+				<th>출시일</th>
+			</tr>
+		</table>
+	</div>
+			
+			</section>
 
 
 			<!-- Section -->
@@ -72,70 +131,10 @@
 							<li><a href="#" class="button">More</a></li>
 						</ul>
 					</article>
-				</div>					
-
-					<div style="text-align: center;"><!-- 페이지 표시 영역 -->
-							<!-- 1페이지로 이동하는 버튼 -->
-							<c:if test="${ currentPage eq 1 }">
-								☜☜ &nbsp;
-							</c:if>
-							<c:if test="${ currentPage > 1 }">
-								<c:url var="p1" value="">
-									<c:param name="page" value="1" />
-								</c:url>
-								<a href="${ p1 }"> ☜☜ </a> &nbsp;
-							</c:if>
-							
-							<!-- 이전 페이지그룹으로 이동하는 버튼 -->
-						   <c:if test="${ !((currentPage - 10) >= 1) }">
-						      ☜ &nbsp;
-						   </c:if>
-						   <c:if test="${ (currentPage - 10) >= 1 }">
-						      <c:url var="pbefore" value="">
-						         <c:param name="page" value="${ startPage - 1 }" />
-						      </c:url>
-						      <a href="${ pbefore }">☜</a> &nbsp;
-						   </c:if>
-							<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-							
-							<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
-								<c:if test="${ p eq currentPage }">
-									<font size="4" color="red">[${ p }]</font>
-								</c:if>
-								<c:if test="${ p ne currentPage }">
-									<c:url var="pp" value="">
-									<c:param name="page" value="${ p }" />
-								</c:url>
-									<a href="${ pp }">${ p }</a>
-								</c:if>
-							</c:forEach>
-							
-							<!-- 다음 페이지그룹으로 이동하는 버튼 -->
-						   <c:if test="${ !((startPage + 10) <= maxPage) }">
-						      ☞ &nbsp;
-						   </c:if>
-						   <c:if test="${ (startPage + 10) <= maxPage }">
-						      <c:url var="pafter" value="">
-						         <c:param name="page" value="${ startPage + 10 }" />
-						      </c:url>
-						      <a href="${ pafter }">☞</a> &nbsp;
-						   </c:if>
-							
-							<!-- 끝 페이지로 이동하는 버튼 -->
-							<c:if test="${ currentPage eq maxPage }">
-								☞☞ &nbsp;
-							</c:if>
-							<c:if test="${ currentPage < maxPage }">
-								<c:url var="pmax" value="">
-									<c:param name="page" value="${maxPage}" />
-								</c:url>
-								<a href="${ pmax }"> ☞☞ </a> &nbsp;
-							</c:if>
-						</div>
-					
-					
-
-
+				</div>
+				
+				<!-- 페이징 처리 -->
+				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
 			<!-- Section -->
 			<section>
@@ -162,63 +161,8 @@
 					</article>
 					
 				</div>
-					<div style="text-align: center;"><!-- 페이지 표시 영역 -->
-							<!-- 1페이지로 이동하는 버튼 -->
-							<c:if test="${ currentPage eq 1 }">
-								☜☜ &nbsp;
-							</c:if>
-							<c:if test="${ currentPage > 1 }">
-								<c:url var="p1" value="">
-									<c:param name="page" value="1" />
-								</c:url>
-								<a href="${ p1 }"> ☜☜ </a> &nbsp;
-							</c:if>
-						<!-- 이전 페이지그룹으로 이동하는 버튼 -->
-						   <c:if test="${ !((currentPage - 10) >= 1) }">
-						      ☜ &nbsp;
-						   </c:if>
-						   <c:if test="${ (currentPage - 10) >= 1 }">
-						      <c:url var="pbefore" value="">
-						         <c:param name="page" value="${ startPage - 1 }" />
-						      </c:url>
-						      <a href="${ pbefore }">☜</a> &nbsp;
-						   </c:if>
-							<!-- 현재 페이지가 속한 페이지 그룹 페이지 숫자 출력 -->
-							
-							<c:forEach var="p" begin="${ startPage }" end="${ endPage }" step="1">
-								<c:if test="${ p eq currentPage }">
-									<font size="4" color="red">[${ p }]</font>
-								</c:if>
-								<c:if test="${ p ne currentPage }">
-									<c:url var="pp" value="">
-									<c:param name="page" value="${ p }" />
-								</c:url>
-									<a href="${ pp }">${ p }</a>
-								</c:if>
-							</c:forEach>
-							
-							<!-- 다음 페이지그룹으로 이동하는 버튼 -->
-						   <c:if test="${ !((startPage + 10) <= maxPage) }">
-						      ☞ &nbsp;
-						   </c:if>
-						   <c:if test="${ (startPage + 10) <= maxPage }">
-						      <c:url var="pafter" value="">
-						         <c:param name="page" value="${ startPage + 10 }" />
-						      </c:url>
-						      <a href="${ pafter }">☞</a> &nbsp;
-						   </c:if>
-							
-							<!-- 끝 페이지로 이동하는 버튼 -->
-							<c:if test="${ currentPage eq maxPage }">
-								☞☞ &nbsp;
-							</c:if>
-							<c:if test="${ currentPage < maxPage }">
-								<c:url var="pmax" value="">
-									<c:param name="page" value="${maxPage}" />
-								</c:url>
-								<a href="${ pmax }"> ☞☞ </a> &nbsp;
-							</c:if>
-						</div>
+					<!-- 페이징 처리 -->
+				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
 
 	
