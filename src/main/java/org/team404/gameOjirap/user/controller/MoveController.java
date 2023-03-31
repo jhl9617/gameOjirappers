@@ -56,6 +56,12 @@ public class MoveController {
 		}//if
 	}//method close
 	
+	//회원활동관리 페이지 이동 처리용 ---------------------------------------------------------------------------------------	
+	@RequestMapping(value="uban.do", method= {RequestMethod.POST} )
+	public String moveUserBan()  {
+		return "user/userBan";		
+	}//method close
+	
 	
 }//class close
 
