@@ -16,7 +16,7 @@ public class BoardDao {
 	private SqlSessionTemplate session;
 	
 	public ArrayList<BoardGen> selectList(Paging page) {
-		List<BoardGen> list = session.selectList("boardMapper.selectList", page);
+		List<BoardGen> list = session.selectList("boardMapper.selectList");
 		return (ArrayList<BoardGen>)list;
 	}
 

@@ -85,7 +85,7 @@ public class GameInfoController {
 
 	} //insertGame
 
-// ------------------------------------------------------------------------------------------	
+
 	
 	@RequestMapping(value = "updateGameInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody

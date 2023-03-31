@@ -4,30 +4,31 @@ import java.io.Serializable;
 
 public class Game implements Serializable {
     private static final long serialVersionUID = 6963064484999333664L;
-    private String appid;
-    private String name;
-    private String developer;
-    private String publisher;
-    private String initialprice;
-    private String finalprice;
-    private int discountrate;
-    private String description;
-    private String platform;
-    private int meta;
-    private String category;
-    private String genre;
-    private String headerimg;
-    private String movie;
-    private String releasedate;
-    private String achievement;
-    private int positive;
-    private int ccu;
-    private String short_description;
-    private String supported_languages;
-    private String pcminimum;
-    private String pcrecommended;
+
+    private String appid;					//게임 ID
+    private String name;					//게임 이름
+    private String developer;				//게임 개발자
+    private String publisher;				//게임 배급사
+    private String initialprice;			//게임 초기가격
+    private String finalprice;				//게임 최종가격
+    private int discountrate;				//할인율
+    private String description;				//게임 설명
+    private String platform;				//게임 플랫폼
+    private int meta;						//메타크리틱 게임 평점
+    private String category;				//카테고리 ID
+    private String genre;					//게임 장르
+    private String headerimg;				//게임 이미지
+    private String movie;					//게임 동영상
+    private String releasedate;				//게임 출시일
+    private String achievement;				//게임 도전과제
+    private int positive;					//게임 긍정평점
+    private int ccu;						//전날 최고 동시 접속사
+    private String short_description;		//게임설명 축약
+    private String supported_languages;		//지원하는 언어
+    private String pcminimum;				//게임컴퓨터 환경 최소 사양
+    private String pcrecommended;			//적정사양
     
-    
+
 
     public Game() {
     }
@@ -161,11 +162,12 @@ public class Game implements Serializable {
         this.genre = genre;
     }
 
-    public String getheaderimgs() {
+    public String getHeaderimgs() {
         return headerimg;
     }
 
-    public void setheaderimgs(String headerimg) {
+    public void setHeaderimgs(String headerimg) {
+
         this.headerimg = headerimg;
     }
 

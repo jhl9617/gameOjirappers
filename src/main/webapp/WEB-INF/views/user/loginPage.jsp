@@ -6,87 +6,60 @@
 <head>
 <meta charset="UTF-8">
 <title>loginPage</title>
-<style type="text/css">
-
-p {text-align: center; }
-
-
-h1 {
-	font-size: 48pt;
-	color: navy;
-}
-
-
-div {
-	margin: 0 auto;
-	width: 400px;
-	height: 170px;
-	border-radius: 8px;	
-    text-align: center;
-	position: relative;
-	border: 2px solid navy;
-	box-shadow: 1px 1px 5px rgb(0,0,0,  0.5);	 /* 박스 그림자 지정 */
-}
-
-div form {
-	font-size: 14pt;
-	color: navy;
-	font-weight: bold;
-	margin: 10px;
-	padding: 10px;
-	
-	postion: relative;
-		
-}
-
-div#loginForm form input.pos {	
-	width: 250px;
-	margin-top: 8px; 
-	height: 25px;
-	position: relative;
-	border-radius: 8px;	
-}
-
-div#loginForm form input[type=submit] {
-	position: relative;
- 	margin-top: 8px; 
- 	border-radius: 8px;	
-	
-	width: 350px;
-	height: 40px;
-	background: Lavenderblush;
-	color: Indigo;
-	font-size: 15pt;
-	font-weight: bold;
-	
-}
-</style>
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/loginCss.css" />
 </head>
 
 
 <body>
-<br>
-<br>
-<br>
-
-<p>
-<img src="resources/images/gamejirapper1.png" alt="gamejirapperImage">
-</p>
-
-
-<div id="loginForm">
-	<form action="login.do" method="post">
-		<label>아이디 : <input type="text" name="userid" class="pos"></label>
-		<br>
-		<label>암호 : <input type="password" name="userpwd" class="pos"></label>
-		<br>
-		<input type="submit" value="로그인">
-	</form>
+<div class="background-wrap">
+	<div class="background"></div>
 </div>
 
+<form id="User_Info">
+	<input type="hidden" id="login_id" />
+	<input type="hidden" id="login_pwd" />
+</form>
 
-
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<form id="accesspanel" method="get">
+	<h1 id="litheader">GAMEJIRAPP</h1>
+	<div class="inset">
+			<p>
+				<input type="text" name="login" id="user_id" placeholder="ID">
+			</p>
+			<p>
+				<input type="password" name="login" id="user_pwd"	placeholder="Password">
+			</p>
+	</div>
+	<p class="p-container">
+<!-- 		<input type="submit" name="Login" id="go" value="로그인"> -->
+		<input type="button" name="Login" id="go" onclick="location.href = 'login.do'" value="로그인">
+		<input type="button" onclick="location.href = 'enrollPage.do'"  value="회원가입">
+	</p>
+</form>
 
 </body>
 </html>
+
+<!-- Jquery 포함 코드 -->
+<script src="https://code.jquery.com/jquery-3.6.0.slim.js" integrity="sha256-HwWONEZrpuoh951cQD1ov2HUK5zA5DwJ1DNUXaM6FsY=" crossorigin="anonymous"></script>
+<script>
+
+
+ // 엔터키 이벤트
+ $('[name=login]').on('keyup', function() {
+	 
+ 	//폼에 데이터 셋팅
+ 	$('#login_id').val( $('.user_id').val() );
+ 	$('#login_pwd').val( $('.user_pwd').val() );
+ 	
+ 	$('#User_Info').submit();
+	 
+	 
+	 if (window.event.keyCode == 13) {
+		 location.href = 'login.do';
+	 }
+ });
+</script>
+
+
+
