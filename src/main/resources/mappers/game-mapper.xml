@@ -3,6 +3,13 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gameMapper">
+	<resultMap type="Game" id="resultgmaeTop">
+		<result property="name" column="name"/>
+		<result property="headerimg" column="headerimg"/>
+		<result property="short_description" column="short_description"/>
+		<result property="releasedate" column="releasedate"/>
+	</resultMap>
+
 
 	<insert id="insertGameInfo" parameterType="Game">
 		insert into game (appid, name, developer, publisher, initialprice, finalprice,
@@ -25,6 +32,15 @@
 		delete from game
 		where appid = #{appid}
 	</delete>
+	
+	 <select id="selectgameTop5" resultMap='resultgmaeTop'>
+	 	<![CDATA[
+	 	select * 
+		from (select rownum rnum, name, headerimg, short_description , releasedate
+				from game )
+		where rnum >= 1 and rnum <=5
+	 	]]>
+	 </select>
 
 </mapper>
 

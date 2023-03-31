@@ -273,7 +273,7 @@ public class GameInfoController {
 				g.setMeta(meta);
 				g.setCategory(category);
 				g.setGenre(genre);
-				g.setheaderImgs(headerImg);
+				g.setHeaderimgs(headerImg);
 				g.setMovies(movie);
 				g.setreleasedate(releasedate);
 				g.setDescription(description);
