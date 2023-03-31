@@ -3,14 +3,16 @@
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="gameMapper">
-	<resultMap type="Game" id="resultgmaeTop">
+	
+	<resultMap type="Game" id="resultgameTop">
+		<id property="appid" column="appid"/>
 		<result property="name" column="name"/>
 		<result property="headerimg" column="headerimg"/>
 		<result property="short_description" column="short_description"/>
 		<result property="releasedate" column="releasedate"/>
 	</resultMap>
 
-
+	<!-- 게임정보 입력 -->
 	<insert id="insertGameInfo" parameterType="Game">
 		insert into game (appid, name, developer, publisher, initialprice, finalprice,
 		discountrate,description,platform,meta,category,genre,headerImg,movie,releasedate,
@@ -22,18 +24,26 @@
 		        #{short_description},#{supported_languages},#{pcminimum},#{pcrecommended})
 	</insert>
 	
+	<!-- 정보 중복 체크용 -->
 	<select id="selectGameCount" parameterType="string" resultType="_int">
 		select count(appid)
 		from game
 		where appid=#{appid}
 	</select>
 	
+	<!-- 게임 정보 삭제 -->
 	<delete id="deleteGameInfo" parameterType="string">
 		delete from game
 		where appid = #{appid}
 	</delete>
 	
-	 <select id="selectgameTop5" resultMap='resultgmaeTop'>
+	<select id="selectAchievement" parameterType="string" resultType="string">
+		select achievement
+		from game
+		where appid = #{appid}
+	</select>
+	
+	 <select id="selectgameTop5" resultMap='resultgameTop'>
 	 	<![CDATA[
 	 	select * 
 		from (select rownum rnum, name, headerimg, short_description , releasedate

@@ -9,6 +9,6 @@ public interface GameService {
 
 	int deleteGameInfo(String appid);
 	int selectGameCount(String appid);
-	
+	String selectAchievement(String appid);
 	ArrayList<Game> selectgameTop5();
 }
