@@ -63,7 +63,7 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjrt</artifactId>
 		    <version>${org.aspectj-version}</version>
-		    <scope>runtime</scope>
+		    <!--<scope>runtime</scope>-->
 		</dependency>
 		
 		<!-- AspectJ Weaver 추가 -->
@@ -72,7 +72,7 @@
 		    <groupId>org.aspectj</groupId>
 		    <artifactId>aspectjweaver</artifactId>
 		    <version>${org.aspectj-version}</version>
-		    <scope>runtime</scope>
+		    <!--<scope>runtime</scope>-->
 		</dependency>
 		
 		<!-- proxy 제어를 위한 cglib 추가 -->
