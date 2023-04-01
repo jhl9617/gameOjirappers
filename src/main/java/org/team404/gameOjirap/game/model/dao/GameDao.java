@@ -30,8 +30,20 @@ public class GameDao {
 	}
 
 
-	public ArrayList<Game> selectgameTop5() {
-		List<Game> list = session.selectList("gameMapper.selectgameTop5");
+	public ArrayList<Game> selectgameTop6() {
+		List<Game> list = session.selectList("gameMapper.selectgameTop6");
+		return (ArrayList<Game>)list;
+	}
+
+
+	public ArrayList<Game> selectgameNew6() {
+		List<Game> list = session.selectList("gameMapper.selectgameNew6");
+		return (ArrayList<Game>)list;
+	}
+
+
+	public ArrayList<Game> selectgamedisctop() {
+		List<Game> list = session.selectList("gameMapper.selectgameDiscTop");
 		return (ArrayList<Game>)list;
 	}
 
