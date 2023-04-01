@@ -48,6 +48,11 @@ public class GameDao {
 	}
 
 
+	public String selectAchievement(String appid) {
+		return session.selectOne("gameMapper.selectAchievement", appid);
+	}
+
+
 
 }
 

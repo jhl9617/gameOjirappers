@@ -143,11 +143,11 @@ public class RequestInfo {
 		}
 
 		// 대표이미지 url
-		String headerImg = "";
+		String headerimg = "";
 		try {
-			headerImg = ((HashMap) datamap.get("data")).get("header_image").toString();
+			headerimg = ((HashMap) datamap.get("data")).get("header_image").toString();
 		} catch (Exception e) {
-			headerImg = null;
+			headerimg = null;
 		}
 
 		// 동영상 url
@@ -237,7 +237,7 @@ public class RequestInfo {
 		g.setMeta(meta);
 		g.setCategory(category);
 		g.setGenre(genre);
-		g.setheaderImgs(headerImg);
+		g.setHeaderimgs(headerimg);
 		g.setMovies(movie);
 		g.setreleasedate(releasedate);
 		g.setDescription(description);

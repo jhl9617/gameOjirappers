@@ -1,10 +1,13 @@
 package org.team404.gameOjirap.game.controller;
 
 
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import org.codehaus.jackson.JsonParseException;
+import org.codehaus.jackson.map.JsonMappingException;
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -19,13 +22,13 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 
-
 @Controller("gameController")
 public class GameController {
 	private static final Logger logger = LoggerFactory.getLogger(GameController.class);
 
 	@Autowired
 	private GameService gameService;
+
 
 	// 이동 처리용 메소드
 	@RequestMapping("moveGameDetail.do")
@@ -41,10 +44,33 @@ public class GameController {
 	// 게임 도전과제 보기 사이트
 	@RequestMapping("goChallenge.do")
 	public String moveGameAchievement(
-			//Model model, @RequestParam("appid") String appid
-			) {
-		//model.addAttribute("appid", appid);
+		Model model, @RequestParam("appid") String appid
+			) throws JsonParseException, JsonMappingException, IOException{
+		String ach = gameService.selectAchievement(appid);
+		if(ach != null) {
+			ach = ach.substring(1, ach.lastIndexOf("]")-1);
+			String[] list = ach.split("},");
+			JSONObject job = null;
+			JSONObject send = new JSONObject();
+			String path = "";
+			String name = "";
+			JSONArray jarray = new JSONArray();
+			for(String s : list) {
+				String[] ss = s.substring(1).split(", ");
+				path = ss[0].split("=")[1];
+				name = ss[1].split("=")[1];
+				job = new JSONObject();
+				job.put("path", path);
+				job.put("name", name);
+				jarray.add(job);
+			}		
+			model.addAttribute("archs", jarray);
+			
 		return "game/achievementView";
+		} else {
+			model.addAttribute("message", "도전과제가 없는 게임입니다");
+			return "common/error";
+		}
 	}
 	
 	// 기능용 메소드 	-----------------------------------
@@ -63,8 +89,10 @@ public class GameController {
 		
 	}
 
+
 	//게임 top6
 	@RequestMapping(value = "gametop6.do", method = RequestMethod.POST)
+
 	@ResponseBody
 	public String gameTop6Method() throws UnsupportedEncodingException {
 		// 인기 순인 게임 6개 조회해 옴
@@ -87,6 +115,7 @@ public class GameController {
 			// 한글에 대해서는 인코딩해서 json에 담도록 함 : 한글깨짐 방지
 			job.put("short_description", URLEncoder.encode(game.getShort_description(), "UTF-8"));			
 			// 날짜는 반드시 toString() 으로 문자열로 바꿔서 json에 담아야 함
+
 
 			job.put("releasedate", game.getreleasedate().toString());
 			job.put("ccu", game.getCcu());
@@ -129,6 +158,7 @@ public class GameController {
 			// 날짜는 반드시 toString() 으로 문자열로 바꿔서 json에 담아야 함
 
 			job.put("releasedate", game.getreleasedate().toString());
+
 
 			jarr.add(job); // job 를 jarr 에 추가함
 		}

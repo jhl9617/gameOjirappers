@@ -7,34 +7,36 @@
 
 	<!-- 유저정보 저장용 -->
 	<resultMap id="resultUser" type="User">
-	   <id column="user_id" property="user_id"/>
-	   <result column="admin_id" property="admin_id"/>
-	   <result column="user_pwd" property="user_pwd"/>
-	   <result column="user_nickname" property="user_nickname"/>
-	   <result column="user_name" property="user_name"/>
-	   <result column="user_phone" property="user_phone"/>
-	   <result column="user_email" property="user_email"/>
-	   <result column="user_birth" property="user_birth"/>
-	   <result column="confirm_answer" property="confirm_answer"/>
-	   <result column="login_ok" property="login_ok"/>
-	   <result column="admin" property="admin"/>
+	   <result column="user_id" 				property="user_id"/>
+	   <result column="admin_id" 			property="admin_id"/>
+	   <result column="user_pwd" 			property="user_pwd"/>
+	   <result column="user_nickname" 	property="user_nickname"/>
+	   <result column="user_name"			property="user_name"/>
+	   <result column="user_phone" 			property="user_phone"/>
+	   <result column="user_email"			property="user_email"/>
+	   <result column="user_birth" 			property="user_birth"/>
+	   <result column="confirm_answer" 	property="confirm_answer"/>
+	   <result column="login_ok" 				property="login_ok"/>
+	   <result column="admin" 					property="admin"/>
 	</resultMap>
 	
 	<!--마이페이지용  -->
+
 	<resultMap id="Mypage" type="User">
-	   <result column="user_level" property="user_level"/>
-	   <result column="user_status" property="user_status"/>
-	   <result column="user_point" property="user_point"/>
-	   <result column="user_access" property="user_access"/>
-	   <result column="user_original_profile" property="user_original_profile"/>
-	   <result column="bname" property="bname"/>
-	   <result column="com_contents" property="com_contents"/>
-	   <result column="board_title" property="board_title"/>
+	   <result column="user_level" 					property="user_level"/>
+	   <result column="user_status" 				property="user_status"/>
+	   <result column="user_point" 					property="user_point"/>
+	   <result column="user_access" 				property="user_access"/>
+	   <result column="user_original_profile" 	property="user_original_profile"/>
+	   <result column="bname" 						property="bname"/>
+	   <result column="com_contents" 				property="com_contents"/>
+	   <result column="board_title" 				property="board_title"/>
 	</resultMap>
 
 
+
 	<!-- 즐겨찾기용  -->
-	<resultMap id="resultHotList" type="HotList">
+	<resultMap id="resultHotList" type="User">
 	   <id column="user_id" property="user_id"/>
 	   <result column="game_id" property="game_id"/>
 	   <result column="board_click_day" property="board_click_day"/>
@@ -43,7 +45,7 @@
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
 	<!-- 로그인 처리용 -->
-	<select id="loginMethod" parameterType="java.util.Map" resultType="String" resultMap="resultUser">		
+	<select id="loginMethod"  parameterType="User"  resultMap="resultUser">		
 		select * 
 		from tb_user
 		where user_id = #{ user_id } 
@@ -62,10 +64,45 @@
 	
 	
 	<!-- 회원 전체 조회용 -->
-	<select id = "selectUserList" resultMap="User">
+	<select id = "selectUserList" resultType="User">
 		select *
 		from tb_user
 	</select>
+	
+	<!-- 회원가입시 아이디 중복 체크 처리용  -->
+	<select id="selectDupCheckId" parameterType="string" resultType="_int" >
+		select count(user_id) 
+		from tb_user
+		where user_id = #{ user_id }	
+	</select>		
+
+	
+	<!-- 회원가입시 닉네임 중복 체크 처리용  -->
+	<select id="selectDupCheckNick" parameterType="string" resultType="_int" >
+		select count(user_nickname) 
+		from tb_user
+		where user_nickname = #{ value }	
+	</select>		
+	
+		
+	<!-- 회원가입 처리용 -->
+	<insert id="userInsertMethod" parameterType="User">			
+	    insert into tb_user (user_id, admin_id, user_pwd, user_nickname, user_name, user_phone, user_email, user_birth, user_level, 
+                                user_status, user_point, user_access, user_original_profile, confirm_answer )	
+		values (#{user_id}, default, #{user_pwd}, default, default, default, default,  default,  default,
+        						default, default, default, default, default) 	
+<!-- 		insert into member (userid, userpwd, username, gender, age, phone, email,  -->
+<!-- 							enroll_date, lastmodified, signtype, admin, login_ok)	 -->
+<!-- 		values (#{userid}, #{userpwd}, #{username}, #{gender}, #{age}, #{phone}, #{email}, default, default, default, default, default) 				 -->
+		<!-- 컬럼의 default 값을 잘 확인하면서 순서대로 작성한다-->
+		<!-- #{}안에 멤버변수명을 작성해주면 알아서 getter가 됨. (vo에 getter가 반드시 있어야 작동함) -->
+	</insert>
+	
+	
+	
+	
+	
+	
 	
 	
 	

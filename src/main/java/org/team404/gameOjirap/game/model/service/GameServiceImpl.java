@@ -42,4 +42,9 @@ public class GameServiceImpl implements GameService{
 		return gameDao.selectgamedisctop();
 	}
 
+	@Override
+	public String selectAchievement(String appid) {
+		return gameDao.selectAchievement(appid);
+	}
+
 }

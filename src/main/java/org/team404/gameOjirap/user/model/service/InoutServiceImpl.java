@@ -5,7 +5,6 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.user.model.dao.InoutDao;
-import org.team404.gameOjirap.user.model.vo.MyPage;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Service("inoutService")	
@@ -29,6 +28,12 @@ public class InoutServiceImpl implements InoutService{
 		return inoutDao.selectUserList();
 	}
 
+	@Override
+	public int userInsertMethod(User user) {
+		return inoutDao.userInsertMethod(user);
+	}
+
+	
 	
 	
 	
@@ -37,13 +42,9 @@ public class InoutServiceImpl implements InoutService{
 		return inoutDao.userDeleteMethod(user_id);
 	}
 
-	@Override
-	public int userInsertMethod(User user) {
-		return inoutDao.userInsertMethod(user);
-	}
 
 	@Override
-	public int levelMethod(MyPage user_level) {
+	public int levelMethod(User user_level) {
 		return inoutDao.levelMethod(user_level);
 	}
 

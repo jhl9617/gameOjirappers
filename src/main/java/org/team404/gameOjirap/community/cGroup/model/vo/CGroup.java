@@ -8,80 +8,104 @@ import java.sql.Date;
  * 커뮤니티 vo클래스
  */
 public class CGroup implements Serializable {
-    private int communityId;
-    private String communityName;
-    private Date communityDate;
-    private String userId;
-    private String communityImgOri;
-    private String communityImgRename;
-
+    private int communityid;
+    private String communityname;
+    private Date communitydate;
+    private String user_id;
+    private String communityimgori;
+    private String communityimgrename;
+    private String communitydesc;
+    private String commuMem_count;
 
 
     public CGroup() {
     }
 
-    public CGroup(String communityName, String userId) {
-        this.communityName = communityName;
-        this.userId = userId;
-
+    public CGroup(int communityid, String communityname, Date communitydate, String user_id, String communityimgori, String communityimgrename, String communitydesc) {
+        this.communityid = communityid;
+        this.communityname = communityname;
+        this.communitydate = communitydate;
+        this.user_id = user_id;
+        this.communityimgori = communityimgori;
+        this.communityimgrename = communityimgrename;
+        this.communitydesc = communitydesc;
     }
 
-    public int getCommunityId() {
-        return communityId;
+    public int getCommunityid() {
+        return communityid;
     }
 
-    public void setCommunityId(int communityId) {
-        this.communityId = communityId;
+    public void setCommunityid(int communityid) {
+        this.communityid = communityid;
     }
 
-    public String getCommunityName() {
-        return communityName;
+    public String getCommunityname() {
+        return communityname;
     }
 
-    public void setCommunityName(String communityName) {
-        this.communityName = communityName;
+    public void setCommunityname(String communityname) {
+        this.communityname = communityname;
     }
 
-    public Date getCommunityDate() {
-        return communityDate;
+    public Date getCommunitydate() {
+        return communitydate;
     }
 
-    public void setCommunityDate(Date communityDate) {
-        this.communityDate = communityDate;
+    public void setCommunitydate(Date communitydate) {
+        this.communitydate = communitydate;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public String getCommunityImgOri() {
-        return communityImgOri;
+    public String getCommunityimgori() {
+        return communityimgori;
     }
 
-    public void setCommunityImgOri(String communityImgOri) {
-        this.communityImgOri = communityImgOri;
+    public void setCommunityimgori(String communityimgori) {
+        this.communityimgori = communityimgori;
     }
 
-    public String getCommunityImgRename() {
-        return communityImgRename;
+    public String getCommunityimgrename() {
+        return communityimgrename;
     }
 
-    public void setCommunityImgRename(String communityImgRename) {
-        this.communityImgRename = communityImgRename;
+    public void setCommunityimgrename(String communityimgrename) {
+        this.communityimgrename = communityimgrename;
+    }
+
+    public String getCommunitydesc() {
+        return communitydesc;
+    }
+
+    public void setCommunitydesc(String communitydesc) {
+        this.communitydesc = communitydesc;
+    }
+
+    public String getCommuMem_count() {
+        return commuMem_count;
+    }
+
+    public void setCommuMem_count(String commuMem_count) {
+        this.commuMem_count = commuMem_count;
     }
 
     @Override
     public String toString() {
-        return "community{" +
-                "communityId=" + communityId +
-                ", communityName='" + communityName + '\'' +
-                ", communityDate=" + communityDate +
-                ", userId='" + userId + '\'' +
-                ", communityImgId='" + communityImgOri + '\'' +
+        return "CGroup{" +
+                "communityid=" + communityid +
+                ", communityname='" + communityname + '\'' +
+                ", communitydate=" + communitydate +
+                ", user_id='" + user_id + '\'' +
+                ", communityimgori='" + communityimgori + '\'' +
+                ", communityimgrename='" + communityimgrename + '\'' +
+                ", communitydesc='" + communitydesc + '\'' +
                 '}';
     }
 }
+

@@ -5,6 +5,9 @@
 
 <html>
 <head>
+
+<title>겜지라퍼</title>
+
 <meta charset="utf-8" />
 <title>GameOjirap</title>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>

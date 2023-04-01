@@ -1,59 +1,61 @@
 <?xml version="1.0" encoding="utf-8"?>
 <!DOCTYPE mapper PUBLIC
-"-//mybatis.org//DTD Mapper 3.0//EN"
-"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="cGroupMapper">
+        "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="CGroupMapper">
 
-<!--	<resultMap type="Board" id="resultBoard">
-		<result column="board_no" property="board_no"/>
-		<result column="board_title" property="board_title"/>
-		<result column="board_content" property="board_content"/>
-		<result column="board_date" property="board_date"/>
-		<result column="board_count" property="board_count"/>
-		<result column="appid" property="appid"/>
-		<result column="board_like" property="board_like"/>
-		<result column="board_orifile" property="board_orifile"/>
-		<result column="board_refile" property="board_refile"/>
-		<result column="user_id" property="user_id"/>
-		<result column="board_notice" property="board_notice"/>
-	</resultMap>-->
+    <resultMap type="CGroup" id="selectCGroupList">
+        <result property="communityid" column="communityid" />
+        <result property="communityname" column="communityname" />
+        <result property="user_id" column="user_id" />
+        <result property="communityimgori" column="communityimgori" />
+        <result property="communityimgrename" column="communityimgrename" />
+        <result property="communitydesc" column="communitydesc" />
+        <result property="commuMem_count" column="commuMem_count" />
 
-    <resultMap type="CGroup" id="searchCGroup">
-        <result column="communityId" property="communityId"/>
-        <result column="communityName" property="communityName"/>
-        <result column="communityDate" property="communityDate"/>
-        <result column="userId" property="userId"/>
-        <result column="communityImgOri" property="communityImgOri"/>
-        <result column="communityImgRename" property="communityImgRename"/>
-    </resultMap>
-
-    <resultMap type="CLike" id="searchCLike">
-        <result column="user_id" property="user_id"/>
-        <result column="cLiked_day" property="cLiked_day"/>
-        <result column="communityId" property="communityId"/>
-    </resultMap>
-
-    <resultMap type="CMember" id="searchCMember">
-        <result column="user_id" property="user_id"/>
-        <result column="communityId" property="communityId"/>
-        <result column="member_roll" property="member_roll"/>
-        <result column="member_date" property="member_date"/>
-    </resultMap>
-
-    <resultMap type="CommunityReq" id="searchCommunityReq">
-        <result column="userId" property="userId"/>
-        <result column="communityId" property="communityId"/>
-        <result column="requestDes" property="requestDes"/>
-        <result column="requestDate" property="requestDate"/>
-    </resultMap>
-
-    <resultMap type="CReport" id="searchCReport">
-        <result column="user_id" property="user_id"/>
-        <result column="communityId" property="communityId"/>
-        <result column="c_report_time" property="c_report_time"/>
-        <result column="requestDate" property="requestDate"/>
     </resultMap>
 
 
+<!--커뮤 이름이 중복인지 확인-->
+    <select id="selectCommuInvalid" parameterType="String" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+        where COMMUNITYNAME = #{communityname}
+    </select>
+
+<!--커뮤 생성-->
+    <insert id="insertCGroup" parameterType="CGroup" >
+        INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
+        VALUES ((SELECT MAX(communityId) + 1 FROM TB_Community), #{communityname}, SYSDATE, #{user_id}, #{communitydesc})
+    </insert>
+
+    <!--커뮤 id 받아오는 구문-->
+    <select id="selectCommunityid" parameterType="String" resultType="_int">
+        select communityId
+        from TB_COMMUNITY
+        where COMMUNITYNAME =#{communityname}
+    </select>
+
+<!--커뮤에 멤버 추가-->
+    <insert id="insertCMember" parameterType="CMember">
+    insert into TB_COMMUNITY_MEMBER (USER_ID, communityId, MEMBER_DATE, MEMBER_ROLL)
+    VALUES (#{user_id}, #{communityid}, SYSDATE, #{member_roll})
+    </insert>
+
+    <!--커뮤 갯수 받아옴-->
+    <select id="selectcgroupcount" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+    </select>
+
+    <!--페이지에 해당하는 커뮤 리스트로 받아옴-->
+    <select id="selectcgrouplist" parameterType="Paging" resultMap="selectCGroupList">
+<![CDATA[
+        select *
+        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
+              from TB_COMMUNITY)
+        where ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
+]]>
+    </select>
 
 </mapper>
