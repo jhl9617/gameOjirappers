@@ -255,9 +255,9 @@ CREATE TABLE TB_BOARD_GEN (
                               board_date	Date		NOT NULL,
                               board_count	number		,
                               board_like	number		,
-                              board_orifile	VARCHAR2(500),		
+                              board_orifile	VARCHAR2(500),
                               board_refile	VARCHAR2(500)		NULL,
-                              appid	Number		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
 					board_notice VARCHAR2(50)
 );
@@ -279,7 +279,7 @@ DROP TABLE TB_HOTLIST cascade constraints;
 
 CREATE TABLE TB_HOTLIST (
                             user_id	VARCHAR2(20)		NOT NULL,
-                            appid	Number		NOT NULL
+                            appid VARCHAR2(30 BYTE)			NOT NULL
 );
 
 comment on column TB_HOTLIST.user_id is '사용자 ID';
@@ -353,7 +353,7 @@ CREATE TABLE TB_BOARD_TAR (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
@@ -380,7 +380,7 @@ CREATE TABLE TB_BOARD_QNA (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		,
+                              appid	VARCHAR2(30 BYTE)		,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
@@ -643,7 +643,6 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
-INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
-VALUES (1, '����', SYSDATE, 'admin', '�����');
-
+INSERT INTO TB_Community (communityId,communityName, communityDate,user_id,communityImgOri,communityImgRename,communityDesc
+) VALUES (0,'Sample Band',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
 commit;
