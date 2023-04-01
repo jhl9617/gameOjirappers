@@ -17,4 +17,6 @@ public interface GameService {
 
 	ArrayList<Game> selectgamedisctop();
 
+	public String selectAchievement(String appid);
+
 }
