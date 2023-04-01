@@ -81,13 +81,17 @@ function showDiv(){
 				<fmt:formatDate value="${ u.enrolldate }" 
 					pattern="yyyy-MM-dd"/>
 			</td>
-			<c:url var="uban" value="/uban.do">
+
+			<c:url var="uban" value="/uban.do" >
+
             	<c:param name="" value="${ u.userid }"/>
             	<c:param name="" value="${ u.username }"/>
             	<c:param name="" value="${ u.usergrade }"/>
             	<c:param name="" value="${ u.point }"/>
          	</c:url>
-			<td><a href="uban">활동정지</a></td>
+
+			<td><a href="uban" >활동정지/포인트차감</a></td>
+
 		</tr>
 	</c:forEach>
 </table>

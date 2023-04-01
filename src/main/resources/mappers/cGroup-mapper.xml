@@ -4,20 +4,58 @@
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CGroupMapper">
 
+    <resultMap type="CGroup" id="selectCGroupList">
+        <result property="communityid" column="communityid" />
+        <result property="communityname" column="communityname" />
+        <result property="user_id" column="user_id" />
+        <result property="communityimgori" column="communityimgori" />
+        <result property="communityimgrename" column="communityimgrename" />
+        <result property="communitydesc" column="communitydesc" />
+        <result property="commuMem_count" column="commuMem_count" />
+
+    </resultMap>
 
 
-    <insert id="insertCGroup" parameterType="CGroup">
+<!--커뮤 이름이 중복인지 확인-->
+    <select id="selectCommuInvalid" parameterType="String" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+        where COMMUNITYNAME = #{communityname}
+    </select>
+
+<!--커뮤 생성-->
+    <insert id="insertCGroup" parameterType="CGroup" >
         INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
         VALUES ((SELECT MAX(communityId) + 1 FROM TB_Community), #{communityname}, SYSDATE, #{user_id}, #{communitydesc})
     </insert>
 
+    <!--커뮤 id 받아오는 구문-->
+    <select id="selectCommunityid" parameterType="String" resultType="_int">
+        select communityId
+        from TB_COMMUNITY
+        where COMMUNITYNAME =#{communityname}
+    </select>
 
+<!--커뮤에 멤버 추가-->
+    <insert id="insertCMember" parameterType="CMember">
+    insert into TB_COMMUNITY_MEMBER (USER_ID, communityId, MEMBER_DATE, MEMBER_ROLL)
+    VALUES (#{user_id}, #{communityid}, SYSDATE, #{member_roll})
+    </insert>
 
+    <!--커뮤 갯수 받아옴-->
+    <select id="selectcgroupcount" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+    </select>
 
-
-
-
-
-
+    <!--페이지에 해당하는 커뮤 리스트로 받아옴-->
+    <select id="selectcgrouplist" parameterType="Paging" resultMap="selectCGroupList">
+<![CDATA[
+        select *
+        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
+              from TB_COMMUNITY)
+        where ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
+]]>
+    </select>
 
 </mapper>

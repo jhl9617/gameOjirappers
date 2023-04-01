@@ -21,6 +21,7 @@
 	</resultMap>
 	
 	<!--마이페이지용  -->
+
 	<resultMap id="Mypage" type="User">
 	   <result column="user_level" 					property="user_level"/>
 	   <result column="user_status" 				property="user_status"/>
@@ -31,6 +32,7 @@
 	   <result column="com_contents" 				property="com_contents"/>
 	   <result column="board_title" 				property="board_title"/>
 	</resultMap>
+
 
 
 	<!-- 즐겨찾기용  -->
