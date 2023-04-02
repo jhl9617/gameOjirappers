@@ -5,7 +5,7 @@ import java.sql.Date;
 public class BoardGen implements java.io.Serializable{
 	private static final long serialVersionUID = -460279728058378628L;
 	
-	private String board_no;	//게시글 번호
+	private int board_no;	//게시글 번호
 	private String board_title; //게시글 제목
 	private String board_content; //게시글 내용
 	private Date board_date;    //게시글 작성 날짜
@@ -21,7 +21,7 @@ public class BoardGen implements java.io.Serializable{
 		super();
 	}
 
-	public BoardGen(String board_no, String board_title, String board_content, Date board_date, int board_count,
+	public BoardGen(int board_no, String board_title, String board_content, Date board_date, int board_count,
 			int board_like, String board_orifile, String board_refile, int appid, String user_id, String board_notice) {
 		super();
 		this.board_no = board_no;
@@ -37,11 +37,11 @@ public class BoardGen implements java.io.Serializable{
 		this.board_notice = board_notice;
 	}
 
-	public String getBoard_no() {
+	public int getBoard_no() {
 		return board_no;
 	}
 
-	public void setBoard_no(String board_no) {
+	public void setBoard_no(int board_no) {
 		this.board_no = board_no;
 	}
 
