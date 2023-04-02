@@ -646,4 +646,8 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
 VALUES (1, '����', SYSDATE, 'admin', '�����');
 
+CREATE SEQUENCE sch_seq
+    START WITH 1
+    INCREMENT BY 1;
+
 commit;
