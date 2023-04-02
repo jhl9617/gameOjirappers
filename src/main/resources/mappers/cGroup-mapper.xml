@@ -38,8 +38,8 @@
 
 <!--커뮤에 멤버 추가-->
     <insert id="insertCMember" parameterType="CMember">
-    insert into TB_COMMUNITY_MEMBER (USER_ID, communityId, MEMBER_DATE)
-    VALUES (#{user_id}, #{communityid}, SYSDATE)
+    insert into TB_COMMUNITY_MEMBER (USER_ID, communityId, MEMBER_DATE, MEMBER_ROLL)
+    VALUES (#{user_id}, #{communityid}, SYSDATE, #{member_roll})
     </insert>
 
     <!--커뮤 갯수 받아옴-->
