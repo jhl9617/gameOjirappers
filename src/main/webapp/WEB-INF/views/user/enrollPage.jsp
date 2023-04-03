@@ -7,11 +7,28 @@
 <head>
 <meta charset="UTF-8">
 <title>enrollPage</title>
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/enrollCss.css" />
-
+<%-- <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/enrollCss.css" /> --%>
+<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/loginCss.css" />
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
+const signInBtn = document.getElementById("signIn");
+const signUpBtn = document.getElementById("signUp");
+const fistForm = document.getElementById("form1");
+const secondForm = document.getElementById("form2");
+const container = document.querySelector(".container");
+
+signInBtn.addEventListener("click", () => {
+  container.classList.remove("right-panel-active");
+});
+
+signUpBtn.addEventListener("click", () => {
+  container.classList.add("right-panel-active");
+});
+
+fistForm.addEventListener("submit", (e) => e.preventDefault());
+secondForm.addEventListener("submit", (e) => e.preventDefault());
+
 
 
 //★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
@@ -34,18 +51,17 @@
 	//아이디 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckId() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({
-			url: "idchek.do",
-			type: "post",   	
-			data: { userid: $("#user_id").val()},		
+			url: "useridchk.do",
+			type: "get",   	
+			data: { user_id: $("#user_id").val()},		
 
 			success: function (data){		
 				console.log("success : " + data);		
-				if(data == "ok"){
+				if(data == "ok" ){
 					alert("사용 가능한 아이디입니다! (*●⁰ꈊ⁰●)ﾉ");
-					$("#pwd1").focus();		//다음칸인 비번 입력칸으로 포커스 옮김
+					$("#user_name").focus();		
 				}else{
 					alert("이미 사용중인 아이디입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
-					$("#user_id").select();		
 				}	//if
 			},	//success close
 			error: function(jqXHR, textStatus, errorThrown){	
@@ -58,20 +74,21 @@
 	
 	
 	
+	
 	//닉네임 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckNickname() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({
 			url: "nickchk.do",
-			type: "post",   	
+			type: "get",   	
 			data: { user_nickname: $("#user_nickname").val()},		
 
 			success: function (data){		
 				console.log("success : " + data);		
 				if(data == "ok" ){
-					alert("사용 가능한 아이디입니다! (*●⁰ꈊ⁰●)ﾉ");
+					alert("사용 가능한 닉네임입니다! (*●⁰ꈊ⁰●)ﾉ");
 					$("#user_name").focus();		
 				}else{
-					alert("이미 사용중인 아이디입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
+					alert("이미 사용중인 닉네임입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
 					$("#user_nickname").select();		//다음칸인 닉네임 입력칸으로 포커스 옮김
 				}	//if
 			},	//success close
@@ -88,14 +105,16 @@
 
 <body>
 
-	<form action="enroll.do" method="post" onsubmit="return validate();">
+
+
+	<form action="enroll.do" method="get" onsubmit="return validate();">
 		<div>
 			<div class="container">
 				<h2 align="center">회원가입 <br></h2>
 
 				<label for="id" style="padding: 2px">* 아이디<br>
 					<input type="text" id="user_id" required> 
-					<input type="button"	value="아이디 중복확인" onclick="return CheckId()">
+					<input type="button"	value="아이디 중복확인" onclick="CheckId()">
 					<br><br>
 				</label> 
 				
@@ -108,46 +127,52 @@
 					<br><br>
 				</label> 
 				
-				<label for="nickname">* 닉네임<br> 
-				<input type="text" id="user_nickname" required>
-					<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()"><br>
-					<br><br>
-				</label> 
+<!-- 				<label for="nickname">* 닉네임<br>  -->
+<!-- 				<input type="text" id="user_nickname" required> -->
+<!-- 					<input type="button" value="닉네임 중복확인" onclick="CheckNickname()"><br> -->
+<!-- 					<br><br> -->
+<!-- 				</label>  -->
 				
-				<label for="name">* 이 름<br> 
-					<input type="text" id="user_name" required><br>
-					<br><br>
-				</label> 
+<!-- 				<label for="name">* 이 름<br>  -->
+<!-- 					<input type="text" id="user_name" required><br> -->
+<!-- 					<br><br> -->
+<!-- 				</label>  -->
 				
-				<label for="phone">* 전화번호(-제외하고 입력)<br> 
-					<input type="tel" id="user_phone" required><br>
-				<br><br>
-				</label> 
+<!-- 				<label for="phone">* 전화번호(-제외하고 입력)<br>  -->
+<!-- 					<input type="tel" id="user_phone" required><br> -->
+<!-- 				<br><br> -->
+<!-- 				</label>  -->
 				
-				<label for="email">* 이메일<br> 
-					<input type="text" id="user_email" required><br>
-					<br><br>
-				</label> 
+<!-- 				<label for="email">* 이메일<br>  -->
+<!-- 					<input type="text" id="user_email" required><br> -->
+<!-- 					<br><br> -->
+<!-- 				</label>  -->
 				
-				<label for="date">생일<br>
-					<input type="date" id="user_birth" required><br>
-					<br><br>
-				</label> 
-				<label for="answer">본인확인 질문
-					<select id ="onfirm_answer_select" style="background:Oldlace; color:gray; font-size: 13pt; ">
-					    <option value="">선택</option>
-						<option value="1">당신의 이름은 무엇입니까?</option>
-						<option value="2">당신의 생년월일은 언제입니까?</option>
-						<option value="3">당신의 최고 학력은 무엇입니까?</option>
-						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option>
-						<option value="5">당신이 태어난 도시는 어디입니까?</option>
-					</select>
-						<input type="text" id="onfirm_answer" placeholder="답변 입력" required > <br>
-				</label>
+<!-- 				<label for="date">생일<br> -->
+<!-- 					<input type="date" id="user_birth" required><br> -->
+<!-- 					<br><br> -->
+<!-- 				</label>  -->
+<!-- 				<label for="answer">본인확인 질문 -->
+<!-- 					<select id ="onfirm_answer_select" style="background:Oldlace; color:gray; font-size: 13pt; "> -->
+<!-- 					    <option value="">선택</option> -->
+<!-- 						<option value="1">당신의 이름은 무엇입니까?</option> -->
+<!-- 						<option value="2">당신의 생년월일은 언제입니까?</option> -->
+<!-- 						<option value="3">당신의 최고 학력은 무엇입니까?</option> -->
+<!-- 						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option> -->
+<!-- 						<option value="5">당신이 태어난 도시는 어디입니까?</option> -->
+<!-- 					</select> -->
+<!-- 						<input type="text" id="onfirm_answer" placeholder="답변 입력" required > <br> -->
+<!-- 				</label> -->
 				<br>
+				<button>가입하기</button>
 			</div>
 		</div>
 	</form>
+
+
+<!--/////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////  -->
+
+
 				
 <%-- 				
 				<form action="" id="joinForm">
@@ -217,7 +242,7 @@
 							※ 더 자세한 내용에 대해서는 사이트 하단의 개인정보처리방침을 참고하시기 바랍니다.
 			    			 </textarea>
 						</li>
-						<button>가입하기</button>
+
 
  --%> 
 

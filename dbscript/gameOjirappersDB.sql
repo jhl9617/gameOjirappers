@@ -193,60 +193,54 @@ comment on column TB_Community_REQ.communityId is '밴드 ID';
 comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
 comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
 
-DROP TABLE TB_GAME cascade constraints;
+DROP TABLE GAME cascade constraints;
 
-CREATE TABLE TB_GAME (
-                         appid	Number		NOT NULL,
-                         name	VARCHAR2(30)		NOT NULL,
-                         metacritic	Number		NULL,
-                         releasedate	Date		NOT NULL,
-                         initialPrice	Number		NULL,
-                         finalPrice	Number		NULL,
-                         discountRate	Number		NULL,
-                         developer	VARCHAR2(40)		NULL,
-                         publisher	VARCHAR2(40)		NULL,
-                         platform	VARCHAR2(50)		NULL,
-                         screenshots	VARCHAR2(300)		NULL,
-                         movies	VARCHAR2(300)		NULL,
-                         challenge	Number		NOT NULL,
-                         genre 	Number		NULL,
-                         description 	VARCHAR2(2000)		NULL,
-                         game_updateinfo	VARCHAR2(1000)		NULL,
-                         game_rank	Number		NULL,
-                         game_like	Number		NULL
+CREATE TABLE GAME (
+     "APPID" VARCHAR2(30 BYTE),
+     "NAME" VARCHAR2(200 BYTE),
+     "DEVELOPER" VARCHAR2(100 BYTE),
+     "PUBLISHER" VARCHAR2(100 BYTE),
+     "INITIALPRICE" VARCHAR2(30 BYTE),
+     "FINALPRICE" VARCHAR2(30 BYTE),
+     "DISCOUNTRATE" NUMBER,
+     "DESCRIPTION" CLOB,
+     "PLATFORM" VARCHAR2(100 BYTE),
+     "META" NUMBER,
+     "CATEGORY" VARCHAR2(1000 BYTE),
+     "GENRE" VARCHAR2(1000 BYTE),
+     "HEADERIMG" VARCHAR2(1000 BYTE),
+     "MOVIE" VARCHAR2(1000 BYTE),
+     "RELEASEDATE" VARCHAR2(50 BYTE),
+     "ACHIEVEMENT" VARCHAR2(2000 BYTE),
+     "POSITIVE" NUMBER,
+     "CCU" NUMBER,
+     "SHORT_DESCRIPTION" VARCHAR2(4000 BYTE),
+     "SUPPORTED_LANGUAGES" VARCHAR2(4000 BYTE),
+     "PCMINIMUM" VARCHAR2(2000 BYTE),
+     "PCRECOMMENDED" VARCHAR2(2000 BYTE)
 );
-comment on column TB_GAME.appid is '게임 ID';
-comment on column TB_GAME.name is '게임 이름';
-comment on column TB_GAME.releasedate is '게임 출시일';
-comment on column TB_GAME.metacritic is '메타크리틱 게임 평점';
-comment on column TB_GAME.initialprice is '게임 초기가격';
-comment on column TB_GAME.finalprice is '게임 최종가격';
-comment on column TB_GAME.discountrate is '할인율';
-comment on column TB_GAME.developer is '게임 개발자';
-comment on column TB_GAME.publisher is '게임 배급사';
-comment on column TB_GAME.platform is '게임 플랫폼';
-comment on column TB_GAME.screenshots is '게임 이미지';
-comment on column TB_GAME.movies is '게임 동영상';
-comment on column TB_GAME.genre is '게임 장르';
-comment on column TB_GAME.challenge is '카테고리 ID';
-comment on column TB_GAME.description is '게임 설명';
-comment on column TB_GAME.game_updateinfo is '게임 업데이트 정보';
-comment on column TB_GAME.game_rank is '전일 게임접속사 수';
-comment on column TB_GAME.game_like is '게임 좋아요수';
-
-
-DROP TABLE TB_CHALLENGE cascade constraints;
-
-CREATE TABLE TB_CHALLENGE (
-                              appid	Number		NOT NULL,
-                              challenge	Number		NOT  NULL,
-                              achievement_name	Varchar2(100)		NOT NULL,
-                              achievement_path	Varchar2(100)		NULL
-);
-comment on column TB_CHALLENGE.appid IS '게임 ID';
-comment on column TB_CHALLENGE.challenge IS '도전 과제 ID';
-comment on column TB_CHALLENGE.achievement_name IS '도전 과제 이름';
-comment on column TB_CHALLENGE.achievement_path IS '도전 과제 이미지';
+comment on column GAME.appid is '게임 ID';
+comment on column GAME.name is '게임 이름';
+comment on column GAME.releasedate is '게임 출시일';
+comment on column GAME.meta is '메타크리틱 게임 평점';
+comment on column GAME.initialprice is '게임 초기가격';
+comment on column GAME.finalprice is '게임 최종가격';
+comment on column GAME.discountrate is '할인율';
+comment on column GAME.developer is '게임 개발자';
+comment on column GAME.publisher is '게임 배급사';
+comment on column GAME.platform is '게임 플랫폼';
+comment on column GAME.HEADERIMG is '게임 이미지';
+comment on column GAME.MOVIE is '게임 동영상';
+comment on column GAME.genre is '게임 장르';
+comment on column GAME.description is '게임 설명';
+comment on column GAME.CCU is '전일 게임접속사 수';
+comment on column GAME.POSITIVE is '게임 좋아요수';
+comment on column GAME.CATEGORY is '게임 카테고리';
+comment on column GAME.ACHIEVEMENT is '게임 도전과제';
+comment on column GAME.SHORT_DESCRIPTION is '게임 간단한 설명';
+comment on column GAME.SUPPORTED_LANGUAGES is '게임 지원언어';
+comment on column GAME.PCMINIMUM is '게임 최소사양';
+comment on column GAME.PCRECOMMENDED is '게임 권장사양';
 
 
 DROP TABLE TB_BOARD_GEN cascade constraints;
@@ -258,9 +252,9 @@ CREATE TABLE TB_BOARD_GEN (
                               board_date	Date		NOT NULL,
                               board_count	number		,
                               board_like	number		,
-                              board_orifile	VARCHAR2(500),		
+                              board_orifile	VARCHAR2(500),
                               board_refile	VARCHAR2(500)		NULL,
-                              appid	Number		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
 					board_notice VARCHAR2(50)
 );
@@ -282,7 +276,7 @@ DROP TABLE TB_HOTLIST cascade constraints;
 
 CREATE TABLE TB_HOTLIST (
                             user_id	VARCHAR2(20)		NOT NULL,
-                            appid	Number		NOT NULL
+                            appid VARCHAR2(30 BYTE)			NOT NULL
 );
 
 comment on column TB_HOTLIST.user_id is '사용자 ID';
@@ -356,7 +350,7 @@ CREATE TABLE TB_BOARD_TAR (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
@@ -383,7 +377,7 @@ CREATE TABLE TB_BOARD_QNA (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		,
+                              appid	VARCHAR2(30 BYTE)		,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
@@ -424,10 +418,6 @@ ALTER TABLE TB_Community_MEMBER
     ADD CONSTRAINT PK_TB_Community_MEMBER
         PRIMARY KEY (user_id,COMMUNITYID);
 
-ALTER TABLE TB_CHALLENGE
-    ADD CONSTRAINT PK_TB_CHALLENGE
-        PRIMARY KEY (challenge);
-
 ALTER TABLE TB_Community
     ADD CONSTRAINT PK_TB_Community
         PRIMARY KEY (COMMUNITYID);
@@ -461,7 +451,7 @@ ALTER TABLE TB_COMMUNITY_REQ
     ADD CONSTRAINT PK_TB_COMMUNITY_REQ
         PRIMARY KEY (user_id,COMMUNITYID);
 
-ALTER TABLE TB_GAME
+ALTER TABLE GAME
     ADD CONSTRAINT PK_TB_GAME
         PRIMARY KEY (appid);
 
@@ -545,7 +535,7 @@ ALTER TABLE TB_HOTLIST
 ALTER TABLE TB_HOTLIST
     ADD CONSTRAINT FK_TB_GAME_TO_TB_HOTLIST_1
         FOREIGN KEY ( appid )
-            REFERENCES TB_GAME (appid);
+            REFERENCES GAME (appid);
 
 ALTER TABLE TB_USER_LIKE
     ADD CONSTRAINT FK_TB_USER_TO_TB_USER_LIKE_1
@@ -650,6 +640,7 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
+
 insert into tb_board_gen
 values(1, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
         250, 1200, null, null, 12, 'peter444', null);
@@ -673,5 +664,9 @@ values(5, '테스트용 게시글 입니다.', '테스트용 게시글 내용입
 insert into tb_board_gen
 values(6, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
         250, 1200, '테스트용', '테스트요', 12, 'peter444', '테스트용공지');
+
+
+INSERT INTO TB_Community (communityId,communityName, communityDate,user_id,communityImgOri,communityImgRename,communityDesc
+) VALUES (0,'Sample Band',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
 
 commit;
