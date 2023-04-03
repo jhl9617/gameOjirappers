@@ -69,7 +69,8 @@ CREATE TABLE TB_Community (
                               communityDate	DATE		,
                               user_id	VARCHAR2(20)		NOT NULL,
                               communityImgOri	VARCHAR2(100),
-                              communityImgRename	VARCHAR2(100)
+                              communityImgRename	VARCHAR2(100),
+                              communityDesc VARCHAR2(500)
 );
 
 comment on column TB_Community.communityId IS '밴드 ID';
@@ -78,6 +79,7 @@ comment on column TB_Community.communityDate IS '밴드 생성일';
 comment on column TB_Community.user_id IS '밴드 생성자 ID';
 comment on column TB_Community.communityImgOri IS '밴드 이미지 원본이름';
 comment on column TB_Community.communityImgOri IS '밴드 이미지 바뀐이름';
+comment on column TB_Community.communityDesc IS '밴드 설명';
 
 
 DROP TABLE TB_Community_BOARD cascade constraints;
