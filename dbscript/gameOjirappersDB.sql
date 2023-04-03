@@ -677,7 +677,12 @@ values(6, '테스트용 게시글 입니다.', '테스트용 게시글 내용입
 
 
 INSERT INTO TB_Community (communityId,communityName, communityDate,user_id,communityImgOri,communityImgRename,communityDesc
-) VALUES (0,'Sample Band',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
+) VALUES (0,'Sample Band by admin',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
 
+INSERT INTO TB_COMMUNITY_MEMBER (USER_ID, COMMUNITYID, MEMBER_ROLL, MEMBER_DATE)
+values ('admin', 0, 'Y', SYSDATE);
+
+INSERT INTO TB_Community_BOARD (CBOARDNO, CBOARDTITLE, CBOARDCONTENT, CBOARDDATE, CBOARDLIKE, CBOARDNOTICE, USER_ID, COMMUNITYID)
+VALUES (0, '0번 커뮤 게시물 테스트 0번 게시물', '게시물 내용입니다.', SYSDATE, 0, 'Y', 'admin', 0);
 
 commit;
