@@ -31,7 +31,9 @@
 	<mappers>
 
 
-<!--		<mapper resource="mappers/user-mapper.xml" />-->
+
+		<!-- <mapper resource="mappers/user-mapper.xml" /> -->
+
 		<mapper resource="mappers/board-mapper.xml" />
 		<mapper resource="mappers/game-mapper.xml"/>
 		<mapper resource="mappers/cboard-mapper.xml"/>

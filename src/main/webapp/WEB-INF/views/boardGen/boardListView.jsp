@@ -7,8 +7,11 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>boardListView</title>
+<title>boardDetailView</title>
 <style type="text/css">
+
+
+
 table {
   border-collapse: collapse;
   border-spacing: 0;
@@ -194,6 +197,15 @@ section.notice {
 </style>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+
+<header>
+   <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+</header>
+
+
+
+
 <section class="notice">
   <div class="page-title">
         <div class="container">
@@ -205,10 +217,10 @@ section.notice {
     <div id="board-search">
         <div class="container">
             <div class="search-window">
-                <form action="">
+                <form action="bgsearchTitle.do" method="post">
                     <div class="search-wrap">
                         <label for="search" class="blind">공지사항 내용 검색</label>
-                        <input id="search" type="search" name="" placeholder="검색어를 입력해주세요." value="">
+                        <input id="search" type="search" name="search" placeholder="제목으로 검색하세요." value="">
                         <button type="submit" class="btn btn-dark">검색</button>
                     </div>
                 </form>
@@ -248,9 +260,14 @@ section.notice {
                 
                 </c:forEach>
                 </tbody>
-                
+                <br>
+        <div id="write" style="float:right;">
+        	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">글작성</button>
+        	<br>
+        </div>
             </table>
         </div>
+        
         <c:import url="/WEB-INF/views/common/footer.jsp"/>
     </div>
 

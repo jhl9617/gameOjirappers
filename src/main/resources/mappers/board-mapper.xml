@@ -31,12 +31,16 @@
 		]]>
 	</select>
 	
-	<select id="selectOne" parameterType="BoardGen" resultMap="resultBoard">
+	<select id="selectOne" parameterType="_int" resultMap="resultBoard">
 		select * from tb_board_gen
-		where user_id = #{ user_id }
+		where board_no = #{ board_no }
 	</select>
 	
-	<select id="selectBoardByTitle"></select>
+	<select id="selectBoardByTitle" parameterType="string" resultMap="resultBoard">
+		select * from tb_board_gen
+		where board_title like '%' || #{ search } || '%'
+		order by board_no desc
+	</select>
 	
 	<select id="selectListCount" resultType="_int">
 		select count(*) from tb_board_gen
@@ -44,7 +48,15 @@
 	
 	<select id="selectRankTop5"></select>
 	
-	<insert id="insertBoard"></insert>
+	<insert id="insertBoard" parameterType="BoardGen">
+		insert into tb_board_gen(BOARD_NO, board_title, BOARD_CONTENT, BOARD_DATE,
+                BOARD_COUNT, BOARD_LIKE, BOARD_ORIFILE, BOARD_REFILE, APPID, USER_ID, BOARD_NOTICE)
+		values((select max(board_no) + 1 from tb_board_gen),
+				#{board_title}, #{board_content},
+				sysdate, null, null,
+				#{board_orifile},
+				#{board_refile}, #{ appid}, #{ user_id}, null)
+	</insert>
 	
 	<insert id="insertBoardLike"></insert>
 	
@@ -52,7 +64,10 @@
 	
 	<update id="updateBoardReadCount"></update>
 	
-	<delete id="deleteBoard"></delete>
+	<delete id="deleteBoard" parameterType="_int" >
+		delete from tb_board_gen
+		where board_no = #{ board_no } 
+	</delete>
 	
 	<delete id="deleteBoardLike"></delete>
 
