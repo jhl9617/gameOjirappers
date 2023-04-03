@@ -39,7 +39,7 @@ public class TestCGroupController {
         logger.info("setup() : MockMvc 객체 생성 확인 " + mockMvc);
     }
 
-    //커뮤니티 생성하는 테스트
+    //커뮤니티 생성하는 테스트(커뮤 이름 중복 될 수 없으므로 다시 테스트 하면 communityname 이름 바꿔야함)
     @Test
     public void testCommuCreate() {
         logger.info("--커뮤 생성 테스트 시작--");
