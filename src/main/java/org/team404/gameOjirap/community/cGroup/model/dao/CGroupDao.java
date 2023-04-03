@@ -24,6 +24,7 @@ public class CGroupDao {
       return session.selectOne("CGroupMapper.selectCommuInvalid", communityname);
     }
 
+
     //커뮤 생성
     public int insertCGroup(CGroup newGroup) {
         return session.insert("CGroupMapper.insertCGroup", newGroup);
@@ -45,5 +46,9 @@ public class CGroupDao {
     public ArrayList<CGroup> selectList(Paging paging) {
         List<CGroup> list = session.selectList("CGroupMapper.selectcgrouplist", paging);
         return (ArrayList<CGroup>) list;
+    }
+
+    public CGroup selectSingleCGroup(int communityId) {
+        return session.selectOne("CGroupMapper.selectcgroup", communityId);
     }
 }

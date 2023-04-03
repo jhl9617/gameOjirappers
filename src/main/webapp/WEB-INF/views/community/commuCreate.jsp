@@ -23,7 +23,6 @@
                 <input type="text" name="communityname" value="${ communityname }"><th>by 작성자</th>     <%--작성자 부분은 나중에 닉네임--%>
             </td>
         </tr>
-
         <tr>
             <th>밴드 대표 이미지</th>
             <td><input type="file" name="communityimgori" accept="image/*"/></td>
