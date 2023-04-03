@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC
 "-//mybatis.org//DTD Mapper 3.0//EN"
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
-<mapper namespace="boardMapper">
+<mapper namespace="boardGenMapper">
 
 	<resultMap type="BoardGen" id="resultBoard">
 		<result column="board_no" property="board_no"/>
@@ -19,15 +19,15 @@
 	</resultMap>
 	
 	
-	<select id="selectList" resultMap="resultBoard">
+	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
 		<![CDATA[
 		select *  
 		from (select rownum rnum, board_no, board_title, board_content,
 		            board_date, board_count, board_like, board_orifile,
 		            board_refile, appid, user_id, board_notice
 		    from (select * from tb_board_gen
-		              order by board_no desc))
-		where rnum >= 1 and rnum <= 10
+		              order by board_count desc))
+		where rnum >= #{ startRow } and rnum <= #{endRow} 
 		]]>
 	</select>
 	
@@ -53,18 +53,28 @@
                 BOARD_COUNT, BOARD_LIKE, BOARD_ORIFILE, BOARD_REFILE, APPID, USER_ID, BOARD_NOTICE)
 		values((select max(board_no) + 1 from tb_board_gen),
 				#{board_title}, #{board_content},
-				sysdate, null, null,
+				sysdate, 0, 0,
 				#{board_orifile},
-				#{board_refile}, #{ appid}, #{ user_id}, null)
+				#{board_refile}, #{appid}, #{user_id}, null)
 	</insert>
 	
 	<insert id="insertBoardLike"></insert>
 	
-	<update id="updateBoard"></update>
+	<update id="updateBoard" parameterType="BoardGen">
+		update tb_board_gen
+		set board_title = #{board_title},
+		board_content = #{board_content},
+		board_date = sysdate
+		where board_no = #{board_no}
+	</update>
 	
-	<update id="updateBoardReadCount"></update>
+	<update id="updateBoardReadCount" parameterType="_int">
+		update tb_board_gen
+		set board_count = board_count + 1
+		where board_no = #{ board_no }
+	</update>
 	
-	<delete id="deleteBoard" parameterType="_int" >
+	<delete id="deleteBoard" parameterType="_int">
 		delete from tb_board_gen
 		where board_no = #{ board_no } 
 	</delete>

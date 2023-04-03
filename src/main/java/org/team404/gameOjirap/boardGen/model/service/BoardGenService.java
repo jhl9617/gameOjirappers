@@ -1,11 +1,11 @@
-package org.team404.gameOjirap.board.model.service;
+package org.team404.gameOjirap.boardGen.model.service;
 
 import java.util.ArrayList;
 
-import org.team404.gameOjirap.board.model.vo.BoardGen;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.Paging;
 
-public interface BoardService {
+public interface BoardGenService {
 	ArrayList<BoardGen> selectList(Paging page); //한 페이지에 보여질 게시글 조회용
 	BoardGen selectOne(int board_no);	//해당 게시글 번호에 대한 게시글 상세 조회용
 	ArrayList<BoardGen> selectBoardByTitle(String search); //게시글 제목으로 검색용
