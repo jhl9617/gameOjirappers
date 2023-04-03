@@ -39,25 +39,23 @@ function showDiv(){
 	<input type="radio" name="item" value="username" > 이름
 </div>
 <div id="useridDiv">
-	<form action="nsearchUserid.do" method="post">
+	<form action="searchUserid.do" method="post">
 		<label>검색할 회원아이디를 입력하세요 : 
-			<input type="seach" name="keyword">
+			<input type="search" name="uid">
 		</label>
 		<input type="submit" value="검색">
 	</form>
 </div>
 <div id="usernameDiv">
-	<form action="nsearchUserName.do" method="post">
+	<form action="searchUserName.do" method="post">
 		<label>검색할 회원이름을 입력하세요 : 
-			<input type="seach" name="keyword">
+			<input type="seach" name="uname">
 		</label>
 		<input type="submit" value="검색">
 	</form>
 </div>
 </center>
-<form action="">
 
-</form>
 <center>
 	<button onclick="javascript:location.href=${ pageContext.servletContext.contextPath }'';">전체 회원 보기</button>
 </center>
@@ -77,20 +75,18 @@ function showDiv(){
  
 			<td>${ u.username }</td>
 			<td>${ u.usergrade }</td>
+			<td>${ u.point }</td>
 			<td>
 				<fmt:formatDate value="${ u.enrolldate }" 
 					pattern="yyyy-MM-dd"/>
 			</td>
-
-			<c:url var="uban" value="/uban.do" >
-
-            	<c:param name="" value="${ u.userid }"/>
-            	<c:param name="" value="${ u.username }"/>
-            	<c:param name="" value="${ u.usergrade }"/>
-            	<c:param name="" value="${ u.point }"/>
-         	</c:url>
-
-			<td><a href="uban" >활동정지/포인트차감</a></td>
+			
+			<td>
+				<form action="uban.do" method="post">
+					<input type="hidden" name="userid" value="${ u.userid }">
+					<input type="submit" value="활동정지/포인트차감">
+				</form>
+			</td>
 
 		</tr>
 	</c:forEach>
