@@ -1,19 +1,23 @@
 package org.team404.gameOjirap.user.controller;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
-import org.team404.gameOjirap.user.model.service.MoveService;
+import org.springframework.web.servlet.ModelAndView;
+import org.team404.gameOjirap.user.model.service.InoutService;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class MoveController {
 	
-	@Autowired 
-	private MoveService moveService;
+	private final Logger logger = LoggerFactory.getLogger(InoutController.class);
+	@Autowired 									
+	private InoutService InoutService;	
 	
 	//로그인 페이지 이동 처리용 --------------------------------------------------------------------------------
 	@RequestMapping(value="loginPage.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
@@ -31,30 +35,24 @@ public class MoveController {
 	}//method close
 	
 	
-	
-	
-	//마이페이지 이동 처리용 ---------------------------------------------------------------------------------------	
-	@RequestMapping(value="userDatailPage.do", method= {RequestMethod.GET, RequestMethod.POST} )
-	public String moveUserDatailPage()  {
-		return "user/userDatailPage";		
-	}//method close
-	
-	
-	
-	
 	//회원정보수정페이지 이동 처리용 --------------------------------------------------------------------------------	
 	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.GET, RequestMethod.POST })
 	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model)  {
-		User user = moveService.selectUser(user_id);
 		
-		if(user != null) {
-			model.addAttribute("user", user);
+		User updateUser = InoutService.selectUser(user_id);
+		
+		if(updateUser != null) {
+			model.addAttribute("user", updateUser);
 			return "user/moveUpdatePage";
 		}else {
 			model.addAttribute("message", user_id + " : 회원조회 실패!");
 			return "common/error";
 		}//if
 	}//method close
+	
+	
+	
+	
 	
 	//회원활동관리 페이지 이동 처리용 ---------------------------------------------------------------------------------------	
 	@RequestMapping(value="uban.do", method= {RequestMethod.POST} )

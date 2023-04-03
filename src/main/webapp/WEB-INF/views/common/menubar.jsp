@@ -23,6 +23,8 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/enrollPage.do" class="button"><span class="label">회원가입</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/userDatailPage.do" class="button"><span class="label">마이페이지</span></a></li> <%--임시--%>
+			<li><a href="${ pageContext.servletContext.contextPath }/moveUpdatePage.do" class="button"><span class="label">회원정보수정하기</span></a></li> <%--임시--%>
 		</ul>	
 	</c:if>	
 	<%-- <% } %> --%>
@@ -43,6 +45,7 @@
 		</ul>
 	</c:if>
 	<ul><a href="${ pageContext.servletContext.contextPath }/commuMain.do" class="button"><span class="label">밴드</span></a></ul> <%--임시--%>
+	
 </header>
 </body>
 </html>
