@@ -62,4 +62,5 @@ public class BoardDao {
 		return session.update("boardMapper.updateBoardReadCount", board_no);
 	}
 
+
 }
