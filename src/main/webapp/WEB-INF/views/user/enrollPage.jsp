@@ -94,47 +94,54 @@
 				<h2 align="center">회원가입 <br></h2>
 
 				<label for="id" style="padding: 2px">* 아이디<br>
-					<input type="text" id="user_id" required> 
+					<input name="user_id" 
+								type="text" id="user_id"  required> 
 					<input type="button"	value="아이디 중복확인" onclick="return CheckId()">
-					<br><br>
+				<br><br>
 				</label> 
 				
 				<label for="pwd">* 비밀번호<br> 
-					<input name="user_pwd" class="pw" id="user_pwd" type="password" required><br>
-					<br><br>
+					<input name="user_pwd" 
+								class="pw" id="user_pwd" type="password" required ><br>
+				<br><br>
 				</label> 
 				<label for="pwd2">* 비밀번호 확인<br> 
 					<input class="pw" id="user_pwd2" type="password" required><br>
-					<br><br>
+				<br><br>
 				</label> 
 				
 				<label for="nickname">* 닉네임<br> 
-				<input type="text" id="user_nickname" required>
-					<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()"><br>
-					<br><br>
+				<input name="user_nickname"
+							type="text" id="user_nickname" required>
+				<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()"><br>
+				<br><br>
 				</label> 
 				
 				<label for="name">* 이 름<br> 
-					<input type="text" id="user_name" required><br>
-					<br><br>
+					<input name="user_name"
+								type="text" id="user_name" required><br>
+				<br><br>
 				</label> 
 				
 				<label for="phone">* 전화번호(-제외하고 입력)<br> 
-					<input type="tel" id="user_phone" required><br>
+					<input name="user_phone"
+								type="tel" id="user_phone" required><br>
 				<br><br>
 				</label> 
 				
 				<label for="email">* 이메일<br> 
-					<input type="text" id="user_email" required><br>
-					<br><br>
+					<input name="user_email"
+								type="text" id="user_email" required><br>
+				<br><br>
 				</label> 
 				
 				<label for="date">생일<br>
-					<input type="date" id="user_birth" required><br>
-					<br><br>
+					<input name="user_birth"
+								type="date" id="user_birth" required><br>
+				<br><br>
 				</label> 
 				<label for="answer">본인확인 질문
-					<select id ="onfirm_answer_select" style="background:Oldlace; color:gray; font-size: 13pt; ">
+					<select id ="onfirm_answer_select" style= "background:Oldlace; color:gray; font-size: 13pt; ">
 					    <option value="">선택</option>
 						<option value="1">당신의 이름은 무엇입니까?</option>
 						<option value="2">당신의 생년월일은 언제입니까?</option>
@@ -142,7 +149,8 @@
 						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option>
 						<option value="5">당신이 태어난 도시는 어디입니까?</option>
 					</select>
-						<input type="text" id="onfirm_answer" placeholder="답변 입력" required > <br>
+						<input name="confirm_answer"
+									type="text" id="onfirm_answer" placeholder="답변 입력" required > <br>
 				</label>
 				<br>
 			</div>

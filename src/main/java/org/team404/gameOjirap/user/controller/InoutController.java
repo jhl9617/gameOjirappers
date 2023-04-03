@@ -31,7 +31,21 @@ public class InoutController {
 	
 			
 	
-	
+	//회원탈퇴 (삭제)요청 처리용  메소드
+	//삭제일때는 따로 정보를 보낼필요가 없음 (자동 로그아웃 처리) => String을 리턴한다.
+	@RequestMapping("mdel.do")
+	public String memberDeleteMethod(@RequestParam("user_id") String user_id, 
+															Model model) {
+		logger.info("mdel.do 확인용 : \n" + user_id);
+		
+		if(InoutService.userDeleteMethod(user_id) > 0) {			//회원 탈퇴 성공했을때 (자동 로그아웃 처리해야함) 
+			return "redirect:logout.do"; //Controller메소드에서 다른 Controller메소드 호출할 수 있음 (앞에  [    redirect:  ] 를 붙여준다
+		}else {		//회원 탈퇴 실패했을때
+			model.addAttribute("message", user_id + " : 회원 삭제 실패! 요청사항을 다시 확인해주세요!");			//이 메세지를 message에 담아서 리턴함
+			return "common/error";
+		}//if
+	}//method close
+		
 	
 	
 	//로그아웃 처리용 메소드
@@ -52,13 +66,13 @@ public class InoutController {
 	
 	
 	
-	
-	
 	// 로그인 요청처리용
 	@RequestMapping(value="login.do", method= {RequestMethod.GET, RequestMethod.POST } )
-	public String loginMethod(User user, HttpSession session, SessionStatus status,Model model) {
+	public String selectUser(User user, HttpSession session, SessionStatus status,Model model) {
 		
 		logger.info("login.do : \n" + user.toString());
+		
+		//전달온 회원 아이디로 먼저 정보조회함
 		User loginUser = InoutService.selectUser(user.getUser_id());
 		
 		if(loginUser != null) {		//로그인한 회원이 있다면
@@ -124,7 +138,7 @@ public class InoutController {
 
 	//회원가입 요청을 처리하는 용도의 메소드
 	@RequestMapping(value="enroll.do", method={RequestMethod.GET, RequestMethod.POST })
-	public String memberInsertMethod(User user, Model model) {		//메소드이름은 내맘대로 작성	//에러메세지 출력을 위해 Model 준비
+	public String userInsertMethod(User user, Model model) {		//메소드이름은 내맘대로 작성	//에러메세지 출력을 위해 Model 준비
 		logger.info("enroll.do에 잘 담겼는지 확인용(controller) : \n" + user);		//멤버에 잘 담겼는지 확인용
 		
 		//패스워드 암호화 처리

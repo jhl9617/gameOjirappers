@@ -32,23 +32,20 @@
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
 	<!-- 로그인 처리용 -->
-	<select id="loginMethod"  parameterType="User"  resultMap="resultUser">		
-		select * 
-		from tb_user
-		where user_id = #{ user_id } 
-		  and user_pwd = #{ user_pwd }			
-		  and user_status = 'run'
+	<select id="selectUser"  parameterType="User"  resultMap="resultUser">		
+      select * 
+      from tb_user
+      where user_id = #{ user_id }
 	</select>
 
 
-	<!-- 아이디로 회원정보 조회용 -->
-	<!-- resultMap방식으로 연결하는 방법임 -->
-	<select id="selectUser" parameterType="string" resultMap="resultUser">
-	   select * 
-	   from tb_user
-	   where user_id = #{ user_id }
-	</select>
-	
+	<!-- 회원탈퇴 처리용 -->
+	<delete id="userDeleteMethod" parameterType="string">		<!-- insert & delete는 기본이 int로 리턴하기때문에  resultType이나 resultMap 작성할 수 없음 -->
+		delete from member
+		where user_id = #{ user_id }			<!-- 값 1개에 대한 변수적용은 변수이름 아무거나 해도 됨  (uid)  but, 여러개일때는 순서대로 똑같이 써줘야한다.-->
+	</delete>
+
+
 	
 	<!-- 회원 전체 조회용 -->
 	<select id = "selectUserList" resultType="User">
@@ -76,18 +73,14 @@
 		
 	<!-- 회원가입 처리용 -->
 	<insert id="userInsertMethod" parameterType="User">			
-	    insert into tb_user (user_id, admin_id, user_pwd, user_nickname, user_name, user_phone, user_email, user_birth, user_level, 
-                                user_status, user_point, user_access, user_original_profile, confirm_answer )	
-		values (#{user_id}, default, #{user_pwd}, default, default, default, default,  default,  default,
-        						default, default, default, default, default) 	
-<!-- 		insert into member (userid, userpwd, username, gender, age, phone, email,  -->
-<!-- 							enroll_date, lastmodified, signtype, admin, login_ok)	 -->
-<!-- 		values (#{userid}, #{userpwd}, #{username}, #{gender}, #{age}, #{phone}, #{email}, default, default, default, default, default) 				 -->
-		<!-- 컬럼의 default 값을 잘 확인하면서 순서대로 작성한다-->
+		insert into tb_user (
+			user_id, admin_id, user_pwd, user_nickname, user_name, user_phone, user_email, user_birth, 
+			user_level, user_status, user_point, user_access, user_original_profile, confirm_answer) 
+		values (
+			#{user_id}, default, #{user_pwd}, #{user_nickname}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, 
+			default, default, default, default, default, default)
 		<!-- #{}안에 멤버변수명을 작성해주면 알아서 getter가 됨. (vo에 getter가 반드시 있어야 작동함) -->
 	</insert>
-	
-	
 	
 	
 	
