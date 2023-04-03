@@ -28,23 +28,32 @@ public class GameServiceImpl implements GameService{
 	}
 
 	@Override
-	public ArrayList<Game> selectgameTop6() {
-		return gameDao.selectgameTop6();
+	public ArrayList<Game> selectGameTop6() {
+		return gameDao.selectGameTop6();
 	}
 
 	@Override
-	public ArrayList<Game> selectgameNew6() {
-		return gameDao.selectgameNew6();
+	public ArrayList<Game> selectGameNew6() {
+		return gameDao.selectGameNew6();
 	}
 
 	@Override
-	public ArrayList<Game> selectgamedisctop() {
-		return gameDao.selectgamedisctop();
+	public ArrayList<Game> selectGameDiscTop() {
+		return gameDao.selectGameDiscTop();
 	}
 
 	@Override
 	public String selectAchievement(String appid) {
 		return gameDao.selectAchievement(appid);
 	}
+
+	@Override
+	public Game selectGame(String appid) {
+		return gameDao.selectGame(appid);
+	}
+
+
+
+
 
 }

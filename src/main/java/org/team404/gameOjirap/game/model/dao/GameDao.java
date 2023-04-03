@@ -30,20 +30,20 @@ public class GameDao {
 	}
 
 
-	public ArrayList<Game> selectgameTop6() {
-		List<Game> list = session.selectList("gameMapper.selectgameTop6");
+	public ArrayList<Game> selectGameTop6() {
+		List<Game> list = session.selectList("gameMapper.selectGameTop6");
 		return (ArrayList<Game>)list;
 	}
 
 
-	public ArrayList<Game> selectgameNew6() {
-		List<Game> list = session.selectList("gameMapper.selectgameNew6");
+	public ArrayList<Game> selectGameNew6() {
+		List<Game> list = session.selectList("gameMapper.selectGameNew6");
 		return (ArrayList<Game>)list;
 	}
 
 
-	public ArrayList<Game> selectgamedisctop() {
-		List<Game> list = session.selectList("gameMapper.selectgameDiscTop");
+	public ArrayList<Game> selectGameDiscTop() {
+		List<Game> list = session.selectList("gameMapper.selectGameDiscTop");
 		return (ArrayList<Game>)list;
 	}
 
@@ -51,6 +51,13 @@ public class GameDao {
 	public String selectAchievement(String appid) {
 		return session.selectOne("gameMapper.selectAchievement", appid);
 	}
+
+
+	public Game selectGame(String appid) {
+		return session.selectOne("gameMapper.selectGame",appid);
+	}
+
+
 
 
 

@@ -11,10 +11,19 @@ public interface GameService {
 	int selectGameCount(String appid);
 
 	
-	ArrayList<Game> selectgameTop6();
+	Game selectGame(String appid);				//게임 리스트 갖고 오기
+	
+	ArrayList<Game> selectGameTop6();			//접속자 많은 게임 
 
-	ArrayList<Game> selectgameNew6();
+	ArrayList<Game> selectGameNew6();			//신작 게임
 
-	ArrayList<Game> selectgamedisctop();
+	ArrayList<Game> selectGameDiscTop();		//할인율 높은 순위
+	
 
+<<<<<<< Updated upstream
+=======
+	public String selectAchievement(String appid);
+
+
+>>>>>>> Stashed changes
 }
