@@ -256,7 +256,7 @@ CREATE TABLE TB_BOARD_GEN (
                               board_like	number		,
                               board_orifile	VARCHAR2(500),		
                               board_refile	VARCHAR2(500)		NULL,
-                              appid	Number		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
 					board_notice VARCHAR2(50)
 );
@@ -278,7 +278,7 @@ DROP TABLE TB_HOTLIST cascade constraints;
 
 CREATE TABLE TB_HOTLIST (
                             user_id	VARCHAR2(20)		NOT NULL,
-                            appid	Number		NOT NULL
+                            appid	VARCHAR2(30 BYTE)		NOT NULL
 );
 
 comment on column TB_HOTLIST.user_id is '사용자 ID';
@@ -352,7 +352,7 @@ CREATE TABLE TB_BOARD_TAR (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		NOT NULL,
+                              appid	VARCHAR2(30 BYTE)		NOT NULL,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
@@ -379,7 +379,7 @@ CREATE TABLE TB_BOARD_QNA (
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
                               board_count	NUMBER		,
-                              appid	NUMBER		,
+                              appid	VARCHAR2(30 BYTE)		,
                               board_like	NUMBER		,
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
