@@ -23,7 +23,6 @@ public class RequestInfo {
 		// 스팀 스파이에 상세정보 요청하는 url
 		String spyURL = "https://steamspy.com/api.php?request=appdetails&appid=" + key;
 		// 초기 게임가격 표시 모양 포맷용
-		DecimalFormat df = new DecimalFormat("₩#,###");
 		JSONParser parser = new JSONParser();
 		Game g = new Game();
 		RestTemplate restTemplate = new RestTemplate();
@@ -67,21 +66,21 @@ public class RequestInfo {
 			publisher = null;
 		}
 		// 초기가
-		String initialPrice = "";
+		int initialPrice = 0;
 		try {
-			double dd = Double.parseDouble(
-					((HashMap) ((HashMap) datamap.get("data")).get("price_overview")).get("initial").toString());
-			initialPrice = df.format(dd / 100);
+			initialPrice = Integer.parseInt(
+					((HashMap)((HashMap)datamap.get("data")).get("price_overview")).get("initial").toString())/100;
+			
 		} catch (Exception e) {
-			initialPrice = "0";
+			initialPrice = 0;
 		}
 		// 최종가
-		String finalPrice = "";
+		int finalPrice = 0;
 		try {
-			finalPrice = ((HashMap) ((HashMap) datamap.get("data")).get("price_overview")).get("final_formatted")
-					.toString();
+			finalPrice = Integer.parseInt(((HashMap) ((HashMap) datamap.get("data")).get("price_overview")).get("final")
+					.toString())/100;
 		} catch (Exception e) {
-			finalPrice = "0";
+			finalPrice = 0;
 		}
 		// 할인율(퍼센트)
 		int discountrate = 0;
@@ -237,9 +236,9 @@ public class RequestInfo {
 		g.setMeta(meta);
 		g.setCategory(category);
 		g.setGenre(genre);
-		g.setHeaderimgs(headerimg);
-		g.setMovies(movie);
-		g.setreleasedate(releasedate);
+		g.setHeaderimg(headerimg);
+		g.setMovie(movie);
+		g.setReleasedate(releasedate);
 		g.setDescription(description);
 		g.setAchievement(achievement);
 		g.setPositive(positive);

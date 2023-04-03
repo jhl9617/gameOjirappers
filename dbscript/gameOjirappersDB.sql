@@ -254,7 +254,7 @@ CREATE TABLE TB_BOARD_GEN (
                               board_date	Date		NOT NULL,
                               board_count	number		,
                               board_like	number		,
-                              board_orifile	VARCHAR2(500),
+                              board_orifile	VARCHAR2(500),		
                               board_refile	VARCHAR2(500)		NULL,
                               appid	VARCHAR2(30 BYTE)		NOT NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
@@ -278,7 +278,7 @@ DROP TABLE TB_HOTLIST cascade constraints;
 
 CREATE TABLE TB_HOTLIST (
                             user_id	VARCHAR2(20)		NOT NULL,
-                            appid VARCHAR2(30 BYTE)			NOT NULL
+                            appid	VARCHAR2(30 BYTE)		NOT NULL
 );
 
 comment on column TB_HOTLIST.user_id is '사용자 ID';
@@ -643,6 +643,14 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
 
+INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
+VALUES (1, '����', SYSDATE, 'admin', '�����');
+
+CREATE SEQUENCE sch_seq
+    START WITH 1
+    INCREMENT BY 1;
+
+
 insert into tb_board_gen
 values(1, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
         250, 1200, null, null, 12, 'peter444', null);
@@ -670,5 +678,6 @@ values(6, '테스트용 게시글 입니다.', '테스트용 게시글 내용입
 
 INSERT INTO TB_Community (communityId,communityName, communityDate,user_id,communityImgOri,communityImgRename,communityDesc
 ) VALUES (0,'Sample Band',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
+
 
 commit;
