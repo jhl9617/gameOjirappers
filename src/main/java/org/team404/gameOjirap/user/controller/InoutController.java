@@ -75,25 +75,11 @@ public class InoutController {
 	}//method close
 	
 	
-	
-//	//관리자기능 : 회원 로그인 제한&가능 처리용 메소드
-//	@RequestMapping(value="loginok.do", method= {RequestMethod.GET, RequestMethod.POST }) 
-//	public String changeLoginOKMethod(User user, MyPage user_status, Model model) {			//commend객체를 이용해서 바로 받는다 (member)
-//		logger.info("loginok.do작동완료 : " + user.getUser_id() + ", " + user_status.getUser_status());		//값 잘 받아왔는지 확인용
-//		
-//		if (InoutService.updateLoginok(user) > 0) {		//updateLoginok 값 수정에 성공 했다면
-//			return "redirect:mlist.do";				// mlist.do가 실행됨 (수정된값으로 실시간으로 다시 조회해옴)
-//		}else {
-//			model.addAttribute("message", "로그인 제한/허용 처리 오류 발생!");
-//			return "common/error";
-//		}//if
-//	}//method close
-	
-	
+
 	
 	//아이디 중복확인 요청 처리용 메소드 (ajax 통신)
 	@RequestMapping(value="useridchk.do", method={RequestMethod.GET, RequestMethod.POST })		//url패턴은 value로 명시하며 // post방식으로 전송왔을땐 method 속성을 추가해서, post방식임을 명시한다. 
-	public void selectDupCheckId(@RequestParam("user_id") String user_id, HttpServletResponse response) throws IOException {		
+	public void selectDupCheckId(@RequestParam(value="user_id", required=false) String user_id, HttpServletResponse response) throws IOException {		
 		int idCount = InoutService.selectDupCheckId(user_id);
 		String returnStr = null;		//받아줄 string 객체인 returnStr을 만들어서 담아주고, 해당 값을 리턴할꺼임
 		if(idCount == 0) {
@@ -114,7 +100,7 @@ public class InoutController {
 	
 	//닉네임 중복확인 요청 처리용 메소드 (ajax 통신)
 	@RequestMapping(value="nickchk.do", method={RequestMethod.GET, RequestMethod.POST })		//url패턴은 value로 명시하며 // post방식으로 전송왔을땐 method 속성을 추가해서, post방식임을 명시한다. 
-	public void selectDupCheckNick(@RequestParam("user_nickname") String user_nickname, HttpServletResponse response) throws IOException {		
+	public void selectDupCheckNick(@RequestParam(value="user_nickname", required=false) String user_nickname, HttpServletResponse response) throws IOException {		
 		int nickCount = InoutService.selectDupCheckNick(user_nickname);
 		
 		String returnStr = null;		//받아줄 string 객체인 returnStr을 만들어서 담아주고, 해당 값을 리턴할꺼임
@@ -146,7 +132,7 @@ public class InoutController {
 		logger.info("after encode : " + user.getUser_pwd());
 		logger.info("length : (바이트길이)" + user.getUser_pwd().length()); 		//패스워드 길이 확인용
 		
-		if( InoutService.userInsertMethod(user)> 0) {	
+		if( InoutService.userInsertMethod(user) > 0) {	
 						//회원가입을 성공했다면?
 			return "common/main"; 		//리턴할 url패턴 리턴 
 		}else{			

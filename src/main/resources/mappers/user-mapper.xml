@@ -7,40 +7,27 @@
 
 	<!-- 유저정보 저장용 -->
 	<resultMap id="resultUser" type="User">
-	   <result column="user_id" 				property="user_id"/>
-	   <result column="admin_id" 			property="admin_id"/>
-	   <result column="user_pwd" 			property="user_pwd"/>
-	   <result column="user_nickname" 	property="user_nickname"/>
-	   <result column="user_name"			property="user_name"/>
-	   <result column="user_phone" 			property="user_phone"/>
-	   <result column="user_email"			property="user_email"/>
-	   <result column="user_birth" 			property="user_birth"/>
-	   <result column="confirm_answer" 	property="confirm_answer"/>
-	   <result column="login_ok" 				property="login_ok"/>
-	   <result column="admin" 					property="admin"/>
+		<result column="user_id" 		        		property="user_id"/> 		                    <!-- 회원아이디 -->
+		<result column="admin_id"		       		property="admin_id"	/>	                     	<!-- 관리자아이디 -->
+		<result column="user_pwd"		        	property="user_pwd"/>		                    <!-- 회원비밀번호 -->
+		<result column="user_nickname" 	        property="user_nickname" />	            <!--회원닉네임-->
+		<result column="user_name" 		        	property="user_name"/> 		                <!--회원이름-->
+		<result column="user_phone"		        	property="user_phone"	/>	                    <!--회원전화번호-->
+		<result column="user_email"		        	property="user_email"	/>	                    <!--회원이메일-->
+		<result column="user_birth"		        	property="user_birth" />		                <!--회원생일-->
+		<result column="user_level" 	       		 	property="user_level"/> 	                    <!--회원등급-->
+		<result column="user_status"	       		property="user_status"	/>                     <!--회원 활동상태-->
+		<result column="user_point" 	        		property="user_point" />	                    <!--보유포인트-->
+		<result column="user_access"				property="user_access"/>						<!--접속기록-->
+		<result column="user_original_profile"  property="user_original_profile" />  	<!--원본프로필이미지-->
+		<result column="confirm_answer"         property="confirm_answer" />              <!--본인확인용 질문-->
+		<result column="board_click_day" 		property="board_click_day"/> 				<!--즐찾한 날짜 ★가져올예정-->
+		<result column="appid"  						property="appid" />					     		<!--즐찾한 게임정보번호★가져올예정-->
+		<result column="bname" 						property="bname" />						     	<!--밴드 이름★가져올예정-->
+		<result column="com_contents"				property="com_contents"	/>				    <!--내가 쓴 코멘트 제목★가져올예정-->
+		<result column="board_title" 				property="board_title" />				     	<!--내가 쓴 글 제목★가져올예정-->
 	</resultMap>
 	
-	<!--마이페이지용  -->
-
-	<resultMap id="Mypage" type="User">
-	   <result column="user_level" 					property="user_level"/>
-	   <result column="user_status" 				property="user_status"/>
-	   <result column="user_point" 					property="user_point"/>
-	   <result column="user_access" 				property="user_access"/>
-	   <result column="user_original_profile" 	property="user_original_profile"/>
-	   <result column="bname" 						property="bname"/>
-	   <result column="com_contents" 				property="com_contents"/>
-	   <result column="board_title" 				property="board_title"/>
-	</resultMap>
-
-
-
-	<!-- 즐겨찾기용  -->
-	<resultMap id="resultHotList" type="User">
-	   <id column="user_id" property="user_id"/>
-	   <result column="game_id" property="game_id"/>
-	   <result column="board_click_day" property="board_click_day"/>
-	</resultMap>
 
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
@@ -69,6 +56,8 @@
 		from tb_user
 	</select>
 	
+	
+	
 	<!-- 회원가입시 아이디 중복 체크 처리용  -->
 	<select id="selectDupCheckId" parameterType="string" resultType="_int" >
 		select count(user_id) 
@@ -81,7 +70,7 @@
 	<select id="selectDupCheckNick" parameterType="string" resultType="_int" >
 		select count(user_nickname) 
 		from tb_user
-		where user_nickname = #{ value }	
+		where user_nickname = #{ user_nickname }	
 	</select>		
 	
 		

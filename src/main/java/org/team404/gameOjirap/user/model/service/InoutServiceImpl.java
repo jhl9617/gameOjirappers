@@ -7,7 +7,7 @@ import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.user.model.dao.InoutDao;
 import org.team404.gameOjirap.user.model.vo.User;
 
-@Service("inoutService")	
+@Service("InoutService")	
 public class InoutServiceImpl implements InoutService{
 
 	@Autowired			//자동 DI 처리됨 : 자동 객체 생성되어 연결된다.
