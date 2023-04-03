@@ -64,15 +64,14 @@ comment on column TB_COMMUNITY_MEMBER.member_date IS '멤버 가입일';
 DROP TABLE TB_Community cascade constraints;
 
 CREATE TABLE TB_Community (
-                              communityId	NUMBER	DEFAULT 0	NOT NULL,
+                              communityId	NUMBER		NOT NULL,
                               communityName	VARCHAR2(100)		NOT NULL,
                               communityDate	DATE		,
                               user_id	VARCHAR2(20)		NOT NULL,
                               communityImgOri	VARCHAR2(100),
                               communityImgRename	VARCHAR2(100),
-                                communityDesc	VARCHAR2(500)
+                              communityDesc VARCHAR2(500)
 );
-
 
 comment on column TB_Community.communityId IS '밴드 ID';
 comment on column TB_Community.communityName IS '밴드 이름';
@@ -249,7 +248,7 @@ comment on column GAME.PCRECOMMENDED is '게임 권장사양';
 DROP TABLE TB_BOARD_GEN cascade constraints;
 
 CREATE TABLE TB_BOARD_GEN (
-                              board_no	NUMBER		NOT NULL,
+                              board_no	number		NOT NULL,
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
@@ -348,7 +347,7 @@ comment on column TB_COMMUNITY_IMG.user_id is '이미지를 등록한 사용자 
 DROP TABLE TB_BOARD_TAR cascade constraints;
 
 CREATE TABLE TB_BOARD_TAR (
-                              board_no	NUMBER		NOT NULL,
+                              board_no	number		NOT NULL,
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
@@ -375,7 +374,7 @@ comment on column TB_BOARD_TAR.board_notice is '공지글 제목';
 DROP TABLE TB_BOARD_QNA cascade constraints;
 
 CREATE TABLE TB_BOARD_QNA (
-                              board_no	NUMBER		NOT NULL,
+                              board_no	number		NOT NULL,
                               board_title	VARCHAR2(50)		NOT NULL,
                               board_content	VARCHAR2(2000)		NULL,
                               board_date	Date		NOT NULL,
@@ -643,11 +642,42 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
+
 INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
 VALUES (1, '����', SYSDATE, 'admin', '�����');
 
 CREATE SEQUENCE sch_seq
     START WITH 1
     INCREMENT BY 1;
+
+
+insert into tb_board_gen
+values(1, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, null, null, 12, 'peter444', null);
+
+insert into tb_board_gen
+values(2, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, '테스트용', '테스트요', 12, 'peter444', '테스트용공지');
+        
+insert into tb_board_gen
+values(3, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, '테스트용', '테스트요', 12, 'peter444', '테스트용공지');     
+        
+insert into tb_board_gen
+values(4, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, '테스트용', '테스트요', 12, 'lisa777', '테스트용공지');
+        
+insert into tb_board_gen
+values(5, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, '테스트용', '테스트요', 12, 'bob555', '테스트용공지');
+     
+insert into tb_board_gen
+values(6, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
+        250, 1200, '테스트용', '테스트요', 12, 'peter444', '테스트용공지');
+
+
+INSERT INTO TB_Community (communityId,communityName, communityDate,user_id,communityImgOri,communityImgRename,communityDesc
+) VALUES (0,'Sample Band',TO_DATE('2023-04-01', 'YYYY-MM-DD'),'admin','sample_band_image_original.jpg','sample_band_image_renamed.jpg','A description of the Sample Band' );
+
 
 commit;

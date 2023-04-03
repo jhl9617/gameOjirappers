@@ -24,8 +24,8 @@ public class BoardDao {
 		return session.selectOne("boardMapper.selectOne", board_no);
 	}
 
-	public ArrayList<BoardGen> selectBoardByTitle(String keyword) {
-		List<BoardGen> list = session.selectList("boardMapper.selectBoardByTitle", keyword);
+	public ArrayList<BoardGen> selectBoardByTitle(String search) {
+		List<BoardGen> list = session.selectList("boardMapper.selectBoardByTitle", search);
 		return (ArrayList<BoardGen>)list;
 	}
 
@@ -33,16 +33,16 @@ public class BoardDao {
 		return session.selectOne("boardMapper.selectListCount");
 	}
 
-	public int insertBoard(BoardGen board) {
-		return session.insert("boardMapper.insertBoard", board);
+	public int insertBoard(BoardGen boardGen) {
+		return session.insert("boardMapper.insertBoard", boardGen);
 	}
 
-	public int updateBoard(BoardGen board) {
-		return session.update("boardMapper.updateBoard", board);
+	public int updateBoard(BoardGen boardGen) {
+		return session.update("boardMapper.updateBoard", boardGen);
 	}
 
-	public int deleteBoard(BoardGen board) {
-		return session.delete("boardMapper.deleteBoard", board);
+	public int deleteBoard(int boardGen) {
+		return session.delete("boardMapper.deleteBoard", boardGen);
 	}
 
 	public ArrayList<BoardGen> selectRankTop5() {
