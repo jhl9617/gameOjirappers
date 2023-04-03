@@ -58,4 +58,11 @@
 ]]>
     </select>
 
+    <!--커뮤 1개 받아옴-->
+    <select id="selectcgroup" parameterType="_int" resultType="CGroup">
+        select *
+        from TB_COMMUNITY
+        where COMMUNITYID = #{ communityid }
+    </select>
+
 </mapper>
