@@ -23,6 +23,10 @@
             <input type="text" class="pos" id="communityname" name="communityname" required>
         </div>
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
+        <c:url var="sse" value="/csview.do">
+        	<c:param name="communityid" value="1" />
+        </c:url>
+        <a href="${sse}"><h2>커뮤티니 일정보기</h2></a>
     </form>
 
     <h2 class="my-4">커뮤니티 찾아보기</h2>

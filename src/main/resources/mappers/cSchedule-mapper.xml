@@ -17,11 +17,32 @@
 		<result column="user_id" property="user_id"/>
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>-->
+	<resultMap type="ScheduleVote" id="ScheduleVotes">
+		<result column="schId" property="schId" />
+		<result column="user_id" property="user_id" />
+		<result column="schName" property="schName" />
+		<result column="schDes" property="schDes" />
+		<result column="schStart" property="schStart" />
+		<result column="schEnd" property="schEnd" />
+		<result column="votePart" property="votePart" />
+	</resultMap>
+	<resultMap type="CSchedule" id="CScheduleList">
+		<result column="schName" property="schName" />
+		<result column="schDes" property="schDes" />
+		<result column="schStart" property="schStart" />
+		<result column="schEnd" property="schEnd" />
+	</resultMap>
 	
-	<select id="selectScheduleList" parameterType="_int" resultType="CSchedule">
+	<select id="selectScheduleList" parameterType="_int" resultMap="ScheduleVotes">
 	select *
 	from tb_community_sch
+	left join tb_community_vote using(schid)
 	where communityId = #{communityId}
+	and schEnd >= trunc(sysdate)
 	</select>
-
+	
+	<insert id="insertSchdule" parameterType="CSchedule">
+	insert into tb_community_sch (schId, schName, schDes, communityId, schStart, schEnd)
+	values (sch_seq.nextval,#{schName},#{schDes},#{communityId},#{schStart},#{schEnd})
+	</insert>
 </mapper>
