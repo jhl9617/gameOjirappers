@@ -18,5 +18,10 @@
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>-->
 	
+	<select id="selectScheduleList" parameterType="_int" resultType="CSchedule">
+	select *
+	from tb_community_sch
+	where communityId = #{communityId}
+	</select>
 
 </mapper>

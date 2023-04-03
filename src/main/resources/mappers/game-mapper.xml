@@ -35,11 +35,11 @@
 	<!-- 게임정보 입력 -->
 	<insert id="insertGameInfo" parameterType="Game">
 		insert into game (appid, name, developer, publisher, initialprice, finalprice,
-		discountrate,description,platform,meta,category,genre,headerImg,movie,releasedate,
+		discountrate,description,platform,meta,category,genre,headerimg,movie,releasedate,
 		achievement,positive,ccu,short_description, supported_languages, pcminimum, pcrecommended)
 		values (#{appid},#{name},#{developer},#{publisher},#{initialprice},
 		        #{finalprice},#{discountrate},#{description},#{platform},
-		        #{meta},#{category},#{genre},#{headerImg},#{movie},
+		        #{meta},#{category},#{genre},#{headerimg},#{movie},
 		        #{releasedate},#{achievement},#{positive},#{ccu},
 		        #{short_description},#{supported_languages},#{pcminimum},#{pcrecommended})
 	</insert>

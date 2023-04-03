@@ -76,7 +76,7 @@ public class GameController {
 	// 기능용 메소드 	-----------------------------------
 	
 	// 게임 정보 삭제
-	@RequestMapping("gdeleteData.do")
+	@RequestMapping(value="gdeleteData.do", method=RequestMethod.POST)
 	public String deleteGameInfo(Model model, @RequestParam("appid") String appid) {
 		
 		if(gameService.deleteGameInfo(appid) > 0) {
@@ -110,14 +110,14 @@ public class GameController {
 			JSONObject job = new JSONObject();
 			job.put("appid", game.getAppid());
 			job.put("name", game.getName());
-			job.put("headerimg",URLEncoder.encode(game.getHeaderimgs(), "UTF-8"));
+			job.put("headerimg",URLEncoder.encode(game.getHeaderimg(), "UTF-8"));
 			
 			// 한글에 대해서는 인코딩해서 json에 담도록 함 : 한글깨짐 방지
 			job.put("short_description", URLEncoder.encode(game.getShort_description(), "UTF-8"));			
 			// 날짜는 반드시 toString() 으로 문자열로 바꿔서 json에 담아야 함
 
 
-			job.put("releasedate", game.getreleasedate().toString());
+			job.put("releasedate", game.getReleasedate().toString());
 			job.put("ccu", game.getCcu());
 			job.put("meta", game.getMeta());
 			
@@ -151,13 +151,13 @@ public class GameController {
 			JSONObject job = new JSONObject();
 			job.put("appid", game.getAppid());
 			job.put("name", game.getName());
-			job.put("headerimg",URLEncoder.encode(game.getHeaderimgs(), "UTF-8"));
+			job.put("headerimg",URLEncoder.encode(game.getHeaderimg(), "UTF-8"));
 			
 			// 한글에 대해서는 인코딩해서 json에 담도록 함 : 한글깨짐 방지
 			job.put("short_description", URLEncoder.encode(game.getShort_description(), "UTF-8"));			
 			// 날짜는 반드시 toString() 으로 문자열로 바꿔서 json에 담아야 함
 
-			job.put("releasedate", game.getreleasedate().toString());
+			job.put("releasedate", game.getReleasedate().toString());
 
 
 			jarr.add(job); // job 를 jarr 에 추가함
@@ -197,8 +197,8 @@ public class GameController {
 				JSONObject job = new JSONObject();
 				job.put("appid", game.getAppid());
 				job.put("name", game.getName());
-				job.put("initialprice", URLEncoder.encode(game.getInitialprice(), "UTF-8"));
-				job.put("finalprice", URLEncoder.encode(game.getFinalprice(), "UTF-8"));
+				job.put("initialprice", game.getInitialprice());
+				job.put("finalprice", game.getFinalprice());
 				job.put("ccu", game.getCcu());
 				job.put("discountrate", game.getDiscountrate());
 				
