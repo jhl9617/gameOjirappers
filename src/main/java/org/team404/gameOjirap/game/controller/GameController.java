@@ -19,6 +19,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 
@@ -29,14 +30,30 @@ public class GameController {
 	@Autowired
 	private GameService gameService;
 
-
-	// 이동 처리용 메소드
+	// 게임정보 상세 보기
 	@RequestMapping("moveGameDetail.do")
-	public String moveGameInfoView(
-			//Model model, @RequestParam("appid") String appid
-			) {
-		//model.addAttribute("appid", appid);
-		return "game/gameDetailView";
+	public ModelAndView moveGameInfoView(ModelAndView mv, @RequestParam("appid") String appid,
+			@RequestParam(name = "page", required = false) String page) throws UnsupportedEncodingException{
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+
+
+		// 해당 게시글 조회
+		Game game = gameService.selectGame(appid);
+
+//		System.out.println(game.toString());
+		if (game != null) {
+			mv.addObject("game", game);
+			mv.addObject("currentPage", currentPage);
+
+			mv.setViewName("game/gameDetailView");
+		} else {
+			mv.addObject("message", appid + "번 게임 정보 조회 실패");
+			mv.setViewName("common/error");
+		}
+		return mv;
 
 
 	}
@@ -96,7 +113,7 @@ public class GameController {
 	@ResponseBody
 	public String gameTop6Method() throws UnsupportedEncodingException {
 		// 인기 순인 게임 6개 조회해 옴
-		ArrayList<Game> list = gameService.selectgameTop6();
+		ArrayList<Game> list = gameService.selectGameTop6();
 		logger.info("gametop6.do : " + list.size()); // 5개 출력 확인
 
 		// 전송용 json 객체 준비
@@ -138,7 +155,7 @@ public class GameController {
 	@ResponseBody
 	public String gameNew6Method() throws UnsupportedEncodingException {
 		// 인기 순인 게임 6개 조회해 옴
-		ArrayList<Game> list = gameService.selectgameNew6();
+		ArrayList<Game> list = gameService.selectGameNew6();
 		logger.info("gamenew6.do : " + list.size()); // 5개 출력 확인
 		// 전송용 json 객체 준비
 		JSONObject sendJson = new JSONObject();
@@ -173,12 +190,12 @@ public class GameController {
 	}
 	
 	//게임 할인10개출력
-		@RequestMapping(value = "gamedisctop.do", method = RequestMethod.POST)
+		@RequestMapping(value = "gameDiscTop.do", method = RequestMethod.POST)
 		@ResponseBody
 		public String gameDiscTopMethod() throws UnsupportedEncodingException {
 			// 게임 할인10개출력
-			ArrayList<Game> list = gameService.selectgamedisctop();
-			logger.info("gamedisctop.do : " + list.size());
+			ArrayList<Game> list = gameService.selectGameDiscTop();
+			logger.info("gameDiscTop.do : " + list.size());
 
 			// 전송용 json 객체 준비
 			JSONObject sendJson = new JSONObject();
@@ -221,6 +238,8 @@ public class GameController {
 			// servlet-context.xml 에 json string 내보내는 JsonView 라는 뷰리졸버 추가 등록해야 함
 
 		}
+		
+
 
 	
 }

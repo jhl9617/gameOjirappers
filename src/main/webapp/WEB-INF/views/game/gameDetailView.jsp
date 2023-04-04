@@ -1,8 +1,14 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
 	pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 
 <c:set var="currentPage" value="${requestScope.currentPage }" />
+<c:set var="game" value="${ requestScope.game }" />
+
+
+
 
 <!DOCTYPE HTML>
 <!--
@@ -14,9 +20,45 @@
 <head>
 <title>GameInfo</title>
 <meta charset="utf-8" />
-<meta name="viewport"
-	content="width=device-width, initial-scale=1, user-scalable=no" />
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/main.css" />
+<meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
+<style type="text/css">
+#updateinfo {
+   display: none;
+}
+#deleteinfo {
+   display: none;
+}
+</style>
+<script type="text/javascript">
+function updateinfo() {
+    const updateinfo = document.getElementById('updateinfo');
+    const deleteinfo = document.getElementById('deleteinfo');
+
+    if (updateinfo.style.display === 'none') {
+        updateinfo.style.display = 'block';
+        deleteinfo.style.display = 'none';
+    } else {
+        updateinfo.style.display = 'none';
+    }
+    return false;
+}
+
+function deleteinfo() {
+    const updateinfo = document.getElementById('updateinfo');
+    const deleteinfo = document.getElementById('deleteinfo');
+
+    if (deleteinfo.style.display === 'none') {
+        deleteinfo.style.display = 'block';
+        updateinfo.style.display = 'none';
+    } else {
+        deleteinfo.style.display = 'none';
+    }
+    return false;
+}
+</script>
+<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+
 </head>
 <body class="is-preload">
 
@@ -25,15 +67,45 @@
 
 		<!-- Main -->
 		<div id="main">
-			<div class="inner">
-<a href="${ pageContext.servletContext.contextPath }/updateGameInfo.do" class="button"><span class="label">게임정보 갖고오기</span></a>
+		
+<div class="inner" align="left">
+<%--             <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}"> --%>
+               <span class="button" onclick="updateinfo();">게임정보 업데이트</span>
+               <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
+               <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
+                  class="button"><span class="label">게임정보 갖고오기</span></a>
+               <div id="updateinfo">
+                  <form action="updateGameInfo.do" method="post">
+                     <input name="appid"> <input type="submit" value="업데이트">
+                  </form>
+               </div>
+               <div id="deleteinfo">
+                  <form action="gdeleteData.do" method="post">
+                     <input name="appid"> <input type="submit" value="삭제">
+                  </form>
+               </div>
+<%--             </c:if> --%>
+            <hr clear="both">
+
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 				<!-- Content -->
 				<section>
+				
 					<header class="main">
-						<h1 align="center">${ requestScope.game.name }의 게임정보</h1>
-						<h3 align="center">#${ requestScope.game.genre }</h3>
+						<h1 align="center">${ requestScope.game.name } 의 게임 정보</h1>
+						<h3 align="center">
+						
+						<script type="text/javascript">
+						function gen2(){
+						var string = '${ requestScope.game.genre }';
+						genre2 = string.replace(/\//g, "#").slice(0,-1);
+						document.write("#"+genre2);
+						}
+						gen2();
+						</script>
+
+						</h3>
 					</header>
 				</section>
 				<section>
@@ -41,7 +113,9 @@
 					<header class="major">
 						<h2> 이미지 </h2>
 					</header>
-					<span class="image main"><img src="${ requestScope.game.screenshot }" alt="게임대표이미지" ></span>
+					<span class="image object">
+					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
+
 				</section>
 				<section>
 				
@@ -49,9 +123,9 @@
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
-							<div style="border:1px solid black;">
-							<video src="${ requestScope.game.movie }"></video>
-							</div>
+					<video controls>
+					  <source src="${ requestScope.game.movie }" type="video/mp4"></video>
+						
 					</table>
 					<table>
 					<header class="major">
@@ -60,13 +134,36 @@
 							<div style="border:1px solid black;">
 							<h2 align="center">초기 가격:[${ requestScope.game.initialprice }]</h2>
 							<h2 align="center">최종 가격:[${ requestScope.game.finalprice }]</h2>
-							<h2 align="center">개발자:[${ requestScope.game.name }]</h2>
-							<h2 align="center">배급사:[${ requestScope.game.name }]</h2>
+							<h2 align="center">개발자:[${ requestScope.game.developer }]</h2>
+							<h2 align="center">배급사:[${ requestScope.game.publisher }]</h2>
 							</div>
 					</table>
 				</section>
 				
-							<section>
+				
+				
+				
+				
+				<section>
+				
+					<header class="major">
+						<h2> 게임 소개글 </h2>
+					</header>
+				<div style="float:left;">		
+					<p>${ requestScope.game.description }</p>
+						<p></p>
+				</div>
+				
+				<header class="major">
+						<h2> 도전과제 링크 </h2>
+					</header>
+				<div style="float:left;">
+					<a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" >도전과제 링크</a>
+				</div>
+				</section>	
+				
+				
+				<section>
 				<header class="major">
 					<h2> 할인율 </h2>
 				</header>
@@ -110,26 +207,7 @@
 				</div>
 				
 				</section>
-				
-				
-				
-				<section>
-				
-					<header class="major">
-						<h2> 게임 소개글 </h2>
-					</header>
-				<div style="float:left;">		
-					<p>${ requestScope.game.description }</p>
-						<p></p>
-				</div>
-				
-				<header class="major">
-						<h2> 도전과제 링크 </h2>
-					</header>
-				<div style="float:left;">
-					<a href="#" >도전과제 링크</a>
-				</div>
-				</section>								
+											
 			<section>
 				<header class="major">
 					<h2> 유저게시판 </h2>
@@ -174,7 +252,9 @@
 				
 
 			</div>
+
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
+
 		</div>
 	</div>
 

@@ -36,12 +36,11 @@ $.ajax({
 			
 			gtvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
                 + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
-                +"<h3>"+json.list[i].name+"</h3><p>"
+                +"<h3><a href='${pageContext.servletContext.contextPath}/moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3><p>"
                 +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
                 +json.list[i].ccu+"</p>"
-                +"<ul class='actions'><li><a href='#' class='button'>More</a></li></ul></article>";
-			
-			
+                +"<ul class='actions'><li><a href='moveGameDetail.do?appid="+json.list[i].appid+"' class='button'>More</a></li></ul></article>";
+               
 		}
 
        
@@ -91,11 +90,11 @@ $(function(){
 	       	console.log("gamenew6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
 	    	}
 	 	});
-	});
+});
 	
 $(function(){
 	$.ajax({
-	    url: "gamedisctop.do",
+	    url: "gameDiscTop.do",
 	    type: "post",
 	    dataType: "json",
 	    success: function(data){
