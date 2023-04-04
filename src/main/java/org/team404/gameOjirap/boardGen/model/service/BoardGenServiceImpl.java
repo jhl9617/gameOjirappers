@@ -1,18 +1,18 @@
-package org.team404.gameOjirap.board.model.service;
+package org.team404.gameOjirap.boardGen.model.service;
 
 import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
-import org.team404.gameOjirap.board.model.dao.BoardDao;
-import org.team404.gameOjirap.board.model.vo.BoardGen;
+import org.team404.gameOjirap.boardGen.model.dao.BoardGenDao;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.Paging;
 
-@Service("boardService")
-public class BoardServiceImpl implements BoardService {
+@Service("boardGenService")
+public class BoardGenServiceImpl implements BoardGenService {
 
 	@Autowired
-	private BoardDao boardDao;
+	private BoardGenDao boardDao;
 	
 	@Override
 	public ArrayList<BoardGen> selectList(Paging page) {
