@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.team404.gameOjirap.common.Pagingnn;
+import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.vo.Game;
 
@@ -50,6 +52,26 @@ public class GameServiceImpl implements GameService{
 	@Override
 	public Game selectGame(String appid) {
 		return gameDao.selectGame(appid);
+	}
+
+	@Override
+	public int selectListNewCount() {
+		return gameDao.selectListNewCount();
+	}
+
+	@Override
+	public ArrayList<Game> selectNewList(Pagingnn paging) {
+		return gameDao.selectNewList(paging);
+	}
+
+	@Override
+	public ArrayList<Game> selectSearchPrice(int finalprice) {
+		return gameDao.selectSearchPrice(finalprice);
+	}
+
+	@Override
+	public ArrayList<Game> selectSearchGenre(Searchs searchs) {
+		return gameDao.selectSearchGenre(searchs);
 	}
 
 

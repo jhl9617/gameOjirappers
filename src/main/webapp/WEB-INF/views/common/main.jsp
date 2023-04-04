@@ -59,11 +59,7 @@ $(function(){
 	    dataType: "json",
 	    success: function(data){
 	       console.log("success : " + data);    // Object 로 출력
-//			select * 
-//			from ( select rownum rnum, name, headerimg, short_description , releasedate
-//					from ( select * from game where releasedate is not null order by releasedate desc  ))
-//			where rnum >= 1 and rnum <=6
-	       // 받은 Object => string 으로 바꿈
+
 	       var jsonStr = JSON.stringify(data);
 	       // sting => json 객체로 바꿈
 	       var json = JSON.parse(jsonStr);
@@ -73,12 +69,12 @@ $(function(){
 
 			for(var i in json.list){
 				
-				gnvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
+				gnvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
 	                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
 	                +"<h3>"+json.list[i].name+"</h3><p>"
 	                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
 	                +json.list[i].releasedate+"</p>"
-	                +"<ul class='actions'><li><a href='#' class='button'>More</a></li></ul></article>";
+	                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='button'>More</a></li></ul></article>";
 				
 				
 			}
@@ -99,23 +95,15 @@ $(function(){
 	    dataType: "json",
 	    success: function(data){
 	       console.log("success : " + data);    // Object 로 출력
-//			select * 
-//			from ( select rownum rnum, name, initialprice, finalprice ,ccu ,discountrate
-//					from ( select * from game where discountrate is not null order by discountrate desc  ))
-//			where rnum >= 1 and rnum <=10
+
 	       var jsonStr = JSON.stringify(data);
 	       // sting => json 객체로 바꿈
 	       var json = JSON.parse(jsonStr);
 	       
 	       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
 	       var gdvalues = $('#disclist').html();
-	       /* job.put("name", game.getName());
-			job.put("initialprice", game.getInitialprice());
-			job.put("finalprice", game.getFinalprice());
-			job.put("ccu", game.getCcu());
-			job.put("discountrate", game.getDiscountrate()); */
+
 			for(var i in json.list){
-				//decodeURIComponent(json.list[i].finalprice)
 				gdvalues += "<tr><td><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
 						+json.list[i].name
 						+"</td><td>" + decodeURIComponent(json.list[i].initialprice)
@@ -190,6 +178,7 @@ $(function(){
 				</div>
 				
 				<!-- 페이징 처리 -->
+				
 				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
 			
@@ -203,6 +192,7 @@ $(function(){
 					
 				</div>
 					<!-- 페이징 처리 -->
+					<c:set var="url" value="/gnlist.do.do"/>
 				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
 
@@ -224,17 +214,17 @@ $(function(){
 				<tr>
 					<th class="table-title" colspan="2">
 						<a href="#">
-						<span class="hide-small">Popular </span>Releases
+						<span class="hide-small">GameName </span>Releases
 						<svg version="1.1" width="24" height="24" viewBox="0 0 16 16" class="octicon octicon-arrow-right" aria-hidden="true">
 						<path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06Z">
 						</path>
 						</svg>
 						</a>
 					</th>
+					<th>초기 가격</th>
+					<th>최종가격</th>
 					<th>Peak Today</th>
-					<th>Peak Today</th>
-					<th>Peak Today</th>
-					<th><img src="" class="flag" alt="" width="18" height="18"> Price</th>
+					<th><img src="" class="flag" alt="" width="18" height="18"> 할인율</th>
 				</tr>
 				</thead>
 				<tbody>

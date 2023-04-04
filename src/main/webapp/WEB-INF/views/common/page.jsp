@@ -5,6 +5,8 @@
 <c:set var="startPage" value="${ requestScope.paging.startPage }" />
 <c:set var="endPage" value="${ requestScope.paging.endPage }" />
 <c:set var="maxPage" value="${ requestScope.paging.maxPage }" />
+<c:set var="currentPage" value="${ requestScope.paging.currentPage }" />
+<c:set var="url" value="${ requestScope.url }" />
 
 <!DOCTYPE html>
 <html>
@@ -20,7 +22,7 @@
 		<img src="<c:url value="/resources/images/movepageLL.jpg"/>" width="20px" height="20px" alt="[맨처음]" /> &nbsp;
 	</c:if>
 	<c:if test="${ currentPage > 1 }">
-		<c:url var="p1" value="/blist.do">
+		<c:url var="p1" value="${ url }">
 			<c:param name="page" value="1" />
 		</c:url>
 		<a href="${ p1 }">
@@ -32,7 +34,7 @@
 		<img src="<c:url value="/resources/images/movepageL.jpg"/>" width="20px" height="20px" alt="[이전그룹]" /> &nbsp;
 	</c:if>
 	<c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) > 1 }">
-		<c:url var="pbefore" value="/blist.do">
+		<c:url var="pbefore" value="${ url }">
 			<c:param name="page" value="${ startPage - 10 }" />
 		</c:url>
 		<a href="${ pbefore }"><img src="<c:url value="/resources/images/movepageL.jpg"/>" width="20px" height="20px" alt="[이전그룹]" />
@@ -45,7 +47,7 @@
 			<font size="4" color="red">[${ p }]</font>
 		</c:if>
 		<c:if test="${ p ne currentPage }">
-			<c:url var="pp" value="/blist.do">
+			<c:url var="pp" value="${ url }">
 				<c:param name="page" value="${ p }" />
 			</c:url>
 			<a href="${ pp }">${ p }</a>
@@ -57,7 +59,7 @@
 		<img src="<c:url value="/resources/images/movepageR.jpg"/>" width="20px" height="20px" alt="[다음그룹]" /> &nbsp;
 	</c:if>
 	<c:if test="${ (currentPage + 10) > endPage and (currentPage + 10) < maxPage }">
-		<c:url var="pafter" value="/blist.do">
+		<c:url var="pafter" value="${ url }">
 			<c:param name="page" value="${ endPage + 10 }" />
 		</c:url>
 		<a href="${ pafter }"><img src="<c:url value="/resources/images/movepageR.jpg"/>" width="20px" height="20px" alt="[다음그룹]" />
@@ -69,13 +71,15 @@
 	<img src="<c:url value="/resources/images/movepageRR.jpg"/>" width="20px" height="20px" alt="[맨끝]" />
 	</c:if>
 	<c:if test="${ currentPage < maxPage }">
-		<c:url var="pmax" value="/blist.do">
+		<c:url var="pmax" value="${ url }">
 			<c:param name="page" value="${ maxPage }" />
 		</c:url>
 		<a href="${ pmax }">
 		<img src="<c:url value="/resources/images/movepageRR.jpg"/>" width="20px" height="20px" alt="[맨끝]" /></a>
 	</c:if>
 </div>
-
+<%-- <c:set var="url" value="/.do"/>
+<c:import url="/WEB-INF/views/common/page.jsp"/>
+<jsp:include page="/WEB-INF/views/common/page.jsp" /> --%>
 </body>
 </html>

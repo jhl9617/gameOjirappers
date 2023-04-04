@@ -6,6 +6,8 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+
 import org.codehaus.jackson.JsonParseException;
 import org.codehaus.jackson.map.JsonMappingException;
 import org.json.simple.JSONArray;
@@ -20,6 +22,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.team404.gameOjirap.common.Pagingnn;
+import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 
@@ -55,6 +59,58 @@ public class GameController {
 		}
 		return mv;
 
+
+	}
+	
+	// 새로운 게임 페이지 단위로 목록보기 요청 처리용
+	@RequestMapping("gnlist.do")
+	public ModelAndView boardListMethod(@RequestParam(name = "page", required = false) String page, ModelAndView mv) {
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+
+		// 한 페이지에 게시글 10개씩 출력 되게 하는 경우 :
+		// 페이징 계산처리 - 별도의 클래스로 작성 해서 이용해도 됨 (공통모델로 만듦)
+		int limit = 2; // 한페이지에 출력할 목록 갯수
+		// 전체 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+		int listCount = gameService.selectListNewCount();
+		// 페이지 수 계산
+		// 주의 : 목록이 11개이면 페이지 수는 2 페이지가 됨
+		// 나머지 목록 1개도 한 페이지가 필요함
+		int maxPage = (int) ((double) listCount / limit + 0.6); // limit 에 따라 0.9는 달라짐
+		// 현재 페이지가 포함된 페이지 그룹으 시작값과 끝값 계산
+		// => 뷰 페이지 아래쪽에 표시할 페이지 숫자를 10개 한다면
+		// 현재 페이지가 95라면 91과 100을 계산해 냄
+		int startPage = ((currentPage - 1) / 1) * 1 + 1;
+		int endPage = startPage + 1 - 1;
+
+		if (maxPage < endPage) {
+			endPage = maxPage;
+		}
+		// 쿼리문에 전달할 현재 페이지에 출력할 목록의 시작행과 끝행을 계산
+		int startRow = (currentPage - 1) * limit + 1;
+		int endRow = startRow + limit - 1;
+		Pagingnn paging = new Pagingnn(startRow, endRow, limit);
+
+		// 페이지 계산 끝 : new Paging(limit, currentPage) --------------------------
+
+		ArrayList<Game> list = gameService.selectNewList(paging);
+		if (list != null && list.size() > 0) {
+			mv.addObject("list", list);
+			mv.addObject("listCount", listCount);
+			mv.addObject("maxPage", maxPage);
+			mv.addObject("currentPage", currentPage);
+			mv.addObject("startPage", startPage);
+			mv.addObject("endPage", endPage);
+			mv.addObject("limit", limit);
+
+			mv.setViewName("common/main");
+		} else {
+			mv.addObject("message", currentPage + "페이지 목록 조회 실패!");
+			mv.setViewName("common/error");
+		}
+		return mv;
 
 	}
 	
@@ -238,7 +294,39 @@ public class GameController {
 			// servlet-context.xml 에 json string 내보내는 JsonView 라는 뷰리졸버 추가 등록해야 함
 
 		}
-		
+		// 게임 장르 할인  검색 처리용
+		@RequestMapping(value = "gpsearch.do", method = RequestMethod.POST)
+		public String memberSearchMethod(HttpServletRequest request, Model model) {
+			// 전송온 값 꺼내기
+			String action = request.getParameter("action");
+			String keyword = null;
+			
+			keyword = request.getParameter("keyword");
+			logger.info(keyword);
+
+			// 서비스 메소드가 리턴 하는 값을 받을 리스트 준비
+			ArrayList<Game> list = null;
+			Searchs searchs = new Searchs();
+
+			switch (action) {
+			case "price":
+				list = gameService.selectSearchPrice(Integer.parseInt(keyword) );
+				break;
+			case "gender":
+				searchs.setKeyword(keyword);
+				list = gameService.selectSearchGenre(searchs);
+				break;
+
+			}// switch
+
+			if (list != null && list.size() > 0) {
+				model.addAttribute("list", list);
+				return "game/gameDetailView";
+			} else {
+				model.addAttribute("message", action + "검색에 대한 결과가 존재하지 않습니다.");
+				return "common/error";
+			}
+		}
 
 
 	
