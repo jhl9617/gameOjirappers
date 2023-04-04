@@ -5,24 +5,20 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.team404.gameOjirap.user.model.service.InoutService;
-import org.team404.gameOjirap.user.model.service.UpdateService;
+import org.team404.gameOjirap.user.model.service.UserService;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class MyPageController {
 
-	private final Logger logger = LoggerFactory.getLogger(InoutController.class);
+	private final Logger logger = LoggerFactory.getLogger(MyPageController.class);
 	
 	@Autowired 									
-	private InoutService InoutService;	
-	@Autowired 									
-	private UpdateService UpdateService;	
+	private UserService UserService;	
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
@@ -32,7 +28,7 @@ public class MyPageController {
 	public ModelAndView userDatailMethod(@RequestParam("user_id") String user_id,			//[  @RequestParam("useri_d") ]  어노테이션을 통해 값을 꺼내고, 객체 String userid에 저장한다
 																		ModelAndView mv) {			//()소괄호안에 바로 ModelAndView객체생성(리턴용 객체)한다
 		//서비스로 아이디 전달하고, 해당 회원정보 받기
-		User myuser = InoutService.selectUser(user_id);
+		User myuser = UserService.selectUser(user_id);
 		
 		if(myuser != null) {
 			mv.addObject("user", myuser);				//꺼내서 저장함 (get / set)

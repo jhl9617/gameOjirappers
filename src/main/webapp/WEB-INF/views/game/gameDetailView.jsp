@@ -93,7 +93,7 @@ function deleteinfo() {
 				<section>
 				
 					<header class="main">
-						<h1 align="center">${ requestScope.game.name } 의 게임 정보</h1>
+						<h1 align="center">${ requestScope.game.name }</h1>
 						<h3 align="center">
 						
 						<script type="text/javascript">
@@ -111,10 +111,9 @@ function deleteinfo() {
 				<section>
 					<!--게임사진 들어갈 부분 -->
 					<header class="major">
-						<h2> 이미지 </h2>
 					</header>
-					<span class="image object">
-					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
+
+					<img style="width: 80%; margin-left:12%;" alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"/>
 
 				</section>
 				<section>
@@ -123,7 +122,7 @@ function deleteinfo() {
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
-					<video controls>
+					<video autoplay muted >
 					  <source src="${ requestScope.game.movie }" type="video/mp4"></video>
 						
 					</table>

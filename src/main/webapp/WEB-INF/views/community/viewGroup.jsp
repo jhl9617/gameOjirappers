@@ -5,7 +5,12 @@
 <head>
     <meta charset="UTF-8">
     <title>${group.communityname}</title>
-
+    <script>
+        function reqjoin(){
+            location.href="movejoinpage.do?communityid="+ ${communityid};
+            return false;
+        }
+    </script>
 
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
@@ -14,7 +19,11 @@
 <body>
 
 <div class="container">
-    <h1 class="my-4">${group.communityname}</h1>
+    <div style="float:left;">
+        <h1 class="my-4">${group.communityname}</h1>
+        <button style="width: 100px;" class="button" onclick="reqjoin();">가입신청</button>
+    </div>
+    <br style="clear: both">
     <c:import url="/WEB-INF/views/community/commuDetailMenu.jsp"/>
 
 

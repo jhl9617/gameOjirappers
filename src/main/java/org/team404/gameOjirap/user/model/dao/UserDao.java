@@ -8,10 +8,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.user.model.vo.User;
 
-@Repository("InoutDao")
-public class InoutDao {
+@Repository("UserDao")
+public class UserDao {
 	//★★★★★★ServiceImpl로부터 받은 값을 처리해서 Controller로 넘기는 파트임!
-//	String NAMESPACE = "userMapper";
 
 	@Autowired	
 	private SqlSessionTemplate session;	
@@ -48,9 +47,9 @@ public class InoutDao {
 		return (ArrayList<User>)list;
 	}
 	
-
-	
-	
+	public int updateUser(User user) {
+		return session.update("userMapper.updateuser", user);
+	}
 	
 	
 	
