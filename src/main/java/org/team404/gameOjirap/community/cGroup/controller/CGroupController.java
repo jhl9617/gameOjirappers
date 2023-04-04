@@ -15,6 +15,7 @@ import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -79,6 +80,7 @@ public String commuMainList() throws UnsupportedEncodingException {
         if(page != null) {
             currentPage = Integer.parseInt(page);
         }
+
 
 // 한 페이지에 게시글 10개씩 출력되게 하는 경우 :
         // 페이징 계산 처리 - 별도의 클래스로 작성해서 이용해도 됨
@@ -168,9 +170,27 @@ public String commuMainList() throws UnsupportedEncodingException {
         return mv;
     }
 
+    // 요청 페이지로 이동
+    @RequestMapping("movejoinpage.do")
+    public String moveRequestPage(@RequestParam("communityid") int communityid, Model model){
+        CGroup cGroup = cGroupService.selectSingleCGroup(communityid);
+        if(cGroup != null){
+            model.addAttribute("communityname", cGroup.getCommunityname());
+            model.addAttribute("communityid", communityid);
+            return "community/joinRequest";}
+        else {
+            model.addAttribute("message", "신청 양식을 불러오지 못했습니다.");
+            return "common/error";
+        }
+    }
 
-
-
-
-
+//    // 요청 정보 저장
+//    @RequestMapping(value="req.do", method=RequestMethod.POST)
+//    public String insertRequest(CommunityReq req, Model model){
+//        if(cGroupService.insertRequest(req) > 0){
+//            return "redirect:viewgroup.do?communityid=" + req.getCommunityId();
+//        } else {
+//            return "common/error";
+//        }
+//    }
 }
