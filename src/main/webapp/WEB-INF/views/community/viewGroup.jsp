@@ -7,8 +7,13 @@
     <title>${group.communityname}</title>
     <script>
         function reqjoin(){
-            location.href="movejoinpage.do?communityid="+ ${communityid};
-            return false;
+            <c:if test="${sessionScope.loginUser.user_id eq group.user_id}">
+                alert("관리자는 가입신청을 할 수 없습니다.");
+                return false;
+            </c:if>
+            <c:if test="${!empty sessionScope.loginUser && loginUser.user_id ne group.user_id}">
+                location.href="movejoinpage.do?communityid="+ ${communityid};
+            </c:if>
         }
     </script>
 
@@ -16,11 +21,16 @@
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br>
+<br>
 
 <div class="container">
-    <div style="float:left;">
+    <div style="all: inherit;">
         <h1 class="my-4">${group.communityname}</h1>
+        <c:if test="${!empty loginUser && sessionScope.loginUser.user_id ne group.user_id}">
         <button style="width: 100px;" class="button" onclick="reqjoin();">가입신청</button>
+        </c:if>
     </div>
     <br style="clear: both">
     <c:import url="/WEB-INF/views/community/commuDetailMenu.jsp"/>
@@ -61,8 +71,8 @@
     <a href="<c:url value="/commuMain.do"/>" class="btn btn-secondary">커뮤니티 메인으로 돌아가기</a>
 </div>
 
-<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+<br>
+<br>
+<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

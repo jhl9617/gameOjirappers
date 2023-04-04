@@ -16,11 +16,12 @@
 <body>
 <h1>커뮤니티 생성하기</h1>
 <form action="CommuCreateSubmit.do" method="post" <%--enctype="multipart/form-data"--%>>
+    <input type="hidden" name="user_id" value="${loginUser.user_id}"/>
     <table>
         <tr>
             <th>밴드 이름</th>
             <td>
-                <input type="text" name="communityname" value="${ communityname }"><th>by 작성자</th>     <%--작성자 부분은 나중에 닉네임--%>
+                <input type="text" name="communityname" value="${ communityname }"><th>by ${loginUser.user_id}</th>     <%--작성자 부분은 나중에 닉네임--%>
             </td>
         </tr>
         <tr>
