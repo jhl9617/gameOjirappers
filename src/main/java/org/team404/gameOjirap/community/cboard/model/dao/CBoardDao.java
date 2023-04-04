@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cboard.model.vo.CBoard;
+import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -38,5 +39,23 @@ public class CBoardDao {
 
     public CBoard selectCommuPost(int cBoardNo) {
         return session.selectOne("cBoardMapper.selectCommuPost", cBoardNo);
+    }
+
+    public int insertCommuPost(CBoard cBoard) {
+        return session.insert("cBoardMapper.insertCommuPost", cBoard);
+    }
+
+    public int updateCommuPost(CBoard cBoard) {
+        return session.update("cBoardMapper.updateCommuPost", cBoard);
+    }
+
+    public ArrayList<CComment> selectCommuCList(int cBoardNo) {
+        List<CComment> list = session.selectList("cBoardMapper.selectCommuReply", cBoardNo);
+        return (ArrayList<CComment>) list;
+    }
+
+    public int insertCommuReply(CComment cComment) {
+        System.out.println(cComment);
+        return session.insert("cBoardMapper.insertCommuReply", cComment);
     }
 }

@@ -116,13 +116,14 @@ CREATE TABLE TB_Community_Comment (
                                       cComDate	DATE		,
                                       cComLvl	Number		NOT NULL,
                                       user_id	VARCHAR2(20)		NOT NULL,
-                                      cBoardNo	VARCHAR2(20)		NOT NULL
+                                      cBoardNo	NUMBER		NOT NULL,
+                                      communityId	NUMBER		NOT NULL
 );
 
 comment on column TB_Community_Comment.cComNo is '밴드 댓글 번호';
 comment on column TB_Community_Comment.cComContent is '밴드 댓글 내용';
 comment on column TB_Community_Comment.cComDate is '밴드 댓글 작성일';
-comment on column TB_Community_Comment.cComLvl is '밴드 댓글 깊이';
+comment on column TB_Community_Comment.cComLvl is '밴드 대댓글 여부 원 댓글이면 0 대댓글이면 1';
 comment on column TB_Community_Comment.user_id is '밴드 댓글 작성자 ID';
 comment on column TB_Community_Comment.cBoardNo is '밴드게시글 번호';
 
@@ -195,7 +196,7 @@ comment on column TB_Community_REQ.communityId is '밴드 ID';
 comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
 comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
 
-DROP TABLE TB_GAME cascade constraints;
+DROP TABLE GAME cascade constraints;
 DROP TABLE GAME cascade constraints;
 
 CREATE TABLE GAME (
@@ -666,14 +667,28 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
-
-INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
-VALUES (1, '����', SYSDATE, 'admin', '�����');
-
+drop sequence sch_seq;
 CREATE SEQUENCE sch_seq
     START WITH 1
     INCREMENT BY 1;
 
+/*커뮤 번호 시퀀스*/
+drop sequence SEQ_COMMUNITY;
+CREATE SEQUENCE SEQ_COMMUNITY
+    START WITH 5
+    INCREMENT BY 1;
+
+/*커뮤 게시판 번호 시퀀스*/
+drop sequence SEQ_COMMUNITY_BOARD;
+CREATE SEQUENCE SEQ_COMMUNITY_BOARD
+    START WITH 5
+    INCREMENT BY 1;
+
+/*커뮤 게시판 댓글 시퀀스*/
+drop sequence SEQ_COMMUNITY_COMMENT;
+CREATE SEQUENCE SEQ_COMMUNITY_COMMENT
+    START WITH 5
+    INCREMENT BY 1;
 
 insert into tb_board_gen
 values(1, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
@@ -708,5 +723,11 @@ values ('admin', 0, 'Y', SYSDATE);
 
 INSERT INTO TB_Community_BOARD (CBOARDNO, CBOARDTITLE, CBOARDCONTENT, CBOARDDATE, CBOARDLIKE, CBOARDNOTICE, USER_ID, COMMUNITYID)
 VALUES (0, '0번 커뮤 게시물 테스트 0번 게시물', '게시물 내용입니다.', SYSDATE, 0, 'Y', 'admin', 0);
+
+INSERT INTO TB_COMMUNITY_COMMENT (CCOMNO, CCOMCONTENT, CCOMDATE, CCOMLVL, USER_ID, CBOARDNO, COMMUNITYID)
+VALUES (0, '0번 게시물의 1번 댓글입니다.', SYSDATE, 0,'admin', 0, 0);
+
+INSERT INTO TB_COMMUNITY_COMMENT (CCOMNO, CCOMCONTENT, CCOMDATE, CCOMLVL, USER_ID, CBOARDNO, COMMUNITYID)
+VALUES (1, '0번 게시물의 2번 댓글입니다.', SYSDATE, 0,'admin', 0, 0);
 
 commit;
