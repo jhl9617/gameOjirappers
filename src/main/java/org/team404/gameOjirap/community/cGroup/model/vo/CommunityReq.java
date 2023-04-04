@@ -8,60 +8,62 @@ import java.sql.Date;
  * 커뮤니티 가입 요청 vo클래스
  */
 public class CommunityReq implements Serializable {
-    private String userId;
-    private int communityId;
-    private String requestDes;
-    private Date requestDate;
+
+    private static final long serialVersionUID = 6075143950164219433L;
+    private String user_id;
+    private int communityid;
+    private String requestdes;
+    private Date requestdate;
 
     public CommunityReq() {
     }
 
-    public CommunityReq(String userId, int communityId, String requestDes, Date requestDate) {
-        this.userId = userId;
-        this.communityId = communityId;
-        this.requestDes = requestDes;
-
+    public CommunityReq(String user_id, int communityid, String requestdes, Date requestdate) {
+        this.user_id = user_id;
+        this.communityid = communityid;
+        this.requestdes = requestdes;
+        this.requestdate = requestdate;
     }
 
-    public String getUserId() {
-        return userId;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUserId(String userId) {
-        this.userId = userId;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
-    public int getCommunityId() {
-        return communityId;
+    public int getCommunityid() {
+        return communityid;
     }
 
-    public void setCommunityId(int communityId) {
-        this.communityId = communityId;
+    public void setCommunityid(int communityid) {
+        this.communityid = communityid;
     }
 
-    public String getRequestDes() {
-        return requestDes;
+    public String getRequestdes() {
+        return requestdes;
     }
 
-    public void setRequestDes(String requestDes) {
-        this.requestDes = requestDes;
+    public void setRequestdes(String requestdes) {
+        this.requestdes = requestdes;
     }
 
-    public Date getRequestDate() {
-        return requestDate;
+    public Date getRequestdate() {
+        return requestdate;
     }
 
-    public void setRequestDate(Date requestDate) {
-        this.requestDate = requestDate;
+    public void setRequestdate(Date requestdate) {
+        this.requestdate = requestdate;
     }
 
     @Override
     public String toString() {
         return "CommunityReq{" +
-                "userId='" + userId + '\'' +
-                ", communityId=" + communityId +
-                ", requestDes='" + requestDes + '\'' +
-                ", requestDate=" + requestDate +
+                "user_id='" + user_id + '\'' +
+                ", communityid=" + communityid +
+                ", requestdes='" + requestdes + '\'' +
+                ", requestdate=" + requestdate +
                 '}';
     }
 }

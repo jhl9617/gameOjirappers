@@ -120,10 +120,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     //커뮤니티 생성 form에서 submit을 눌렀을때
     @RequestMapping(value = "CommuCreateSubmit.do", method=RequestMethod.POST)
     public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request) {
-
-        //유저 아이디 임시로 입력
-        cGroup.setUser_id("admin");
-
+        System.out.println("---------------------------user id check : "+cGroup.getUser_id());
         //이미지 첨부 미구현
         if (cGroupService.selectCGroup(cGroup.getCommunityname()) < 1 && cGroupService.insertCGroup(cGroup) > 0) {
 
@@ -184,13 +181,14 @@ public String commuMainList() throws UnsupportedEncodingException {
         }
     }
 
-//    // 요청 정보 저장
-//    @RequestMapping(value="req.do", method=RequestMethod.POST)
-//    public String insertRequest(CommunityReq req, Model model){
-//        if(cGroupService.insertRequest(req) > 0){
-//            return "redirect:viewgroup.do?communityid=" + req.getCommunityId();
-//        } else {
-//            return "common/error";
-//        }
-//    }
+    // 요청 정보 저장
+    @RequestMapping(value="req.do", method=RequestMethod.POST)
+    public String insertRequest(CommunityReq req, Model model){
+        System.out.println("=================================================================="+req.getUser_id());
+        if(cGroupService.insertRequest(req) > 0){
+            return "redirect:viewgroup.do?communityid=" + req.getCommunityid();
+        } else {
+            return "common/error";
+        }
+    }
 }
