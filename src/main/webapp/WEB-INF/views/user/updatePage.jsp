@@ -26,6 +26,9 @@
 </script>
 </head>
 
+
+
+
 <body>
 <h1> 정보수정 페이지임</h1>
 
@@ -33,7 +36,7 @@
 <h1 align = "center"> 회원 정보 수정 페이지</h1>
 <br>
 <%-- DB전송을 위한 form태그 준비  --%>
-<form action="moveUpdatePage.do" method="post" onsubmit="return validate();">			<%-- 이 form의 수정정보를 받을 mupdate.do 준비  --%>
+<form action="moveUpdatePage.do" method="get" onsubmit="return validate();">			<%-- 이 form의 수정정보를 받을 mupdate.do 준비  --%>
 		<%--원래 암호도 함께 전송함(숨겨서 보냄) --%>
 		<input type="hidden" name="origin_user_pwd" value="${user.user_pwd }">	<%--value가 암호화되어있는 값임 --%>
 		
