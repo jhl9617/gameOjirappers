@@ -2,7 +2,10 @@
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
-<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>     
+<%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
+
+<c:set var="ListCount" value="${ requestScope.paging.listCount }" />
+<c:set var="currentPage" value="${ requestScope.paging.currentPage }" />     
 <!DOCTYPE html>
 <html>
 <head>
@@ -10,7 +13,19 @@
 <title>boardDetailView</title>
 <style type="text/css">
 
-
+button {
+  background-color: #4CAF50;
+  border: none;
+  color: white;
+  padding: 10px 20px;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 16px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 4px;
+}
 
 table {
   border-collapse: collapse;
@@ -234,10 +249,11 @@ section.notice {
             <table class="board-table">
                 <thead>
                 <tr>
-                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-num">조회수</th>
                     <th scope="col" class="th-title">제목</th>
                     <th scope="col" class="th-date">등록일</th>
                     <th scope="col" class="th-id">ID</th>
+                    <th scope="col" class="th-num">번호</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -248,13 +264,14 @@ section.notice {
                         <c:param name="page" value="${ currentPage }"/>
                     </c:url>
                     
-                    <td>${ boardGen.board_no }</td>
+                    <td>${ boardGen.board_count }</td>
                     <th>
                       <a href="${ dtview }">${ boardGen.board_title }</a>
                       <p>테스트</p>
                     </th>
                     <td><fmt:formatDate value="${ boardGen.board_date }" pattern="yyyy-MM-dd" /></td>
                     <td>${ boardGen.user_id }</td>
+                    <td>${ boardGen.board_no }</td>
                 </tr>
                 
                 
@@ -267,7 +284,8 @@ section.notice {
         </div>
             </table>
         </div>
-        
+<c:set var="url" value="/blist.do" />
+<jsp:include page="/WEB-INF/views/common/page.jsp" /> <br>
         <c:import url="/WEB-INF/views/common/footer.jsp"/>
     </div>
 

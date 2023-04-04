@@ -327,7 +327,7 @@ CREATE TABLE TB_COMMENT (
                             com_contents	VARCHAR2(500)		NOT NULL,
                             com_date	DATE		NOT NULL,
                             com_lev	Number		NOT NULL,
-                            com_no2	NUMBER		NOT NULL,
+                            com_no2	NUMBER		,
                             board_no	NUMBER		NOT NULL,
                             user_id	VARCHAR2(20)		NOT NULL
 );
@@ -668,7 +668,7 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 
 
 INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
-VALUES (1, '����', SYSDATE, 'admin', '�����');
+VALUES (1, '    ', SYSDATE, 'admin', '     ');
 
 CREATE SEQUENCE sch_seq
     START WITH 1
@@ -710,3 +710,4 @@ INSERT INTO TB_Community_BOARD (CBOARDNO, CBOARDTITLE, CBOARDCONTENT, CBOARDDATE
 VALUES (0, '0번 커뮤 게시물 테스트 0번 게시물', '게시물 내용입니다.', SYSDATE, 0, 'Y', 'admin', 0);
 
 commit;
+   
