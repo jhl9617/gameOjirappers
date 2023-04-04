@@ -116,6 +116,7 @@
 				console.log("data : "+ JSON.stringify(json));
 				var events = [];
 				for (var i in json) {
+
 					events.push({
 						title: decodeURIComponent(json[i].title).replace(
 								/\+/gi, " "),
@@ -124,6 +125,7 @@
 					});
 				}
 				$('#calendar').fullCalendar({
+
 					initialView: 'dayGridMonth',
 					events: events
 				});
@@ -148,7 +150,9 @@
 	<center>
 		<h2>이번 달 일정</h2>
 		<div id="calendar"></div>
+
 		<c:if test="${loginUser.user_id eq cGroup.user_id and not empty loginUser}">
+
 		<div align="center">
 			<span onclick="addsch();" class="button">새로운 일정 등록</span>
 		</div>

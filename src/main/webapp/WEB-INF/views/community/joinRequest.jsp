@@ -19,10 +19,12 @@
 
 
   <center>
+
     <form action="req.do" method="post">
       <input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}"/>
       <input type="hidden" name="communityid" value="${communityid}"/>
       <label for="request_des"><h2>[${communityname}]</h2> 가입 신청</label><br>
+
       <textarea id="request_des" name="requestdes" rows="5" cols="50"></textarea><br><br>
       <input type="submit" value="신청">
     </form>

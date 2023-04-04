@@ -3,13 +3,13 @@ package org.team404.gameOjirap.community.cboard.model.vo;
 
 import java.sql.Date;
 
-public class CBoard {
+public class CBoard implements java.io.Serializable{
     private int cBoardNo;
     private String cBoardTitle;
-    private String user_Id;
+    private String user_id;
     private String cBoardContent;
     private Date cBoardDate;
-    private int communityId;
+    private int communityid;
     private int cBoardLike;
     private String cBoardOrifile;
     private String cBoardRefile;
@@ -18,11 +18,11 @@ public class CBoard {
     public CBoard() {
     }
 
-    public CBoard(String cBoardTitle, String userId, String cBoardContent, int communityId, int cBoardLike, String cBoardOrifile, String cBoardRefile, String cBoardNotice) {
+    public CBoard(String cBoardTitle, String userId, String cBoardContent, int communityid, int cBoardLike, String cBoardOrifile, String cBoardRefile, String cBoardNotice) {
         this.cBoardTitle = cBoardTitle;
-        this.user_Id = userId;
+        this.user_id = userId;
         this.cBoardContent = cBoardContent;
-        this.communityId = communityId;
+        this.communityid = communityid;
         this.cBoardLike = cBoardLike;
         this.cBoardOrifile = cBoardOrifile;
         this.cBoardRefile = cBoardRefile;
@@ -45,12 +45,12 @@ public class CBoard {
         this.cBoardTitle = cBoardTitle;
     }
 
-    public String getUser_Id() {
-        return user_Id;
+    public String getUser_id() {
+        return user_id;
     }
 
-    public void setUser_Id(String user_Id) {
-        this.user_Id = user_Id;
+    public void setUser_id(String user_id) {
+        this.user_id = user_id;
     }
 
     public String getcBoardContent() {
@@ -69,12 +69,12 @@ public class CBoard {
         this.cBoardDate = cBoardDate;
     }
 
-    public int getCommunityId() {
-        return communityId;
+    public int getCommunityid() {
+        return communityid;
     }
 
-    public void setCommunityId(int communityId) {
-        this.communityId = communityId;
+    public void setCommunityid(int communityid) {
+        this.communityid = communityid;
     }
 
     public int getcBoardLike() {
@@ -114,10 +114,10 @@ public class CBoard {
         return "CBoard{" +
                 "cBoardNo=" + cBoardNo +
                 ", cBoardTitle='" + cBoardTitle + '\'' +
-                ", user_Id='" + user_Id + '\'' +
+                ", user_id='" + user_id + '\'' +
                 ", cBoardContent='" + cBoardContent + '\'' +
                 ", cBoardDate=" + cBoardDate +
-                ", communityId=" + communityId +
+                ", communityid=" + communityid +
                 ", cBoardLike=" + cBoardLike +
                 ", cBoardOrifile='" + cBoardOrifile + '\'' +
                 ", cBoardRefile='" + cBoardRefile + '\'' +

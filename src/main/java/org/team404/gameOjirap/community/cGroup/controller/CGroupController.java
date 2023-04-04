@@ -184,11 +184,12 @@ public String commuMainList() throws UnsupportedEncodingException {
     // 요청 정보 저장
     @RequestMapping(value="req.do", method=RequestMethod.POST)
     public String insertRequest(CommunityReq req, Model model){
-        System.out.println("=================================================================="+req.getUser_id());
+        
         if(cGroupService.insertRequest(req) > 0){
             return "redirect:viewgroup.do?communityid=" + req.getCommunityid();
         } else {
             return "common/error";
         }
     }
+
 }

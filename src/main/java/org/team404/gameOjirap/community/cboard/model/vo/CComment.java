@@ -2,47 +2,49 @@ package org.team404.gameOjirap.community.cboard.model.vo;
 
 import java.sql.Date;
 
-public class CComment {
-    private int cComNo;
-    private String cComContent;
-    private Date cComDate;
-    private int cComLvl;
+public class CComment implements java.io.Serializable{
+
+    private int ccomno;
+    private String ccomcontent;
+    private Date ccomdate;
+    private int ccomlvl;
     private String user_id;
-    private String cBoardNo;
+    private int cboardno;
+    private int communityid;
 
     public CComment() {
     }
 
-    public int getcComNo() {
-        return cComNo;
+    public int getCcomno() {
+        return ccomno;
     }
 
-    public void setcComNo(int cComNo) {
-        this.cComNo = cComNo;
+    public void setCcomno(int ccomno) {
+        this.ccomno = ccomno;
     }
 
-    public String getcComContent() {
-        return cComContent;
+    public String getCcomcontent() {
+        return ccomcontent;
     }
 
-    public void setcComContent(String cComContent) {
-        this.cComContent = cComContent;
+    public void setCcomcontent(String ccomcontent) {
+        this.ccomcontent = ccomcontent;
     }
 
-    public Date getcComDate() {
-        return cComDate;
+    public Date getCcomdate() {
+        return ccomdate;
     }
 
-    public void setcComDate(Date cComDate) {
-        this.cComDate = cComDate;
+    public void setCcomdate(Date ccomdate) {
+        this.ccomdate = ccomdate;
     }
 
-    public int getcComLvl() {
-        return cComLvl;
+    public int getCcomlvl() {
+        return ccomlvl;
     }
 
-    public void setcComLvl(int cComLvl) {
-        this.cComLvl = cComLvl;
+    public void setCcomlvl(int ccomlvl) {
+        this.ccomlvl = ccomlvl;
     }
 
     public String getUser_id() {
@@ -53,23 +55,33 @@ public class CComment {
         this.user_id = user_id;
     }
 
-    public String getcBoardNo() {
-        return cBoardNo;
+    public int getCboardno() {
+        return cboardno;
     }
 
-    public void setcBoardNo(String cBoardNo) {
-        this.cBoardNo = cBoardNo;
+    public void setCboardno(int cboardno) {
+        this.cboardno = cboardno;
+    }
+
+    public int getCommunityid() {
+        return communityid;
+    }
+
+    public void setCommunityid(int communityid) {
+        this.communityid = communityid;
     }
 
     @Override
-    public String toString() {
+    public String
+    toString() {
         return "CComment{" +
-                "cComNo=" + cComNo +
-                ", cComContent='" + cComContent + '\'' +
-                ", cComDate=" + cComDate +
-                ", cComLvl=" + cComLvl +
+                "ccomno=" + ccomno +
+                ", ccomcontent='" + ccomcontent + '\'' +
+                ", ccomdate=" + ccomdate +
+                ", ccomlvl=" + ccomlvl +
                 ", user_id='" + user_id + '\'' +
-                ", cBoardNo='" + cBoardNo + '\'' +
+                ", cboardno=" + cboardno +
+                ", communityid=" + communityid +
                 '}';
     }
 }
