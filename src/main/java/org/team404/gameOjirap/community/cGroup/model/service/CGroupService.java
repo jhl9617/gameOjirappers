@@ -20,5 +20,8 @@ public interface CGroupService {
 
      int selectCGroup(String communityname);
 
+
     ArrayList<CGroup> selectList(Paging paging);
+
+
 }

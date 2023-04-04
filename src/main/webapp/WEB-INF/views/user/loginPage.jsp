@@ -20,10 +20,10 @@
    <h1 id="litheader">GAMEJIRAPP</h1>
    <div class="inset">
          <p>
-            <input type="text" name="login" id="user_id" placeholder="ID">
+            <input type="text" name="user_id" id="user_id" placeholder="ID">
          </p>
          <p>
-            <input type="password" name="login" id="user_pwd"   placeholder="Password">
+            <input type="password" name="user_pwd" id="user_pwd"   placeholder="Password">
          </p>
    </div>
    <p class="p-container">

@@ -32,6 +32,35 @@
         <result column="cBoardRefile" property="cBoardRefile"/>
         <result column="cBoardNotice" property="cBoardNotice"/>
     </resultMap>
-	
 
+
+    <select id="selectBListCount" parameterType="_int" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY_BOARD
+        where COMMUNITYID = #{ communityid }
+    </select>
+
+    <!--특정 커뮤니티에서 시작, 끝 행까지 가져오기-->
+    <select id="selectCommuBList" parameterType="map" resultType="CBoard">
+
+        SELECT *
+        FROM (
+                 SELECT ROWNUM RNUM, C.*
+                 FROM (
+                          SELECT *
+                        FROM TB_COMMUNITY_BOARD
+                          WHERE COMMUNITYID = #{communityid}
+                          ORDER BY CBOARDNO DESC
+                      ) C
+             )
+        WHERE RNUM BETWEEN #{paging.startRow} AND #{paging.endRow}
+
+    </select>
+
+    <!--커뮤 글 보여주기-->
+    <select id="selectCommuPost" parameterType="_int" resultType="CBoard">
+        select *
+        from TB_COMMUNITY_BOARD
+        where COMMUNITYID = #{ communityid }
+    </select>
 </mapper>

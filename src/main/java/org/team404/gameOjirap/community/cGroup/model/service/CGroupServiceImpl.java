@@ -37,7 +37,7 @@ public class CGroupServiceImpl implements CGroupService{
 
     @Override
     public CGroup selectSingleCGroup(int communityId) {
-        return null;
+        return cGroupDao.selectSingleCGroup(communityId);
     }
 
     @Override
@@ -54,6 +54,9 @@ public class CGroupServiceImpl implements CGroupService{
     public int selectCGroup(String communityname) {
         return cGroupDao.selectCGroup(communityname);
     }
+
+
+
 
     @Override
     public ArrayList<CGroup> selectList(Paging paging) {

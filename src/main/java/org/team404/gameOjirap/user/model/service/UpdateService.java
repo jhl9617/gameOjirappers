@@ -1,10 +1,13 @@
 package org.team404.gameOjirap.user.model.service;
 
+
+import java.util.ArrayList;
+
 import org.team404.gameOjirap.user.model.vo.User;
+ 
 
-public interface MoveService {
-	
-	User selectUser(String user_id);
+public interface UpdateService {
 
-	}//close
+	int updateUser (User user);
 	
+}

@@ -38,6 +38,9 @@
 		<property name="dataSource" ref="dataSource" />
 	</bean>
 	
+	
+
+	
 	<!-- dao 에서 사용할 MyBatis 객체 생성 -->
 	<bean class="org.mybatis.spring.SqlSessionTemplate">
 		<constructor-arg index="0" ref="sqlSession"></constructor-arg>

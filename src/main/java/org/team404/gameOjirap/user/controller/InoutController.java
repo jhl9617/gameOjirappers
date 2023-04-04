@@ -31,7 +31,21 @@ public class InoutController {
 	
 			
 	
-	
+	//회원탈퇴 (삭제)요청 처리용  메소드
+	//삭제일때는 따로 정보를 보낼필요가 없음 (자동 로그아웃 처리) => String을 리턴한다.
+	@RequestMapping("mdel.do")
+	public String memberDeleteMethod(@RequestParam("user_id") String user_id, 
+															Model model) {
+		logger.info("mdel.do 확인용 : \n" + user_id);
+		
+		if(InoutService.userDeleteMethod(user_id) > 0) {			//회원 탈퇴 성공했을때 (자동 로그아웃 처리해야함) 
+			return "redirect:logout.do"; //Controller메소드에서 다른 Controller메소드 호출할 수 있음 (앞에  [    redirect:  ] 를 붙여준다
+		}else {		//회원 탈퇴 실패했을때
+			model.addAttribute("message", user_id + " : 회원 삭제 실패! 요청사항을 다시 확인해주세요!");			//이 메세지를 message에 담아서 리턴함
+			return "common/error";
+		}//if
+	}//method close
+		
 	
 	
 	//로그아웃 처리용 메소드
@@ -52,13 +66,13 @@ public class InoutController {
 	
 	
 	
-	
-	
 	// 로그인 요청처리용
 	@RequestMapping(value="login.do", method= {RequestMethod.GET, RequestMethod.POST } )
-	public String loginMethod(User user, HttpSession session, SessionStatus status,Model model) {
+	public String selectUser(User user, HttpSession session, SessionStatus status,Model model) {
 		
 		logger.info("login.do : \n" + user.toString());
+		
+		//전달온 회원 아이디로 먼저 정보조회함
 		User loginUser = InoutService.selectUser(user.getUser_id());
 		
 		if(loginUser != null) {		//로그인한 회원이 있다면
@@ -75,25 +89,11 @@ public class InoutController {
 	}//method close
 	
 	
-	
-//	//관리자기능 : 회원 로그인 제한&가능 처리용 메소드
-//	@RequestMapping(value="loginok.do", method= {RequestMethod.GET, RequestMethod.POST }) 
-//	public String changeLoginOKMethod(User user, MyPage user_status, Model model) {			//commend객체를 이용해서 바로 받는다 (member)
-//		logger.info("loginok.do작동완료 : " + user.getUser_id() + ", " + user_status.getUser_status());		//값 잘 받아왔는지 확인용
-//		
-//		if (InoutService.updateLoginok(user) > 0) {		//updateLoginok 값 수정에 성공 했다면
-//			return "redirect:mlist.do";				// mlist.do가 실행됨 (수정된값으로 실시간으로 다시 조회해옴)
-//		}else {
-//			model.addAttribute("message", "로그인 제한/허용 처리 오류 발생!");
-//			return "common/error";
-//		}//if
-//	}//method close
-	
-	
+
 	
 	//아이디 중복확인 요청 처리용 메소드 (ajax 통신)
 	@RequestMapping(value="useridchk.do", method={RequestMethod.GET, RequestMethod.POST })		//url패턴은 value로 명시하며 // post방식으로 전송왔을땐 method 속성을 추가해서, post방식임을 명시한다. 
-	public void selectDupCheckId(@RequestParam("user_id") String user_id, HttpServletResponse response) throws IOException {		
+	public void selectDupCheckId(@RequestParam(value="user_id", required=false) String user_id, HttpServletResponse response) throws IOException {		
 		int idCount = InoutService.selectDupCheckId(user_id);
 		String returnStr = null;		//받아줄 string 객체인 returnStr을 만들어서 담아주고, 해당 값을 리턴할꺼임
 		if(idCount == 0) {
@@ -114,7 +114,7 @@ public class InoutController {
 	
 	//닉네임 중복확인 요청 처리용 메소드 (ajax 통신)
 	@RequestMapping(value="nickchk.do", method={RequestMethod.GET, RequestMethod.POST })		//url패턴은 value로 명시하며 // post방식으로 전송왔을땐 method 속성을 추가해서, post방식임을 명시한다. 
-	public void selectDupCheckNick(@RequestParam("user_nickname") String user_nickname, HttpServletResponse response) throws IOException {		
+	public void selectDupCheckNick(@RequestParam(value="user_nickname", required=false) String user_nickname, HttpServletResponse response) throws IOException {		
 		int nickCount = InoutService.selectDupCheckNick(user_nickname);
 		
 		String returnStr = null;		//받아줄 string 객체인 returnStr을 만들어서 담아주고, 해당 값을 리턴할꺼임
@@ -138,7 +138,7 @@ public class InoutController {
 
 	//회원가입 요청을 처리하는 용도의 메소드
 	@RequestMapping(value="enroll.do", method={RequestMethod.GET, RequestMethod.POST })
-	public String memberInsertMethod(User user, Model model) {		//메소드이름은 내맘대로 작성	//에러메세지 출력을 위해 Model 준비
+	public String userInsertMethod(User user, Model model) {		//메소드이름은 내맘대로 작성	//에러메세지 출력을 위해 Model 준비
 		logger.info("enroll.do에 잘 담겼는지 확인용(controller) : \n" + user);		//멤버에 잘 담겼는지 확인용
 		
 		//패스워드 암호화 처리
@@ -146,7 +146,7 @@ public class InoutController {
 		logger.info("after encode : " + user.getUser_pwd());
 		logger.info("length : (바이트길이)" + user.getUser_pwd().length()); 		//패스워드 길이 확인용
 		
-		if( InoutService.userInsertMethod(user)> 0) {	
+		if( InoutService.userInsertMethod(user) > 0) {	
 						//회원가입을 성공했다면?
 			return "common/main"; 		//리턴할 url패턴 리턴 
 		}else{			
