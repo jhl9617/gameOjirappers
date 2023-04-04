@@ -20,7 +20,7 @@ public class AfterReturningAdvice {
     private Logger logger = LoggerFactory.getLogger(this.getClass());
 
     //포인트컷 설정을 위한 메소드 작성
-    @Pointcut("execution(* org.team404.gameOjirap.user.model.dao.InoutDao.loginMethod(..))")
+    @Pointcut("execution(* org.team404.gameOjirap.user.model.dao.UserDao.loginMethod(..))")
     public void loginPointcut() {}
 
     //타겟 오브젝트의 메소드가 실행 후 리턴될 때 작동되는 어드바이스
