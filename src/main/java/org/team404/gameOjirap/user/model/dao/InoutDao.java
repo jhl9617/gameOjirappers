@@ -10,50 +10,51 @@ import org.team404.gameOjirap.user.model.vo.User;
 
 @Repository("InoutDao")
 public class InoutDao {
-	//★★★★★★MemberServiceImpl로부터 받은 값을 처리해서 Controller로 넘기는 파트임!
+	//★★★★★★ServiceImpl로부터 받은 값을 처리해서 Controller로 넘기는 파트임!
 //	String NAMESPACE = "userMapper";
 
 	@Autowired	
 	private SqlSessionTemplate session;	
 
 	//로그인요청처리용
-	public User loginMethod(User user) {
-		
-		return session.selectOne("userMapper.loginMethod", user);
-	}
-	
 	public User selectUser(String user_id) {
 		return session.selectOne("userMapper.selectUser", user_id);	
 	}
 
-	
-	
-	public ArrayList<User> selectUserList() {
-		List<User> list = session.selectList("userMapper.selectUserList");	
-		
-		return (ArrayList<User>)list;
-	}
-	
-
+	//아이디중복확인용
 	public int selectDupCheckId(String user_id) {
 		return session.selectOne("userMapper.selectDupCheckId", user_id);	
 	}
 	
+	//닉네임중복확인용
 	public int selectDupCheckNick(String user_nickname) {
 		return session.selectOne("userMapper.selectDupCheckNick", user_nickname);	
 	}
-
+	
+	//회원가입요청처리용
 	public int userInsertMethod(User user) {
-		return session.insert("userMapper.insertMember", user);
+		return session.insert("userMapper.userInsertMethod", user);
 	}
-	
-	
 	
 	
 	public int userDeleteMethod(String user_id) {
 		return session.delete("deleteUser", user_id);
 	}
+	
+	
+	
+	public ArrayList<User> selectUserList() {
+		List<User> list = session.selectList("userMapper.selectUserList");	
+		return (ArrayList<User>)list;
+	}
+	
 
+	
+	
+	
+	
+	
+	
 
 
 	public int levelMethod(User user_level) {

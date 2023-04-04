@@ -91,6 +91,7 @@ public String commuMainList() throws UnsupportedEncodingException {
 
         ArrayList<CGroup> list = cGroupService.selectList(paging);
 
+
         if (list != null && list.size() > 0) {
             mv.addObject("list", list);
             mv.addObject("paging", paging);
@@ -108,8 +109,6 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping(value = "commuCreate.do", method={ RequestMethod.GET, RequestMethod.POST })
     public String creatCommuMethod(HttpSession session, Model model, @RequestParam(name = "communityname") String communityname) {
 
-
-
         //커뮤 메인에서 입력한 생성할 이름 생성 form에 기본적으로 적용 되도록
         model.addAttribute("communityname", communityname);
 
@@ -119,7 +118,6 @@ public String commuMainList() throws UnsupportedEncodingException {
     //커뮤니티 생성 form에서 submit을 눌렀을때
     @RequestMapping(value = "CommuCreateSubmit.do", method=RequestMethod.POST)
     public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request) {
-
 
         //유저 아이디 임시로 입력
         cGroup.setUser_id("admin");
@@ -140,11 +138,34 @@ public String commuMainList() throws UnsupportedEncodingException {
             }else{
                 return "redirect:commuMain.do";
             }
-
         } else {
             model.addAttribute("message", "새 커뮤니티 생성 실패");
             return "common/error";
         }
+    }
+
+    //커뮤니티 detailView
+    @RequestMapping("viewgroup.do")
+    public ModelAndView commuDetailMethod(ModelAndView mv, @RequestParam("communityid") int communityid
+                                        , @RequestParam(name = "page", required = false) String page, HttpSession session) {
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        CGroup cGroup = cGroupService.selectSingleCGroup(communityid);
+
+        if (cGroup != null) {
+
+            mv.addObject("communityid", communityid);
+            mv.addObject("group", cGroupService.selectSingleCGroup(communityid));
+            mv.addObject("currentPage", currentPage);
+
+            mv.setViewName("community/viewGroup");
+        } else {
+            mv.addObject("message", communityid + "번 커뮤니티 조회 실패!");
+            mv.setViewName("common/error");
+        }
+        return mv;
     }
 
 

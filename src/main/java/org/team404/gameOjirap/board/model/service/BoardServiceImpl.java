@@ -25,8 +25,8 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public ArrayList<BoardGen> selectBoardByTitle(String keyword) {
-		return boardDao.selectBoardByTitle(keyword);
+	public ArrayList<BoardGen> selectBoardByTitle(String search) {
+		return boardDao.selectBoardByTitle(search);
 	}
 
 	@Override
@@ -35,18 +35,18 @@ public class BoardServiceImpl implements BoardService {
 	}
 
 	@Override
-	public int insertBoard(BoardGen board) {
-		return boardDao.insertBoard(board);
+	public int insertBoard(BoardGen boardGen) {
+		return boardDao.insertBoard(boardGen);
 	}
 
 	@Override
-	public int updateBoard(BoardGen board) {
-		return boardDao.updateBoard(board);
+	public int updateBoard(BoardGen boardGen) {
+		return boardDao.updateBoard(boardGen);
 	}
 
 	@Override
-	public int deleteBoard(BoardGen board) {
-		return boardDao.deleteBoard(board);
+	public int deleteBoard(int boardGen) {
+		return boardDao.deleteBoard(boardGen);
 	}
 
 	@Override

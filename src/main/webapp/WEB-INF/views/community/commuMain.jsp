@@ -1,6 +1,10 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
+
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -23,6 +27,10 @@
             <input type="text" class="pos" id="communityname" name="communityname" required>
         </div>
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
+        <c:url var="sse" value="/csview.do">
+        	<c:param name="communityid" value="1" />
+        </c:url>
+        <a href="${sse}"><h2>커뮤티니 일정보기</h2></a>
     </form>
 
     <h2 class="my-4">커뮤니티 찾아보기</h2>
@@ -30,18 +38,27 @@
         <thead>
         <tr>
             <th scope="col">커뮤니티 이름</th>
-            <th scope="col">회원 수</th>
-            <th scope="col">커뮤 마스터</th>
+            <th scope="col">생성자</th>
+            <th scope="col">커뮤 생성일</th>
+            <th scope="col"></th>
         </tr>
         </thead>
         <tbody>
-        <c:forEach var="group" items="${groups}">
+        <c:forEach var="group" items="${list}">
             <tr>
-                <td>${group.name}</td>
-                <td>${group.members.size()}</td>
+
+
+                <td>${group.communityname}</td>
+
+                <td>${group.user_id}</td>
+                <td><fmt:formatDate value="${group.communitydate}" pattern="yyyy-MM-dd" /></td>
                 <td>
-                    <a href="joinGroup?groupId=${group.id}" class="btn btn-success">Join</a>
-                    <a href="viewGroup?groupId=${group.id}" class="btn btn-primary">View</a>
+                    <a href="joinGroup?communityid=${group.communityid}" class="btn btn-success">Join</a>
+
+                    <c:url var="cdt" value="/viewgroup.do">
+                        <c:param name="communityid" value="${ group.communityid }" />
+                    </c:url>
+                    <a href="${cdt}" class="btn btn-primary">View</a>
                 </td>
             </tr>
         </c:forEach>

@@ -20,10 +20,9 @@ public interface GameService {
 	ArrayList<Game> selectGameDiscTop();		//할인율 높은 순위
 	
 
-<<<<<<< Updated upstream
-=======
+
 	public String selectAchievement(String appid);
 
 
->>>>>>> Stashed changes
+
 }

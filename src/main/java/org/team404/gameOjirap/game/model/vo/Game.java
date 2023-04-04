@@ -9,8 +9,8 @@ public class Game implements Serializable {
     private String name;					//게임 이름
     private String developer;				//게임 개발자
     private String publisher;				//게임 배급사
-    private String initialprice;			//게임 초기가격
-    private String finalprice;				//게임 최종가격
+    private int initialprice;			//게임 초기가격
+    private int finalprice;				//게임 최종가격
     private int discountrate;				//할인율
     private String description;				//게임 설명
     private String platform;				//게임 플랫폼
@@ -33,9 +33,9 @@ public class Game implements Serializable {
     public Game() {
     }
 
-    
 
-    public Game(String appid, String name, String developer, String publisher, String initialprice, String finalprice,
+
+	public Game(String appid, String name, String developer, String publisher, int initialprice, int finalprice,
 			int discountrate, String description, String platform, int meta, String category, String genre,
 			String headerimg, String movie, String releasedate, String achievement, int positive, int ccu,
 			String short_description, String supported_languages, String pcminimum, String pcrecommended) {
@@ -67,150 +67,219 @@ public class Game implements Serializable {
 
 
 	public String getAppid() {
-        return appid;
-    }
+		return appid;
+	}
 
-    public void setAppid(String appid) {
-        this.appid = appid;
-    }
 
-    public String getName() {
-        return name;
-    }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
 
-    public String getDeveloper() {
-        return developer;
-    }
 
-    public void setDeveloper(String developer) {
-        this.developer = developer;
-    }
 
-    public String getPublisher() {
-        return publisher;
-    }
+	public String getName() {
+		return name;
+	}
 
-    public void setPublisher(String publisher) {
-        this.publisher = publisher;
-    }
 
-    public String getInitialprice() {
-        return initialprice;
-    }
 
-    public void setInitialprice(String initialPrice) {
-        this.initialprice = initialPrice;
-    }
+	public void setName(String name) {
+		this.name = name;
+	}
 
-    public String getFinalprice() {
-        return finalprice;
-    }
 
-    public void setFinalprice(String finalPrice) {
-        this.finalprice = finalPrice;
-    }
 
-    public int getDiscountrate() {
-        return discountrate;
-    }
+	public String getDeveloper() {
+		return developer;
+	}
 
-    public void setDiscountrate(int discountrate) {
-        this.discountrate = discountrate;
-    }
 
-    public String getDescription() {
-        return description;
-    }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
+	public void setDeveloper(String developer) {
+		this.developer = developer;
+	}
 
-    public String getPlatform() {
-        return platform;
-    }
 
-    public void setPlatform(String platform) {
-        this.platform = platform;
-    }
 
-    public int getMeta() {
-        return meta;
-    }
+	public String getPublisher() {
+		return publisher;
+	}
 
-    public void setMeta(int meta) {
-        this.meta = meta;
-    }
 
-    public String getCategory() {
-        return category;
-    }
 
-    public void setCategory(String category) {
-        this.category = category;
-    }
+	public void setPublisher(String publisher) {
+		this.publisher = publisher;
+	}
 
-    public String getGenre() {
-        return genre;
-    }
 
-    public void setGenre(String genre) {
-        this.genre = genre;
-    }
 
-    public String getHeaderimgs() {
-        return headerimg;
-    }
+	public int getInitialprice() {
+		return initialprice;
+	}
 
-    public void setHeaderimgs(String headerimg) {
 
-        this.headerimg = headerimg;
-    }
 
-    public String getMovies() {
-        return movie;
-    }
+	public void setInitialprice(int initialprice) {
+		this.initialprice = initialprice;
+	}
 
-    public void setMovies(String movie) {
-        this.movie = movie;
-    }
 
-    public String getreleasedate() {
-        return releasedate;
-    }
 
-    public void setreleasedate(String releasedate) {
-        this.releasedate = releasedate;
-    }
+	public int getFinalprice() {
+		return finalprice;
+	}
 
-    public String getAchievement() {
-        return achievement;
-    }
 
-    public void setAchievement(String achievement) {
-        this.achievement = achievement;
-    }
 
-    public int getPositive() {
-        return positive;
-    }
+	public void setFinalprice(int finalprice) {
+		this.finalprice = finalprice;
+	}
 
-    public void setPositive(int positive) {
-        this.positive = positive;
-    }
 
-    public int getCcu() {
-        return ccu;
-    }
 
-    public void setCcu(int ccu) {
-        this.ccu = ccu;
-    }
-    
+	public int getDiscountrate() {
+		return discountrate;
+	}
+
+
+
+	public void setDiscountrate(int discountrate) {
+		this.discountrate = discountrate;
+	}
+
+
+
+	public String getDescription() {
+		return description;
+	}
+
+
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+
+
+
+	public String getPlatform() {
+		return platform;
+	}
+
+
+
+	public void setPlatform(String platform) {
+		this.platform = platform;
+	}
+
+
+
+	public int getMeta() {
+		return meta;
+	}
+
+
+
+	public void setMeta(int meta) {
+		this.meta = meta;
+	}
+
+
+
+	public String getCategory() {
+		return category;
+	}
+
+
+
+	public void setCategory(String category) {
+		this.category = category;
+	}
+
+
+
+	public String getGenre() {
+		return genre;
+	}
+
+
+
+	public void setGenre(String genre) {
+		this.genre = genre;
+	}
+
+
+
+	public String getHeaderimg() {
+		return headerimg;
+	}
+
+
+
+	public void setHeaderimg(String headerimg) {
+		this.headerimg = headerimg;
+	}
+
+
+
+	public String getMovie() {
+		return movie;
+	}
+
+
+
+	public void setMovie(String movie) {
+		this.movie = movie;
+	}
+
+
+
+	public String getReleasedate() {
+		return releasedate;
+	}
+
+
+
+	public void setReleasedate(String releasedate) {
+		this.releasedate = releasedate;
+	}
+
+
+
+	public String getAchievement() {
+		return achievement;
+	}
+
+
+
+	public void setAchievement(String achievement) {
+		this.achievement = achievement;
+	}
+
+
+
+	public int getPositive() {
+		return positive;
+	}
+
+
+
+	public void setPositive(int positive) {
+		this.positive = positive;
+	}
+
+
+
+	public int getCcu() {
+		return ccu;
+	}
+
+
+
+	public void setCcu(int ccu) {
+		this.ccu = ccu;
+	}
+
 
 
 	public String getShort_description() {
@@ -261,6 +330,12 @@ public class Game implements Serializable {
 
 
 
+	public static long getSerialversionuid() {
+		return serialVersionUID;
+	}
+
+
+
 	@Override
 	public String toString() {
 		return "Game [appid=" + appid + ", name=" + name + ", developer=" + developer + ", publisher=" + publisher
@@ -272,7 +347,9 @@ public class Game implements Serializable {
 				+ ", pcminimum=" + pcminimum + ", pcrecommended=" + pcrecommended + "]";
 	}
 
-	
+    
+
+    
 
     
 }

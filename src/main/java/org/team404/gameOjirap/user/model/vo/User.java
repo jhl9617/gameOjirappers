@@ -13,20 +13,27 @@ public class User implements java.io.Serializable{
 	private String user_phone; 			//회원전화번호
 	private String user_email;    			//회원이메일
 	private String user_birth;     		//회원생일
-	private String confirm_answer;   //본인확인용 질문
 	private String user_level; 					//회원등급
 	private String user_status;					//회원 활동상태
 	private int user_point; 							//보유포인트
 	private java.sql.Date user_access;		//접속기록
 	private String user_original_profile;	//원본프로필이미지
+	private String confirm_answer;  			 //본인확인용 질문
+	
+	private java.sql.Date board_click_day;//즐찾한 날짜 ★가져올예정
+	private String appid; 							//즐찾한 게임정보번호★가져올예정
+	private String bname;   						//밴드 이름★가져올예정
+	private String com_contents; 				//내가 쓴 코멘트 제목★가져올예정
+	private String board_title;  					//내가 쓴 글 제목★가져올예정
 	
 	public User() {
 		super();
 	}
 
 	public User(String user_id, String admin_id, String user_pwd, String user_nickname, String user_name,
-			String user_phone, String user_email, String user_birth, String confirm_answer, String user_level,
-			String user_status, int user_point, Date user_access, String user_original_profile) {
+			String user_phone, String user_email, String user_birth, String user_level, String user_status,
+			int user_point, Date user_access, String user_original_profile, String confirm_answer, Date board_click_day,
+			String appid, String bname, String com_contents, String board_title) {
 		super();
 		this.user_id = user_id;
 		this.admin_id = admin_id;
@@ -36,21 +43,17 @@ public class User implements java.io.Serializable{
 		this.user_phone = user_phone;
 		this.user_email = user_email;
 		this.user_birth = user_birth;
-		this.confirm_answer = confirm_answer;
 		this.user_level = user_level;
 		this.user_status = user_status;
 		this.user_point = user_point;
 		this.user_access = user_access;
 		this.user_original_profile = user_original_profile;
-	}
-
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", admin_id=" + admin_id + ", user_pwd=" + user_pwd + ", user_nickname="
-				+ user_nickname + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_email="
-				+ user_email + ", user_birth=" + user_birth + ", confirm_answer=" + confirm_answer + ", user_level="
-				+ user_level + ", user_status=" + user_status + ", user_point=" + user_point + ", user_access="
-				+ user_access + ", user_original_profile=" + user_original_profile + "]";
+		this.confirm_answer = confirm_answer;
+		this.board_click_day = board_click_day;
+		this.appid = appid;
+		this.bname = bname;
+		this.com_contents = com_contents;
+		this.board_title = board_title;
 	}
 
 	public String getUser_id() {
@@ -117,14 +120,6 @@ public class User implements java.io.Serializable{
 		this.user_birth = user_birth;
 	}
 
-	public String getConfirm_answer() {
-		return confirm_answer;
-	}
-
-	public void setConfirm_answer(String confirm_answer) {
-		this.confirm_answer = confirm_answer;
-	}
-
 	public String getUser_level() {
 		return user_level;
 	}
@@ -164,17 +159,57 @@ public class User implements java.io.Serializable{
 	public void setUser_original_profile(String user_original_profile) {
 		this.user_original_profile = user_original_profile;
 	}
-	
+
+	public String getConfirm_answer() {
+		return confirm_answer;
+	}
+
+	public void setConfirm_answer(String confirm_answer) {
+		this.confirm_answer = confirm_answer;
+	}
+
+	public java.sql.Date getBoard_click_day() {
+		return board_click_day;
+	}
+
+	public void setBoard_click_day(java.sql.Date board_click_day) {
+		this.board_click_day = board_click_day;
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public String getBname() {
+		return bname;
+	}
+
+	public void setBname(String bname) {
+		this.bname = bname;
+	}
+
+	public String getCom_contents() {
+		return com_contents;
+	}
+
+	public void setCom_contents(String com_contents) {
+		this.com_contents = com_contents;
+	}
+
+	public String getBoard_title() {
+		return board_title;
+	}
+
+	public void setBoard_title(String board_title) {
+		this.board_title = board_title;
+	}
 	
 	
 	
 }//class close
-
-
-
-
-
-
-
 
 
