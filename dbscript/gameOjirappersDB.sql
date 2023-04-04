@@ -195,7 +195,7 @@ comment on column TB_Community_REQ.communityId is '밴드 ID';
 comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
 comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
 
-DROP TABLE TB_GAME cascade constraints;
+DROP TABLE GAME cascade constraints;
 DROP TABLE GAME cascade constraints;
 
 CREATE TABLE GAME (
@@ -667,13 +667,19 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
 
-INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
-VALUES (1, '����', SYSDATE, 'admin', '�����');
-
 CREATE SEQUENCE sch_seq
     START WITH 1
     INCREMENT BY 1;
 
+/*커뮤 번호 시퀀스*/
+CREATE SEQUENCE SEQ_COMMUNITY
+    START WITH 1
+    INCREMENT BY 1;
+
+/*커뮤 게시판 번호 시퀀스*/
+CREATE SEQUENCE SEQ_COMMUNITY_BOARD
+    START WITH 1
+    INCREMENT BY 1;
 
 insert into tb_board_gen
 values(1, '테스트용 게시글 입니다.', '테스트용 게시글 내용입니다', sysdate,
