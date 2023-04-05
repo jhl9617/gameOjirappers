@@ -35,11 +35,10 @@ public class UserDao {
 		return session.insert("userMapper.userInsertMethod", user);
 	}
 	
-	
+	//회원탈퇴요청처리용
 	public int userDeleteMethod(String user_id) {
-		return session.delete("deleteUser", user_id);
+		return session.delete("userMapper.userDeleteMethod", user_id);
 	}
-	
 	
 	
 	public ArrayList<User> selectUserList() {
@@ -48,7 +47,7 @@ public class UserDao {
 	}
 	
 	public int updateUser(User user) {
-		return session.update("userMapper.updateuser", user);
+		return session.update("userMapper.updateUser", user);
 	}
 	
 	
