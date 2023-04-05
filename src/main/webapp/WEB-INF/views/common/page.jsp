@@ -17,6 +17,7 @@
 <body>
 <!-- 페이징 처리 -->
 <div style="text-align:center;"> <!-- 페이지 표시 영역 -->
+
    <!-- 1페이지로 이동하는 버튼 -->
    <c:if test="${ currentPage eq 1 }">
       <img src="<c:url value="/resources/images/movepageLL.jpg"/>" width="20px" height="20px" alt="[맨처음]" /> &nbsp;
@@ -79,6 +80,7 @@
    </c:if>
 </div>
 <%-- <c:set var="url" vlaue="/.do"/>
+
 <c:import url="/WEB-INF/views/common/page.jsp"/>
 <jsp:include page="/WEB-INF/views/common/page.jsp" /> --%>
 </body>

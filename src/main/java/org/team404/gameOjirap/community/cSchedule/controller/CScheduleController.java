@@ -91,4 +91,26 @@ public class CScheduleController {
 		System.out.println(sendjson.toJSONString());
     	return sendjson.toJSONString();
     }
+
+	@RequestMapping(value="schcal.do", method = RequestMethod.POST)
+	@ResponseBody
+	public String scheduleCalendar(Model model, @RequestParam("communityid") int communityid){
+		ArrayList<CSchedule> list = cScheduleService.selectCalendarList(communityid);
+		JSONObject sendjson = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		for(CSchedule cs : list){
+			JSONObject job = new JSONObject();
+			try {
+				job.put("title", URLEncoder.encode(cs.getSchName(), "utf-8"));
+				job.put("start", cs.getSchStart().toString());
+				job.put("end", cs.getSchEnd().toString());
+			} catch (UnsupportedEncodingException e) {
+				throw new RuntimeException(e);
+			}
+			jarr.add(job);
+		}
+		sendjson.put("list",jarr);
+		System.out.println(sendjson.toJSONString());
+		return sendjson.toJSONString();
+	}
 }

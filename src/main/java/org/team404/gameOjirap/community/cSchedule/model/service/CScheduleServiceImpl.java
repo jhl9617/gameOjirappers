@@ -26,5 +26,10 @@ public class CScheduleServiceImpl implements CScheduleService{
 		return cScheduleDao.insertSchdule(cschedule);
 	}
 
+	@Override
+	public ArrayList<CSchedule> selectCalendarList(int communityid) {
+		return cScheduleDao.selectCalendarList(communityid);
+	}
+
 
 }

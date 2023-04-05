@@ -18,7 +18,7 @@
 -->
 <html>
 <head>
-<title>GameInfo</title>
+<title>${ requestScope.game.name }</title>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no" />
 <style type="text/css">
@@ -28,6 +28,16 @@
 #deleteinfo {
    display: none;
 }
+#samePrice {
+   display: none;
+}
+#sameGenre {
+   display: none;
+}
+/* form.sform {
+	display: none; /* 처음엔 안보이게 설정 클릭시 보임*/
+	background: lightgray;
+} */
 </style>
 <script type="text/javascript">
 function updateinfo() {
@@ -55,6 +65,54 @@ function deleteinfo() {
     }
     return false;
 }
+
+function sameGenre() {
+    const sameGenre = document.getElementById('sameGenre');
+    const samePrice = document.getElementById('samePrice');
+
+    if (sameGenre.style.display === 'none') {
+    	sameGenre.style.display = 'block';
+    	samePrice.style.display = 'none';
+    } else {
+    	sameGenre.style.display = 'none';
+    }
+    return false;
+}
+
+function samePrice() {
+	const sameGenre = document.getElementById('sameGenre');
+    const samePrice = document.getElementById('samePrice');
+
+    if (samePrice.style.display === 'none') {
+    	samePrice.style.display = 'block';
+    	sameGenre.style.display = 'none';
+    } else {
+    	samePrice.style.display = 'none';
+    }
+    return false;
+}
+/* $(function(){
+	//$('선택자').이벤트 함수(function(){실행코드});
+	//$('선택자').on('이벤트종류',function(){실행코드});
+	//작성한 이벤트 실행 코드는 이벤트가 발생될 때까지 대기 상태임
+	
+	//검색할 항목을 선택하면, 해당 항목에 대한 폼이 보여지게 함
+	//보여지고 있는 다른 폼은 다시 안 보이게 함
+	
+	$('input[name=item]').on('change', function(){
+		//change 이벤트가 발생한 radio 와 연결된 폼만 보여지게 하고,나머지 폼들은 안 보이게 처리함
+		$('input[name=item]').each(function(index){
+			//해당 index 번째 redio 가 checked 인지 확인 하고
+			if($(this).is(':checked')){
+				$('form.sform').eq(index).css('display','block');
+			}else{
+				$('form.sform').eq(index).css('display','none');
+			}
+		}); //each
+	}); //on
+	
+});//document.ready */
+
 </script>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
@@ -69,7 +127,7 @@ function deleteinfo() {
 		<div id="main">
 		
 <div class="inner" align="left">
-<%--             <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}"> --%>
+         <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}">
                <span class="button" onclick="updateinfo();">게임정보 업데이트</span>
                <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
                <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
@@ -84,7 +142,7 @@ function deleteinfo() {
                      <input name="appid"> <input type="submit" value="삭제">
                   </form>
                </div>
-<%--             </c:if> --%>
+             </c:if>
             <hr clear="both">
 
 			<!-- Header -->
@@ -93,7 +151,7 @@ function deleteinfo() {
 				<section>
 				
 					<header class="main">
-						<h1 align="center">${ requestScope.game.name } 의 게임 정보</h1>
+						<h1 align="center">${ requestScope.game.name }</h1>
 						<h3 align="center">
 						
 						<script type="text/javascript">
@@ -111,10 +169,11 @@ function deleteinfo() {
 				<section>
 					<!--게임사진 들어갈 부분 -->
 					<header class="major">
-						<h2> 이미지 </h2>
 					</header>
+
 					<span class="image object">
 					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
+					</span>
 
 				</section>
 				<section>
@@ -123,14 +182,16 @@ function deleteinfo() {
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
-					<video controls>
+
+					<video autoplay muted>
+
 					  <source src="${ requestScope.game.movie }" type="video/mp4"></video>
 						
 					</table>
 					<table>
-					<header class="major">
+					<!-- <header class="major">
 						<h2> ㅀㄹㅇㅎ </h2>
-					</header>
+					</header> -->
 							<div style="border:1px solid black;">
 							<h2 align="center">초기 가격:[${ requestScope.game.initialprice }]</h2>
 							<h2 align="center">최종 가격:[${ requestScope.game.finalprice }]</h2>
@@ -165,7 +226,7 @@ function deleteinfo() {
 				
 				<section>
 				<header class="major">
-					<h2> 할인율 </h2>
+					<h2> 게임리스트 </h2>
 				</header>
 				<div class="discount">
 				<table class="table-products table-hover">
@@ -186,7 +247,57 @@ function deleteinfo() {
 						</svg>
 						</a>
 					</th>
-					<th>Peak Today</th>
+					
+					<center>
+					<!-- 항목별 검색 기능 추가 -->
+					<fieldset id="ss">
+						<legend>검색할 항목을 선택하세요</legend>
+						<span class="button" name="item" onclick="samePrice();">가격 같은순</span>  &nbsp;
+						<span class="button" name="item" onclick="sameGenre();">같은 장르 순</span>  &nbsp;
+					</fieldset>
+					<!-- 검색 항목 제공 끝 -->
+					<br>
+					<!-- 가격 같은순 -->
+					<form action="${ pageContext.servletContext.contextPath }/gpsearch.do" method="post" id="priceform" class="sform">
+						<input type="hidden" name="action" value="price">
+						<input type="number" name="keyword" value="${ requestScope.game.finalprice }">&nbsp;
+						<input type="submit" value="검색">
+					</form>
+					<!-- 같은 장르 순 -->
+					<form action="${ pageContext.servletContext.contextPath }/gpsearch.do" method="post" id="genderform" class="sform">
+						<input type="hidden" name="action" value="gender">
+						<input type="search" name="keyword"> &nbsp;
+						<input type="submit" value="검색">
+					</form>
+				</center>
+					<%-- <table align="center" border="1" cellspacing="0" cellpadding="3">
+						<tr>
+							<th>게임이름</th>
+							<th>장르</th>
+							<th>좋아요</th>
+							<th>초기값</th>
+							<th>마지막값</th>
+							<th>할인율</th>
+
+						</tr>
+
+						<c:forEach items="${ requestScope.list }" var="g">
+							<tr>
+								<td>${ g.name }</td>
+								<td>${ g.genre }</td>
+								<td>${ g.positive }</td>
+								<td>${ g.initialprice }</td>
+								<td>${ g.finalprice }</td>
+								<td>${ g.description }</td>
+
+							</tr>
+						</c:forEach>
+					</table> --%>
+					
+					<!-- <span class="button" onclick="samePrice();">가격 같은순</span>
+					
+               		<span class="button" onclick="sameGenre();">같은 장르 순</span> -->
+<!-- 					<th>Peak Today</th>
 					<th><img src="" class="flag" alt="" width="18" height="18"> Price</th>
 				</tr>
 				</thead>
@@ -201,7 +312,7 @@ function deleteinfo() {
 					<td class="text-center green">접속유저</td>
 					<td class="text-center">할인율</td>
 				</tr>
-				</tbody>
+				</tbody> -->
 				</table>
 
 				</div>
@@ -231,9 +342,10 @@ function deleteinfo() {
 				<tbody>
 				<tr class="boraddd">
 
-					<th><a href="" class="css-truncate">번호</a></th>
+					<!-- <th><a href="" class="css-truncate">번호</a></th>
 					<th class="text-center green">제목</td>
-					<th class="text-center">조회수</td>
+					<th class="text-center">조회수</td> -->
+					
 				</tr>
 				</tbody>
 				</table>

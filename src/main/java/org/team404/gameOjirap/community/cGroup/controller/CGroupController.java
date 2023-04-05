@@ -15,6 +15,7 @@ import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -80,6 +81,7 @@ public String commuMainList() throws UnsupportedEncodingException {
             currentPage = Integer.parseInt(page);
         }
 
+
 // 한 페이지에 게시글 10개씩 출력되게 하는 경우 :
         // 페이징 계산 처리 - 별도의 클래스로 작성해서 이용해도 됨
         int limit = 10; // 한 페이지에 출력할 목록 갯수
@@ -118,10 +120,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     //커뮤니티 생성 form에서 submit을 눌렀을때
     @RequestMapping(value = "CommuCreateSubmit.do", method=RequestMethod.POST)
     public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request) {
-
-        //유저 아이디 임시로 입력
-        cGroup.setUser_id("admin");
-
+        System.out.println("---------------------------user id check : "+cGroup.getUser_id());
         //이미지 첨부 미구현
         if (cGroupService.selectCGroup(cGroup.getCommunityname()) < 1 && cGroupService.insertCGroup(cGroup) > 0) {
 
@@ -168,9 +167,29 @@ public String commuMainList() throws UnsupportedEncodingException {
         return mv;
     }
 
+    // 요청 페이지로 이동
+    @RequestMapping("movejoinpage.do")
+    public String moveRequestPage(@RequestParam("communityid") int communityid, Model model){
+        CGroup cGroup = cGroupService.selectSingleCGroup(communityid);
+        if(cGroup != null){
+            model.addAttribute("communityname", cGroup.getCommunityname());
+            model.addAttribute("communityid", communityid);
+            return "community/joinRequest";}
+        else {
+            model.addAttribute("message", "신청 양식을 불러오지 못했습니다.");
+            return "common/error";
+        }
+    }
 
-
-
-
+    // 요청 정보 저장
+    @RequestMapping(value="req.do", method=RequestMethod.POST)
+    public String insertRequest(CommunityReq req, Model model){
+        
+        if(cGroupService.insertRequest(req) > 0){
+            return "redirect:viewgroup.do?communityid=" + req.getCommunityid();
+        } else {
+            return "common/error";
+        }
+    }
 
 }

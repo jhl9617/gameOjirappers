@@ -6,6 +6,7 @@ import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.dao.CGroupDao;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
 
@@ -61,5 +62,10 @@ public class CGroupServiceImpl implements CGroupService{
     @Override
     public ArrayList<CGroup> selectList(Paging paging) {
         return cGroupDao.selectList(paging);
+    }
+
+    @Override
+    public int insertRequest(CommunityReq req) {
+        return cGroupDao.insertRequest(req);
     }
 }

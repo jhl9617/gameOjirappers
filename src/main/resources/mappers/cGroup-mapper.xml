@@ -65,4 +65,9 @@
         where COMMUNITYID = #{ communityid }
     </select>
 
+    <!-- 가입 요청 저장 -->
+    <insert id="insertRequest" parameterType="CommunityReq">
+     insert into tb_community_req (user_id, communityid, requestdes, requestdate)
+        values (#{user_id},#{communityid},#{requestdes},sysdate)
+    </insert>
 </mapper>

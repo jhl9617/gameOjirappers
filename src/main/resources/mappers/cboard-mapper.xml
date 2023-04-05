@@ -5,33 +5,11 @@
 
 <mapper namespace="cBoardMapper">
 
-<!--	<resultMap type="Board" id="resultBoard">
-		<result column="board_no" property="board_no"/>
-		<result column="board_title" property="board_title"/>
-		<result column="board_content" property="board_content"/>
-		<result column="board_date" property="board_date"/>
-		<result column="board_count" property="board_count"/>
-		<result column="appid" property="appid"/>
-		<result column="board_like" property="board_like"/>
-		<result column="board_orifile" property="board_orifile"/>
-		<result column="board_refile" property="board_refile"/>
-		<result column="user_id" property="user_id"/>
-		<result column="board_notice" property="board_notice"/>
-	</resultMap>-->
 
 
-    <resultMap type="CBoard" id="resultCBoard">
-        <result column="cBoardNo" property="cBoardNo"/>
-        <result column="cBoardTitle" property="cBoardTitle"/>
-        <result column="user_Id" property="user_Id"/>
-        <result column="cBoardContent" property="cBoardContent"/>
-        <result column="cBoardDate" property="cBoardDate"/>
-        <result column="communityId" property="communityId"/>
-        <result column="cBoardLike" property="cBoardLike"/>
-        <result column="cBoardOrifile" property="cBoardOrifile"/>
-        <result column="cBoardRefile" property="cBoardRefile"/>
-        <result column="cBoardNotice" property="cBoardNotice"/>
-    </resultMap>
+
+
+
 
 
     <select id="selectBListCount" parameterType="_int" resultType="_int">
@@ -57,10 +35,46 @@
 
     </select>
 
-    <!--커뮤 글 보여주기-->
+    <!--커뮤 글 1개 글 번호로 가져오기-->
     <select id="selectCommuPost" parameterType="_int" resultType="CBoard">
         select *
         from TB_COMMUNITY_BOARD
-        where COMMUNITYID = #{ communityid }
+        where CBOARDNO = #{ cboardno }
     </select>
+
+    <!--커뮤니티 게시물 입력-->
+    <insert id="insertCommuPost" parameterType="CBoard">
+        insert into TB_COMMUNITY_BOARD
+        values (SEQ_COMMUNITY_BOARD.nextval, #{cBoardTitle}, #{user_Id}, #{cBoardContent}, sysdate, #{communityId}, 0, #{cBoardOrifile}, #{cBoardRefile}, 0)
+    </insert>
+
+    <!--커뮤니티 게시물 수정-->
+    <update id="updateCommuPost" parameterType="CBoard">
+        update TB_COMMUNITY_BOARD
+        set CBOARDTITLE = #{cBoardTitle}, CBOARDCONTENT = #{cBoardContent}, CBOARDORIFILE = #{cBoardOrifile}, CBOARDREFILE = #{cBoardRefile}
+        where CBOARDNO = #{cBoardNo}
+    </update>
+
+    <!--커뮤니티 게시물 삭제-->
+    <delete id="deleteCommuPost" parameterType="_int">
+        delete from TB_COMMUNITY_BOARD
+        where CBOARDNO = #{ cBoardNo }
+    </delete>
+
+    <!--커뮤니티 게시물에 해당하는 댓글 날짜로 정렬해서 가져오기-->
+    <select id="selectCommuReply" parameterType="_int" resultType="CComment">
+        select *
+        from TB_COMMUNITY_COMMENT
+        where CBOARDNO = #{ cBoardNo }
+        order by CCOMDATE
+    </select>
+
+    <!--커뮤니티 댓글 insert-->
+    <insert id="insertCommuReply" parameterType="CComment">
+        insert into TB_COMMUNITY_COMMENT(CCOMNO, CBOARDNO, USER_ID, CCOMCONTENT, CCOMDATE, CCOMLVL, COMMUNITYID)
+        values ((SELECT MAX(CCOMNO) + 1 FROM TB_COMMUNITY_COMMENT), #{cboardno}, #{user_id}, #{ccomcontent}, sysdate, 0, #{communityid})
+    </insert>
+<!---->
+
+
 </mapper>
