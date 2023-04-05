@@ -2,6 +2,8 @@ package org.team404.gameOjirap.game.model.service;
 
 import java.util.ArrayList;
 
+import org.team404.gameOjirap.common.Pagingnn;
+import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.vo.Game;
 
 public interface GameService {
@@ -22,6 +24,18 @@ public interface GameService {
 
 
 	public String selectAchievement(String appid);
+
+	//새게임 리스트 에서 페이지 처리
+	int selectListNewCount();
+	ArrayList<Game> selectNewList(Pagingnn paging);
+
+	//게임 할인율로 보이기
+	ArrayList<Game> selectSearchPrice(int finalprice);
+	ArrayList<Game> selectSearchGenre(Searchs searchs);
+
+	
+	
+	
 
 
 
