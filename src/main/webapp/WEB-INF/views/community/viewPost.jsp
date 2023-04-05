@@ -5,6 +5,19 @@
 <head>
     <title>${cBoard.cBoardTitle}</title>
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" /><%--css 스타일 가져오기--%>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <script>
+        $(document).ready(function() {
+            var urlParams = new URLSearchParams(window.location.search);
+            if (urlParams.get('scrollToComment') === 'true') {
+                $('html, body').animate({
+                    scrollTop: $('#comments-end').offset().top
+                }, 500);
+            }
+        });
+    </script>
+
+
 </head>
 <body>
 <%--게시글 내용 보여주는 테이블--%>
@@ -48,8 +61,8 @@
     </div>
     <%--수정 삭제 버튼--%>
     <div class="btn-group" role="group" aria-label="Basic example">
-        <a href="<c:url value="/updateViewPost.do?cBoardNo=${cBoard.cBoardNo}"/>" class="btn btn-secondary">수정</a>
-        <a href="<c:url value="/commuDelete.do?cBoardNo=${cBoard.cBoardNo}"/>" class="btn btn-secondary">삭제</a>
+        <a href=""/>" class="btn btn-secondary">게시물 수정</a>
+        <a href=""/>" class="btn btn-secondary">삭제</a>
 
         <hr>
 
@@ -57,6 +70,7 @@
 
         <%--커뮤니티 댓글 리스트로 불러와서 보여주기--%>
         <c:import url="/WEB-INF/views/community/commuReplyList.jsp"/>
+        <div id="comments-end"></div>
 
     <%--댓글 입력 form--%>
     <form action="<c:url value="/commuReplyWrite.do"/>" method="post">
@@ -67,10 +81,9 @@
             <label for="ccomcontent">댓글 내용</label>
             <textarea class="form-control" id="ccomcontent" name="ccomcontent" rows="3"></textarea>
         </div>
+
         <button type="submit" class="btn btn-primary">댓글 작성</button>
     </form>
-
-
 </body>
 
 </div>
