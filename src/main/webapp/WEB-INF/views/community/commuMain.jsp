@@ -18,9 +18,14 @@
 <%--css 스타일 가져오기--%>
 </head>
 <body>
+
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br>
+<br>
+
 <div class="container">
     <h1 class="my-4">커뮤니티 허브</h1>
-
+    <c:if test="${!empty sessionScope.loginUser}">
     <h2>나만의 커뮤니티 생성</h2>
     <form action="commuCreate.do" method="post">
         <div class="form-group">
@@ -29,7 +34,7 @@
         </div>
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
     </form>
-
+    </c:if>
     <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">
         <thead>
@@ -59,8 +64,13 @@
                 </td>
             </tr>
         </c:forEach>
+
         </tbody>
     </table>
+    <c:import url="/WEB-INF/views/common/page.jsp" />
+    <br>
+    <br>
+    <c:import url="/WEB-INF/views/common/footer.jsp" />
 </div>
 </body>
 </html>

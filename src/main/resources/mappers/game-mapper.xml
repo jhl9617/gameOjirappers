@@ -55,6 +55,25 @@
 		<result property="pcminimum" column="pcminimum"/>
 		<result property="pcrecommended" column="pcrecommended"/>
 	</resultMap>
+	
+	<resultMap type="Game" id="searchPrice">
+		<result property="appid" column="appid"/>
+		<result property="name" column="name"/>
+		<result property="initialprice" column="initialprice"/>
+		<result property="finalprice" column="finalprice"/>
+		<result property="discountrate" column="discountrate"/>
+		<result property="description" column="description"/>
+	</resultMap>
+	
+	<resultMap type="Game" id="searchGenre">
+		<result property="appid" column="appid"/>
+		<result property="name" column="name"/>
+		<result property="genre" column="genre"/>
+		<result property="positive" column="positive"/>
+		<result property="ccu" column="ccu"/>
+		<result property="releasedate" column="releasedate"/>
+		
+	</resultMap>
 
 
 	<!-- 게임정보 입력 -->
@@ -120,12 +139,43 @@
 	 	where appid = #{appid}
 	 </select>
 	 
+	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
+	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
+	 	select name, initialprice, finalprice, discountrate  from game
+		where finalprice = #{ finalprice }
+	 </select>
+
+
+	  <!-- 게임 장르가 같은 것 끼리 출력 -->
+	 <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
+	 	<![CDATA[
+	 select*
+		from(select rownum rnum,  name, genre ,positive
+        from (select * from game order by positive desc)
+		where genre like '%' || #{ keyword } || '%' )
+        where rnum >= 1 and rnum <=10
+	]]>
+	 </select>
+	 
+	 <!-- 도전과제  -->
 	 <select id="selectAchievement" parameterType="string" resultType="string">
       select achievement
       from game
       where appid = #{appid}
    </select>
 	 
+	<!--  <select id="selectListCount" resultType="_int">
+	 	select count(*) from game
+	 </select>
+	 <select id="selectList" parameterType="Pagingnn" resultMap="allGame">
+	 	<![CDATA[
+	 	select *
+		from(select rownum rnum, 
+        from (select * from game
+                            order by  asc))
+		where rnum >=#{startRow} and rnum <=#{endRow} 
+		]]>
+	 </select> -->
 
 
 

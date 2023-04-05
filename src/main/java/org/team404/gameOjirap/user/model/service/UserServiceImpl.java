@@ -39,15 +39,15 @@ public class UserServiceImpl implements UserService{
 		return userDao.selectUserList();
 	}
 	
+	//회원탈퇴요청처리용
 	@Override
 	public int userDeleteMethod(String user_id) {
 		return userDao.userDeleteMethod(user_id);
 	}
 	
 	
-
 	
-	
+	@Override
 	public int updateUser(User user)	{
 	return userDao.updateUser(user);
 }
