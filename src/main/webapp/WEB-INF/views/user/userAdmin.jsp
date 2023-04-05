@@ -7,6 +7,7 @@
 <meta charset="UTF-8">
 <title></title>
 </head>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function() {
     showDiv();
@@ -56,8 +57,9 @@ function showDiv(){
 </div>
 </center>
 
+<!-- 목록 출력 영역 -->
 <center>
-	<button onclick="javascript:location.href=${ pageContext.servletContext.contextPath }'';">전체 회원 보기</button>
+	<button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/ualist.do?page=${currentPage}';">목록 보기</button>	
 </center>
 <br>
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
