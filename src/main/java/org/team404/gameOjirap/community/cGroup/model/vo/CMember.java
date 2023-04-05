@@ -13,6 +13,7 @@ public class CMember implements Serializable {
     private int communityid;
     private Date member_date;
     private String member_roll;
+    private char isdeleted;
 
     public CMember() {
     }
@@ -21,6 +22,7 @@ public class CMember implements Serializable {
         this.user_id = user_id;
         this.communityid = communityid;
         this.member_roll = member_roll;
+
     }
 
     public String getUser_id() {
@@ -55,6 +57,14 @@ public class CMember implements Serializable {
         this.member_roll = member_roll;
     }
 
+    public char getIsdeleted() {
+        return isdeleted;
+    }
+
+    public void setIsdeleted(char isdeleted) {
+        this.isdeleted = isdeleted;
+    }
+
     @Override
     public String toString() {
         return "CMember{" +
@@ -62,6 +72,7 @@ public class CMember implements Serializable {
                 ", communityid=" + communityid +
                 ", member_date=" + member_date +
                 ", member_roll='" + member_roll + '\'' +
+                ", isdeleted=" + isdeleted +
                 '}';
     }
 }
