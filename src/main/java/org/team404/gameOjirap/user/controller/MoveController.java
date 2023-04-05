@@ -9,15 +9,15 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-import org.team404.gameOjirap.user.model.service.InoutService;
+import org.team404.gameOjirap.user.model.service.UserService;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class MoveController {
 	
-	private final Logger logger = LoggerFactory.getLogger(InoutController.class);
+	private final Logger logger = LoggerFactory.getLogger(MoveController.class);
 	@Autowired 									
-	private InoutService InoutService;	
+	private UserService UserService;	
 	
 	//로그인 페이지 이동 처리용 --------------------------------------------------------------------------------
 	@RequestMapping(value="loginPage.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
@@ -39,7 +39,7 @@ public class MoveController {
 	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.GET, RequestMethod.POST })
 	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model)  {
 		
-		User updateUser = InoutService.selectUser(user_id);
+		User updateUser = UserService.selectUser(user_id);
 		
 		if(updateUser != null) {
 			model.addAttribute("user", updateUser);

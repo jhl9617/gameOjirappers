@@ -11,7 +11,7 @@
 	<!-- 매퍼에서 사용할 vo 클래스에 대한 줄임말 선언 -->
 	<typeAliases>
 
-		<typeAlias type="org.team404.gameOjirap.board.model.vo.BoardGen" alias="BoardGen" />
+		<typeAlias type="org.team404.gameOjirap.boardGen.model.vo.BoardGen" alias="BoardGen" />
 		<typeAlias type="org.team404.gameOjirap.common.Paging" alias="Paging" />
 		<typeAlias type="org.team404.gameOjirap.common.Pagingnn" alias="Pagingnn" />
 		<typeAlias type="org.team404.gameOjirap.common.Searchs" alias="Searchs" />
@@ -34,7 +34,7 @@
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
 	<mappers>
 		<mapper resource="mappers/user-mapper.xml" />
-		<mapper resource="mappers/board-mapper.xml" />
+		<mapper resource="mappers/boardGen-mapper.xml" />
 		<mapper resource="mappers/game-mapper.xml"/>
 		<mapper resource="mappers/cboard-mapper.xml"/>
 		<mapper resource="mappers/cGroup-mapper.xml"/>

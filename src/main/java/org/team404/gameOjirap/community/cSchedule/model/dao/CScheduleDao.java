@@ -25,4 +25,8 @@ public class CScheduleDao {
 		return session.insert("cScheduleMapper.insertSchdule", cschedule);
 	}
 
+    public ArrayList<CSchedule> selectCalendarList(int communityid) {
+		List<CSchedule> list = session.selectList("cScheduleMapper.selectCalendarList",communityid);
+		return (ArrayList<CSchedule>)list;
+    }
 }

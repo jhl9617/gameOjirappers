@@ -8,18 +8,24 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <meta charset="UTF-8">
+    <meta charset="UTF-8"/>
     <title>커뮤니티 허브</title>
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
-    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
+    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
+<%--css 스타일 가져오기--%>
 </head>
 <body>
+
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<br>
+<br>
+
 <div class="container">
     <h1 class="my-4">커뮤니티 허브</h1>
-
+    <c:if test="${!empty sessionScope.loginUser}">
     <h2>나만의 커뮤니티 생성</h2>
     <form action="commuCreate.do" method="post">
         <div class="form-group">
@@ -27,12 +33,8 @@
             <input type="text" class="pos" id="communityname" name="communityname" required>
         </div>
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
-        <c:url var="sse" value="/csview.do">
-        	<c:param name="communityid" value="1" />
-        </c:url>
-        <a href="${sse}"><h2>커뮤티니 일정보기</h2></a>
     </form>
-
+    </c:if>
     <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">
         <thead>
@@ -62,8 +64,13 @@
                 </td>
             </tr>
         </c:forEach>
+
         </tbody>
     </table>
+    <c:import url="/WEB-INF/views/common/page.jsp" />
+    <br>
+    <br>
+    <c:import url="/WEB-INF/views/common/footer.jsp" />
 </div>
 </body>
 </html>

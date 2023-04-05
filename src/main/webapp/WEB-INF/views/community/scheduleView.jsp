@@ -40,10 +40,11 @@
 	width: 200px;
 }
 </style>
-<script type="text/javascript"
-	src="${ pageContext.servletContext.contextPath }/resources/js/index.global.min.js"></script>
+	<link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css' />
 <script type="text/javascript"
 	src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/moment.js/2.29.1/moment.min.js'></script>
+	<script src='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.js'></script>
 <script type="text/javascript">
 
 	function addsch() {
@@ -101,7 +102,38 @@
 						+ textStatus + ", " + errorThrown);
 			}
 		}); // list
-		
+
+		$.ajax({
+			url: 'schcal.do', // Replace with your server URL that returns the JSON object
+			type: 'post',
+			data : {
+				"communityid" : "${communityid}"
+			},
+			dataType: 'json',
+			success: function(data) {
+				var jsonStr = JSON.stringify(data);
+				var json = JSON.parse(jsonStr).list;
+				console.log("data : "+ JSON.stringify(json));
+				var events = [];
+				for (var i in json) {
+
+					events.push({
+						title: decodeURIComponent(json[i].title).replace(
+								/\+/gi, " "),
+						start: json[i].start,
+						end: json[i].end
+					});
+				}
+				$('#calendar').fullCalendar({
+
+					initialView: 'dayGridMonth',
+					events: events
+				});
+			},
+			error: function(jqXHR, err, errorThrown) {
+				console.error('Error loading events: '+ JSON.stringify(jqXHR) +"["+ JSON.stringify(err) + "], " + errorThrown);
+			}
+		});
 	}); //document ready
 	
 	
@@ -116,11 +148,15 @@
 	<br>
 	<hr>
 	<center>
-		<div id="schcalendar"></div>
+		<h2>이번 달 일정</h2>
+		<div id="calendar"></div>
+
+		<c:if test="${loginUser.user_id eq cGroup.user_id and not empty loginUser}">
+
 		<div align="center">
 			<span onclick="addsch();" class="button">새로운 일정 등록</span>
 		</div>
-			
+		</c:if>
 
 		<div id="asch">
 			<form action="insertsch.do" method="post">

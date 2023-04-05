@@ -11,4 +11,5 @@ public interface CScheduleService {
 
 	int insertSchdule(CSchedule cschedule);
 
+    ArrayList<CSchedule> selectCalendarList(int communityid);
 }

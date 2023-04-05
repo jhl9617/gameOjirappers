@@ -127,7 +127,7 @@ function samePrice() {
 		<div id="main">
 		
 <div class="inner" align="left">
-<%--             <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}"> --%>
+         <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}">
                <span class="button" onclick="updateinfo();">게임정보 업데이트</span>
                <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
                <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
@@ -142,7 +142,7 @@ function samePrice() {
                      <input name="appid"> <input type="submit" value="삭제">
                   </form>
                </div>
-<%--             </c:if> --%>
+             </c:if>
             <hr clear="both">
 
 			<!-- Header -->
@@ -151,7 +151,7 @@ function samePrice() {
 				<section>
 				
 					<header class="main">
-						<h1 align="center">${ requestScope.game.name } 의 게임 정보</h1>
+						<h1 align="center">${ requestScope.game.name }</h1>
 						<h3 align="center">
 						
 						<script type="text/javascript">
@@ -169,11 +169,12 @@ function samePrice() {
 				<section>
 					<!--게임사진 들어갈 부분 -->
 					<header class="major">
-						<h2> 이미지 </h2>
 					</header>
+
 					<span class="image object">
 					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
 					</span>
+
 				</section>
 				<section>
 				
@@ -181,7 +182,9 @@ function samePrice() {
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
+
 					<video autoplay muted>
+
 					  <source src="${ requestScope.game.movie }" type="video/mp4"></video>
 						
 					</table>

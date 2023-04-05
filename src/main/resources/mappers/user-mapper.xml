@@ -31,19 +31,25 @@
 
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
-	<!-- 로그인 처리용 -->
-	<select id="selectUser"  parameterType="User"  resultMap="resultUser">		
-      select * 
-      from tb_user
-      where user_id = #{ user_id }
-	</select>
-
 
 	<!-- 회원탈퇴 처리용 -->
 	<delete id="userDeleteMethod" parameterType="string">		<!-- insert & delete는 기본이 int로 리턴하기때문에  resultType이나 resultMap 작성할 수 없음 -->
-		delete from member
+		delete 
+		from tb_user
 		where user_id = #{ user_id }			<!-- 값 1개에 대한 변수적용은 변수이름 아무거나 해도 됨  (uid)  but, 여러개일때는 순서대로 똑같이 써줘야한다.-->
 	</delete>
+
+
+	<!-- 회원정보 수정용 -->
+	<update id="updateUser" parameterType="User">		<!--전달받는값의 타입이 Member임  // 수정안된 값은 그냥 똑같이 덮어씌우기 하는거라고 생각하면 됨-->
+		update tb_user
+		set user_pwd= #{user_pwd},
+			 user_phone= #{user_phone}, 
+			 email= #{email},
+		where user_id = #{user_id}		
+	</update>
+
+
 
 
 	
@@ -52,6 +58,17 @@
 		select *
 		from tb_user
 	</select>
+	
+	
+	
+	
+	<!-- 로그인 처리용 -->
+	<select id="selectUser"  parameterType="User"  resultMap="resultUser">		
+      select * 
+      from tb_user
+      where user_id = #{ user_id }
+	</select>
+
 	
 	
 	
