@@ -328,7 +328,7 @@ CREATE TABLE TB_COMMENT (
                             com_contents	VARCHAR2(500)		NOT NULL,
                             com_date	DATE		NOT NULL,
                             com_lev	Number		NOT NULL,
-                            com_no2	NUMBER		NOT NULL,
+                            com_no2	NUMBER		,
                             board_no	NUMBER		NOT NULL,
                             user_id	VARCHAR2(20)		NOT NULL
 );
@@ -667,7 +667,12 @@ INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, US
 INSERT INTO TB_USER (USER_ID, USER_PWD, USER_NICKNAME, USER_NAME, USER_PHONE, USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, CONFIRM_ANSWER, ADMIN_ID) VALUES
     ('admin', 'admin', 'JackBrown', 'Jack Brown', '777-777-7777', 'jack.brown@example.com', TO_DATE('1991-09-09', 'YYYY-MM-DD'), '마스터', 'run', 2000, SYSDATE-8, '기본', NULL, 'Y');
 
+
+INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
+VALUES (1, '    ', SYSDATE, 'admin', '     ');
+
 drop sequence sch_seq;
+
 CREATE SEQUENCE sch_seq
     START WITH 1
     INCREMENT BY 1;
@@ -731,3 +736,4 @@ INSERT INTO TB_COMMUNITY_COMMENT (CCOMNO, CCOMCONTENT, CCOMDATE, CCOMLVL, USER_I
 VALUES (1, '0번 게시물의 2번 댓글입니다.', SYSDATE, 0,'admin', 0, 0);
 
 commit;
+   

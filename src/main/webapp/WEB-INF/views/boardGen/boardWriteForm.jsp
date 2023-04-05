@@ -1,7 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -12,13 +12,13 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <hr>
 <h2 align="center">게시글 등록</h2>
-<form action="bginsert.do" method="post" >
+<form action="bginsert.do" method="post" enctype="multipart/form-data">
 <table align="center" width="500" border="1" cellspacing="0"
 cellpadding="5">
 	<tr><th>제목</th><td><input type="text" name="board_title"></td></tr>
 	<tr><th>작성자</th>
-		<td><input type="text" name="user_id"  
-			>
+		<td><input type="text" name="user_id" > 
+			
 		</td>
 	</tr>
 	 <tr><th>첨부파일</th>
