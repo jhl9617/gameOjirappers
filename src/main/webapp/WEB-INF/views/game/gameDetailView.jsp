@@ -69,7 +69,7 @@ function deleteinfo() {
 		<div id="main">
 		
 <div class="inner" align="left">
-<%--             <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}"> --%>
+         <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}">
                <span class="button" onclick="updateinfo();">게임정보 업데이트</span>
                <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
                <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
@@ -84,7 +84,7 @@ function deleteinfo() {
                      <input name="appid"> <input type="submit" value="삭제">
                   </form>
                </div>
-<%--             </c:if> --%>
+             </c:if>
             <hr clear="both">
 
 			<!-- Header -->

@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,5 +51,9 @@ public class CGroupDao {
 
     public CGroup selectSingleCGroup(int communityId) {
         return session.selectOne("CGroupMapper.selectcgroup", communityId);
+    }
+
+    public int insertRequest(CommunityReq req) {
+        return session.insert("CGroupMapper.insertRequest", req);
     }
 }
