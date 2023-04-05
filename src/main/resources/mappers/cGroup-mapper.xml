@@ -54,7 +54,7 @@
         select *
         from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
               from TB_COMMUNITY)
-        where ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
+        WHERE ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
 ]]>
     </select>
 
