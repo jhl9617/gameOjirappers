@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.servlet.http.HttpServletRequest;
 
 import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -14,13 +15,12 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
-import org.team404.gameOjirap.boardGen.controller.BoardGenController;
 import org.team404.gameOjirap.boardGen.model.service.BoardGenService;
+import org.team404.gameOjirap.boardGen.model.service.CommentService;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.boardGen.model.vo.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
-
-import org.slf4j.LoggerFactory;
 
 @Controller
 public class BoardGenController {
@@ -29,7 +29,11 @@ public class BoardGenController {
 	@Autowired
 	private BoardGenService boardService;
 	
+	@Autowired
+	private CommentService commentService;  //댓글 서비스 의존성 주입
 	
+	@Autowired
+	//private CommentService commentService;
 	/*
 	 * 게시 원글 쓰기 페이지로 이동 처리용
 	 */
@@ -84,20 +88,34 @@ public class BoardGenController {
 		boardService.updateBoardReadCount(board_no);  //조회수 1증가 처리
 		
 		BoardGen boardGen = boardService.selectOne(board_no); //해당 게시글 조회
+		/*
+		 * ArrayList<Comment> comment = commentService.selectList(board_no); //해당 댓글 조회
+		 * int userId = commentService.selectUserId(board_no); int commentCount =
+		 * commentService.selectCommentCount(board_no);
+		 * 
+		 * for(int i = 0; i < comment.size(); i++) { comment.get(i).setCom_no(i); }
+		 */
 		
 		if(boardGen != null) {
 			mv.addObject("boardGen", boardGen);
 			mv.addObject("currentPage", currentPage);
 			
-			mv.setViewName("boardGen/boardDetailView");
-		}else {
+		}
+		/*
+		 * if(comment != null) { mv.addObject("comment", comment);
+		 * mv.addObject("userId", userId); mv.addObject("commentCount", commentCount); }
+		 */
+		
+		if(mv.isEmpty()) {
 			mv.addObject("message", board_no + "번 글은 삭제된 게시글 입니다.");
 			mv.setViewName("common/error");
+			return mv;
+		}else {
+			mv.setViewName("boardGen/boardDetailView");
+			return mv;
 		}
-		
-		return mv;
-		
 	}
+
 	
 	/*
 	 * 게시글 삭제용(첨부파일 포함)
