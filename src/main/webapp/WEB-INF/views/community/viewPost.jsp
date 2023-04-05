@@ -61,8 +61,8 @@
     </div>
     <%--수정 삭제 버튼--%>
     <div class="btn-group" role="group" aria-label="Basic example">
-        <a href=""/>" class="btn btn-secondary">게시물 수정</a>
-        <a href=""/>" class="btn btn-secondary">삭제</a>
+        <a href="" class="btn btn-secondary">게시물 수정</a>
+        <a href="" class="btn btn-secondary">삭제</a>
 
         <hr>
 
