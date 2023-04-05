@@ -250,43 +250,6 @@ $(function(){
 				</section>
 				
 				
-				
-<%-- 	<!-- 유저게시판  -->				
-			<section>
-				<header class="major">
-					<h2> 유저게시판 </h2>
-				</header>
-				<div class="bbborad">
-				<table class="table-products table-hover">
-				<colgroup>
-					<col style="width:119px">
-					<col style="width:120px">
-					<col style="width:100px">
-				</colgroup>
-				<thead>
-				<tr>
-					<th class="table-title">
-						<a href="">번호
-					</th>
-					<th>제목</th>
-					<th>조회수</th>
-				</tr>
-				</thead>
-				<tbody>
-				<tr class="boraddd">
-
-					<th><a href="" class="css-truncate">번호</a></th>
-					<th class="text-center green">제목</td>
-					<th class="text-center">조회수</td>
-				</tr>
-				</tbody>
-				</table>
-				</div>
-			
-			</section> --%>
-			
-
-
 
 		</div>
 <hr>
