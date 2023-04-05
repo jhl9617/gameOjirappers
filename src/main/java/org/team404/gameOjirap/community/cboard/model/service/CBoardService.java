@@ -23,4 +23,8 @@ public interface CBoardService {
     ArrayList<CComment> selectCommuCList(int cBoardNo);
 
     int insertCommuReply(CComment cComment);
+
+    int updateCommuComment(CComment cComment);
+
+    int deleteCommuComment(CComment cComment);
 }
