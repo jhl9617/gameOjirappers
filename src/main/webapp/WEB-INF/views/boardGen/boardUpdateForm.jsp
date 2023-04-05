@@ -15,11 +15,12 @@
 <body>
 <c:import url="../common/menubar.jsp" />      
 <hr>
+${boardGen.board_no }
 <h2 align="center">${ boardGen.board_no } 번 게시글 수정</h2>
 <br>
 
 <%-- <c:if test="#"> --%>
-<form action="bgoriginup.do" method="post" >
+<form action="bgoriginup.do" method="post" enctype="multipart/form-data">
 <!-- 페이징 처리 후 추가 코드 -->
 	 <input type="text" name="board_no" value="${ boardGen.board_no }">
 	<input type="text" name="page" value="${ currentPage }"> 

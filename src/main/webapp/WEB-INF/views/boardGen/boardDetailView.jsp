@@ -31,16 +31,33 @@
 		font-weight: bold;
 	}
 	button {
-		background-color: #4CAF50;
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 14px;
-		margin: 4px 2px;
-		cursor: pointer;
+     -moz-appearance: none;
+     -webkit-appearance: none;
+     -ms-appearance: none;
+     appearance: none;
+     -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+     -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+     -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+     background-color: transparent;
+     border-radius: 0.375em;
+     border: 0;
+     box-shadow: inset 0 0 0 2px #f56a6a;
+     color: #f56a6a !important;
+     cursor: pointer;
+     display: inline-block;
+     font-family: "Roboto Slab", serif;
+     font-size: 0.8em;
+     font-weight: 700;
+     height: 3.5em;
+     letter-spacing: 0.075em;
+     line-height: 3.5em;
+     padding: 0 2.25em;
+     text-align: center;
+     text-decoration: none;
+     text-transform: uppercase;
+     white-space: nowrap; }
+
 	}
 	a {
 		background-color: #008CBA;
@@ -113,48 +130,38 @@ cellpadding="50">
 
 <hr />
 
-<ul>
-    <%-- <li>
-        <div>
-            <p>${ comment.user_id }</p>
-            <p>첫번째 댓글</p>
-        </div>
-    </li>
-    <li>
-        <div>
-            <p>두번째 댓글 작성자</p>
-            <p>두번째 댓글</p>
-        </div>
-    </li>
-    <li>
-        <div>
-            <p>세번째 댓글 작성자</p>
-            <p>세번째 댓글</p>
-        </div>
-    </li> --%>
-    
-    <c:forEach items="${requestScope.comment}" var="comment">
-<li>
-    <div>
-        <p>${comment.user_id} / ${comment.com_date}</p>
-        <p>${comment.contents }</p>
-    </div>
-</li>    
-</c:forEach>
+			<div>
+               <c:forEach var="comment" items="${comment}">
+                  
+                  <input type="hidden" name="${comment.com_no}">
+                  <p>[닉네임: ${comment.user_id}]&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${comment.com_date}" type="date"
+                  pattern="yyyy-MM-dd"/></p>
+                  &nbsp;${comment.com_contents}
+                <%--   <p>&nbsp;&nbsp;&nbsp;*${comment.com_contents}</p> --%>
+                  
+                  
+               </c:forEach>
+            </div>
+				
+			
+				<tr><th>댓글 작성</th>
+                  <td>
+                     <form action="commentwriteform.do" method="post">
+                        <%-- <input type="text" value="${comment.board_no}" name="board_no">
+                        <input type="text" value="${comment.user_id}" name="user_id"> --%>
+                        <textarea rows="5" cols="50" name="incoment"></textarea></td></tr>
+                        <tr><th colspan="2">
+                        &nbsp;
+                        <input type="submit" value="등록하기"> &nbsp;
+                        <input type="reset" value="작성취소"><br>
+                     </form>
+                  </tr>            
+
+		
     
 </ul>
 
-<div>
-    <p>
-        <label>댓글 작성자</label> <input type="text">
-    </p>
-    <p>
-        <textarea rows="5" cols="50"></textarea>
-    </p>
-    <p>
-        <button type="button">댓글 작성</button>
-    </p>
-</div>
+
 
 <br>
 <hr>

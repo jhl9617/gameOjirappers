@@ -32,8 +32,7 @@ public class BoardGenController {
 	@Autowired
 	private CommentService commentService;  //댓글 서비스 의존성 주입
 	
-	@Autowired
-	//private CommentService commentService;
+
 	/*
 	 * 게시 원글 쓰기 페이지로 이동 처리용
 	 */
@@ -45,7 +44,7 @@ public class BoardGenController {
 	/*
 	 *게시글 페이지 단위로 목록보기 요청 처리용 
 	 */
-	     //게시글 페이지 단위로 목록보기 요청 처리용
+	    
 	   @RequestMapping("blist.do")
 	   public ModelAndView boardListMethod(@RequestParam(name = "page", required = false) String page, ModelAndView mv) {
 
@@ -80,7 +79,8 @@ public class BoardGenController {
 	 */
 	@RequestMapping("boardDetailView.do")
 	public ModelAndView boardDetailView(ModelAndView mv, @RequestParam("board_no") int board_no,
-			@RequestParam(name="page", required=false) String page) {
+			@RequestParam(name="page", required=false) String page  
+		                                            ) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = Integer.parseInt(page);
@@ -88,23 +88,20 @@ public class BoardGenController {
 		boardService.updateBoardReadCount(board_no);  //조회수 1증가 처리
 		
 		BoardGen boardGen = boardService.selectOne(board_no); //해당 게시글 조회
-		/*
-		 * ArrayList<Comment> comment = commentService.selectList(board_no); //해당 댓글 조회
-		 * int userId = commentService.selectUserId(board_no); int commentCount =
-		 * commentService.selectCommentCount(board_no);
-		 * 
-		 * for(int i = 0; i < comment.size(); i++) { comment.get(i).setCom_no(i); }
-		 */
+		
+		  ArrayList<Comment> comment = commentService.selectList(board_no); //해당 댓글 조회
 		
 		if(boardGen != null) {
 			mv.addObject("boardGen", boardGen);
 			mv.addObject("currentPage", currentPage);
 			
 		}
-		/*
-		 * if(comment != null) { mv.addObject("comment", comment);
-		 * mv.addObject("userId", userId); mv.addObject("commentCount", commentCount); }
-		 */
+		
+		  if(comment != null) { 
+	      mv.addObject("comment", comment);
+	   
+		}
+		 
 		
 		if(mv.isEmpty()) {
 			mv.addObject("message", board_no + "번 글은 삭제된 게시글 입니다.");
@@ -113,6 +110,7 @@ public class BoardGenController {
 		}else {
 			mv.setViewName("boardGen/boardDetailView");
 			return mv;
+			
 		}
 	}
 
@@ -231,64 +229,64 @@ public class BoardGenController {
 			,@RequestParam("page") int page 
 			,@RequestParam(name="delfile", required = false) String delFile,
 			@RequestParam(name="upfile", required = false) MultipartFile mfile) {
-		
+		logger.info("파일 첨부 성공" + boardGen);
 		String savePath = request.getSession()
 				.getServletContext().getRealPath("resources/boardGen_upfiles");
 
 		// 첨부파일이 수정 처리된 경우 ---------------------------
 		// 1. 원래 첨부파일이 있는데 '파일삭제'를 선택한 경우
-//		if (boardGen.getBoard_orifile() != null && delFile != null 
-//					&& delFile.equals("yes")) {
-//			// 저장 폴더에 있는 파일을 삭제함
-//			new File(savePath + "\\" + 
-//					boardGen.getBoard_refile()).delete();
-//			
-//			boardGen.setBoard_orifile(null);
-//			boardGen.setBoard_refile(null);
-//		}
-//
-//		// 새로운 첨부파일이 있을때
-//		if (!mfile.isEmpty()) {
-//			// 2-1. 이전 첨부파일이 있을 때
-//			if (boardGen.getBoard_orifile() != null) {
-//				// 저장 폴더에 있는 이전 파일을 삭제함
-//				new File(savePath + "\\" + boardGen.getBoard_refile()).delete();
-//				// board 의 이전 파일 정보도 제거함
-//				boardGen.setBoard_orifile(null);
-//				boardGen.setBoard_refile(null);
-//			}
-//
-//			// 2-2. 이전 첨부파일이 없을 때
-//			// 전송온 파일이름 추출함
-//			String fileName = mfile.getOriginalFilename();
-//
-//			// 다른 게시글의 첨부파일과 파일명이 중복되어서
-//			// 덮어쓰기 되는것을 막기 위해, 파일명을 변경해서
-//			// 폴더에 저장하는 방식을 사용할 수 있음
-//			// 변경 파일명 : 년월일시분초.확장자
-//			if (fileName != null && fileName.length() > 0) {
-//
-//				String renameFileName = 
-//						FileNameChange.change(
-//							fileName, "yyyyMMddHHmmss");
-//
-//				logger.info("첨부 파일명 확인 : " + fileName + ", " + renameFileName);
-//
-//				// 폴더에 저장 처리
-//				try {
-//					mfile.transferTo(new File(savePath + 
-//							"\\" + renameFileName));
-//				} catch (Exception e) {
-//					e.printStackTrace();
-//					model.addAttribute("message", "첨부파일 저장 실패!");
-//					return "common/error";
-//				}
-//
-//				// board 객체에 첨부파일 정보 기록 저장
-//				boardGen.setBoard_orifile(fileName);
-//				boardGen.setBoard_refile(renameFileName);
-//			} // 이름바꾸기
-//		} // 새로운 첨부파일이 있을 때
+		if (boardGen.getBoard_orifile() != null && delFile != null 
+					&& delFile.equals("yes")) {
+			// 저장 폴더에 있는 파일을 삭제함
+			new File(savePath + "\\" + 
+					boardGen.getBoard_refile()).delete();
+			
+			boardGen.setBoard_orifile(null);
+			boardGen.setBoard_refile(null);
+		}
+
+		// 새로운 첨부파일이 있을때
+		if (!mfile.isEmpty()) {
+			// 2-1. 이전 첨부파일이 있을 때
+			if (boardGen.getBoard_orifile() != null) {
+				// 저장 폴더에 있는 이전 파일을 삭제함
+				new File(savePath + "\\" + boardGen.getBoard_refile()).delete();
+				// board 의 이전 파일 정보도 제거함
+				boardGen.setBoard_orifile(null);
+				boardGen.setBoard_refile(null);
+			}
+
+			// 2-2. 이전 첨부파일이 없을 때
+			// 전송온 파일이름 추출함
+			String fileName = mfile.getOriginalFilename();
+
+			// 다른 게시글의 첨부파일과 파일명이 중복되어서
+			// 덮어쓰기 되는것을 막기 위해, 파일명을 변경해서
+			// 폴더에 저장하는 방식을 사용할 수 있음
+			// 변경 파일명 : 년월일시분초.확장자
+			if (fileName != null && fileName.length() > 0) {
+
+				String renameFileName = 
+						FileNameChange.change(
+							fileName, "yyyyMMddHHmmss");
+
+				logger.info("첨부 파일명 확인 : " + fileName + ", " + renameFileName);
+
+				// 폴더에 저장 처리
+				try {
+					mfile.transferTo(new File(savePath + 
+							"\\" + renameFileName));
+				} catch (Exception e) {
+					e.printStackTrace();
+					model.addAttribute("message", "첨부파일 저장 실패!");
+					return "common/error";
+				}
+
+				// board 객체에 첨부파일 정보 기록 저장
+				boardGen.setBoard_orifile(fileName);
+				boardGen.setBoard_refile(renameFileName);
+			} // 이름바꾸기
+		} // 새로운 첨부파일이 있을 때
 
 		if (boardService.updateBoard(boardGen) > 0) {
 			// 게시원글 수정 성공시 상세보기 페이지로 이동
