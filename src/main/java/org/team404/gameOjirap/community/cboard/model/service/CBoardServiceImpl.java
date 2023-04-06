@@ -61,4 +61,9 @@ public class CBoardServiceImpl implements CBoardService{
     public int deleteCommuComment(CComment cComment) {
         return cBoardDao.deleteCommuComment(cComment);
     }
+
+    @Override
+    public int deleteCommuPost(int cBoardNo) {
+        return cBoardDao.deleteCommuPost(cBoardNo);
+    }
 }

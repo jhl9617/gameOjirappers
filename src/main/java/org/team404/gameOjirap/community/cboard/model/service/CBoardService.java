@@ -27,4 +27,6 @@ public interface CBoardService {
     int updateCommuComment(CComment cComment);
 
     int deleteCommuComment(CComment cComment);
+
+    int deleteCommuPost(int cBoardNo);
 }
