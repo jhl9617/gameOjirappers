@@ -130,76 +130,112 @@ function samePrice() {
 						document.write("#"+genre2);
 						}
 						gen2();
-						</script>
-
+						</script>					
 						</h3>
+						<h3 align="center">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
+						<h3 align="center">게임 카테고리: [${ requestScope.game.category }]</h3>
+						<h3 align="center">게임 출시일: [${ requestScope.game.releasedate }]</h3>
+						<h3 align="center">게임 좋아요수: [${ requestScope.game.positive }]</h3>
+						<h3 align="center">전일 게임접속사 수: [${ requestScope.game.ccu }]</h3>
+						<h3 align="center">게임 간단한 설명: [${ requestScope.game.short_description }]</h3>
+						<h2 align="center">개발자:[${ requestScope.game.developer }]</h2>
+						<h2 align="center">배급사:[${ requestScope.game.publisher }]</h2>
+						
+						
 					</header>
 				</section>
 				<section>
 					<!--게임사진 들어갈 부분 -->
 					<header class="major">
+						<h2> ${ requestScope.game.name }의 대표이미지 </h2>
 					</header>
-
-					<span class="image object">
+					<span style="">
 					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
-					</span>
+					</span>					
+					
 
 				</section>
-				<section>
 				
-					<table>
+				<section>
+					<div class="content">
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
-
 					<video autoplay muted>
-
-					  <source src="${ requestScope.game.movie }" type="video/mp4"></video>
-						
-					</table>
-					<table>
-					<!-- <header class="major">
-						<h2> ㅀㄹㅇㅎ </h2>
-					</header> -->
-							<div style="border:1px solid black;">
-							<h2 align="center">초기 가격:[${ requestScope.game.initialprice }원]</h2>
+					  <source src="${ requestScope.game.movie }" type="video/mp4">
+					 </video>						
+					</div>
+					<span class="object">
+							<div style=" border:1px solid black; ">
+							<h2 align="center" >초기 가격:[${ requestScope.game.initialprice }원]</h2>
 							<h2 align="center">최종 가격:[${ requestScope.game.finalprice }원]</h2>
-							<h2 align="center">개발자:[${ requestScope.game.developer }]</h2>
-							<h2 align="center">배급사:[${ requestScope.game.publisher }]</h2>
+							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
 							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 링크</a></h2>
 							</div>
-					</table>
-				</section>
-				
-				
-				
-				
+					</span>
+				</section>			
 				
 				<section>
 				
+					<div>
+						<header class="major">
+						<h2> 게임 플랫폼 </h2>
+					</header>
+					<div>
+						<h3 align="center">${ requestScope.game.platform }</h3>
+					</div>
+					</div>
+					<div>			
+					<header class="major">
+						<h2> 게임 지원언어 </h2>
+					</header>
+					<div style="float:left; border:1px solid black;">		
+					<h3>${ requestScope.game.supported_languages }</h3>
+					</div>
+					</div>	
+				
+				
+					<div>				
+						<header class="major">
+							<h2> 게임 최소사양 </h2>
+						</header>
+						<div style="float:left;">		
+						<p>${ requestScope.game.pcminimum }</p>
+						</div>
+					</div>
+				
+					<div>
+					<header class="major">
+							<h2> 게임 권장사양 </h2>
+						</header>
+						<div style="float:left;">		
+						<p>${ requestScope.game.pcrecommended }</p>
+						</div>
+					</div>
+				</section>
+				
+				<!-- 게임 소개글 -->
+				<section>				
 					<header class="major">
 						<h2> 게임 소개글 </h2>
 					</header>
 				<div style="float:left;">		
 					<p>${ requestScope.game.description }</p>
-						<p></p>
 				</div>
 				</section>
 				
 				
-				
 				<section>
 				<header class="major">
-					<h2> 게임리스트 </h2>
+					<h2> 장르별로 검색하세요! </h2>
 				</header>				
 				<div>
-					<form name="search-form" autocomplete="off">
+					<form name="search-form1" autocomplete="off">
 						<input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
-						<input type="button" onclick="gamegSearch()" value="검색">
+						<input type="button" onclick="gamegSearch()" id="search" value="검색">
 					</form>
 				</div>
 				<table id="g" >
-					
 				</table>
 				</section>
 				<script type="text/javascript">
@@ -207,7 +243,7 @@ function samePrice() {
 					$.ajax({
 						type: 'GET',
 						url : "ggsearch.do",
-						data : $("form[name=search-form]").serialize(),
+						data : $("form[name=search-form1]").serialize(),
 						success : function(result){
 							//테이블 초기화
 							$('#g').empty();
@@ -215,26 +251,29 @@ function samePrice() {
 							
 							if(result.length>=1){								
 								result.forEach(function(item){
-									ge +='<tr>';
-									ge += "<td>"+item.name+"</td>";
+									ge +="<tr><td><a href='moveGameDetail.do?appid="
+										+item.appid
+										+ "'>"+item.name+"</td>";
 									ge += "<td>"+item.genre+"</td>";
 									ge += "<td>"+item.positive+"</td>";
-									ge +="</tr>";			
-				        		})
+									ge +="</tr>"			
+				        		});
 				        		$('#g').append(ge);
 							}
 						}
 					})
 				}
 				</script>
-				<section>
+				
+				
+<%-- 				<section>
 				<header class="major">
 					<h2> 게임리스트2 </h2>
 				</header>				
 				<div>
-					<form name="search-form" autocomplete="off">
-						<input type="number" name="keywordp" value="${ requestScope.game.finalprice }" />
-						<input type="button" onclick="gamepSearch()" value="검색">
+					<form name="search-form2" autocomplete="off">
+						<input type="number" name="keyword" value="${ requestScope.game.finalprice }" />
+						<input type="button" onclick="gamepSearch()" value="초기가:[${ requestScope.game.finalprice }]">
 					</form>
 				</div>
 				<table id="p" >
@@ -246,26 +285,26 @@ function samePrice() {
 					$.ajax({
 						type: 'GET',
 						url : "gpsearch.do",
-						data : $("form[name=search-form]").serialize(),
-						success : function(result){
-							//테이블 초기화
-							$('#p').empty();
-							var pr = '<tr><th>게임이름</th><th>게임장르</th><th>긍정 평가</th></tr>';
+						data : "json",
+						success : function(data){
+							console.log("data : "+data);
 							
-							if(result.length>=1){								
-								result.forEach(function(item){
-									pr +='<tr>';
-										pr += "<td>"+item.name+"</td>";
-									/*str += "<td>"+item.genre+"</td>";
-									str += "<td>"+item.positive+"</td>"; */
-									pr+ ="</tr>";			
-				        		})
-				        		$('#p').append(pr);
+							var jsonStr = JSON.stringify(data);
+							var json = JSON.parse(jsonStr);
+							var gp = $('#p').html();
+							for ( var i in json.list) {
+								gdvalues += "<tr><td><a href='moveGameDetail.do?appid="
+								+ json.list[i].appid+ "'>"
+								+ json.list[i].name
+								+ "</td><td>"+ json.list[i].name.initialprice
+								+ "</td><td>"+ decodeURIComponent(json.list[i].finalprice).replace(/\+/gi," ")
+								+ "</td><td>"+ json.list[i].discountrate
+								+ "</td></tr>";
+								}
 							}
-						}
-					})
-				}
-				</script>
+						});
+					}
+				</script> --%>
 											
 			<section>
 				<header class="major">
@@ -300,13 +339,13 @@ function samePrice() {
 				</div>
 			
 			</section>
-			<section>
+			<!-- <section>
 					<h2>댓글 처리할거임</h2>
 					<p></p>
 					<p></p>
 
 					<hr class="major" />
-				</section>	
+				</section>	 -->
 						
 				
 				
