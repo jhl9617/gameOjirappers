@@ -14,19 +14,23 @@ public class CBoard implements java.io.Serializable{
     private String cBoardOrifile;
     private String cBoardRefile;
     private String cBoardNotice;
+    private char isdeleted;
 
     public CBoard() {
     }
 
-    public CBoard(String cBoardTitle, String userId, String cBoardContent, int communityid, int cBoardLike, String cBoardOrifile, String cBoardRefile, String cBoardNotice) {
+    public CBoard(int cBoardNo, String cBoardTitle, String user_id, String cBoardContent, Date cBoardDate, int communityid, int cBoardLike, String cBoardOrifile, String cBoardRefile, String cBoardNotice, char isdeleted) {
+        this.cBoardNo = cBoardNo;
         this.cBoardTitle = cBoardTitle;
-        this.user_id = userId;
+        this.user_id = user_id;
         this.cBoardContent = cBoardContent;
+        this.cBoardDate = cBoardDate;
         this.communityid = communityid;
         this.cBoardLike = cBoardLike;
         this.cBoardOrifile = cBoardOrifile;
         this.cBoardRefile = cBoardRefile;
         this.cBoardNotice = cBoardNotice;
+        this.isdeleted = isdeleted;
     }
 
     public int getcBoardNo() {
@@ -109,6 +113,14 @@ public class CBoard implements java.io.Serializable{
         this.cBoardNotice = cBoardNotice;
     }
 
+    public char getIsdeleted() {
+        return isdeleted;
+    }
+
+    public void setIsdeleted(char isdeleted) {
+        this.isdeleted = isdeleted;
+    }
+
     @Override
     public String toString() {
         return "CBoard{" +
@@ -122,6 +134,7 @@ public class CBoard implements java.io.Serializable{
                 ", cBoardOrifile='" + cBoardOrifile + '\'' +
                 ", cBoardRefile='" + cBoardRefile + '\'' +
                 ", cBoardNotice='" + cBoardNotice + '\'' +
+                ", isdeleted=" + isdeleted +
                 '}';
     }
 }

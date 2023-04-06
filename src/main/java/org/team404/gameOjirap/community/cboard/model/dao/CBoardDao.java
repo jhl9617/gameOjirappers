@@ -50,6 +50,8 @@ public class CBoardDao {
     }
 
     public ArrayList<CComment> selectCommuCList(int cBoardNo) {
+
+
         List<CComment> list = session.selectList("cBoardMapper.selectCommuReply", cBoardNo);
         return (ArrayList<CComment>) list;
     }
@@ -57,5 +59,13 @@ public class CBoardDao {
     public int insertCommuReply(CComment cComment) {
         System.out.println(cComment);
         return session.insert("cBoardMapper.insertCommuReply", cComment);
+    }
+
+    public int updateCommuComment(CComment cComment) {
+        return session.update("cBoardMapper.updateCommuComment", cComment);
+    }
+
+    public int deleteCommuComment(CComment cComment) {
+        return session.delete("cBoardMapper.deleteCommuComment", cComment);
     }
 }

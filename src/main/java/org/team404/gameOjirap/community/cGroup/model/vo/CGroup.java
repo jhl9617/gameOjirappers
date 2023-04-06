@@ -16,12 +16,13 @@ public class CGroup implements Serializable {
     private String communityimgrename;
     private String communitydesc;
     private String commuMem_count;
+    private char isdeleted;
 
 
     public CGroup() {
     }
 
-    public CGroup(int communityid, String communityname, Date communitydate, String user_id, String communityimgori, String communityimgrename, String communitydesc) {
+    public CGroup(int communityid, String communityname, Date communitydate, String user_id, String communityimgori, String communityimgrename, String communitydesc, String commuMem_count, char isdeleted) {
         this.communityid = communityid;
         this.communityname = communityname;
         this.communitydate = communitydate;
@@ -29,6 +30,8 @@ public class CGroup implements Serializable {
         this.communityimgori = communityimgori;
         this.communityimgrename = communityimgrename;
         this.communitydesc = communitydesc;
+        this.commuMem_count = commuMem_count;
+        this.isdeleted = isdeleted;
     }
 
     public int getCommunityid() {
@@ -95,6 +98,14 @@ public class CGroup implements Serializable {
         this.commuMem_count = commuMem_count;
     }
 
+    public char getIsdeleted() {
+        return isdeleted;
+    }
+
+    public void setIsdeleted(char isdeleted) {
+        this.isdeleted = isdeleted;
+    }
+
     @Override
     public String toString() {
         return "CGroup{" +
@@ -105,6 +116,8 @@ public class CGroup implements Serializable {
                 ", communityimgori='" + communityimgori + '\'' +
                 ", communityimgrename='" + communityimgrename + '\'' +
                 ", communitydesc='" + communitydesc + '\'' +
+                ", commuMem_count='" + commuMem_count + '\'' +
+                ", isdeleted=" + isdeleted +
                 '}';
     }
 }
