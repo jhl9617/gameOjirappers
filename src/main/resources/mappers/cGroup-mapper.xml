@@ -67,7 +67,21 @@
 
     <!-- 가입 요청 저장 -->
     <insert id="insertRequest" parameterType="CommunityReq">
-     insert into tb_community_req (user_id, communityid, requestdes, requestdate)
-        values (#{user_id},#{communityid},#{requestdes},sysdate)
+     insert into tb_community_req (reqno, user_id, communityid, requestdes, requestdate)
+        values (req_seq.nextval, #{user_id},#{communityid},#{requestdes},sysdate)
     </insert>
+
+    <!-- 커뮤니티 가입 요청 리스트 -->
+    <select id="selectRequests" parameterType="_int" resultType="CommunityReq">
+        select *
+        from tb_community_req
+        where communityid = #{communityid}
+    </select>
+
+    <!-- 커뮤니티 가입 요청 조회 -->
+    <select id="selectRequest" parameterType="_int" resultType="CommunityReq">
+        select *
+        from tb_community_req
+        where reqno = #{reqno}
+    </select>
 </mapper>

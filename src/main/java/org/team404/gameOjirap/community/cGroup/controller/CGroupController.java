@@ -192,4 +192,26 @@ public String commuMainList() throws UnsupportedEncodingException {
         }
     }
 
-}
+    // managePage로 communityid 값 가지고 이동
+    @RequestMapping("managePage.do")
+    public String goManagePage(@RequestParam("communityid") int communityid, Model model){
+        model.addAttribute("communityid", communityid);
+        ArrayList<CommunityReq> requests = cGroupService.selectRequests(communityid);
+        model.addAttribute("requests", requests);
+
+        return "community/managePage";
+    }
+
+    // acceptreq.do
+    @RequestMapping("acceptreq.do")
+    public String acceptRequest(@RequestParam("reqno") int reqno){
+        CommunityReq req = cGroupService.selectRequest(reqno);
+        CGroup cGroup = cGroupService.selectSingleCGroup(req.getCommunityid());
+        CMember cMember = new CMember(req.getUser_id(), req.getCommunityid(), "N");
+        if(cGroupService.insertCMember(cMember, cGroup) > 0){
+            return "redirect:managePage.do?communityid=" + req.getCommunityid();
+        } else {
+            return "common/error";
+        }
+    }
+} // end of class

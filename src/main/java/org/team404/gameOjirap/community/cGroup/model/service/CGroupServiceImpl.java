@@ -68,4 +68,14 @@ public class CGroupServiceImpl implements CGroupService{
     public int insertRequest(CommunityReq req) {
         return cGroupDao.insertRequest(req);
     }
+
+    @Override
+    public ArrayList<CommunityReq> selectRequests(int communityid) {
+        return cGroupDao.selectRequests(communityid);
+    }
+
+    @Override
+    public CommunityReq selectRequest(int reqno) {
+        return cGroupDao.selectRequest(reqno);
+    }
 }

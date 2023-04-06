@@ -14,15 +14,17 @@ public class CommunityReq implements Serializable {
     private int communityid;
     private String requestdes;
     private Date requestdate;
+    private int reqno;
 
     public CommunityReq() {
     }
 
-    public CommunityReq(String user_id, int communityid, String requestdes, Date requestdate) {
+    public CommunityReq(String user_id, int communityid, String requestdes, Date requestdate, int reqno) {
         this.user_id = user_id;
         this.communityid = communityid;
         this.requestdes = requestdes;
         this.requestdate = requestdate;
+        this.reqno = reqno;
     }
 
     public String getUser_id() {
@@ -57,6 +59,14 @@ public class CommunityReq implements Serializable {
         this.requestdate = requestdate;
     }
 
+    public int getReqno() {
+        return reqno;
+    }
+
+    public void setReqno(int reqno) {
+        this.reqno = reqno;
+    }
+
     @Override
     public String toString() {
         return "CommunityReq{" +
@@ -64,6 +74,7 @@ public class CommunityReq implements Serializable {
                 ", communityid=" + communityid +
                 ", requestdes='" + requestdes + '\'' +
                 ", requestdate=" + requestdate +
+                ", reqno=" + reqno +
                 '}';
     }
 }
