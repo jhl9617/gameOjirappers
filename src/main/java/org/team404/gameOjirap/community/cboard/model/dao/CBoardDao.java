@@ -48,6 +48,9 @@ public class CBoardDao {
     public int updateCommuPost(CBoard cBoard) {
         return session.update("cBoardMapper.updateCommuPost", cBoard);
     }
+    public int deleteCommuPost(int cBoardNo) {
+        return session.delete("cBoardMapper.deleteCommuPost", cBoardNo);
+    }
 
     public ArrayList<CComment> selectCommuCList(int cBoardNo) {
 
@@ -68,4 +71,6 @@ public class CBoardDao {
     public int deleteCommuComment(CComment cComment) {
         return session.delete("cBoardMapper.deleteCommuComment", cComment);
     }
+
+
 }
