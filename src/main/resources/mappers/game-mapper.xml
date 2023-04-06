@@ -143,7 +143,7 @@
 	 <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
 	 	<![CDATA[
 	 select*
-		from(select rownum rnum,  name, genre ,positive
+		from(select rownum rnum,appid,  name, genre ,positive
         from (select * from game order by positive desc)
 		where genre like '%' || #{ keyword } || '%' )
         where rnum >= 1 and rnum <=10
@@ -152,8 +152,8 @@
 	 
 	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
 	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
-	 	select name, initialprice, finalprice, discountrate  from game
-		where finalprice = #{ finalprice }
+	 	select appid, name, initialprice, finalprice, discountrate  from game
+		where finalprice = #{ keyword }
 	 </select>
 
 
