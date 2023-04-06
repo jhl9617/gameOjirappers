@@ -39,8 +39,8 @@ public class CommentDao {
 		return session.selectOne("commentMapper.selectCommentCount", board_no);
 	}
 
-	public int selectUserId(int com_no) {
-		return session.selectOne("commentMapper.selectUserId", com_no);
+	public int selectUserId(int board_no) {
+		return session.selectOne("commentMapper.selectUserId", board_no);
 	}
 
 	

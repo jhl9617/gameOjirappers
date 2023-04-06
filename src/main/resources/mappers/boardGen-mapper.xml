@@ -65,6 +65,14 @@
 		set board_title = #{board_title},
 		board_content = #{board_content},
 		board_date = sysdate
+		<if test="board_orifile != null">
+				, board_orifile = #{ board_orifile }
+				, board_refile = #{ board_refile }
+			</if>
+			<if test="board_orifile == null">
+				, board_orifile = null
+				, board_refile = null
+		</if>
 		where board_no = #{board_no}
 	</update>
 	
