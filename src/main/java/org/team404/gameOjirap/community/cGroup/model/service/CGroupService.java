@@ -26,4 +26,8 @@ public interface CGroupService {
 
 
     int insertRequest(CommunityReq req);
+
+    ArrayList<CommunityReq> selectRequests(int communityid);
+
+    CommunityReq selectRequest(int reqno);
 }
