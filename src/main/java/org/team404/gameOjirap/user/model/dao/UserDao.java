@@ -15,7 +15,7 @@ public class UserDao {
 	@Autowired	
 	private SqlSessionTemplate session;	
 
-	//로그인요청처리용
+	//1명 정보 조회
 	public User selectUser(String user_id) {
 		return session.selectOne("userMapper.selectUser", user_id);	
 	}
