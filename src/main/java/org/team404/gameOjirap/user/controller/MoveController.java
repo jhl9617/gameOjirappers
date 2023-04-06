@@ -37,8 +37,6 @@ public class MoveController {
 	
 	
 	
-	
-	
 	//마이페이지 내보내기용
 	@RequestMapping(value="moveup.do", method= {RequestMethod.GET, RequestMethod.POST } )
 	public String moveMyPage(@RequestParam("user_id") String user_id,	Model model) {	
@@ -52,7 +50,6 @@ public class MoveController {
 			return "common/error";
 		}//if
 	}//method close
-	
 	
 	
 	
@@ -74,7 +71,6 @@ public class MoveController {
 	
 	
 	
-	
 	//탈퇴 페이지 이동 처리용 --------------------------------------------------------------------------------	
 	@RequestMapping(value="delPage.do", method= {RequestMethod.GET, RequestMethod.POST })
 	public String moveDelPage(@RequestParam("user_id") String user_id, Model model) {
@@ -88,7 +84,6 @@ public class MoveController {
 			return "common/error";
 		}//if
 	}//method close
-	
 	
 	
 	

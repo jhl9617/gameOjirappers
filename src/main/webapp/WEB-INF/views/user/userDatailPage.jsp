@@ -7,7 +7,6 @@
 <meta charset="UTF-8">
 <title>UserDatailPage</title>
     <style>
-    
     bady{
     margin-bottom:0px;
     font-family: 'HSSaemaul-Regular';
@@ -24,6 +23,7 @@
     .table-container {
       display: flex;
       flex-direction: row;
+      border-collapse: collapse;
     }
     
     .menu p {
@@ -53,12 +53,15 @@
       }
       
     .user_community {
-      position: relative;
-      top: -30px;
-      width: 700px;
-      height: 100px;
-      background: pink;        
-      }
+	position: relative;
+	top: -30px;
+	width: 700px;
+	height: 200px;
+	background: pink;        
+    }
+    
+	
+	
     .user_board {
       position: relative;
       top: -60px;
@@ -111,13 +114,48 @@
 	  text-decoration: none;
 	  text-transform: uppercase;
 	  white-space: nowrap; }
-
-
     </style>
+    
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <script type="text/javascript">
+	$(function(){
+		//최근 가입한 밴드 top5개 출력
+		var values = $('#user_community').html();
+		console.log("values : " + values);
+		
+		$.ajax({
+			url: "mybandtop5.do" , 
+			type: "post",
+			dataType: "json",
+			success: function(data){
+				console.log("success : " + JSON.stringify(data));  			//Object 로 출력
+				var json = JSON.parse(JSON.stringify(data));			//string => json 객체로 바꿈
+				
+				for(var i in json.list){
+					if(json.list[i] == null) {
+						break;
+					}//if
+					values += "<tr border: 2px solid black>"
+								+"<td>" + json.list[i].Communitydate + "</td>"
+								+"<td>" + json.list[i].Communityid + "</td>"
+								+"<td>" + decodeURIComponent(json.list[i].Communityname).replace(/\+/gi, " ") + "</td>"
+								+"</tr><br>";
+				}  //for in
+				
+				$('#user_community').html(values);
+			},	//success
+			error: function(jqXHR, textStatus, errorThrown){
+				console.log("mybandtop5.do error : " + jqXHR + ", " + textStatus + ", "	+ errorThrown);
+			}	//error
+		});  //mybandtop5.do ajax
+	});  //document ready
+
+</script>   
     
 </head>
 <body>
 <%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
+
 <br> <br>
     <div class="table-container">
       <div class="menu">
@@ -144,37 +182,43 @@
         <h5>누적적립포인트</h5>
         <table>
           <tr>
-            <td>누적적립포인트 출력예정</td>
+            <th>누적적립포인트 출력예정</td>
           </tr>
         </table>
       </div>
       
       <br>
-      <div class="user_community">
+      <div class="user_community" id="user_community">
         <h5>내가 가입한 밴드</h5>
-        <table>
+        <table >
           <tr>
-            <td>내가 가입한 밴드 출력예정</td>
+				<th>밴드생성일</th>
+				<th>글번호</th>
+				<th>밴드이름</th>
           </tr>
         </table>
       </div>
       
       <br>
       <div class="user_board">
-        <h5>내가 쓴 글 보기</h5>
+        <h5>내가 쓴 글 </h5>
         <table>
           <tr>
-            <td>내가 쓴 글 보기 출력예정</td>
+				<th>글번호</th>
+				<th>글제목</th>
+				<th>글작성일</th>
           </tr>
         </table>
       </div>
       
       <br>
-      <div class="user_commont_comment">
+      <div class="user_commont_comment" >
         <h5>내가 쓴 댓글 보기</h5>
-        <table>
+         <table>
           <tr>
-            <td>내가 쓴 댓글 보기 출력예정</td>
+				<th>댓글번호</th>
+				<th>댓글제목</th>
+				<th>댓글작성일</th>
           </tr>
         </table>
       </div>
@@ -182,16 +226,16 @@
       <br>
       <div class="user_gamelist">
         <h5>즐겨찾기한 게임리스트</h5>
-        <table>
+         <table>
           <tr>
-            <td>즐겨찾기한 게임리스트 출력예정</td>
+				<th>즐찾번호</th>
+				<th>즐찾게임제목</th>
           </tr>
         </table>
-      </div>
       </div>
       
       
     </div><%-- all div close --%>
-	<c:import url="/WEB-INF/views/common/footer.jsp" />
+<%-- 	<c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
 </body>
 </html>

@@ -28,10 +28,31 @@
 		<result column="board_title" 				property="board_title" />				     	<!--내가 쓴 글 제목★가져올예정-->
 	</resultMap>
 	
-
+	<resultMap type="CGroup" id="resultmybandtop5">
+		<result property="communityid" column="communityid" />
+		<result property="communityname" column="communityname" />
+		<result property="communitydate" column="communitydate" />		
+	</resultMap>
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
+	<!-- mybandtop5 출력 처리용 -->
+	<select id="mybandtop5" resultMap="resultmybandtop5">
+		<![CDATA[
+		select *
+		from (select rownum rnum, communityid, communityname, communitydate
+		        from (select * 
+                from tb_community
+                order by communitydate desc, communityid desc))
+		where rnum >= 1 and rnum <= 5
+		]]>
+	</select>
+	
+	
+	
+	
+	
+	
 	<!-- 회원탈퇴 처리용 -->
 	<delete id="userDeleteMethod" parameterType="string">		<!-- insert & delete는 기본이 int로 리턴하기때문에  resultType이나 resultMap 작성할 수 없음 -->
 		delete 
