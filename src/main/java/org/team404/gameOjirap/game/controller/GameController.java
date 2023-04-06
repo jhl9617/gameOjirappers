@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -24,6 +25,7 @@ import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.common.Pagingnn;
 import org.team404.gameOjirap.common.Searchs;
+import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 
@@ -294,38 +296,61 @@ public class GameController {
 			// servlet-context.xml 에 json string 내보내는 JsonView 라는 뷰리졸버 추가 등록해야 함
 
 		}
-		// 게임 장르 할인  검색 처리용
-		@RequestMapping(value = "gpsearch.do", method = RequestMethod.POST)
-		public String memberSearchMethod(HttpServletRequest request, Model model) {
-			// 전송온 값 꺼내기
-			String action = request.getParameter("action");
-			String keyword = null;
+//		// 게임 장르 할인  검색 처리용
+//		@RequestMapping(value = "gpsearch.do", method = RequestMethod.POST)
+//		public String gameSearchMethod(HttpServletRequest request, Model model) {
+//			// 전송온 값 꺼내기
+//			String action = request.getParameter("action");
+//			String keyword = null;
+//			
+//			keyword = request.getParameter("keyword");
+//			logger.info(keyword);
+//
+//			// 서비스 메소드가 리턴 하는 값을 받을 리스트 준비
+//			ArrayList<Game> list = null;
+//			Searchs searchs = new Searchs();
+//			//return job.toJSONString();
+//			switch (action) {
+//			case "price":
+//				list = gameService.selectSearchPrice(Integer.parseInt(keyword) );
+//				break;
+//			case "gender":
+//				searchs.setKeyword(keyword);
+//				list = gameService.selectSearchGenre(searchs);
+//				break;
+//
+//			}// switch
+//
+//			if (list != null && list.size() > 0) {
+//				model.addAttribute("list", list);
+//				return "game/gameDetailView";
+//			} else {
+//				model.addAttribute("message", action + "검색에 대한 결과가 존재하지 않습니다.");
+//				return "common/error";
+//			}
+//		}
+		
+		// 게임 장르 할인 검색 처리용
+		@RequestMapping(value = "ggsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
+		@ResponseBody
+		public ArrayList<Game> gamegpSearchMethod(HttpServletRequest request,@RequestParam("keyword") String keyword ,Model model) throws Exception{
 			
-			keyword = request.getParameter("keyword");
-			logger.info(keyword);
-
-			// 서비스 메소드가 리턴 하는 값을 받을 리스트 준비
-			ArrayList<Game> list = null;
 			Searchs searchs = new Searchs();
-
-			switch (action) {
-			case "price":
-				list = gameService.selectSearchPrice(Integer.parseInt(keyword) );
-				break;
-			case "gender":
-				searchs.setKeyword(keyword);
-				list = gameService.selectSearchGenre(searchs);
-				break;
-
-			}// switch
-
-			if (list != null && list.size() > 0) {
-				model.addAttribute("list", list);
-				return "game/gameDetailView";
-			} else {
-				model.addAttribute("message", action + "검색에 대한 결과가 존재하지 않습니다.");
-				return "common/error";
-			}
+			searchs.setKeyword(keyword);
+			
+			return gameService.selectgamegSearch(searchs);
+			
+		}
+		
+		@RequestMapping(value = "gpsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
+		@ResponseBody
+		public ArrayList<Game> gamepSearchMethod(HttpServletRequest request,@RequestParam("keyword") String keyword ,Model model) throws Exception{
+			
+			Searchs searchs = new Searchs();
+			searchs.setKeyword(keyword);
+			
+			return gameService.selectgamepSearch(Integer.parseInt(keyword));
+			
 		}
 
 

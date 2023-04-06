@@ -64,14 +64,22 @@ public class GameServiceImpl implements GameService{
 		return gameDao.selectNewList(paging);
 	}
 
+	/*
+	 * @Override public ArrayList<Game> selectSearchPrice(int finalprice) { return
+	 * gameDao.selectSearchPrice(finalprice); }
+	 * 
+	 * @Override public ArrayList<Game> selectSearchGenre(Searchs searchs) { return
+	 * gameDao.selectSearchGenre(searchs); }
+	 */
+
 	@Override
-	public ArrayList<Game> selectSearchPrice(int finalprice) {
-		return gameDao.selectSearchPrice(finalprice);
+	public ArrayList<Game> selectgamegSearch(Searchs searchs) {
+		return gameDao.selectgamegSearch(searchs);
 	}
 
 	@Override
-	public ArrayList<Game> selectSearchGenre(Searchs searchs) {
-		return gameDao.selectSearchGenre(searchs);
+	public ArrayList<Game> selectgamepSearch(int finalprice) {
+		return gameDao.selectgamepSearch(finalprice);
 	}
 
 
