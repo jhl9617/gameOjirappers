@@ -28,12 +28,12 @@ public class CGroupServiceImpl implements CGroupService{
 
     @Override
     public int updateCGroup(CGroup cGroup) {
-        return 0;
+        return cGroupDao.updateCGroup(cGroup);
     }
 
     @Override
-    public int deleteCGroup(CGroup cGroup) {
-        return 0;
+    public int deleteCGroup(int communityId){
+    return cGroupDao.deleteCGroup(communityId);
     }
 
     @Override
@@ -77,5 +77,20 @@ public class CGroupServiceImpl implements CGroupService{
     @Override
     public CommunityReq selectRequest(int reqno) {
         return cGroupDao.selectRequest(reqno);
+    }
+
+    @Override
+    public int deleteRequest(int reqno) {
+        return cGroupDao.deleteRequest(reqno);
+    }
+
+    @Override
+    public ArrayList<CMember> selectMembers(int communityid) {
+        return cGroupDao.selectMembers(communityid);
+    }
+
+    @Override
+    public int deleteMember(CMember cmember) {
+        return cGroupDao.deleteMember(cmember);
     }
 }
