@@ -46,8 +46,8 @@ public class CommentServiceImpl implements CommentService{
 
 
 	@Override
-	public int selectUserId(int com_no) {
-		return commentDao.selectUserId(com_no);
+	public int selectUserId(int board_no) {
+		return commentDao.selectUserId(board_no);
 	}
 
 }

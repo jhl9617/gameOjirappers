@@ -56,4 +56,13 @@ public class CGroupDao {
     public int insertRequest(CommunityReq req) {
         return session.insert("CGroupMapper.insertRequest", req);
     }
+
+    public ArrayList<CommunityReq> selectRequests(int communityid) {
+        List<CommunityReq> list = session.selectList("CGroupMapper.selectRequests", communityid);
+        return (ArrayList<CommunityReq>) list;
+    }
+
+    public CommunityReq selectRequest(int reqno) {
+        return session.selectOne("CGroupMapper.selectRequest", reqno);
+    }
 }

@@ -7,7 +7,10 @@ import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.vo.Game;
 
 public interface GameService {
-    int insertGameInfo(Game game);
+
+	
+	
+	int insertGameInfo(Game game);
 
 	int deleteGameInfo(String appid);
 	int selectGameCount(String appid);
@@ -29,10 +32,16 @@ public interface GameService {
 	int selectListNewCount();
 	ArrayList<Game> selectNewList(Pagingnn paging);
 
-	//게임 할인율로 보이기
-	ArrayList<Game> selectSearchPrice(int finalprice);
-	ArrayList<Game> selectSearchGenre(Searchs searchs);
+	/*
+	 * //게임 할인율로 보이기 ArrayList<Game> selectSearchPrice(int finalprice);
+	 * ArrayList<Game> selectSearchGenre(Searchs searchs);
+	 */
 
+	ArrayList<Game> selectgamegSearch(Searchs searchs);
+
+	ArrayList<Game> selectgamepSearch(int finalprice);
+	
+	
 	
 	
 	

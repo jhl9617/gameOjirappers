@@ -44,11 +44,11 @@ public class Comment implements java.io.Serializable{
 		this.com_contents = com_contents;
 	}
 
-	public Date getDate() {
+	public Date getCom_date() {
 		return com_date;
 	}
 
-	public void setDate(Date com_date) {
+	public void setCom_date(Date com_date) {
 		this.com_date = com_date;
 	}
 
@@ -93,6 +93,8 @@ public class Comment implements java.io.Serializable{
 		return "Comment [com_no=" + com_no + ", com_contents=" + com_contents + ", com_date=" + com_date + ", com_lev="
 				+ com_lev + ", com_no2=" + com_no2 + ", board_no=" + board_no + ", user_id=" + user_id + "]";
 	}
+
+	
 	
 	
 }

@@ -139,14 +139,7 @@
 	 	where appid = #{appid}
 	 </select>
 	 
-	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
-	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
-	 	select name, initialprice, finalprice, discountrate  from game
-		where finalprice = #{ finalprice }
-	 </select>
-
-
-	  <!-- 게임 장르가 같은 것 끼리 출력 -->
+	 <!-- 게임 장르가 같은 것 끼리 출력 -->
 	 <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
 	 	<![CDATA[
 	 select*
@@ -156,6 +149,16 @@
         where rnum >= 1 and rnum <=10
 	]]>
 	 </select>
+	 
+	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
+	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
+	 	select name, initialprice, finalprice, discountrate  from game
+		where finalprice = #{ finalprice }
+	 </select>
+
+
+	  
+	 
 	 
 	 <!-- 도전과제  -->
 	 <select id="selectAchievement" parameterType="string" resultType="string">
@@ -176,7 +179,6 @@
 		where rnum >=#{startRow} and rnum <=#{endRow} 
 		]]>
 	 </select> -->
-
 
 
 

@@ -25,16 +25,16 @@
  	</tr>
  	<c:forEach items="${ requestScope.list }" var="r">
  		<tr>
- 			<td>${  }</td>
- 			<td>${  }</td>
- 			<td>${  }</td>
+<%--  			<td>${  }</td> --%>
+<%--  			<td>${  }</td> --%>
+<%--  			<td>${  }</td> --%>
  			<td><button onclick="showReportContent();">상세 보기</button></td>
  		</tr>
  	</c:forEach>
  </table>
  <form name=""  id="">
  	
- 	<textarea rows="" cols="" readonly>${  }</textarea><br>
+<%--  	<textarea rows="" cols="" readonly>${  }</textarea><br> --%>
  	&nbsp; <button onclick="">닫기</button>
  </form>
  
