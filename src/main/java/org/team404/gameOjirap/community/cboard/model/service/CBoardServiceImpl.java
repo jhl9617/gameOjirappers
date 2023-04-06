@@ -51,4 +51,14 @@ public class CBoardServiceImpl implements CBoardService{
     public int insertCommuReply(CComment cComment) {
         return cBoardDao.insertCommuReply(cComment);
     }
+
+    @Override
+    public int updateCommuComment(CComment cComment) {
+        return cBoardDao.updateCommuComment(cComment);
+    }
+
+    @Override
+    public int deleteCommuComment(CComment cComment) {
+        return cBoardDao.deleteCommuComment(cComment);
+    }
 }

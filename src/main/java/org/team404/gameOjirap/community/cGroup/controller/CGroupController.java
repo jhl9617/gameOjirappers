@@ -106,14 +106,12 @@ public String commuMainList() throws UnsupportedEncodingException {
         return mv;
     }
 
-
     //커뮤니티 메인에서 커뮤니티 생성 form으로 넘어가는 method
     @RequestMapping(value = "commuCreate.do", method={ RequestMethod.GET, RequestMethod.POST })
     public String creatCommuMethod(HttpSession session, Model model, @RequestParam(name = "communityname") String communityname) {
 
         //커뮤 메인에서 입력한 생성할 이름 생성 form에 기본적으로 적용 되도록
         model.addAttribute("communityname", communityname);
-
         return "community/commuCreate";
     }
 

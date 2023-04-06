@@ -53,7 +53,8 @@ CREATE TABLE TB_COMMUNITY_MEMBER (
                                      user_id	VARCHAR2(20)		NOT NULL,
                                      communityID	NUMBER		NOT NULL,
                                      member_roll	char(1)		NOT NULL,
-                                     member_date	Date		NOT NULL
+                                     member_date	Date		NOT NULL,
+                                     isDeleted   Char(1)		DEFAULT 'N'	NOT NULL
 );
 
 comment on column TB_COMMUNITY_MEMBER.user_id IS '밴드 멤버 ID';
@@ -64,13 +65,14 @@ comment on column TB_COMMUNITY_MEMBER.member_date IS '멤버 가입일';
 DROP TABLE TB_Community cascade constraints;
 
 CREATE TABLE TB_Community (
-                              communityId	NUMBER		NOT NULL,
+                              communityId	NUMBER	default 0	NOT NULL,
                               communityName	VARCHAR2(100)		NOT NULL,
                               communityDate	DATE		,
                               user_id	VARCHAR2(20)		NOT NULL,
                               communityImgOri	VARCHAR2(100),
                               communityImgRename	VARCHAR2(100),
-                              communityDesc VARCHAR2(500)
+                              communityDesc VARCHAR2(500),
+                              isDeleted   Char(1)		DEFAULT 'N'	NOT NULL
 );
 
 comment on column TB_Community.communityId IS '밴드 ID';
@@ -85,7 +87,7 @@ comment on column TB_Community.communityDesc IS '밴드 설명';
 DROP TABLE TB_Community_BOARD cascade constraints;
 
 CREATE TABLE TB_Community_BOARD (
-                                    cBoardNo	NUMBER		NOT NULL,
+                                    cBoardNo	NUMBER	default 0	NOT NULL,
                                     cBoardTitle	VARCHAR2(50)		NOT NULL,
                                     cBoardContent	VARCHAR2(2000)		,
                                     cBoardDate	Date		NOT NULL,
@@ -94,7 +96,8 @@ CREATE TABLE TB_Community_BOARD (
                                     cBoardRefile	VARCHAR2(500)		,
                                     cBoardNotice	Char(5)		NOT NULL,
                                     user_id	VARCHAR2(20)		NOT NULL,
-                                    communityId	NUMBER		NOT NULL
+                                    communityId	NUMBER		NOT NULL,
+                                    isDeleted   Char(1)		DEFAULT 'N'	NOT NULL
 );
 
 comment on column TB_Community_BOARD.cBoardNo is '밴드게시글 번호';
@@ -111,13 +114,14 @@ comment on column TB_Community_BOARD.communityId is '게시글이 속한 밴드 
 DROP TABLE TB_Community_Comment cascade constraints;
 
 CREATE TABLE TB_Community_Comment (
-                                      cComNo	NUMBER		NOT NULL,
+                                      cComNo	NUMBER	default 0	NOT NULL,
                                       cComContent	VARCHAR2(500)		,
                                       cComDate	DATE		,
                                       cComLvl	Number		NOT NULL,
                                       user_id	VARCHAR2(20)		NOT NULL,
                                       cBoardNo	NUMBER		NOT NULL,
-                                      communityId	NUMBER		NOT NULL
+                                      communityId	NUMBER		NOT NULL,
+                                      isDeleted   Char(1)		DEFAULT 'N'	NOT NULL
 );
 
 comment on column TB_Community_Comment.cComNo is '밴드 댓글 번호';

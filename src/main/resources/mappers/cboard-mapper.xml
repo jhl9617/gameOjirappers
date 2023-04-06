@@ -5,13 +5,6 @@
 
 <mapper namespace="cBoardMapper">
 
-
-
-
-
-
-
-
     <select id="selectBListCount" parameterType="_int" resultType="_int">
         select count(*)
         from TB_COMMUNITY_BOARD
@@ -44,8 +37,8 @@
 
     <!--커뮤니티 게시물 입력-->
     <insert id="insertCommuPost" parameterType="CBoard">
-        insert into TB_COMMUNITY_BOARD
-        values (SEQ_COMMUNITY_BOARD.nextval, #{cBoardTitle}, #{user_Id}, #{cBoardContent}, sysdate, #{communityId}, 0, #{cBoardOrifile}, #{cBoardRefile}, 0)
+        insert into TB_COMMUNITY_BOARD (CBOARDNO, CBOARDTITLE, CBOARDCONTENT, CBOARDDATE, CBOARDLIKE, CBOARDORIFILE, CBOARDREFILE, CBOARDNOTICE, USER_ID, COMMUNITYID)
+        values (SEQ_COMMUNITY_BOARD.nextval, #{cBoardTitle}, #{cBoardContent}, SYSDATE, 0 , #{cBoardOrifile}, #{cBoardRefile}, 'n', #{user_id}, #{communityid})
     </insert>
 
     <!--커뮤니티 게시물 수정-->
@@ -72,9 +65,20 @@
     <!--커뮤니티 댓글 insert-->
     <insert id="insertCommuReply" parameterType="CComment">
         insert into TB_COMMUNITY_COMMENT(CCOMNO, CBOARDNO, USER_ID, CCOMCONTENT, CCOMDATE, CCOMLVL, COMMUNITYID)
-        values ((SELECT MAX(CCOMNO) + 1 FROM TB_COMMUNITY_COMMENT), #{cboardno}, #{user_id}, #{ccomcontent}, sysdate, 0, #{communityid})
+        values (SEQ_COMMUNITY_COMMENT.nextval, #{cboardno}, #{user_id}, #{ccomcontent}, sysdate, 0, #{communityid})
     </insert>
-<!---->
+    <!--커뮤니티 댓글 update-->
+    <update id="updateCommuComment" parameterType="CComment">
+        update TB_COMMUNITY_COMMENT
+        set CCOMCONTENT = #{ccomcontent}
+        where CCOMNO = #{ccomno}
+    </update>
+
+    <!--커뮤니티 댓글 delete-->
+    <delete id="deleteCommuComment" parameterType="_int">
+        delete from TB_COMMUNITY_COMMENT
+        where CCOMNO = #{ ccomno }
+    </delete>
 
 
 </mapper>

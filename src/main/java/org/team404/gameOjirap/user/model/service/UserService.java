@@ -8,7 +8,7 @@ import org.team404.gameOjirap.user.model.vo.User;
 
 public interface UserService {
 
-	User selectUser(String user_id);									//로그인 요청처리용 // 회원 1명 조회
+	User selectUser(String user_id);									// 회원 1명 조회
 	ArrayList<User> selectUserList();								//회원 리스트 조회
 	int userInsertMethod(User user);    								// 회원가입 요청처리용
 	int selectDupCheckId(String user_id); 							// 아이디 중복확인용
