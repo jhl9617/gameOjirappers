@@ -739,5 +739,13 @@ VALUES (0, '0번 게시물의 1번 댓글입니다.', SYSDATE, 0,'admin', 0, 0);
 INSERT INTO TB_COMMUNITY_COMMENT (CCOMNO, CCOMCONTENT, CCOMDATE, CCOMLVL, USER_ID, CBOARDNO, COMMUNITYID)
 VALUES (1, '0번 게시물의 2번 댓글입니다.', SYSDATE, 0,'admin', 0, 0);
 
+alter table tb_community_req add reqno number default 1 not null unique;
+
+comment on column tb_community_req.reqno is '신청번호';
+
+create SEQUENCE req_seq
+    start with 1
+    increment by 1;
+
 commit;
    
