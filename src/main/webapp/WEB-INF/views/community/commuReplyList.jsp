@@ -82,17 +82,14 @@
 <%--CComment 리스트로 가져와서 댓글 보여주기--%>
 <c:forEach var="comment" items="${commentList}" >
     <div class="comment">
-
         <div class="comment-content">
             <span class="comment-author" id="author-${comment.ccomno}">${comment.user_id}</span>
             <span class="comment-date" id="date-${comment.ccomno}">${comment.ccomdate}</span>
             <h3><p id="content-${comment.ccomno}">${comment.ccomcontent}</p></h3>
-
         <%--수정삭제버튼--%>
             <div class="comment-btn">
-                <a href="javascript:void(0)" class="edit-comment" data-ccomno="${comment.ccomno}">Edit</a>
-                <a href="javascript:void(0)" class="delete-comment" data-ccomno="${comment.ccomno}">Delete</a>
-
+                <a href="javascript:void(0)" class="edit-comment" data-ccomno="${comment.ccomno}">수정</a> &nbsp;
+                <a href="javascript:void(0)" class="delete-comment" data-ccomno="${comment.ccomno}">삭제</a>
                 <hr>
         </div>
     </div>

@@ -13,16 +13,18 @@
 
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-
+    <script>
+        function showAlertMessage() {
+            <c:if test="${not empty message}">
+            alert("${message}");
+            </c:if>
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            showAlertMessage();
+        });
+    </script>
 </head>
-<script>
-    function showAlertMessage() {
-        <c:if test="${not empty message}">
-        alert("${message}");
-        </c:if>
 
-    }
-</script>
 <body onload="showAlertMessage()">
 
 <div class="container">
@@ -30,18 +32,18 @@
     <c:import url="/WEB-INF/views/community/commuDetailMenu.jsp"/>
 
 
-
     <div class="tab-content" id="communityTabsContent">
-
         <div class="tab-pane fade show active" id="community-info" role="tabpanel" aria-labelledby="community-info-tab">
-            <!-- Community information content goes here -->
+            <form action="insertCommuPost.do" method="post" enctype="multipart/form-data">
 
-            <form action="insertCommuPost.do" method="post" >
-                <td>글제목</td>
+            <td>글제목</td>
                 <input type="text" name="cBoardTitle" value="">
-                <input type="text" name="communityid" value="${communityid}">
+                <input type="hidden" name="communityid" value="${communityid}">
 
                 <table class="table table-bordered">
+                    <tr><th>첨부파일</th>
+                        <td><input type="file" name="upfile"></td>
+                    </tr>
                     <tr>
                         <td>글내용</td>
                         <td><textarea name="cBoardContent" cols="100" rows="10"></textarea></td>

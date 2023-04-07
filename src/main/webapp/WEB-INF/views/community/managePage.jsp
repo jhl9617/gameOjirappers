@@ -36,8 +36,15 @@
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
-<script type="text/javascript"
-        src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+<script>
+    function showAlertMessage() {
+        <c:if test="${not empty message}">
+        alert("${message}");
+        </c:if>
+
+    }
+</script>
 <br>
 <br>
 <table>

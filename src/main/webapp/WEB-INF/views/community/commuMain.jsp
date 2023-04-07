@@ -11,16 +11,26 @@
     <meta charset="UTF-8"/>
     <title>커뮤니티 허브</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <script>
+        function showAlertMessage() {
+            <c:if test="${not empty message}">
+            alert("${message}");
+            </c:if>
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            showAlertMessage();
+        });
+    </script>
 <%--css 스타일 가져오기--%>
 </head>
 <body>
 
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<br>
+
 <br>
 
 <div class="container">
@@ -48,15 +58,11 @@
         <tbody>
         <c:forEach var="group" items="${list}">
             <tr>
-
-
                 <td>${group.communityname}</td>
-
                 <td>${group.user_id}</td>
                 <td><fmt:formatDate value="${group.communitydate}" pattern="yyyy-MM-dd" /></td>
                 <td>
                     <a href="joinGroup?communityid=${group.communityid}" class="btn btn-success">Join</a>
-
                     <c:url var="cdt" value="/viewgroup.do">
                         <c:param name="communityid" value="${ group.communityid }" />
                     </c:url>
