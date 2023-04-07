@@ -12,6 +12,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.user.model.service.UserService;
 import org.team404.gameOjirap.user.model.vo.User;
 
+import java.util.ArrayList;
+
 @Controller
 public class MoveController {
 
