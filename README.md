@@ -8,6 +8,8 @@ aspectj 1.9.6 <br>
 slf4j 1.7.25 <br>
 <hr>
 
+<h3>Guide</h3>
+
 1. Creating new oracle local db localhost:xe:1521 with username:c##student, password:student
 
 2. Run dbscript/gameOjirappersDB.sql on c##student
