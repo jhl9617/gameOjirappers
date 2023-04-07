@@ -36,6 +36,7 @@ public class MoveController {
 	@RequestMapping(value = "enrollPage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String moveEnrollPage() {
 
+
 		return "user/enrollPage";		
 	}//method close
 	
@@ -46,6 +47,7 @@ public class MoveController {
 	@RequestMapping(value="moveup.do", method= {RequestMethod.GET, RequestMethod.POST } )
 	public String moveMyPage(@RequestParam("user_id") String user_id,	Model model) {	
 
+
 		User user = UserService.selectUser(user_id);
 
 		if (user != null) {
@@ -55,14 +57,12 @@ public class MoveController {
 			model.addAttribute("message", user_id + " : 회원조회 실패!");
 			return "common/error";
 
-		}//if
-	}//method close
-	
-	
-	
-	
-	//회원정보수정페이지 이동 처리용 --------------------------------------------------------------------------------	
-	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.GET, RequestMethod.POST })
+		} // if
+	}// method close
+
+	// 회원정보수정페이지 이동 처리용
+	// --------------------------------------------------------------------------------
+	@RequestMapping(value = "moveUpdatePage.do", method = { RequestMethod.GET, RequestMethod.POST })
 
 	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model) {
 		User user = UserService.selectUser(user_id);
@@ -74,6 +74,7 @@ public class MoveController {
 			model.addAttribute("message", user_id + " : 회원조회 실패!");
 			return "common/error";
 
+
 		}//if
 	}//method close
 	
@@ -82,7 +83,6 @@ public class MoveController {
 	
 	//탈퇴 페이지 이동 처리용 --------------------------------------------------------------------------------	
 	@RequestMapping(value="delPage.do", method= {RequestMethod.GET, RequestMethod.POST })
-
 	public String moveDelPage(@RequestParam("user_id") String user_id, Model model) {
 		User user = UserService.selectUser(user_id);
 
@@ -112,6 +112,7 @@ public class MoveController {
       
       return mv;
 }
+\
 	
 	//회원활동관리 페이지 이동 처리용 ---------------------------------------------------------------------------------------	
 	@RequestMapping(value="uban.do", method= {RequestMethod.GET, RequestMethod.POST} )
@@ -125,8 +126,6 @@ public class MoveController {
 	         mv.addObject("message" + "페이지 목록 조회 실패!");
 	         mv.setViewName("common/error");
 	      }
-		 
-		 return mv;
 	}// method close
 
 }// class close
