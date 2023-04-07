@@ -15,22 +15,19 @@
 
 
 //★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
-	function validate(){
-		//암호와 암호확인이 일치하는지 체크함 (밑에 두개 중 편한걸로 쓰면 됨)
-		var pwd1 = document.getElementById("user_pwd").value;		//자바코드임
-		var pwd2 = $("#user_pwd2").val();											//jQuery코드임
-		
-		if(pwd1 !== pwd2) {		//pwd1과 pwd2 값이 다르다면,
-			alert ("암호와 암호확인이 일치하지 않습니다.\n다시 입력해주세요(ﾉ›_‹)ﾉ");
-			document.getElementById("upwd1").select();			//다시 입력하도록 함
-			return false;				//false로 끝내서, 입력값을 DB로 전송 X
-		}//if
-		return true;			//pwd1과 pwd2 값이 맞다면 DB로 전송함
-	}//close
-	
-	
-	
-	
+function validate() {
+	var pwd1 = document.getElementById("user_pwd").value;
+	var pwd2 = $("#user_pwd2").val();
+
+	if (pwd1 === pwd2) { // If pwd1 and pwd2 are the same
+		return true; // Send input values to DB
+	} else {
+		alert("Password and password confirmation do not match.\nPlease enter again (ﾉ›_‹)ﾉ");
+		document.getElementById("user_pwd").select(); // Make it re-enter
+		return false; // End with false, do not send input values to DB
+	}
+}
+
 	//아이디 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckId() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({

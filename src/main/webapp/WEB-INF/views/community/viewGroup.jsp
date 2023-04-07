@@ -5,6 +5,17 @@
 <head>
     <meta charset="UTF-8">
     <title>${group.communityname}</title>
+    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <script>
+        function showAlertMessage() {
+            <c:if test="${not empty message}">
+            alert("${message}");
+            </c:if>
+        }
+        document.addEventListener("DOMContentLoaded", function() {
+            showAlertMessage();
+        });
+    </script>
     <script>
         function reqjoin(){
 

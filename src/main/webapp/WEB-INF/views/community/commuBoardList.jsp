@@ -7,6 +7,17 @@
   <title>${group.communityname} 게시판</title>
   <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
   <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" /><%--css 스타일 가져오기--%>
+  <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+  <script>
+    function showAlertMessage() {
+      <c:if test="${not empty message}">
+      alert("${message}");
+      </c:if>
+    }
+    document.addEventListener("DOMContentLoaded", function() {
+      showAlertMessage();
+    });
+  </script>
 </head>
 <body>
 <div class="container">
@@ -33,7 +44,15 @@
     </tr>
   </c:forEach>
   </tbody>
-</table>
+
+    </table>
+
 </div>
+<%--글 작성 버튼--%>
+<div class="container">
+  <c:url var="cbd" value="/writeCommuPost.do">
+    <c:param name="communityid" value="${ communityid }" />
+  </c:url>
+  <a href="${cbd}"><button type="button" class="btn btn-primary">글 작성</button></a>
 </body>
 </html>
