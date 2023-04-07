@@ -93,4 +93,14 @@ public class CGroupServiceImpl implements CGroupService{
     public int deleteMember(CMember cmember) {
         return cGroupDao.deleteMember(cmember);
     }
+
+    @Override
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
+        return cGroupDao.searchCGroup(keyword, paging);
+    }
+
+    @Override
+    public int searchCGroupCount(String keyword) {
+        return cGroupDao.searchCGroupCount(keyword);
+    }
 }

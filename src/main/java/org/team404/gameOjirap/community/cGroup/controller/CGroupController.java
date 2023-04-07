@@ -341,4 +341,33 @@ public String commuMainList() throws UnsupportedEncodingException {
             return "common/error";
         }
     } // deleteCGroup
+
+    // 커뮤니티 검색
+    @RequestMapping("commuSearch.do")
+    public ModelAndView searchCGroup(@RequestParam("keyword") String keyword, @RequestParam(name = "page", required = false) String page, ModelAndView mv){
+
+
+        int currentPage = 1;
+
+        int limit = 10; // 한 페이지에 출력할 목록 갯수
+        // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+        int listCount = cGroupService.searchCGroupCount(keyword);
+        Paging paging = new Paging(listCount, currentPage, limit);
+        paging.calculator();
+        ArrayList<CGroup> list = cGroupService.searchCGroup(keyword, paging);
+        if (list != null && list.size() > 0) {
+
+            mv.addObject("list", list);
+            mv.addObject("paging", paging);
+
+
+            mv.setViewName("community/commuMain");
+        } else {
+            mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
+            mv.setViewName("common/error");
+        }
+        return mv;
+    } // searchCGroup
+
+
 } // end of class

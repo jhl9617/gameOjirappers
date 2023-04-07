@@ -11,6 +11,7 @@ import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository("cGroupDao")
@@ -85,5 +86,16 @@ public class CGroupDao {
 
     public int deleteCGroup(int communityId) {
         return session.delete("CGroupMapper.deleteCGroup", communityId);
+    }
+
+    public int searchCGroupCount(String keyword) {
+        return session.selectOne("CGroupMapper.searchCGroupCount", keyword);
+    }
+
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
+        Map<String, Object> map = Map.of("keyword", keyword, "paging", paging);
+        List<CGroup> list = session.selectList("CGroupMapper.searchCGroup", map);
+        return (ArrayList<CGroup>) list;
+
     }
 }

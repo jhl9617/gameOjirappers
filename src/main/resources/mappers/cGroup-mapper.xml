@@ -125,4 +125,22 @@
         delete from tb_community
         where communityid = #{communityid}
     </delete>
+
+    <!--커뮤니티 검색 count-->
+    <select id="searchCGroupCount" parameterType="String" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+        where COMMUNITYNAME like '%'||#{keyword}||'%'
+    </select>
+
+    <!--커뮤니티 검색 keywword와 paging 처리 해서-->
+    <select id="searchCGroup" parameterType="map" resultType="CGroup">
+        select *
+        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
+              from TB_COMMUNITY
+              where COMMUNITYNAME like '%'||#{keyword}||'%')
+<![CDATA[
+        WHERE ROWNUM >= #{ paging.startRow } and ROWNUM <= #{ paging.endRow }
+        ]]>
+    </select>
 </mapper>

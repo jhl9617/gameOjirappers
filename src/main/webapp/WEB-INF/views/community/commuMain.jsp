@@ -62,7 +62,6 @@
                 <td>${group.user_id}</td>
                 <td><fmt:formatDate value="${group.communitydate}" pattern="yyyy-MM-dd" /></td>
                 <td>
-                    <a href="joinGroup?communityid=${group.communityid}" class="btn btn-success">Join</a>
                     <c:url var="cdt" value="/viewgroup.do">
                         <c:param name="communityid" value="${ group.communityid }" />
                     </c:url>
@@ -73,8 +72,20 @@
 
         </tbody>
     </table>
+    <div id="board-search">
+        <div class="container">
+            <div class="search-window">
+                <form action="commuSearch.do" method="post">
+                    <div class="search-wrap">
+                        <label for="search" >커뮤니티 검색</label>
+                        <input id="search" size="15" maxlength="30" type="keyword" name="keyword" placeholder="이름으로 검색하세요." value="">
+                        <button type="submit" class="btn btn-dark">검색</button>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
     <c:import url="/WEB-INF/views/common/page.jsp" />
-    <br>
     <br>
     <c:import url="/WEB-INF/views/common/footer.jsp" />
 </div>

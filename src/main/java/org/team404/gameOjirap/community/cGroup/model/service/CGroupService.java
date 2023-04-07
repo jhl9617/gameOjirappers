@@ -37,4 +37,8 @@ public interface CGroupService {
     ArrayList<CMember> selectMembers(int communityid);
 
     int deleteMember(CMember cmember);
+
+    ArrayList<CGroup> searchCGroup(String keyword, Paging paging);
+
+    int searchCGroupCount(String keyword);
 }
