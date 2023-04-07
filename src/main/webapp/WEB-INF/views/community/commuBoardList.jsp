@@ -44,9 +44,22 @@
     </tr>
   </c:forEach>
   </tbody>
+</table>
 
-    </table>
-
+  <div id="board-search">
+    <div class="container">
+      <div class="search-window">
+        <form action="commuBoardSearch.do" method="post">
+          <div class="search-wrap">
+            <label for="search" >검색</label>
+              <input id="search" size="15" maxlength="30" type="keyword" name="keyword" placeholder="제목으로 검색하세요." value="">
+            <input type="hidden" name="communityid" value="${ communityid }">
+            <button type="submit" class="btn btn-dark">검색</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
 <%--글 작성 버튼--%>
 <div class="container">

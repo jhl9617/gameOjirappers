@@ -14,6 +14,7 @@
 		<typeAlias type="org.team404.gameOjirap.boardGen.model.vo.BoardGen" alias="BoardGen" />
 		<typeAlias type="org.team404.gameOjirap.boardGen.model.vo.Comment" alias="Comment"/>
 		<typeAlias type="org.team404.gameOjirap.common.Paging" alias="Paging" />
+		<typeAlias type="org.team404.gameOjirap.common.Paging2" alias="Paging2" />
 		<typeAlias type="org.team404.gameOjirap.common.Pagingnn" alias="Pagingnn" />
 		<typeAlias type="org.team404.gameOjirap.common.Searchs" alias="Searchs" />
 		<typeAlias type="org.team404.gameOjirap.game.model.vo.Game" alias="Game"/>

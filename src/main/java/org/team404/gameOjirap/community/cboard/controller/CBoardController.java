@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cboard.model.service.CBoardService;
 import org.team404.gameOjirap.community.cboard.model.vo.CBoard;
 import org.team404.gameOjirap.community.cboard.model.vo.CComment;
@@ -271,6 +272,32 @@ public class CBoardController {
     public void deleteCommuComment(HttpServletResponse response, CComment cComment) {
         int result = cBoardService.deleteCommuComment(cComment);
     }
+
+    //커뮤니티 게시판 search
+    @RequestMapping("commuBoardSearch.do")
+    public ModelAndView commuBoardSearch(@RequestParam("communityid") int communityid, @RequestParam("keyword") String keyword, @RequestParam(name = "page", required = false) String page, ModelAndView mv){
+
+
+        int currentPage = 1;
+
+        int limit = 10; // 한 페이지에 출력할 목록 갯수
+        // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+        int listCount = cBoardService.commuBoardSearchCount(keyword, communityid);
+        Paging paging = new Paging(listCount, currentPage, limit);
+        paging.calculator();
+        ArrayList<CBoard> list = cBoardService.commuBoardSearch(communityid, keyword, paging);
+        if (list != null && list.size() > 0) {
+
+            mv.addObject("list", list);
+            mv.addObject("paging", paging);
+            mv.addObject("communityid", communityid);
+            mv.setViewName("community/commuBoardList");
+        } else {
+            mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
+            mv.setViewName("common/error");
+        }
+        return mv;
+    } // searchCGroup
 
 }
 

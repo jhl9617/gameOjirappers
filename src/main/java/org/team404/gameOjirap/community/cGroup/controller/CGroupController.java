@@ -16,6 +16,7 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.Paging2;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
@@ -346,14 +347,14 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping("commuSearch.do")
     public ModelAndView searchCGroup(@RequestParam("keyword") String keyword, @RequestParam(name = "page", required = false) String page, ModelAndView mv){
 
-
         int currentPage = 1;
 
         int limit = 10; // 한 페이지에 출력할 목록 갯수
         // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
         int listCount = cGroupService.searchCGroupCount(keyword);
-        Paging paging = new Paging(listCount, currentPage, limit);
+        Paging2 paging = new Paging2(listCount, currentPage, limit, "commuMain.do");
         paging.calculator();
+
         ArrayList<CGroup> list = cGroupService.searchCGroup(keyword, paging);
         if (list != null && list.size() > 0) {
 

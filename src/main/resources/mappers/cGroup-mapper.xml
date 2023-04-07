@@ -49,12 +49,18 @@
     </select>
 
     <!--페이지에 해당하는 커뮤 리스트로 받아옴-->
-    <select id="selectcgrouplist" parameterType="Paging" resultMap="selectCGroupList">
+    <select id="selectcgrouplist" parameterType="Paging2" resultType="CGroup">
 <![CDATA[
         select *
-        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
-              from TB_COMMUNITY)
-        WHERE ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
+        from (
+            select rownum as rnum, a.*
+            from (
+                select *
+                from TB_COMMUNITY
+                order by communityid desc
+            ) a
+        )
+        where rnum between #{Paging.startRow} and #{Paging.endRow}
 ]]>
     </select>
 
