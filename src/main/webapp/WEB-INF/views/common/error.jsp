@@ -35,6 +35,7 @@
 --%>
 <c:url var="movemain" value="/main.do" />
 <a href="${ movemain }">시작페이지로 이동</a>
+<a href="javascript:history.go(-1)">이전페이지로 이동</a>
 <%--
 	상대경로 : 현재 문서를 기준으로 대상까지의 경로
 	같은 폴더에 있으면 : 파일명.확장자, 폴더명/파일명.확장자

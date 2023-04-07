@@ -10,7 +10,8 @@
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function() {
-    showDiv();
+	$('#useridDiv').css('display','none');
+    $('#usernameDiv').css('display','none');
     
     $('input[name=item]').on("change",function(){
        showDiv();
@@ -36,7 +37,9 @@ function showDiv(){
 <center>
 <div>
    <h2>검색할 항목을 선택하세요.</h2>
-   <input type="radio" name="item" value="userid" checked> 아이디
+
+   <input type="radio" name="item" value="userid"> 아이디
+
    &nbsp; &nbsp;
    <input type="radio" name="item" value="username" > 이름
 </div>
@@ -60,7 +63,7 @@ function showDiv(){
 
 <!-- 목록 출력 영역 -->
 <center>
-   <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/ualist.do?page=${currentPage}';">목록 보기</button>   
+   <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=${currentPage}';">목록 보기</button>   
 </center>
 <br>
 <table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
@@ -85,8 +88,9 @@ function showDiv(){
          </td>
          
          <td>
-            <form action="uban.do" method="post">
-               <input type="hidden" name="userid" value="${ u.user_id }">
+
+            <form action="uban.do?user_id=${ u.user_id }" method="post">
+
                <input type="submit" value="활동정지/포인트차감">
             </form>
          </td>

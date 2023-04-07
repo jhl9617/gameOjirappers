@@ -5,21 +5,31 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
+import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
+import org.team404.gameOjirap.user.model.service.UserService;
+import org.team404.gameOjirap.user.model.vo.User;
 
 
+import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import javax.servlet.http.Part;
+import java.io.File;
+import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
@@ -33,6 +43,8 @@ public class CGroupController {
     private CGroupService cGroupService;
 
 
+    @Autowired
+    private UserService userService;
    /* @RequestMapping("commuMainList.do")
 public String commuMainList() throws UnsupportedEncodingException {
 
@@ -181,7 +193,13 @@ public String commuMainList() throws UnsupportedEncodingException {
     // 요청 정보 저장
     @RequestMapping(value="req.do", method=RequestMethod.POST)
     public String insertRequest(CommunityReq req, Model model){
-        
+        ArrayList<CommunityReq> list = cGroupService.selectRequests(req.getCommunityid());
+        for(CommunityReq r : list){
+            if(r.getUser_id().equals(req.getUser_id())){
+                model.addAttribute("message", "이미 요청한 커뮤니티입니다.");
+                return "common/error";
+            }
+        }
         if(cGroupService.insertRequest(req) > 0){
             return "redirect:viewgroup.do?communityid=" + req.getCommunityid();
         } else {
@@ -194,6 +212,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     public String goManagePage(@RequestParam("communityid") int communityid, Model model){
         model.addAttribute("communityid", communityid);
         ArrayList<CommunityReq> requests = cGroupService.selectRequests(communityid);
+        model.addAttribute("group", cGroupService.selectSingleCGroup(communityid));
         model.addAttribute("requests", requests);
 
         return "community/managePage";
@@ -201,14 +220,125 @@ public String commuMainList() throws UnsupportedEncodingException {
 
     // acceptreq.do
     @RequestMapping("acceptreq.do")
-    public String acceptRequest(@RequestParam("reqno") int reqno){
+    public String acceptRequest(@RequestParam("reqno") int reqno, Model model){
         CommunityReq req = cGroupService.selectRequest(reqno);
         CGroup cGroup = cGroupService.selectSingleCGroup(req.getCommunityid());
         CMember cMember = new CMember(req.getUser_id(), req.getCommunityid(), "N");
-        if(cGroupService.insertCMember(cMember, cGroup) > 0){
+        if(cGroupService.insertCMember(cMember, cGroup) > 0 && cGroupService.deleteRequest(reqno) > 0){
+
             return "redirect:managePage.do?communityid=" + req.getCommunityid();
         } else {
+            model.addAttribute("message", "요청을 수락하지 못했습니다.");
             return "common/error";
         }
-    }
+    } //  acceptRequest
+
+    // declinereq.do
+    @RequestMapping("declinereq.do")
+    public String declineRequest(@RequestParam("reqno") int reqno, Model model){
+        CommunityReq req = cGroupService.selectRequest(reqno);
+        if(cGroupService.deleteRequest(reqno) > 0){
+            return "redirect:managePage.do?communityid=" + req.getCommunityid();
+        } else {
+            model.addAttribute("message", "요청을 거절하지 못했습니다.");
+            return "common/error";
+        }
+    } // declineRequest
+
+    // managemember.do
+    @RequestMapping(value="managemember.do", method = RequestMethod.POST)
+    @ResponseBody
+    public String manageMember(@RequestParam("communityid") int communityid) {
+        ArrayList<CMember> members = cGroupService.selectMembers(communityid);
+        JSONObject json = new JSONObject();
+        JSONArray jarr = new JSONArray();
+        for(CMember member : members){
+            User user = userService.selectUser(member.getUser_id());
+            JSONObject job = new JSONObject();
+            job.put("user_id", user.getUser_id());
+            job.put("user_nickname", user.getUser_nickname());
+
+            jarr.add(job);
+        }
+        json.put("list", jarr);
+        return json.toJSONString();
+    } // manageMember
+
+    // 멤버 탈퇴
+    @RequestMapping("deletemember.do")
+    public String deleteMember(CMember cmember, Model model){
+        int communityid = cmember.getCommunityid();
+        if(cGroupService.deleteMember(cmember) > 0){
+            return "redirect:managePage.do?communityid=" + communityid;
+        } else {
+            model.addAttribute("message", "멤버를 삭제하지 못했습니다.");
+            return "common/error";
+        }
+    } // deleteMember
+
+    // 커뮤니티 수정
+    @RequestMapping(value="updatecommu.do", method=RequestMethod.POST)
+    public String updateCGroup(CGroup cGroup, Model model,
+        @RequestParam(value="delFlag", required = false) String delFlag,
+        @RequestParam("orifile") MultipartFile mfile,
+        HttpServletRequest request) throws ServletException, IOException {
+        if(!mfile.getContentType().startsWith("image/")) {
+            model.addAttribute("message", "이미지 파일만 업로드 가능합니다.");
+            return "common/error";
+        }
+        if(cGroup.getCommunityname().equals("")){
+            cGroup.setCommunityname(cGroupService.selectSingleCGroup(cGroup.getCommunityid()).getCommunityname());
+        }
+        if(cGroup.getCommunitydesc().equals("")){
+            cGroup.setCommunitydesc(cGroupService.selectSingleCGroup(cGroup.getCommunityid()).getCommunitydesc());
+        }
+        System.out.println(cGroupService.selectSingleCGroup(cGroup.getCommunityid()).getCommunityname() + "++++++" + cGroup.getCommunitydesc() );
+        String savePath = request.getSession().getServletContext().getRealPath("resources/commuimg");
+        if(cGroup.getCommunityimgori() != null && delFlag != null && delFlag.equals("yes")){
+            new File(savePath + "\\" + cGroup.getCommunityimgrename()).delete();
+            cGroup.setCommunityimgori(null);
+            cGroup.setCommunityimgrename(null);
+        }
+
+        if(!mfile.isEmpty()){
+            if(cGroup.getCommunityimgori() != null){
+                new File(savePath + "\\" + cGroup.getCommunityimgrename()).delete();
+                cGroup.setCommunityimgori(null);
+                cGroup.setCommunityimgrename(null);
+            }
+
+            String fileName = mfile.getOriginalFilename();
+
+            if(fileName != null && fileName.length() > 0){
+                String rename = FileNameChange.change(fileName,"yyyyMMddHHmmss");
+                File renameFile = new File(savePath+ "\\" + rename);
+                try {
+                    mfile.transferTo(renameFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                cGroup.setCommunityimgori(fileName);
+                cGroup.setCommunityimgrename(rename);
+            } // if fileName
+        } // if !mfile.isEmpty()
+
+        if(cGroupService.updateCGroup(cGroup) > 0){
+            return "redirect:managePage.do?communityid=" + cGroup.getCommunityid();
+        } else {
+            model.addAttribute("message", "커뮤니티 수정에 실패했습니다.");
+            return "common/error";
+        }
+    } // updateCGroup
+
+    // 커뮤니티 삭제
+    @RequestMapping("deletecommu.do")
+    public String deleteCGroup(@RequestParam("communityid") int communityid, Model model){
+        if(cGroupService.deleteCGroup(communityid) > 0){
+
+            return "redirect:commuMain.do";
+        } else {
+            model.addAttribute("message", "커뮤니티 삭제에 실패했습니다.");
+            return "common/error";
+        }
+    } // deleteCGroup
 } // end of class

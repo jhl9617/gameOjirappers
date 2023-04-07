@@ -3,6 +3,7 @@ package org.team404.gameOjirap.user.model.service;
 
 import java.util.ArrayList;
 
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.vo.User;
  
 
@@ -19,5 +20,6 @@ public interface UserService {
 	int levelMethod(User user_level);     							// 현재등급 출력용
 	int checkanswer(String confirm_answer);						//본인확인 질문 확인용
 	int updateLoginok (User user);										//로그인가능 확인용
+	ArrayList<CGroup> mybandtop5();								//내가 가입한 밴드 출력용
 	
 }

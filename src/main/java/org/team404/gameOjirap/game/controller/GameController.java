@@ -24,10 +24,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.common.Pagingnn;
-import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
+import org.team404.gameOjirap.game.model.vo.GameSearchs;
 
 @Controller("gameController")
 public class GameController {
@@ -335,21 +335,39 @@ public class GameController {
 		@ResponseBody
 		public ArrayList<Game> gamegpSearchMethod(HttpServletRequest request,@RequestParam("keyword") String keyword ,Model model) throws Exception{
 			
-			Searchs searchs = new Searchs();
+			GameSearchs searchs = new GameSearchs();
 			searchs.setKeyword(keyword);
 			
 			return gameService.selectgamegSearch(searchs);
 			
 		}
 		
+		//게임 초기 가격으로 검색 
 		@RequestMapping(value = "gpsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
 		@ResponseBody
-		public ArrayList<Game> gamepSearchMethod(HttpServletRequest request,@RequestParam("keyword") String keyword ,Model model) throws Exception{
+		public void gamepSearchMethod(@RequestParam("keyword") String Keyword) throws Exception {
+			ArrayList<Game> list = gameService.selectgamepSearch(Keyword);
+			logger.info("gpsearch.do : " + list.size());
+
+			// 전송용 json 객체 준비
+			JSONObject sendJson = new JSONObject();
+			// 리스트 저장할 json 배열 객체 준비
+			JSONArray jarr = new JSONArray();
 			
-			Searchs searchs = new Searchs();
-			searchs.setKeyword(keyword);
+			// list 를 jarr 에 옮기기 (복사)
+			for (Game game : list) {
+				JSONObject job = new JSONObject();
+				job.put("appid", game.getAppid());
+				job.put("name", game.getName());
+				job.put("initialprice", game.getInitialprice());
+				job.put("finalprice", game.getFinalprice());
+				job.put("discountrate", game.getDiscountrate());
+				
+				jarr.add(job);
+			}
 			
-			return gameService.selectgamepSearch(Integer.parseInt(keyword));
+			sendJson.put("list", jarr);
+			
 			
 		}
 
