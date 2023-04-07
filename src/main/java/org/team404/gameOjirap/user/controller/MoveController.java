@@ -1,5 +1,8 @@
 package org.team404.gameOjirap.user.controller;
 
+import java.util.ArrayList;
+
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,12 +35,17 @@ public class MoveController {
 	// --------------------------------------------------------------------------------
 	@RequestMapping(value = "enrollPage.do", method = { RequestMethod.GET, RequestMethod.POST })
 	public String moveEnrollPage() {
-		return "user/enrollPage";
-	}// method close
 
-	// 마이페이지 내보내기용
-	@RequestMapping(value = "moveup.do", method = { RequestMethod.GET, RequestMethod.POST })
-	public String moveMyPage(@RequestParam("user_id") String user_id, Model model) {
+		return "user/enrollPage";		
+	}//method close
+	
+	
+	
+	
+	//마이페이지 내보내기용
+	@RequestMapping(value="moveup.do", method= {RequestMethod.GET, RequestMethod.POST } )
+	public String moveMyPage(@RequestParam("user_id") String user_id,	Model model) {	
+
 		User user = UserService.selectUser(user_id);
 
 		if (user != null) {
@@ -46,12 +54,16 @@ public class MoveController {
 		} else {
 			model.addAttribute("message", user_id + " : 회원조회 실패!");
 			return "common/error";
-		} // if
-	}// method close
 
-	// 회원정보수정페이지 이동 처리용
-	// --------------------------------------------------------------------------------
-	@RequestMapping(value = "moveUpdatePage.do", method = { RequestMethod.GET, RequestMethod.POST })
+		}//if
+	}//method close
+	
+	
+	
+	
+	//회원정보수정페이지 이동 처리용 --------------------------------------------------------------------------------	
+	@RequestMapping(value="moveUpdatePage.do", method= {RequestMethod.GET, RequestMethod.POST })
+
 	public String moveUpdatePage(@RequestParam("user_id") String user_id, Model model) {
 		User user = UserService.selectUser(user_id);
 
@@ -61,12 +73,16 @@ public class MoveController {
 		} else {
 			model.addAttribute("message", user_id + " : 회원조회 실패!");
 			return "common/error";
-		} // if
-	}// method close
 
-	// 탈퇴 페이지 이동 처리용
-	// --------------------------------------------------------------------------------
-	@RequestMapping(value = "delPage.do", method = { RequestMethod.GET, RequestMethod.POST })
+		}//if
+	}//method close
+	
+	
+	
+	
+	//탈퇴 페이지 이동 처리용 --------------------------------------------------------------------------------	
+	@RequestMapping(value="delPage.do", method= {RequestMethod.GET, RequestMethod.POST })
+
 	public String moveDelPage(@RequestParam("user_id") String user_id, Model model) {
 		User user = UserService.selectUser(user_id);
 
@@ -97,11 +113,20 @@ public class MoveController {
       return mv;
 }
 	
-	
 	//회원활동관리 페이지 이동 처리용 ---------------------------------------------------------------------------------------	
-	@RequestMapping(value="uban.do", method= {RequestMethod.POST} )
-	public String moveUserBan()  {
-		return "user/userBan";		
+	@RequestMapping(value="uban.do", method= {RequestMethod.GET, RequestMethod.POST} )
+	public ModelAndView moveUserBan(ModelAndView mv, @RequestParam("user_id") String user_id)  {
+		User user = UserService.selectUser(user_id);
+		
+		 if(user != null){
+			mv.addObject("user", user);
+			mv.setViewName("user/userBan");
+		 }else {
+	         mv.addObject("message" + "페이지 목록 조회 실패!");
+	         mv.setViewName("common/error");
+	      }
+		 
+		 return mv;
 	}// method close
 
 }// class close

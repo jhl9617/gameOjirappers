@@ -65,4 +65,25 @@ public class CGroupDao {
     public CommunityReq selectRequest(int reqno) {
         return session.selectOne("CGroupMapper.selectRequest", reqno);
     }
+
+    public int deleteRequest(int reqno) {
+        return session.delete("CGroupMapper.deleteRequest", reqno);
+    }
+
+    public ArrayList<CMember> selectMembers(int communityid) {
+        List<CMember> list = session.selectList("CGroupMapper.selectMembers", communityid);
+        return (ArrayList<CMember>) list;
+    }
+
+    public int deleteMember(CMember cmember) {
+        return session.delete("CGroupMapper.deleteMember", cmember);
+    }
+
+    public int updateCGroup(CGroup cGroup) {
+        return session.update("CGroupMapper.updateCGroup", cGroup);
+    }
+
+    public int deleteCGroup(int communityId) {
+        return session.delete("CGroupMapper.deleteCGroup", communityId);
+    }
 }
