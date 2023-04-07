@@ -132,6 +132,7 @@ function samePrice() {
 						gen2();
 						</script>					
 						</h3>
+						
 						<h3 align="center">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
 						<h3 align="center">게임 카테고리: [${ requestScope.game.category }]</h3>
 						<h3 align="center">게임 출시일: [${ requestScope.game.releasedate }]</h3>
@@ -167,9 +168,9 @@ function samePrice() {
 					</div>
 					<span class="object">
 							<div style=" border:1px solid black; ">
-							<h2 align="center" >초기 가격:[${ requestScope.game.initialprice }원]</h2>
-							<h2 align="center">최종 가격:[${ requestScope.game.finalprice }원]</h2>
+							<h2 align="center" >출시된 가격:[${ requestScope.game.initialprice }원]</h2>
 							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
+							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2>
 							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 링크</a></h2>
 							</div>
 					</span>

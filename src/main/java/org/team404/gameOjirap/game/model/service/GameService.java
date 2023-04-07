@@ -41,6 +41,10 @@ public interface GameService {
 
 	ArrayList<Game> selectgamepSearch(String Keyword);//초기값이 같은 값으로 검색
 
+//	ArrayList<Game> selectgameAllSearch(GameSearchs searchs, Pagingnn paging);
+
+	ArrayList<Game> selectgameAllSearch(GameSearchs searchs);
+	
 //	ArrayList<Game> selectgamepSearch(GameSearchs searchs);
 	
 	
