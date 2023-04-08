@@ -3,8 +3,7 @@
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CGroupMapper">
-
-    <resultMap type="CGroup" id="selectCGroupList">
+<!--    <resultMap type="CGroup" id="selectCGroupList">
         <result property="communityid" column="communityid" />
         <result property="communityname" column="communityname" />
         <result property="user_id" column="user_id" />
@@ -12,8 +11,7 @@
         <result property="communityimgrename" column="communityimgrename" />
         <result property="communitydesc" column="communitydesc" />
         <result property="commuMem_count" column="commuMem_count" />
-
-    </resultMap>
+    </resultMap>-->
 
 
 <!--커뮤 이름이 중복인지 확인-->
@@ -49,7 +47,7 @@
     </select>
 
     <!--페이지에 해당하는 커뮤 리스트로 받아옴-->
-    <select id="selectcgrouplist" parameterType="Paging2" resultType="CGroup">
+    <select id="selectcgrouplist" parameterType="Paging" resultType="CGroup">
 <![CDATA[
         select *
         from (
@@ -60,7 +58,7 @@
                 order by communityid desc
             ) a
         )
-        where rnum between #{Paging.startRow} and #{Paging.endRow}
+        where rnum between #{startRow} and #{endRow}
 ]]>
     </select>
 

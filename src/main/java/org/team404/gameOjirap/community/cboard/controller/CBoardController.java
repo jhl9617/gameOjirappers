@@ -37,11 +37,14 @@ public class CBoardController {
         int listCount = cBoardService.selectBListCount(communityid);
         System.out.println(listCount);
         int currentPage = 1;
+
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
         int limit = 10;
-        Paging paging = new Paging(listCount, currentPage, limit);
+
+        String url = "commuBoardList.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url);
         paging.calculator();
 
         ArrayList<CBoard> list = cBoardService.selectCommuBList(paging, communityid);
@@ -281,9 +284,11 @@ public class CBoardController {
         int currentPage = 1;
 
         int limit = 10; // 한 페이지에 출력할 목록 갯수
+
+        String url = "commuBoardSearch.do";
         // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
         int listCount = cBoardService.commuBoardSearchCount(keyword, communityid);
-        Paging paging = new Paging(listCount, currentPage, limit);
+        Paging paging = new Paging(listCount, currentPage, limit, url);
         paging.calculator();
         ArrayList<CBoard> list = cBoardService.commuBoardSearch(communityid, keyword, paging);
         if (list != null && list.size() > 0) {

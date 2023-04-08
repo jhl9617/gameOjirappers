@@ -3,7 +3,6 @@ package org.team404.gameOjirap.community.cGroup.model.service;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.common.Paging;
-import org.team404.gameOjirap.common.Paging2;
 import org.team404.gameOjirap.community.cGroup.model.dao.CGroupDao;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
@@ -96,7 +95,7 @@ public class CGroupServiceImpl implements CGroupService{
     }
 
     @Override
-    public ArrayList<CGroup> searchCGroup(String keyword, Paging2 paging) {
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
         return cGroupDao.searchCGroup(keyword, paging);
     }
 

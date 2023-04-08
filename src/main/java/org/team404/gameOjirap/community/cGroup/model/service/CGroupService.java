@@ -1,7 +1,6 @@
 package org.team404.gameOjirap.community.cGroup.model.service;
 
 import org.team404.gameOjirap.common.Paging;
-import org.team404.gameOjirap.common.Paging2;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
@@ -39,7 +38,7 @@ public interface CGroupService {
 
     int deleteMember(CMember cmember);
 
-    ArrayList<CGroup> searchCGroup(String keyword, Paging2 paging);
+    ArrayList<CGroup> searchCGroup(String keyword, Paging paging);
 
     int searchCGroupCount(String keyword);
 }

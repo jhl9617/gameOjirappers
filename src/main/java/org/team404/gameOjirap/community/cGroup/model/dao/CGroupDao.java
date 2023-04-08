@@ -5,7 +5,6 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
-import org.team404.gameOjirap.common.Paging2;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
@@ -93,7 +92,7 @@ public class CGroupDao {
         return session.selectOne("CGroupMapper.searchCGroupCount", keyword);
     }
 
-    public ArrayList<CGroup> searchCGroup(String keyword, Paging2 paging) {
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
         Map<String, Object> map = Map.of("keyword", keyword, "paging", paging);
         List<CGroup> list = session.selectList("CGroupMapper.searchCGroup", map);
         return (ArrayList<CGroup>) list;
