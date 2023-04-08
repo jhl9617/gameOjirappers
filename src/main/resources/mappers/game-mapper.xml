@@ -141,19 +141,82 @@
 	 
 	 <!-- 게임 장르가 같은 것 끼리 출력 -->
 	 <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
+	 select*
+		from(select rownum rnum, appid,  name, genre ,positive
+        from (select * from game order by positive desc)
+		where genre like '%' || #{ keyword } || '%'
+		)
+		<![CDATA[
+        where rnum >= 1 and rnum <=10
+		]]>
+	 </select>
+	 
+	 <!-- <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
 	 	<![CDATA[
 	 select*
 		from(select rownum rnum,appid,  name, genre ,positive
         from (select * from game order by positive desc)
-		where genre like '%' || #{ keyword } || '%' )
+		where genre like '%' || #{ keyword } || '%' 
+		)
         where rnum >= 1 and rnum <=10
 	]]>
-	 </select>
+	 </select> -->
 	 
 	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
 	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
 	 	select appid, name, initialprice, finalprice, discountrate  from game
-		where finalprice = #{ keyword }
+	 	where
+	 	<if test="keyword !=null and keyword.equals('initialprice')" >
+		 	  initialprice like '%' || #{ keyword } || '%'
+		 </if>
+	 	
+	 </select>
+	 
+ 	 <!-- 게임 검색 모두 갖고 오기 -->
+	<!-- <select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
+	 	select * 
+	 	from (select rownum rnum, name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta 
+	 	from game where
+	 	<choose>
+	 		<when test="type !=null and type.equals('name')" >
+		 	  name like '%' || #{ keyword } || '%'
+		 	</when>
+		 	<when test="type !=null and type.equals('genre')" >
+		 	  genre like '%' || #{ keyword } || '%'
+		 	</when>
+		 	<when test="type !=null and type.equals('initialprice')" >
+		 	<![CDATA[
+		 	  initialprice <=  #{ keyword }
+		 	  ]]>
+		 	</when>
+		 </choose>
+		 <![CDATA[
+		 ) where rnum >= #{ page.startRow } and rnum <= #{ page.endRow }
+		 ]]>
+	 </select> -->
+	 
+
+	<select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
+	 	select  name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta 
+	 	from game where
+	 	<choose>
+	 		<when test="type !=null and type.equals('name')" >
+		 	  name like '%' || #{ keyword } || '%'
+		 	</when>
+		 	<when test="type !=null and type.equals('genre')" >
+		 	  genre like '%' || #{ keyword } || '%'
+		 	</when>
+		 	<when test="type !=null and type.equals('initialprice')" >
+		 	<![CDATA[
+		 	  initialprice =  #{ keyword } order by initialprice
+		 	  ]]>
+		 	</when>
+		 	<when test="type !=null and type.equals('finalprice')" >
+		 	<![CDATA[
+		 	  finalprice =  #{ keyword } order by finalprice
+		 	  ]]>
+		 	</when>
+		 </choose>
 	 </select>
 
 

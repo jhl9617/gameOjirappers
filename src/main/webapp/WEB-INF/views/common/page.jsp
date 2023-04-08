@@ -6,7 +6,7 @@
 <c:set var="endPage" value="${ requestScope.paging.endPage }" />
 <c:set var="maxPage" value="${ requestScope.paging.maxPage }" />
 <c:set var="currentPage" value="${ requestScope.paging.currentPage }" />
-<c:set var="url" value="${ requestScope.url }" />
+<c:set var="url" value="${ requestScope.paging.url }" />
 
 <!DOCTYPE html>
 <html>
