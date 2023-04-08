@@ -74,6 +74,26 @@ public class UserServiceImpl implements UserService{
 		return userDao.updateLoginok(user);
 	}
 
+	
+	//////////////////////////////////////////////////////////////////////////
+	//즐찾등록요청처리용
+	@Override
+	public int insertFavorite(User user) {
+		return userDao.insertFavorite(user);
+	}
+
+	//즐찾삭제요청처리용
+	@Override
+	public int deleteFavorite(String user_id) {
+		return userDao.deleteFavorite(user_id);
+	}
+
+	//즐찾 갯수조회 => 게임과 아이디매칭
+	@Override
+	public User selectFavoriteCount(String user_id) {
+		return userDao.selectFavoriteCount(user_id);
+	}
+
 
 	
 }//class close
