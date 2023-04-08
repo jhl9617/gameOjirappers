@@ -2,8 +2,6 @@
          pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
-<c:set var="listCount" value="${ requestScope.paging.listCount }" />
-<c:set var="currentPage" value="${ requestScope.paging.currentPage }" />
 
 
 <!DOCTYPE html>
@@ -47,7 +45,7 @@
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
     </form>
     </c:if>
-    <h3 align="center">총 게시글 수 : ${ listCount } 개</h3>
+    <h3 align="center">총 커뮤니티 수 : ${ listCount } 개</h3>
     <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">
         <thead>

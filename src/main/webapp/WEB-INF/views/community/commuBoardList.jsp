@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="communityid" value="${ requestScope.communityid }" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -61,11 +64,13 @@
     </div>
   </div>
 </div>
+<c:import url="/WEB-INF/views/common/page.jsp" />
 <%--글 작성 버튼--%>
 <div class="container">
   <c:url var="cbd" value="/writeCommuPost.do">
     <c:param name="communityid" value="${ communityid }" />
   </c:url>
   <a href="${cbd}"><button type="button" class="btn btn-primary">글 작성</button></a>
+
 </body>
 </html>

@@ -53,8 +53,7 @@ public class CBoardController {
 
             mv.addObject("communityid", communityid);
             mv.addObject("list", list);
-            mv.addObject("paging", page);
-
+            mv.addObject("paging", paging);
             mv.setViewName("community/commuBoardList");
         } else {
             mv.addObject("message","게시물이 없습니다. 하나 작성 해주세요.");
@@ -76,13 +75,12 @@ public class CBoardController {
     @RequestMapping("insertCommuPost.do")
     public ModelAndView insertCommuPost(ModelAndView mv, CBoard cBoard, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name = "upfile", required = false) MultipartFile mfile) {
 
-        if(!mfile.getContentType().startsWith("image/")) {
+        if (!mfile.isEmpty() && !mfile.getContentType().startsWith("image/")) {
             redirectAttributes.addFlashAttribute("message", "이미지 파일만 업로드 가능합니다.");
             redirectAttributes.addAttribute("communityid", cBoard.getCommunityid());
             mv.setViewName("redirect:commuBoardList.do");
 
             return mv;
-
         }
 
         //\n문자 <br>로 바꿔서 저장
