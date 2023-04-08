@@ -1,25 +1,43 @@
-<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
+<%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
     <meta charset="UTF-8">
     <title>${group.communityname}</title>
+    <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>"/>
     <script>
-        function reqjoin(){
-
-            location.href="movejoinpage.do?communityid="+ ${communityid};
+        function reqjoin() {
+            location.href = "movejoinpage.do?communityid=" + ${communityid};
             return false;
 
         }
+
+        function report() {
+            location.href = "moveReport.do?communityid=" + ${communityid};
+            return false;
+        }
+
+        $(function () {
+            <c:if test="${!empty message}">
+            alert("${message}");
+            const state = { communityId: 1};
+            const title = null;
+            const url = `viewgroup.do?communityid=${communityid}`;
+            history.pushState(state, title, url);
+            window.onpopstate = function(event) {
+                history.pushState(state, title, url);
+            };
+            </c:if>
+        });
     </script>
 
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
-    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
-<%--css 스타일 가져오기--%>
+    <%--css 스타일 가져오기--%>
 </head>
 <body>
-<c:import url="/WEB-INF/views/common/menubar.jsp" />
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
 <br>
 
@@ -27,8 +45,9 @@
 
     <div style="all: inherit;">
         <h1 class="my-4">${group.communityname}</h1>
-        <c:if test="${!empty loginUser && sessionScope.loginUser.user_id ne group.user_id}">
-        <button style="width: 100px;" class="button" onclick="reqjoin();">가입신청</button>
+        <c:if test="${sessionScope.loginUser.user_id ne group.user_id}">
+            <button style="width: 100px;" class="button" onclick="reqjoin();">가입신청</button>
+            <button style="width: 100px;" class="button" onclick="report();">신고하기</button>
         </c:if>
 
     </div>
@@ -73,6 +92,6 @@
 
 <br>
 <br>
-<c:import url="/WEB-INF/views/common/footer.jsp" />
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
