@@ -132,6 +132,45 @@ function samePrice() {
 						gen2();
 						</script>					
 						</h3>
+
+
+					<%--즐찾기능 START (230407) --%>
+					<form id="like_form">
+					<c:url var = "like" value="/.do">
+						<c:param name="appid" value="${appid}"/>
+						<c:param name="login_user" value="${sessionScope.loginUser.user_id}"/>
+					</c:url>
+					
+					<c:if test="${!empty sessionScope.loginUser}">
+						<input type="button" value="즐겨찾기" onclick="return like()" >
+						<div id="like_result">${game.appid}</div> 
+					</c:if>
+					</form>
+					
+					<script type="text/javascript">
+					function like(){
+					  $.ajax({
+						    url: "asl아직안만들었음!ksdf.do ",
+						    type: "POST",
+						    cache: false,
+						    dataType: "json",
+						    data: $('#like_form').serialize(),   //아이디가 like_form인 곳의 모든 정보를 가져와  파라미터 전송 형태(표준 쿼리형태)로 만들어줌
+						    success: 
+						    function(data){      					
+						    	alert("즐겨찾기 성공!") ;  
+					               $("#like_result").html(data.like);  //id값이 like_result인 html을 찾아서 data.like값으로 바꿔준다.
+						    },   //success
+						    
+						    error: 
+						    function (request, status, error){  
+						      alert("즐겨찾기 실패")                  
+						    }	//error
+						  });
+					}
+					</script>
+					<%--즐찾기능 END --%>
+                  
+
 						<h3 align="center">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
 						<h3 align="center">게임 카테고리: [${ requestScope.game.category }]</h3>
 						<h3 align="center">게임 출시일: [${ requestScope.game.releasedate }]</h3>
@@ -167,9 +206,9 @@ function samePrice() {
 					</div>
 					<span class="object">
 							<div style=" border:1px solid black; ">
-							<h2 align="center" >초기 가격:[${ requestScope.game.initialprice }원]</h2>
-							<h2 align="center">최종 가격:[${ requestScope.game.finalprice }원]</h2>
+							<h2 align="center" >출시된 가격:[${ requestScope.game.initialprice }원]</h2>
 							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
+							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2>
 							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 링크</a></h2>
 							</div>
 					</span>

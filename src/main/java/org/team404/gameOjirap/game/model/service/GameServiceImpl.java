@@ -82,6 +82,13 @@ public class GameServiceImpl implements GameService{
 		return gameDao.selectgamepSearch(Keyword);
 	}
 
+
+
+	@Override
+	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
+		return gameDao.selectgameAllSearch(searchs);
+	}
+
 	/*
 	 * @Override public ArrayList<Game> selectgamepSearch(GameSearchs searchs) {
 	 * return gameDao.selectgamepSearch(searchs); }

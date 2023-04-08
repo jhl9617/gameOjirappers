@@ -167,12 +167,14 @@ CREATE TABLE TB_Community_REPORT (
                                      user_id	VARCHAR2(20)		NOT NULL,
                                      communityId	NUMBER		NOT NULL,
                                      c_report_time	DATE		,
-                                     c_report_desc	VARCHAR2(500)
+                                     c_report_desc	VARCHAR2(500),
+                                     c_rep_type varchar2(50) not null
 );
 comment on column TB_Community_REPORT.user_id is '사용자 ID';
-comment on column TB_Community_REPORT.communityId is '밴드 번호';
-comment on column TB_Community_REPORT.c_report_time is '밴드 신고 시간';
-comment on column TB_Community_REPORT.c_report_desc is '밴드 신고 내용';
+comment on column TB_Community_REPORT.communityId is '커뮤니티번호';
+comment on column TB_Community_REPORT.c_report_time is '커뮤니티신고 시간';
+comment on column TB_Community_REPORT.c_report_desc is '커뮤니티신고 내용';
+comment on column TB_Community_REPORT.c_rep_type is '커뮤니티신고유형';
 
 DROP TABLE TB_Community_LIKE cascade constraints;
 
@@ -193,12 +195,14 @@ CREATE TABLE TB_Community_REQ (
                                   communityId	NUMBER NOT NULL,
                                   requestDes	Varchar2(1000)		,
                                   requestDate	Date
+
 );
 
 comment on column TB_Community_REQ.user_id is '사용자 ID';
 comment on column TB_Community_REQ.communityId is '밴드 ID';
 comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
 comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
+
 
 DROP TABLE GAME cascade constraints;
 DROP TABLE GAME cascade constraints;
