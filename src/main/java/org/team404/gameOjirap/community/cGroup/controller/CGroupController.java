@@ -83,7 +83,6 @@ public String commuMainList() throws UnsupportedEncodingException {
         // servlet-context.xml 에 json string 내보내는
         // JsonView 라는 뷰리졸버 추가 등록해야 함
 
-
     }*/
 
     //커뮤니티 메인 화면으로 이동하는 method

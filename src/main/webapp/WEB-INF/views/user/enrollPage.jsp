@@ -13,6 +13,7 @@
 <script type="text/javascript">
 
 
+
 	$(document).ready(function() {		//validate() 함수가 false를 리턴할 때 submit 작동 방지
 	  $("#next_form").on("submit", function(event) {
 	    if (!validate()) {
@@ -20,7 +21,6 @@
 	    }	//if
 	  });	//on submit
 	});	//document ready
-	
 	
 	//★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
 	function validate() {
@@ -59,9 +59,7 @@
 	} //validate close
 	
 	
-	
-	
-	
+
 	//아이디 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckId() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({

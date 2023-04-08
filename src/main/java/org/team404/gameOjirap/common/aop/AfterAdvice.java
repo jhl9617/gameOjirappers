@@ -16,10 +16,10 @@ public class AfterAdvice {
 
     //포인트컷 설정에 사용되는 메소드 작성 : 내용없이 작성 해야 함
 
-    //    @Pointcut("execution(* org.ict.first..*Impl.*(..))")
+    //@Pointcut("execution(* org.ict.first..*Impl.*(..))")
     public void implPointcut() {}
 
-    //    @After("implPointcut()")
+    //@After("implPointcut()")
     public void finallyLog() {
         //예외발생 상관 없이 무조건 실행되는 어드바이스임
         logger.info("Impl 클래스 메소드 실행 후 작동 : " + "서비스 로직 수행이 완료된 후 무조건 작동");

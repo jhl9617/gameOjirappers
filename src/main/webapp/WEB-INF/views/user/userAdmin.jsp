@@ -37,7 +37,9 @@ function showDiv(){
 <center>
 <div>
    <h2>검색할 항목을 선택하세요.</h2>
+
    <input type="radio" name="item" value="userid"> 아이디
+
    &nbsp; &nbsp;
    <input type="radio" name="item" value="username" > 이름
 </div>
@@ -86,7 +88,9 @@ function showDiv(){
          </td>
          
          <td>
+
             <form action="uban.do?user_id=${ u.user_id }" method="post">
+
                <input type="submit" value="활동정지/포인트차감">
             </form>
          </td>
