@@ -96,7 +96,13 @@ public class CGroupServiceImpl implements CGroupService{
     }
 
     @Override
-    public int insertReport(CReport cReport) {
-        return cGroupDao.insertReport(cReport);
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
+        return cGroupDao.searchCGroup(keyword, paging);
+    }
+
+    @Override
+    public int searchCGroupCount(String keyword) {
+        return cGroupDao.searchCGroupCount(keyword);
+
     }
 }

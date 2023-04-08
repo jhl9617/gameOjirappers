@@ -12,6 +12,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cboard.model.service.CBoardService;
 import org.team404.gameOjirap.community.cboard.model.vo.CBoard;
 import org.team404.gameOjirap.community.cboard.model.vo.CComment;
@@ -36,11 +37,14 @@ public class CBoardController {
         int listCount = cBoardService.selectBListCount(communityid);
         System.out.println(listCount);
         int currentPage = 1;
+
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
         int limit = 10;
-        Paging paging = new Paging(listCount, currentPage, limit);
+
+        String url = "commuBoardList.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url);
         paging.calculator();
 
         ArrayList<CBoard> list = cBoardService.selectCommuBList(paging, communityid);
@@ -49,8 +53,7 @@ public class CBoardController {
 
             mv.addObject("communityid", communityid);
             mv.addObject("list", list);
-            mv.addObject("paging", page);
-
+            mv.addObject("paging", paging);
             mv.setViewName("community/commuBoardList");
         } else {
             mv.addObject("message","게시물이 없습니다. 하나 작성 해주세요.");
@@ -72,13 +75,12 @@ public class CBoardController {
     @RequestMapping("insertCommuPost.do")
     public ModelAndView insertCommuPost(ModelAndView mv, CBoard cBoard, HttpSession session, HttpServletRequest request, RedirectAttributes redirectAttributes, @RequestParam(name = "upfile", required = false) MultipartFile mfile) {
 
-        if(!mfile.getContentType().startsWith("image/")) {
+        if (!mfile.isEmpty() && !mfile.getContentType().startsWith("image/")) {
             redirectAttributes.addFlashAttribute("message", "이미지 파일만 업로드 가능합니다.");
             redirectAttributes.addAttribute("communityid", cBoard.getCommunityid());
             mv.setViewName("redirect:commuBoardList.do");
 
             return mv;
-
         }
 
         //\n문자 <br>로 바꿔서 저장
@@ -271,6 +273,34 @@ public class CBoardController {
     public void deleteCommuComment(HttpServletResponse response, CComment cComment) {
         int result = cBoardService.deleteCommuComment(cComment);
     }
+
+    //커뮤니티 게시판 search
+    @RequestMapping("commuBoardSearch.do")
+    public ModelAndView commuBoardSearch(@RequestParam("communityid") int communityid, @RequestParam("keyword") String keyword, @RequestParam(name = "page", required = false) String page, ModelAndView mv){
+
+
+        int currentPage = 1;
+
+        int limit = 10; // 한 페이지에 출력할 목록 갯수
+
+        String url = "commuBoardSearch.do";
+        // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+        int listCount = cBoardService.commuBoardSearchCount(keyword, communityid);
+        Paging paging = new Paging(listCount, currentPage, limit, url);
+        paging.calculator();
+        ArrayList<CBoard> list = cBoardService.commuBoardSearch(communityid, keyword, paging);
+        if (list != null && list.size() > 0) {
+
+            mv.addObject("list", list);
+            mv.addObject("paging", paging);
+            mv.addObject("communityid", communityid);
+            mv.setViewName("community/commuBoardList");
+        } else {
+            mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
+            mv.setViewName("common/error");
+        }
+        return mv;
+    } // searchCGroup
 
 }
 

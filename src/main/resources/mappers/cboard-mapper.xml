@@ -80,5 +80,29 @@
         where CCOMNO = #{ ccomno }
     </delete>
 
+    <!--커뮤니티 게시물 검색 count 처리-->
+    <select id="commuBoardSearchCount" parameterType="map" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY_BOARD
+        where COMMUNITYID = #{communityid}
+        and CBOARDTITLE like '%'||#{keyword}||'%'
+    </select>
+
+    <!--커뮤니티 게시물 검색-->
+    <select id="commuBoardSearch" parameterType="map" resultType="CBoard">
+        SELECT *
+        FROM (
+                 SELECT ROWNUM RNUM, C.*
+                 FROM (
+                          SELECT *
+                          FROM TB_COMMUNITY_BOARD
+                          WHERE COMMUNITYID = #{communityid}
+                          and CBOARDTITLE like '%'||#{keyword}||'%'
+                          ORDER BY CBOARDNO
+                      ) C
+             )
+        WHERE RNUM BETWEEN #{paging.startRow} AND #{paging.endRow}
+    </select>
+
 
 </mapper>

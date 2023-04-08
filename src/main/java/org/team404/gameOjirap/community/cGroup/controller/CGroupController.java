@@ -5,7 +5,9 @@ import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+
 import org.springframework.dao.DuplicateKeyException;
+
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -29,11 +31,8 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import javax.servlet.http.Part;
 import java.io.File;
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLEncoder;
 import java.util.ArrayList;
 
 @Controller
@@ -101,7 +100,9 @@ public String commuMainList() throws UnsupportedEncodingException {
         int limit = 10; // 한 페이지에 출력할 목록 갯수
         // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
         int listCount = cGroupService.selectListCount();
-        Paging paging = new Paging(listCount, currentPage, limit);
+
+        String url = "commuMain.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url);
         paging.calculator();
         System.out.println(paging);
 
@@ -273,7 +274,6 @@ public String commuMainList() throws UnsupportedEncodingException {
             JSONObject job = new JSONObject();
             job.put("user_id", user.getUser_id());
             job.put("user_nickname", user.getUser_nickname());
-
             jarr.add(job);
         }
         json.put("list", jarr);
@@ -348,6 +348,7 @@ public String commuMainList() throws UnsupportedEncodingException {
 
     // 커뮤니티 삭제
     @RequestMapping("deletecommu.do")
+
     public String deleteCGroup(@RequestParam("communityid") int communityid, Model model) {
         if (cGroupService.deleteCGroup(communityid) > 0) {
 
@@ -357,6 +358,7 @@ public String commuMainList() throws UnsupportedEncodingException {
             return "common/error";
         }
     } // deleteCGroup
+
 
     // 커뮤니티 신고
     @RequestMapping(value="reportcommu.do", method=RequestMethod.POST)
@@ -375,4 +377,5 @@ public String commuMainList() throws UnsupportedEncodingException {
             return "redirect:commuMain.do";
         }
     }// reportCGroup
+
 } // end of class

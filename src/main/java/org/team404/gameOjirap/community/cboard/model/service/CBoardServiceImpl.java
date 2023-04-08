@@ -66,4 +66,14 @@ public class CBoardServiceImpl implements CBoardService{
     public int deleteCommuPost(int cBoardNo) {
         return cBoardDao.deleteCommuPost(cBoardNo);
     }
+
+    @Override
+    public int commuBoardSearchCount(String keyword, int communityid) {
+        return cBoardDao.commuBoardSearchCount(keyword, communityid);
+    }
+
+    @Override
+    public ArrayList<CBoard> commuBoardSearch(int communityid, String keyword, Paging paging) {
+        return cBoardDao.commuBoardSearch(communityid, keyword, paging);
+    }
 }

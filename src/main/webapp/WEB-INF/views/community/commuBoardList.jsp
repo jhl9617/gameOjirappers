@@ -1,5 +1,8 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
+<c:set var="communityid" value="${ requestScope.communityid }" />
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -44,15 +47,30 @@
     </tr>
   </c:forEach>
   </tbody>
+</table>
 
-    </table>
-
+  <div id="board-search">
+    <div class="container">
+      <div class="search-window">
+        <form action="commuBoardSearch.do" method="post">
+          <div class="search-wrap">
+            <label for="search" >검색</label>
+              <input id="search" size="15" maxlength="30" type="keyword" name="keyword" placeholder="제목으로 검색하세요." value="">
+            <input type="hidden" name="communityid" value="${ communityid }">
+            <button type="submit" class="btn btn-dark">검색</button>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
 </div>
+<c:import url="/WEB-INF/views/common/page.jsp" />
 <%--글 작성 버튼--%>
 <div class="container">
   <c:url var="cbd" value="/writeCommuPost.do">
     <c:param name="communityid" value="${ communityid }" />
   </c:url>
   <a href="${cbd}"><button type="button" class="btn btn-primary">글 작성</button></a>
+
 </body>
 </html>

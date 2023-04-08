@@ -1,20 +1,20 @@
 DROP TABLE TB_USER cascade constraints;
 -- 소셜로그인시 회원가입을 이용할 경우의 회원 테이블
 CREATE TABLE TB_USER (
-                         USER_ID 		 VARCHAR2(50) 				NOT NULL,
-                         ADMIN_ID 		VARCHAR2(20) DEFAULT 'N' 		NOT NULL,
-                         USER_PWD		VARCHAR2(100) 			NOT NULL,
-                         USER_NICKNAME		VARCHAR2(30)			NOT NULL,
-                         USER_NAME 		VARCHAR2(100)			NOT NULL,
-                         USER_PHONE 		VARCHAR2(13) 			NOT NULL,
-                         USER_EMAIL 		VARCHAR2(100) 			NOT NULL,
-                         USER_BIRTH 		DATE 	NULL,
+                         USER_ID 		    VARCHAR2(50) 				    NOT NULL,
+                         ADMIN_ID 		    VARCHAR2(20) DEFAULT 'N'        NOT NULL,
+                         USER_PWD		    VARCHAR2(100) 			        NOT NULL,
+                         USER_NICKNAME		VARCHAR2(30)			        NOT NULL,
+                         USER_NAME 		    VARCHAR2(100)			        NOT NULL,
+                         USER_PHONE 		VARCHAR2(13) 			        NOT NULL,
+                         USER_EMAIL 		VARCHAR2(100) 			        NOT NULL,
+                         USER_BIRTH 		DATE 	                            NULL,
                          USER_LEVEL 		VARCHAR2(20)	DEFAULT '새싹'	NOT NULL,
                          USER_STATUS		VARCHAR2(30) 	DEFAULT 'run'	NOT NULL,
-                         USER_POINT 		NUMBER		DEFAULT 0		NOT NULL,
+                         USER_POINT 		NUMBER		DEFAULT 0		    NOT NULL,
                          USER_ACCESS 		DATE 		DEFAULT SYSDATE,
-                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'		NULL,
-                         CONFIRM_ANSWER 	VARCHAR2(100) 			NULL
+                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'	NULL,
+                         CONFIRM_ANSWER 	VARCHAR2(100) 			            NULL
 );
 
 

@@ -3,8 +3,7 @@
         "-//mybatis.org//DTD Mapper 3.0//EN"
         "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="CGroupMapper">
-
-    <resultMap type="CGroup" id="selectCGroupList">
+<!--    <resultMap type="CGroup" id="selectCGroupList">
         <result property="communityid" column="communityid" />
         <result property="communityname" column="communityname" />
         <result property="user_id" column="user_id" />
@@ -12,8 +11,7 @@
         <result property="communityimgrename" column="communityimgrename" />
         <result property="communitydesc" column="communitydesc" />
         <result property="commuMem_count" column="commuMem_count" />
-
-    </resultMap>
+    </resultMap>-->
 
 
 <!--커뮤 이름이 중복인지 확인-->
@@ -49,12 +47,18 @@
     </select>
 
     <!--페이지에 해당하는 커뮤 리스트로 받아옴-->
-    <select id="selectcgrouplist" parameterType="Paging" resultMap="selectCGroupList">
+    <select id="selectcgrouplist" parameterType="Paging" resultType="CGroup">
 <![CDATA[
         select *
-        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
-              from TB_COMMUNITY)
-        WHERE ROWNUM >= #{ startRow } and ROWNUM <= #{ endRow }
+        from (
+            select rownum as rnum, a.*
+            from (
+                select *
+                from TB_COMMUNITY
+                order by communityid desc
+            ) a
+        )
+        where rnum between #{startRow} and #{endRow}
 ]]>
     </select>
 
@@ -126,9 +130,28 @@
         where communityid = #{communityid}
     </delete>
 
+    <!--커뮤니티 검색 count-->
+    <select id="searchCGroupCount" parameterType="String" resultType="_int">
+        select count(*)
+        from TB_COMMUNITY
+        where COMMUNITYNAME like '%'||#{keyword}||'%'
+    </select>
+
+    <!--커뮤니티 검색 keywword와 paging 처리 해서-->
+    <select id="searchCGroup" parameterType="map" resultType="CGroup">
+        select *
+        from (select communityid, communityname, communitydate, user_id, communityimgori, communityimgrename, communitydesc, ROWNUM
+              from TB_COMMUNITY
+              where COMMUNITYNAME like '%'||#{keyword}||'%')
+<![CDATA[
+        WHERE ROWNUM >= #{ paging.startRow } and ROWNUM <= #{ paging.endRow }
+        ]]>
+    </select>
+
     <!-- 커뮤니티 신고 -->
     <insert id="insertReport" parameterType="CReport">
         insert into tb_community_report (user_id, communityId, c_report_time, c_report_desc, c_rep_type)
         values (#{user_id}, #{communityid}, sysdate, #{c_report_desc}, #{c_rep_type})
     </insert>
+
 </mapper>

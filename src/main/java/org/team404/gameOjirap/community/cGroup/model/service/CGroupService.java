@@ -39,5 +39,9 @@ public interface CGroupService {
 
     int deleteMember(CMember cmember);
 
-    int insertReport(CReport cReport);
+
+    ArrayList<CGroup> searchCGroup(String keyword, Paging paging);
+
+    int searchCGroupCount(String keyword);
+
 }
