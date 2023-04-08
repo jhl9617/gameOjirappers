@@ -8,6 +8,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.community.cSchedule.model.vo.CSchedule;
+import org.team404.gameOjirap.community.cSchedule.model.vo.CVote;
 import org.team404.gameOjirap.community.cSchedule.model.vo.ScheduleVote;
 
 @Repository("cScheduleDao")
@@ -29,4 +30,12 @@ public class CScheduleDao {
 		List<CSchedule> list = session.selectList("cScheduleMapper.selectCalendarList",communityid);
 		return (ArrayList<CSchedule>)list;
     }
+
+    public int insertOrUpdateVote(CVote cvote) {
+		return session.insert("cScheduleMapper.insertOrUpdateVote", cvote);
+    }
+
+	public CVote selectVote(CVote cvote) {
+		return session.selectOne("cScheduleMapper.selectVote", cvote);
+	}
 }
