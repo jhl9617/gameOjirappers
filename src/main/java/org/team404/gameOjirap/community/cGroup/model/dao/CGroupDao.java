@@ -7,6 +7,7 @@ import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CReport;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
@@ -85,5 +86,9 @@ public class CGroupDao {
 
     public int deleteCGroup(int communityId) {
         return session.delete("CGroupMapper.deleteCGroup", communityId);
+    }
+
+    public int insertReport(CReport cReport) {
+        return session.insert("CGroupMapper.insertReport", cReport);
     }
 }

@@ -125,4 +125,10 @@
         delete from tb_community
         where communityid = #{communityid}
     </delete>
+
+    <!-- 커뮤니티 신고 -->
+    <insert id="insertReport" parameterType="CReport">
+        insert into tb_community_report (user_id, communityId, c_report_time, c_report_desc, c_rep_type)
+        values (#{user_id}, #{communityid}, sysdate, #{c_report_desc}, #{c_rep_type})
+    </insert>
 </mapper>

@@ -11,31 +11,35 @@
     <meta charset="UTF-8"/>
     <title>커뮤니티 허브</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css"/>
+
+    <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.16.0/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
     <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
-    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <script>
-        function showAlertMessage() {
-            <c:if test="${not empty message}">
+<script type="text/javascript">
+    $(function () {
+        <c:if test="${!empty message}">
             alert("${message}");
-            </c:if>
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            showAlertMessage();
-        });
-    </script>
+            const state = null;
+            const title = null;
+            const url = `commuMain.do?`;
+            history.pushState(state, title, url);
+            window.onpopstate = function(event) {
+                history.go(1);
+            };
+        </c:if>
+    });
+</script>
+
 <%--css 스타일 가져오기--%>
 </head>
 <body>
-
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 
 <br>
 
 <div class="container">
     <h1 class="my-4">커뮤니티 허브</h1>
-    <c:if test="${!empty sessionScope.loginUser}">
     <h2>나만의 커뮤니티 생성</h2>
     <form action="commuCreate.do" method="post">
         <div class="form-group">
@@ -44,7 +48,7 @@
         </div>
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
     </form>
-    </c:if>
+
     <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">
         <thead>
