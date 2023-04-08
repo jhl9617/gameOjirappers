@@ -7,16 +7,7 @@
     <title>${group.communityname}</title>
 
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <script>
-        function showAlertMessage() {
-            <c:if test="${not empty message}">
-            alert("${message}");
-            </c:if>
-        }
-        document.addEventListener("DOMContentLoaded", function() {
-            showAlertMessage();
-        });
-    </script>
+    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
     <script>
         function reqjoin() {
             location.href = "movejoinpage.do?communityid=" + ${communityid};
@@ -31,14 +22,14 @@
 
         $(function () {
             <c:if test="${!empty message}">
-            alert("${message}");
-            const state = { communityId: 1};
-            const title = null;
-            const url = `viewgroup.do?communityid=${communityid}`;
-            history.pushState(state, title, url);
-            window.onpopstate = function(event) {
+                alert("${message}");
+                const state = { communityid: ${communityid}};
+                const title = null;
+                const url = `viewgroup.do?communityid=${communityid}`;
                 history.pushState(state, title, url);
-            };
+                window.onpopstate = function(event) {
+                    history.go(1);
+                };
             </c:if>
         });
     </script>

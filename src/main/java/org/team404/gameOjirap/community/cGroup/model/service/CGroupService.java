@@ -44,4 +44,5 @@ public interface CGroupService {
 
     int searchCGroupCount(String keyword);
 
+    int insertReport(CReport cReport);
 }

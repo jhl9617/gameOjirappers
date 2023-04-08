@@ -23,6 +23,7 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/loginPage.do" class="button"><span class="label">로그인</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/enrollPage.do" class="button"><span class="label">회원가입</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
+			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" class="button"><span class="label">밴드</span></a><li>
 		</ul>	
 	</c:if>	
 	<%-- <% } %> --%>
@@ -31,7 +32,7 @@
 		<ul class="icons"> 
  			<li><a href="${ pageContext.servletContext.contextPath }/logout.do" class="button"><span class="label">로그아웃하기</span></a></li>
  			<li><a href="${ pageContext.servletContext.contextPath }/userDatailPage.do" class="button"><span class="label">마이페이지</span></a></li>
-			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do" class="button"><span class="label">밴드</span></a><li>
+			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" class="button"><span class="label">밴드</span></a><li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/moveup.do?user_id=${ sessionScope.loginUser.user_id }" class="button"><span class="label">마이페이지</span></a></li> <%--임시--%>
 			<li><a href="${ pageContext.servletContext.contextPath }/uadmin.do" class="button"><span class="label">관리자</span></a></li> 
@@ -42,7 +43,7 @@
 		<ul class="icons">
 			<li>${ loginUser.user_name}님 로긘중!</li>
 			<li><a href="${ pageContext.servletContext.contextPath }/logout.do" class="button"><span class="label">로그아웃하기</span></a></li>
-			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do" class="button"><span class="label">밴드</span></a><li>
+			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" class="button"><span class="label">밴드</span></a><li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/moveup.do?user_id=${ sessionScope.loginUser.user_id }" class="button"><span class="label">마이페이지</span></a></li> <%--임시--%>
 		</ul>

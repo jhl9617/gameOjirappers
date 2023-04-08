@@ -56,7 +56,8 @@ public class BoardGenController {
 	      int limit = 10; // 한 페이지에 출력할 목록 갯수
 	      // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
 	      int listCount = boardService.selectListCount();
-	      Paging paging = new Paging(listCount, currentPage, limit);
+		   String url = "blist.do";
+	      Paging paging = new Paging(listCount, currentPage, limit, url);
 	      paging.calculator();
 
 	      ArrayList<BoardGen> list = boardService.selectList(paging);

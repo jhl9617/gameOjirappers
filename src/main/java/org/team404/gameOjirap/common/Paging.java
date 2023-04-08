@@ -36,8 +36,8 @@ public class Paging {
 		// 현재 페이지가 포함된 페이지 그룹의 시작값과 끝값 계산
 		// => 뷰 페이지 아래쪽에 표시할 페이지 숫자를 10개 한다면
 		// 현재 페이지가 95라면 91과 100 을 계산해 냄
-		startPage = ((currentPage - 1) / 5) * 5 + 1;
-		endPage = startPage + 5 - 1;
+		startPage = ((currentPage - 1) / 10) * 10 + 1;
+		endPage = startPage + 10 - 1;
 
 		if (maxPage < endPage) {
 			endPage = maxPage;

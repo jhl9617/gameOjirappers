@@ -19,13 +19,13 @@
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 
     <script>
-        function showAlertMessage() {
+        $(function() {
             <c:if test="${not empty message}">
 
             alert("${message}");
             const state = null;
             const title = null;
-            const url = `commuMain.do?`;
+            const url = `commuMain.do`;
             history.pushState(state, title, url);
             window.onpopstate = function(event) {
                 history.go(1);
@@ -52,7 +52,7 @@
         <button type="submit">나만의 커뮤니티 이름 입력하고 만들기</button>
     </form>
 
-    </c:if>
+
     <h3 align="center">총 커뮤니티 수 : ${ listCount } 개</h3>
 
     <h2 class="my-4">커뮤니티 찾아보기</h2>
