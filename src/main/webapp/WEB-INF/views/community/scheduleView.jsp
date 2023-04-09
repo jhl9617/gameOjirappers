@@ -41,6 +41,12 @@
         #td {
             width: 200px;
         }
+
+        #calendar {
+            max-width: 900px;
+            max-height: 600px;
+            margin-bottom: 200px;
+        }
     </style>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'/>
     <script type="text/javascript"
@@ -193,7 +199,7 @@
 
     <hr>
 
-    <table style="width: 500px;" id="schlist">
+    <table style=" max-width: 900px;" id="schlist">
         <tr>
             <th><h5>일정이름</h5></th>
             <th><h5>일정내용</h5></th>

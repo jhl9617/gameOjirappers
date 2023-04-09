@@ -23,6 +23,15 @@
       text-align: center;
       text-decoration: none;
     }
+    ul {
+      list-style-type: none;
+      margin: 0;
+      padding: 0;
+      overflow: hidden;
+      width: 30%;
+      height: 30%;
+    }
+
   </style>
 </head>
 
@@ -49,7 +58,7 @@
         <c:param name="communityid" value="${communityid}" />
       </c:url>
       <li><a href="${sse}"  class="button large">일정</a></li>
-      <li><a href="memberInfo.jsp"  class="button large">멤버 정보</a></li>
+      <li><a href="memberinfo.do?communityid=${communityid}"  class="button large">멤버 정보</a></li>
       <c:if test="${sessionScope.loginUser.user_id eq group.user_id}">
         <li><a href="managePage.do?communityid=${communityid}"  class="button large">관리</a></li>
       </c:if>

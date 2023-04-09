@@ -53,13 +53,13 @@
 			<mapping path="/csview.do"/>
 			<mapping path="/movejoinpage.do"/>
 			<mapping path="/moveReport.do"/>
-
+			<mapping path="/memberinfo.do"/>
 			<beans:bean class="org.team404.gameOjirap.common.intercepter.LoginCheckInterceptor" id="loginCheckInterceptor"/>
 		</interceptor>
 		<interceptor>
 			<mapping path="/commuBoardList.do"/>
 			<mapping path="/csview.do"/>
-
+			<mapping path="/memberinfo.do"/>
 			<beans:bean class="org.team404.gameOjirap.common.intercepter.MemberCheckInterceptor" id="memberCheckInterceptor"/>
 		</interceptor>
 	</interceptors>

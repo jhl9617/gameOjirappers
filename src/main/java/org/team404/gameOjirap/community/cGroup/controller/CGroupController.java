@@ -195,6 +195,12 @@ public String commuMainList() throws UnsupportedEncodingException {
         }
     }
 
+    // 멤버 목록 페이지 이동
+    @RequestMapping("memberinfo.do")
+    public String memberView(){
+        return "";
+    }
+
     // 커뮤니티 신고 페이지 이동
     @RequestMapping("moveReport.do")
     public String reportPageView(@RequestParam("communityid") int communityid, HttpServletRequest request, Model model) {

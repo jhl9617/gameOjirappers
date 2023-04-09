@@ -105,4 +105,9 @@ public class CGroupServiceImpl implements CGroupService{
         return cGroupDao.searchCGroupCount(keyword);
 
     }
+
+    @Override
+    public int insertReport(CReport cReport) {
+        return cGroupDao.insertReport(cReport);
+    }
 }

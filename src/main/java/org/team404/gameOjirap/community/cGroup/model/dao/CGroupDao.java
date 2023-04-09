@@ -100,4 +100,8 @@ public class CGroupDao {
         return (ArrayList<CGroup>) list;
 
     }
+
+    public int insertReport(CReport cReport) {
+        return session.insert("CGroupMapper.insertReport", cReport);
+    }
 }
