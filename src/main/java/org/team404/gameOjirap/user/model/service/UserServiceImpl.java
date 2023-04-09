@@ -23,7 +23,7 @@ public class UserServiceImpl implements UserService{
 	public int userInsertMethod(User user) {
 		return userDao.userInsertMethod(user);
 	}
-
+	
 	@Override
 	public int selectDupCheckId(String user_id) {
 		return userDao.selectDupCheckId(user_id);
@@ -67,6 +67,20 @@ public class UserServiceImpl implements UserService{
 	public int updateLoginok(User user) {
 		return userDao.updateLoginok(user);
 	}
+
+	@Override
+	public void updateBan(User user) {
+		userDao.updateBan(user);
+		
+	}
+	
+	@Override
+	public void updateBanRelease(User loginUser) {
+		userDao.updateBanRelease(loginUser);
+		
+	}
+
+	
 
 
 	

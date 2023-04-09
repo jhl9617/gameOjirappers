@@ -49,10 +49,7 @@ public class UserDao {
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);
 	}
-	
-	
-	
-	
+
 
 
 	public int levelMethod(User user_level) {
@@ -71,6 +68,19 @@ public class UserDao {
 	public int updateLoginok(User user) {
 		return session.update("userMapper.updateLoginok", user);
 	}
+	
+	// 유저 활동정지 처리용-------------------------------------------------
+	public void updateBan(User user) {
+		session.update("userMapper.updateBan", user);
+	}
+
+	// 유저 활동정지 해제처리용------------------------------------
+	public void updateBanRelease(User loginUser) {
+		session.update("userMapper.updateBanRelease", loginUser);
+		
+	}
+
+	
 
 
 

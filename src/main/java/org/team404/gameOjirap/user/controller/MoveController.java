@@ -80,39 +80,6 @@ public class MoveController {
 		} // if
 	}// method close
 
-	@RequestMapping(value="uadmin.do", method= {RequestMethod.GET, RequestMethod.POST} )
-	public ModelAndView moveUserAdmin(ModelAndView mv, @RequestParam(name = "page", required = false) String page)  {
-      ArrayList<User> list = UserService.selectUserList();
-      int listCount = list.size();
-      
-      if(list != null && list.size() > 0){
-         mv.addObject("list", list);
-         mv.addObject("listCount", listCount);
-         
-         mv.setViewName("user/userAdmin");
-      }else {
-         mv.addObject("message" + "페이지 목록 조회 실패!");
-         mv.setViewName("common/error");
-      }
-      
-      return mv;
-}
 	
-	
-	//회원활동관리 페이지 이동 처리용 ---------------------------------------------------------------------------------------	
-	@RequestMapping(value="uban.do", method= {RequestMethod.GET, RequestMethod.POST} )
-	public ModelAndView moveUserBan(ModelAndView mv, @RequestParam("user_id") String user_id)  {
-		User user = UserService.selectUser(user_id);
-		
-		 if(user != null){
-			mv.addObject("user", user);
-			mv.setViewName("user/userBan");
-		 }else {
-	         mv.addObject("message" + "페이지 목록 조회 실패!");
-	         mv.setViewName("common/error");
-	      }
-		 
-		 return mv;
-	}// method close
 
 }// class close

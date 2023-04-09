@@ -17,6 +17,7 @@
 		<result column="user_birth"		        	property="user_birth" />		                <!--회원생일-->
 		<result column="user_level" 	       		 	property="user_level"/> 	                    <!--회원등급-->
 		<result column="user_status"	       		property="user_status"	/>                     <!--회원 활동상태-->
+		<result column="ban_release_date"	       		property="ban_release_date"	/>                     <!--정지 해제일-->
 		<result column="user_point" 	        		property="user_point" />	                    <!--보유포인트-->
 		<result column="user_access"				property="user_access"/>						<!--접속기록-->
 		<result column="user_original_profile"  property="user_original_profile" />  	<!--원본프로필이미지-->
@@ -49,8 +50,7 @@
 		where user_id = #{user_id}		
 	</update>
 
-
-
+	
 
 	
 	<!-- 회원 전체 조회용 -->
@@ -99,18 +99,24 @@
 		<!-- #{}안에 멤버변수명을 작성해주면 알아서 getter가 됨. (vo에 getter가 반드시 있어야 작동함) -->
 	</insert>
 	
+	<update id="updateBan" parameterType="User">
+		update tb_user
+		set user_status = #{user_status},
+			 ban_release_date = #{ban_release_date}
+		where user_id = #{user_id}
+	</update>
 	
-	
+	<update id="updateBanRelease" parameterType="User">
+		update tb_user
+		set user_status = #{user_status},
+			 ban_release_date = #{ban_release_date}
+		where user_id = #{user_id}
+	</update>
 	
 	
 	
 	
 
 </mapper>
-
-
-
-
-
 
 

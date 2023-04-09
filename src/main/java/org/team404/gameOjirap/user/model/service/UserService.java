@@ -19,5 +19,7 @@ public interface UserService {
 	int levelMethod(User user_level);     							// 현재등급 출력용
 	int checkanswer(String confirm_answer);						//본인확인 질문 확인용
 	int updateLoginok (User user);										//로그인가능 확인용
+	void updateBan(User user);									// 유저 정지용
+	void updateBanRelease(User loginUser);					// 유저 정지 해제용
 	
 }

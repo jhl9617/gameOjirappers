@@ -11,6 +11,7 @@ CREATE TABLE TB_USER (
                          USER_BIRTH 		DATE 	NULL,
                          USER_LEVEL 		VARCHAR2(20)	DEFAULT '새싹'	NOT NULL,
                          USER_STATUS		VARCHAR2(30) 	DEFAULT 'run'	NOT NULL,
+                         BAN_RELEASE_DATE  DATE,
                          USER_POINT 		NUMBER		DEFAULT 0		NOT NULL,
                          USER_ACCESS 		DATE 		DEFAULT SYSDATE,
                          USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'		NULL,
@@ -28,6 +29,7 @@ comment on column TB_USER.user_email is '회원이메일';
 comment on column TB_USER.user_birth is '회원생일';
 comment on column TB_USER.user_level is '회원등급';
 comment on column TB_USER.user_status is '회원 활동상태';
+comment on column TB_USER.ban_release_date is '정지 해제일';
 comment on column TB_USER.user_point is '보유포인트';
 comment on column TB_USER.user_access is '접속기록';
 comment on column TB_USER.user_original_profile is '프로필이미지';
