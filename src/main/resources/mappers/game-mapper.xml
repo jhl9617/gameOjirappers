@@ -61,8 +61,8 @@
 		<result property="name" column="name"/>
 		<result property="initialprice" column="initialprice"/>
 		<result property="finalprice" column="finalprice"/>
-		<result property="discountrate" column="discountrate"/>
 		<result property="description" column="description"/>
+		<result property="genre" column="genre"/>
 	</resultMap>
 	
 	<resultMap type="Game" id="searchGenre">
@@ -128,7 +128,7 @@
 	 	<![CDATA[
 	 	select * 
 		from ( select rownum rnum, appid ,name, initialprice, finalprice ,ccu ,discountrate
-				from ( select * from game where discountrate is not null order by discountrate desc  ))
+				from ( select * from game where discountrate is not null order by discountrate desc,finalprice asc  ))
 		where rnum >= 1 and rnum <=10
 	 	]]>
 	 </select>
@@ -144,60 +144,39 @@
 	 select*
 		from(select rownum rnum, appid,  name, genre ,positive
         from (select * from game order by positive desc)
+        <if test="keyword !=null and keyword.equals('initialprice')" >
 		where genre like '%' || #{ keyword } || '%'
+		</if>
 		)
+		
 		<![CDATA[
         where rnum >= 1 and rnum <=10
 		]]>
 	 </select>
 	 
-	 <!-- <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
-	 	<![CDATA[
-	 select*
-		from(select rownum rnum,appid,  name, genre ,positive
-        from (select * from game order by positive desc)
-		where genre like '%' || #{ keyword } || '%' 
-		)
-        where rnum >= 1 and rnum <=10
-	]]>
-	 </select> -->
-	 
-	 <!-- 게임 최종 가 같은 것 끼리 출력 -->
-	 <select id="selectSearchPrice" parameterType="_int" resultMap="searchPrice">
-	 	select appid, name, initialprice, finalprice, discountrate  from game
-	 	where
-	 	<if test="keyword !=null and keyword.equals('initialprice')" >
-		 	  initialprice like '%' || #{ keyword } || '%'
-		 </if>
-	 	
-	 </select>
-	 
- 	 <!-- 게임 검색 모두 갖고 오기 -->
-	<!-- <select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
-	 	select * 
-	 	from (select rownum rnum, name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta 
-	 	from game where
-	 	<choose>
-	 		<when test="type !=null and type.equals('name')" >
-		 	  name like '%' || #{ keyword } || '%'
-		 	</when>
-		 	<when test="type !=null and type.equals('genre')" >
-		 	  genre like '%' || #{ keyword } || '%'
-		 	</when>
-		 	<when test="type !=null and type.equals('initialprice')" >
-		 	<![CDATA[
-		 	  initialprice <=  #{ keyword }
-		 	  ]]>
-		 	</when>
-		 </choose>
-		 <![CDATA[
-		 ) where rnum >= #{ page.startRow } and rnum <= #{ page.endRow }
-		 ]]>
-	 </select> -->
-	 
 
+	 
+	 <!-- 게임 가격으로 검 -->
+	 <select id="selectSearchPrice" parameterType="Searchs" resultMap="searchPrice">
+	 	select appid, name, genre,initialprice, finalprice, discountrate  from game
+	 	where
+	 	<choose>
+	 	<when test="type !=null and type.equals('initialprice')" >
+		 	  initialprice =  #{ keyword } order by initialprice
+		 </when>
+		 <when test="type !=null and type.equals('finalprice')" >
+		 	  finalprice =  #{ keyword } order by finalprice
+		 </when>
+		 <when test="type !=null and type.equals('discountrate')" >
+		 	  discountrate =  #{ keyword } order by discountrate
+		 </when>
+	 	</choose>
+	 </select>
+
+	 
+	 <!-- 게임 검색 모두 갖고 오기 -->
 	<select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
-	 	select  name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta 
+	 	select  name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta, discountrate
 	 	from game where
 	 	<choose>
 	 		<when test="type !=null and type.equals('name')" >
@@ -214,6 +193,11 @@
 		 	<when test="type !=null and type.equals('finalprice')" >
 		 	<![CDATA[
 		 	  finalprice =  #{ keyword } order by finalprice
+		 	  ]]>
+		 	</when>
+		 	<when test="type !=null and type.equals('discountrate')" >
+		 	<![CDATA[
+		 	  discountrate =  #{ keyword } order by discountrate
 		 	  ]]>
 		 	</when>
 		 </choose>
