@@ -184,7 +184,8 @@ function deleteinfo() {
 							<h2 align="center" >출시된 가격:[${ requestScope.game.initialprice }원]</h2>
 							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
 							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2>
-							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 링크</a></h2>
+							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 보러가기</a></h2>
+							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button">유튜브 영상 보러가기</a></h2>
 							</div>
 					</span>
 				</section>			

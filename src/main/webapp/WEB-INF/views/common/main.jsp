@@ -34,6 +34,7 @@
 
 	<!-- Main -->
 	<div id="main">
+	
 		<div class="inner">
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
@@ -44,41 +45,7 @@
 				</header>	
 				<table id="gameAll" >
 				</table>
-				<div class="paginate" id="paging">
-  </div>
-<script>
-  var pageNum = 1 ;  //현재 페이지 번호
-  var totalPageCnt = 0 ; //전체 페이지 수
-  var totalCnt = 0;  //전체 글 수
-  var listCnt = 10;  //한 화면에 보여질 리스트 수
-  var pageSet = 10;  // 페이징 부부의 카운트 수
-  var searchString = ""; //검색
-$(function(){
-   searchList();  //목록 조회 함수 호출
-});
- 
-  //정보 조회
-searchList = function(){
-  var startNum = (pageNum -1) * listCnt;  //현재 페이지 번호를 가지고 시작 위치를 구한다.    
-  var parameter = {
-    "SearchType" : $("#searchType").val() + ""
-    ,"SearchString" : $("#searchString").val() + ""
-    ,"startNum" : startNum + ""
-    ,"endNum" : listCnt + ""        
-    }
-  util.data.getDatafromUrl("/process/p_list.jsp", parameter, searchListCallback); //호출 주소는 적당히 알아서...
-  }
-   
-searchListCallback = function(resultData){
-    $("#listCont").empty(); //리스트 내용을 지움
-    if (resultData.list != null){
-      totalCnt = resultData.Cnt;
-      util.list.setListContent(resultData,"#listCont", "#listTmpl");  //util.list.setListContent(데이터, 대상 오브젝트, 템플릿스크립트 오브젝트);                   
-    }
-    util.list.paging("#paging", pageNum, listCnt, resultData.Cnt , "searchList()", "pageNum"); //페이징 처리
-  }
-   
-</script>
+				
 							
 				<div>
 					<form name="search-form1" autocomplete="off">
@@ -198,7 +165,8 @@ searchListCallback = function(resultData){
 						}
 
 				       
-				       $('#toplist').html(gtvalues);
+				      /*  $('#toplist').html(gtvalues); */
+						$('#toplist').html(gtvalues);
 				    	},
 				    	error: function(jqXHR, textStatus, errorThrown){
 				       	console.log("gametop6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
