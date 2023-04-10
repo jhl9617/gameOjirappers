@@ -10,6 +10,9 @@ public class Paging {
 	private int startPage; //페이지그룹의 시작값
 	private int endPage;  //페이지그룹의 끝값
 	private String url;
+	private String appid;
+	private int communityid;
+
 
 	//매개변수 있는 생성자
 	public Paging(int listCount, int currentPage, int limit, String url) {
@@ -19,6 +22,39 @@ public class Paging {
 		this.url = url;
 	}
 
+	// appid 받는 생성자
+	public Paging(int listCount, int currentPage, int limit, String url, String appid) {
+		this.listCount = listCount;
+		this.currentPage = currentPage;
+		this.limit = limit;
+		this.url = url;
+		this.appid = appid;
+	}
+
+	// communityid 받는 생성자
+	public Paging(int listCount, int currentPage, int limit, String url, int communityid) {
+		this.listCount = listCount;
+		this.currentPage = currentPage;
+		this.limit = limit;
+		this.url = url;
+		this.communityid = communityid;
+	}
+
+	public String getAppid() {
+		return appid;
+	}
+
+	public void setAppid(String appid) {
+		this.appid = appid;
+	}
+
+	public int getCommunityid() {
+		return communityid;
+	}
+
+	public void setCommunityid(int communityid) {
+		this.communityid = communityid;
+	}
 
 	public String getUrl() {
 		return url;
@@ -113,12 +149,20 @@ public class Paging {
 		this.endPage = endPage;
 	}
 
-
 	@Override
 	public String toString() {
-		return "Paging [startRow=" + startRow + ", endRow=" + endRow + ", listCount=" + listCount + ", limit=" + limit
-				+ ", currentPage=" + currentPage + ", maxPage=" + maxPage + ", startPage=" + startPage + ", endPage="
-				+ endPage + ", url=" + url + "]";
+		return "Paging{" +
+				"startRow=" + startRow +
+				", endRow=" + endRow +
+				", listCount=" + listCount +
+				", limit=" + limit +
+				", currentPage=" + currentPage +
+				", maxPage=" + maxPage +
+				", startPage=" + startPage +
+				", endPage=" + endPage +
+				", url='" + url + '\'' +
+				", appid='" + appid + '\'' +
+				", communityid=" + communityid +
+				'}';
 	}
-
 }

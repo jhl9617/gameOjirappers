@@ -31,10 +31,10 @@
         </a> &nbsp;
     </c:if>
     <!-- 이전 페이지그룹으로 이동하는 버튼 -->
-    <c:if test="${ !((currentPage - 10) < startPage and (currentPage - 10) >= 1) }">
+    <c:if test="${ !((currentPage - 10) >= 1) }">
         <img src="<c:url value="/resources/images/movepageL.jpg"/>" width="20px" height="20px" alt="[이전그룹]"/> &nbsp;
     </c:if>
-    <c:if test="${ (currentPage - 10) < startPage and (currentPage - 10) >= 1 }">
+    <c:if test="${ (currentPage - 10) >= 1 }">
         <c:url var="pbefore" value="${ url }">
             <c:param name="page" value="${ startPage - 10 }"/>
         </c:url>
@@ -57,21 +57,16 @@
     </c:forEach>
 
     <!-- 다음 페이지그룹으로 이동하는 버튼 -->
-    <c:if test="${ !((currentPage + 10) > endPage ) }">
+    <c:if test="${ !((startPage + 10) <= maxPage)  }">
         <img src="<c:url value="/resources/images/movepageR.jpg"/>" width="20px" height="20px" alt="[다음그룹]"/> &nbsp;
     </c:if>
-    <c:if test="${ (currentPage + 10) > endPage  }">
+    <c:if test="${ (startPage + 10) <= maxPage }">
         <c:url var="pafter" value="${ url }">
-            <c:if test="${endPage+10 >= maxPage}">
-                <c:param name="page" value="${ maxPage }"/>
-            </c:if>
-            <c:if test="${endPage+10 < maxPage}">
-                <c:param name="page" value="${ endPage + 10 }"/>
-            </c:if>
+                <c:param name="page" value="${ startPage + 10 }"/>
         </c:url>
         <a href="${ pafter }"><img src="<c:url value="/resources/images/movepageR.jpg"/>" width="20px" height="20px"
                                    alt="[다음그룹]"/>
-        </a> &nbsp;
+        </a>
     </c:if>
 
     <!-- 끝 페이지로 이동하는 버튼 -->
