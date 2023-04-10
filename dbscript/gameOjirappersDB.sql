@@ -26,7 +26,8 @@ CREATE TABLE TB_USER (
                          USER_LEVEL 		VARCHAR2(20)	DEFAULT '새싹'	NOT NULL,
                          USER_STATUS		VARCHAR2(30) 	DEFAULT 'run'	NOT NULL,
                          BAN_RELEASE_DATE  DATE,
-                         USER_POINT 		NUMBER		DEFAULT 0		NOT NULL,
+                         USER_POINT 		NUMBER		DEFAULT 0		    NOT NULL,
+                         USER_ENROLLDATE 	DATE 		DEFAULT             SYSDATE,
 
                          USER_ACCESS 		DATE 		DEFAULT SYSDATE,
                          USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'	NULL,
@@ -768,5 +769,8 @@ create SEQUENCE req_seq
     start with 1
     increment by 1;
 
+create SEQUENCE seq_comment
+    start with 1
+    increment by 1;
 commit;
    
