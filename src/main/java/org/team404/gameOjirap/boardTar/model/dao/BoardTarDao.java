@@ -23,4 +23,8 @@ public class BoardTarDao {
         List<BoardTar> list = session.selectList("boardTarMapper.selectList", paging);
         return (ArrayList<BoardTar>) list;
     }
+
+    public int insertTarBoard(BoardTar boardTar) {
+        return session.insert("boardTarMapper.insertTarBoard", boardTar);
+    }
 }

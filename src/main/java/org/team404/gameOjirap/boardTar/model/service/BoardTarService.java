@@ -11,4 +11,6 @@ public interface BoardTarService {
     int selectListCount(String appid);
 
     ArrayList<BoardTar> selectList(Paging paging);
+
+    int insertTarBoard(BoardTar boardTar);
 }

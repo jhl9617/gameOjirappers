@@ -54,6 +54,7 @@
 			<mapping path="/movejoinpage.do"/>
 			<mapping path="/moveReport.do"/>
 			<mapping path="/memberinfo.do"/>
+			<mapping path="/gbwriteform.do"/>
 			<beans:bean class="org.team404.gameOjirap.common.intercepter.LoginCheckInterceptor" id="loginCheckInterceptor"/>
 		</interceptor>
 		<interceptor>
