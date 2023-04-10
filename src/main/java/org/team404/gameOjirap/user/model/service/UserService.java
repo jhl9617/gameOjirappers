@@ -9,6 +9,9 @@ import org.team404.gameOjirap.user.model.vo.User;
 
 public interface UserService {
 
+	//mybandtop5 출력 처리용
+	ArrayList<CGroup> mybandtop5();
+
 	User selectUser(String user_id);									// 회원 1명 조회
 	ArrayList<User> selectUserList();								//회원 리스트 조회
 	int userInsertMethod(User user);    								// 회원가입 요청처리용
