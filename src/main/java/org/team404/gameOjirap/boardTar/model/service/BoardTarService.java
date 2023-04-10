@@ -2,12 +2,12 @@ package org.team404.gameOjirap.boardTar.model.service;
 
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.BoardLikeCount;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.Paging;
 
 import java.util.ArrayList;
 
 public interface BoardTarService {
-
 
     int selectListCount(String appid);
 
@@ -23,4 +23,9 @@ public interface BoardTarService {
 
     int updateTarLike(int boardNo);
 
+    int insertTarReply(Comment comment);
+
+    ArrayList<Comment> selectComments(int boardNo);
+
+    int updateTarReply(Comment comment);
 }

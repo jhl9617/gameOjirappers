@@ -5,6 +5,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.BoardLikeCount;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.Paging;
 
 import java.util.ArrayList;
@@ -45,4 +46,17 @@ public class BoardTarDao {
         return session.update("boardTarMapper.updateTarLike", boardNo);
     }
 
+    public int insertTarReply(Comment comment) {
+        return session.insert("boardTarMapper.insertTarReply", comment);
+    }
+
+    //댓글 리스트
+    public ArrayList<Comment> selectComments(int boardNo) {
+        List<Comment> list = session.selectList("boardTarMapper.selectTarReply", boardNo);
+        return (ArrayList<Comment>) list;
+    }
+
+    public int updateTarReply(Comment comment) {
+        return session.update("boardTarMapper.updateTarReply", comment);
+    }
 }

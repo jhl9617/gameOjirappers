@@ -4,7 +4,6 @@ import java.sql.Date;
 
 public class BoardTar implements java.io.Serializable{
 
-
 	private static final long serialVersionUID = -5701946729213390024L;
 	private int board_no;
 	private String board_title;

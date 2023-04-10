@@ -2,8 +2,7 @@ package org.team404.gameOjirap.boardGen.model.service;
 
 import java.util.ArrayList;
 
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
-import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 public interface CommentService {
 
