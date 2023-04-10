@@ -52,6 +52,16 @@ public class InoutController {
 		    status.setComplete();		//로그인 요청 성공 => 200을 전송하면 문제없는것임
 		    mv.setViewName("common/main");
 		    System.out.println("로그인 완료");
+		    
+		    // 로그인 성공시 정지해제일 확인하고 정지 해제 처리하기--------------------------------------
+		    boolean b = loginUser.getUser_status().equalsIgnoreCase("pause") && loginUser.getBan_release_date() != null && 
+		    		!(new java.sql.Date(System.currentTimeMillis()).before(loginUser.getBan_release_date()));
+		    
+		    if(b) {
+		    	loginUser.setUser_status("run");
+		    	loginUser.setBan_release_date(null);
+		    	UserService.updateBanRelease(loginUser);
+		    }
 		} else {
 			model.addAttribute("message", "로그인 실패 : 아이디나 암호를 확인해주세요<br>" + "또는, 로그인 제한된 회원인지 관리자에게 문의하세요.");	
 			mv.setViewName("common/error");

@@ -15,6 +15,7 @@ public class User implements java.io.Serializable{
 	private String user_birth;     		//회원생일
 	private String user_level; 					//회원등급
 	private String user_status;					//회원 활동상태
+	private java.sql.Date ban_release_date;			// 정지해제일
 	private int user_point; 							//보유포인트
 	private java.sql.Date user_access;		//접속기록
 	private String user_original_profile;	//원본프로필이미지
@@ -37,8 +38,11 @@ public class User implements java.io.Serializable{
 
 	public User(String user_id, String admin_id, String user_pwd, String user_nickname, String user_name,
 			String user_phone, String user_email, String user_birth, String user_level, String user_status,
-			int user_point, Date user_access, String user_original_profile, String confirm_answer, String favo_id,
-			String appid, Date like_dt, String bname, String com_contents, String board_title) {
+
+			Date ban_release_date, int user_point, Date user_access, String user_original_profile,
+			String confirm_answer, Date board_click_day, String appid, String bname, String com_contents,
+			String board_title) {
+
 		super();
 		this.user_id = user_id;
 		this.admin_id = admin_id;
@@ -50,6 +54,7 @@ public class User implements java.io.Serializable{
 		this.user_birth = user_birth;
 		this.user_level = user_level;
 		this.user_status = user_status;
+		this.ban_release_date = ban_release_date;
 		this.user_point = user_point;
 		this.user_access = user_access;
 		this.user_original_profile = user_original_profile;
@@ -142,6 +147,14 @@ public class User implements java.io.Serializable{
 		this.user_status = user_status;
 	}
 
+	public java.sql.Date getBan_release_date() {
+		return ban_release_date;
+	}
+
+	public void setBan_release_date(java.sql.Date ban_release_date) {
+		this.ban_release_date = ban_release_date;
+	}
+
 	public int getUser_point() {
 		return user_point;
 	}
@@ -221,18 +234,6 @@ public class User implements java.io.Serializable{
 	public void setBoard_title(String board_title) {
 		this.board_title = board_title;
 	}
-
-	@Override
-	public String toString() {
-		return "User [user_id=" + user_id + ", admin_id=" + admin_id + ", user_pwd=" + user_pwd + ", user_nickname="
-				+ user_nickname + ", user_name=" + user_name + ", user_phone=" + user_phone + ", user_email="
-				+ user_email + ", user_birth=" + user_birth + ", user_level=" + user_level + ", user_status="
-				+ user_status + ", user_point=" + user_point + ", user_access=" + user_access
-				+ ", user_original_profile=" + user_original_profile + ", confirm_answer=" + confirm_answer
-				+ ", favo_id=" + favo_id + ", appid=" + appid + ", like_dt=" + like_dt + ", bname=" + bname
-				+ ", com_contents=" + com_contents + ", board_title=" + board_title + "]";
-	}
-
 	
 }//class close
 

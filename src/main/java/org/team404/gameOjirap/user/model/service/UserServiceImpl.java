@@ -29,7 +29,7 @@ public class UserServiceImpl implements UserService{
 	public int userInsertMethod(User user) {
 		return userDao.userInsertMethod(user);
 	}
-
+	
 	@Override
 	public int selectDupCheckId(String user_id) {
 		return userDao.selectDupCheckId(user_id);
@@ -74,28 +74,19 @@ public class UserServiceImpl implements UserService{
 		return userDao.updateLoginok(user);
 	}
 
+	@Override
+	public void updateBan(User user) {
+		userDao.updateBan(user);
+		
+	}
 	
-	//////////////////////////////////////////////////////////////////////////
-	//즐찾등록요청처리용
 	@Override
-	public int insertFavorite(User user) {
-		return userDao.insertFavorite(user);
-	}
-
-	//즐찾삭제요청처리용
-	@Override
-	public int deleteFavorite(String user_id) {
-		return userDao.deleteFavorite(user_id);
-	}
-
-	//즐찾 갯수조회 => 게임과 아이디매칭
-	@Override
-	public User selectFavoriteCount(String user_id) {
-		return userDao.selectFavoriteCount(user_id);
+	public void updateBanRelease(User loginUser) {
+		userDao.updateBanRelease(loginUser);
+		
 	}
 
 
-	
 }//class close
 
 

@@ -66,22 +66,26 @@ function showDiv(){
    <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=${currentPage}';">목록 보기</button>   
 </center>
 <br>
-<table align="center" width="500" border="1" cellspacing="0" cellpadding="1">
+<table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
    <tr>
       <th>회원아이디</th>
       <th>회원이름</th>
       <th>회원등급</th>
       <th>포인트</th>
+      <th>활동상태</th>
       <th>가입일</th>
       <th></th>
    </tr>
    <c:forEach items="${ requestScope.list }" var="u">
       <tr align="center">
          <td>${ u.user_id }</td>
- 
          <td>${ u.user_name }</td>
          <td>${ u.user_level }</td>
          <td>${ u.user_point }</td>
+         <td>
+         <c:if test="${ u.user_status eq 'run' }">활동가능</c:if>
+		 <c:if test="${ u.user_status eq 'pause' }">활동불가</c:if>
+		 </td>
          <td>
             <fmt:formatDate value="${ u.board_click_day }" 
                pattern="yyyy-MM-dd"/>
