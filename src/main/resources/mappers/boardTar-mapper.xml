@@ -36,6 +36,33 @@
 		INSERT INTO TB_BOARD_TAR (board_no, board_title, board_content, board_date, board_count, board_like, user_id, appid, board_orifile, board_refile, board_notice)
 		VALUES (seq_board_tar.nextval, #{board_title}, #{board_content}, SYSDATE, 0, 0, #{user_id}, #{appid}, #{board_orifile}, #{board_refile}, #{board_notice})
 	</insert>
+
+	<!-- 조회수 1증가 -->
+	<update id="updateReadCount" parameterType="int">
+		UPDATE TB_BOARD_TAR
+		SET board_count = board_count + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!-- 게임게시판 게시물 상세보기 -->
+	<select id="selectBoard" parameterType="int" resultMap="pagingmap">
+		SELECT *
+		FROM TB_BOARD_TAR
+		WHERE board_no = #{board_no}
+	</select>
+
+	<!-- 좋아요 눌렀는지 체크 -->
+	<select id="selectTarLike" parameterType="BoardLikeCount" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD_TAR
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</select>
+
+	<!-- 좋아요 숫자 증가 -->
+	<update id="updateTarLike" parameterType="BoardLikeCount">
+		UPDATE TB_BOARD_TAR
+		SET board_like = board_like + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
 </mapper>
 
 

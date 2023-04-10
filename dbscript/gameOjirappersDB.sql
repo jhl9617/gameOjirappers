@@ -1,3 +1,17 @@
+drop table tb_board_like cascade constraints;
+
+create table tb_board_like(
+                              user_id VARCHAR2(50 BYTE) ,
+                              board_no number not null,
+                              like_date date not null,
+                              constraint pk_board_like primary key (user_id, board_no),
+                              constraint fk_board_like foreign key (user_id) references tb_user(user_id)
+);
+
+comment on column tb_board_like.user_id is '좋아요누른회원';
+comment on column tb_board_like.board_no is '좋아요누른게시물';
+comment on column tb_board_like.like_date is '좋아요누른날짜';
+
 DROP TABLE TB_USER cascade constraints;
 -- 소셜로그인시 회원가입을 이용할 경우의 회원 테이블
 CREATE TABLE TB_USER (
