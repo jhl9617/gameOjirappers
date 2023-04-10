@@ -375,7 +375,7 @@ function deleteinfo() {
 											
 			<section>
 				<header class="major">
-					<h2> 유저게시판 </h2>
+					<h2><a onclick="movegameboard();"> 유저게시판 </a></h2>
 				</header>
 				<div class="bbborad">
 				<table class="table-products table-hover">
