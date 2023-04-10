@@ -12,119 +12,7 @@
 <title>GameOjirap</title>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-<script type="text/javascript">
-$(function(){
-$.ajax({
-    url: "gametop6.do",
-    type: "post",
-    dataType: "json",
-    success: function(data){
-       console.log("success : " + data);    // Object 로 출력
-//		select * 
-//		from ( select rownum rnum, name, headerimg, short_description , releasedate,ccu,meta
-//				from ( select * from game order by ccu desc ))
-//		where rnum >= 1 and rnum <=6
-       // 받은 Object => string 으로 바꿈
-       var jsonStr = JSON.stringify(data);
-       // sting => json 객체로 바꿈
-       var json = JSON.parse(jsonStr);
-       
-       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
-       var gtvalues = $('#toplist').html();
 
-		for(var i in json.list){
-			
-			gtvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
-                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
-                +"<h3><a href='${pageContext.servletContext.contextPath}/moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3><p>"
-                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
-                +json.list[i].ccu+"</p>"
-                +"<ul class='actions'><li><a href='moveGameDetail.do?appid="+json.list[i].appid+"' class='button'>More</a></li></ul></article>";
-               
-		}
-
-       
-       $('#toplist').html(gtvalues);
-    	},
-    	error: function(jqXHR, textStatus, errorThrown){
-       	console.log("gametop6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
-    	}
- 	});
-});
-
-$(function(){
-	$.ajax({
-	    url: "gamenew6.do",
-	    type: "post",
-	    dataType: "json",
-	    success: function(data){
-	       console.log("success : " + data);    // Object 로 출력
-
-	       var jsonStr = JSON.stringify(data);
-	       // sting => json 객체로 바꿈
-	       var json = JSON.parse(jsonStr);
-	       
-	       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
-	       var gnvalues = $('#newlist').html();
-
-			for(var i in json.list){
-				
-				gnvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
-	                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
-	                +"<h3>"+json.list[i].name+"</h3><p>"
-	                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
-	                +json.list[i].releasedate+"</p>"
-	                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='button'>More</a></li></ul></article>";
-				
-				
-			}
-
-	       
-	       $('#newlist').html(gnvalues);
-	    	},
-	    	error: function(jqXHR, textStatus, errorThrown){
-	       	console.log("gamenew6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
-	    	}
-	 	});
-});
-	
-$(function(){
-	$.ajax({
-	    url: "gameDiscTop.do",
-	    type: "post",
-	    dataType: "json",
-	    success: function(data){
-	       console.log("success : " + data);    // Object 로 출력
-
-	       var jsonStr = JSON.stringify(data);
-	       // sting => json 객체로 바꿈
-	       var json = JSON.parse(jsonStr);
-	       
-	       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
-	       var gdvalues = $('#disclist').html();
-
-			for(var i in json.list){
-				gdvalues += "<tr><td><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
-						+json.list[i].name
-						+"</td><td>" + decodeURIComponent(json.list[i].initialprice)
-	                     +"</td><td>" + decodeURIComponent(json.list[i].finalprice).replace(/\+/gi, " ")
-	                     +"</td><td>" + json.list[i].ccu
-	                     +"</td><td>" + json.list[i].discountrate
-	                     +"</td></tr>";
-				
-				
-			}
-
-	       
-	       $('#disclist').html(gdvalues);
-	    	},
-	    	error: function(jqXHR, textStatus, errorThrown){
-	       	console.log("gamedisctop.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
-	    	}
-	 	});
-	});
-
-</script>
 
 </head>
 	<!-- Scripts -->
@@ -155,17 +43,54 @@ $(function(){
 					<h2> 게임검색하기 </h2>
 				</header>	
 				<table id="gameAll" >
-				</table>			
+				</table>
+				<div class="paginate" id="paging">
+  </div>
+<script>
+  var pageNum = 1 ;  //현재 페이지 번호
+  var totalPageCnt = 0 ; //전체 페이지 수
+  var totalCnt = 0;  //전체 글 수
+  var listCnt = 10;  //한 화면에 보여질 리스트 수
+  var pageSet = 10;  // 페이징 부부의 카운트 수
+  var searchString = ""; //검색
+$(function(){
+   searchList();  //목록 조회 함수 호출
+});
+ 
+  //정보 조회
+searchList = function(){
+  var startNum = (pageNum -1) * listCnt;  //현재 페이지 번호를 가지고 시작 위치를 구한다.    
+  var parameter = {
+    "SearchType" : $("#searchType").val() + ""
+    ,"SearchString" : $("#searchString").val() + ""
+    ,"startNum" : startNum + ""
+    ,"endNum" : listCnt + ""        
+    }
+  util.data.getDatafromUrl("/process/p_list.jsp", parameter, searchListCallback); //호출 주소는 적당히 알아서...
+  }
+   
+searchListCallback = function(resultData){
+    $("#listCont").empty(); //리스트 내용을 지움
+    if (resultData.list != null){
+      totalCnt = resultData.Cnt;
+      util.list.setListContent(resultData,"#listCont", "#listTmpl");  //util.list.setListContent(데이터, 대상 오브젝트, 템플릿스크립트 오브젝트);                   
+    }
+    util.list.paging("#paging", pageNum, listCnt, resultData.Cnt , "searchList()", "pageNum"); //페이징 처리
+  }
+   
+</script>
+							
 				<div>
 					<form name="search-form1" autocomplete="off">
 						<select name="type">
-							<option selected value="">검색 내용 선택</option>
+							<option selected value="name">검색 내용 선택</option>
 							<option value="name">게임이름</option>
 							<option value="genre">게임장르</option>
 							<option value="initialprice">출시가격</option>
-							<option value="finalprice">할인된가격</option>							
+							<option value="finalprice">할인된가격</option>
+							<option value="discountrate">할인율</option>							
 						</select>
-						<input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
+						<input type="text" name="keyword" placeholder="입력하세요" />
 						<input type="button" onclick="gameAllSearch()" id="search" value="검색">
 					</form>
 				</div>				
@@ -179,14 +104,17 @@ $(function(){
 						success : function(result){
 							//테이블 초기화
 							$('#gameAll').empty();
-							var ge = '<tr><th>게임이름</th><th>게임내용</th><th>게임장르</th><th>좋아요</th><th>출시가격</th><th>할인된가격</th><th>어제 접속자수</th><th>출시일</th><th>평점</th></tr>';
+							var ge = '<tr><td color="red">게임이름</td><td>게임내용</td><td>게임장르</td><td>좋아요</td><td>출시가격</td><td>할인된가격</td><td>어제 접속자수</td><td>출시일</td><td>평점</td></tr>';
+							
+							
 							if(result.length>=1){								
 								result.forEach(function(item){
 									ge +="<tr><td><a href='moveGameDetail.do?appid="
 										+item.appid
 										+ "'>"+item.name+"</td>";
 									ge += "<td>"+item.short_description+"</td>";
-									ge += "<td>"+item.genre+"</td>";
+									ge += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
+									+"</td>";
 									ge += "<td>"+item.positive+"</td>";
 									ge += "<td>"+item.initialprice+"</td>";									
 									ge += "<td>"+item.finalprice+"</td>";
@@ -197,9 +125,12 @@ $(function(){
 				        		});
 				        		$('#gameAll').append(ge);
 							}
+							
 						}
-					})
+					});
 				}
+				
+				
 				</script>
 			<section id="banner">
 				<div class="content">
@@ -235,6 +166,46 @@ $(function(){
 				
 				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
+			<script type="text/javascript">
+			$(function(){
+				$.ajax({
+				    url: "gametop6.do",
+				    type: "post",
+				    dataType: "json",
+				    success: function(data){
+				       console.log("success : " + data);    // Object 로 출력
+//						select * 
+//						from ( select rownum rnum, name, headerimg, short_description , releasedate,ccu,meta
+//								from ( select * from game order by ccu desc ))
+//						where rnum >= 1 and rnum <=6
+				       // 받은 Object => string 으로 바꿈
+				       var jsonStr = JSON.stringify(data);
+				       // sting => json 객체로 바꿈
+				       var json = JSON.parse(jsonStr);
+				       
+				       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+				       var gtvalues = $('#toplist').html();
+
+						for(var i in json.list){
+							
+							gtvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
+				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
+				                +"<h3><a href='${pageContext.servletContext.contextPath}/moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3><p>"
+				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
+				                +json.list[i].ccu+"</p>"
+				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid="+json.list[i].appid+"' class='button'>More</a></li></ul></article>";
+				               
+						}
+
+				       
+				       $('#toplist').html(gtvalues);
+				    	},
+				    	error: function(jqXHR, textStatus, errorThrown){
+				       	console.log("gametop6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+				    	}
+				 	});
+				});
+			</script>
 			
 			<!-- Section -->
 			<section>
@@ -249,6 +220,43 @@ $(function(){
 					<c:set var="url" value="/gnlist.do.do"/>
 				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
+			<script type="text/javascript">
+			$(function(){
+				$.ajax({
+				    url: "gamenew6.do",
+				    type: "post",
+				    dataType: "json",
+				    success: function(data){
+				       console.log("success : " + data);    // Object 로 출력
+
+				       var jsonStr = JSON.stringify(data);
+				       // sting => json 객체로 바꿈
+				       var json = JSON.parse(jsonStr);
+				       
+				       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+				       var gnvalues = $('#newlist').html();
+
+						for(var i in json.list){
+							
+							gnvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
+				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
+				                +"<h3>"+json.list[i].name+"</h3><p>"
+				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
+				                +json.list[i].releasedate+"</p>"
+				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"%"+"' class='button'>More</a></li></ul></article>";
+							
+							
+						}
+
+				       
+				       $('#newlist').html(gnvalues);
+				    	},
+				    	error: function(jqXHR, textStatus, errorThrown){
+				       	console.log("gamenew6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+				    	}
+				 	});
+			});
+			</script>
 
 	
 	<!-- 순위 아래  -->
@@ -264,44 +272,84 @@ $(function(){
 					<col style="width:120px">
 					<col style="width:100px">
 				</colgroup>
+				<tbody>
 				<thead>
-				<tr>
+				<!-- <tr>
 					<th class="table-title" colspan="2">
 						<a href="#">
 						<span class="hide-small">GameName </span>Releases
 						<svg version="1.1" width="24" height="24" viewBox="0 0 16 16" class="octicon octicon-arrow-right" aria-hidden="true">
 						<path d="M8.22 2.97a.75.75 0 0 1 1.06 0l4.25 4.25a.75.75 0 0 1 0 1.06l-4.25 4.25a.751.751 0 0 1-1.042-.018.751.751 0 0 1-.018-1.042l2.97-2.97H3.75a.75.75 0 0 1 0-1.5h7.44L8.22 4.03a.75.75 0 0 1 0-1.06Z">
-						</path>
+						</path> 
 						</svg>
 						</a>
+						game name
 					</th>
 					<th>초기 가격</th>
 					<th>최종가격</th>
-					<th>Peak Today</th>
+					<th>전일 접속</th>
 					<th><img src="" class="flag" alt="" width="18" height="18"> 할인율</th>
-				</tr>
+				</tr> -->
+				<table id="disclist">
+				<tr><td class='table-title' colspan='2'>game name</td>
+				<td>초기 가격</td><td>최종가격</td><td>전일 접속</td><td>할인율</td></td></table>
+				
+				
 				</thead>
-				<tbody>
-				<table id="disclist" border="1" cellspacing="0">
+				</tbody>
+				</table>
+				<!-- <table id="disclist" border="1" cellspacing="0">
 				<tr class="app" data-appid="2050650" data-cache="1679986748">
-					<!-- <td class="applogo">
-					<a href="/app/2050650/charts/" tabindex="-1" aria-hidden="true">
-					<img src="" alt="">
-					</a>
-					</td> -->
+				 
+				<tr>
 					<th><a href="" class="css-truncate">GameName</a></th>
 					<th class="text-center green">초기 가격</th>
 					<th class="text-center">최종가격</th>
 					<th class="text-center">전날 최고 동시 접속사</th>
 					<th class="text-center">할인율</th>
 				</tr>
-				</table>
-				</tbody>
-				</table>
+				</table> -->
 
 				</div>
 				
 				</section>
+				<script type="text/javascript">
+				$(function(){
+					$.ajax({
+					    url: "gameDiscTop.do",
+					    type: "post",
+					    dataType: "json",
+					    success: function(data){
+					       console.log("success : " + data);    // Object 로 출력
+
+					       var jsonStr = JSON.stringify(data);
+					       // sting => json 객체로 바꿈
+					       var json = JSON.parse(jsonStr);
+					       
+					       // for in 문 : 인덱스 변수를 0에서 자동 1씩 증가시키는 루프문
+					       var gdvalues = $('#disclist').html();
+
+							for(var i in json.list){
+								gdvalues +="<tr><td colspan='2'><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
+										+json.list[i].name
+										+"</td><td>" + decodeURIComponent(json.list[i].initialprice)
+					                     +"</td><td>" + decodeURIComponent(json.list[i].finalprice).replace(/\+/gi, " ")
+					                     +"</td><td>" + json.list[i].ccu
+					                     +"</td><td>" + json.list[i].discountrate
+					                     +"</td></tr>";
+								
+								
+							}
+
+					       
+					       $('#disclist').html(gdvalues);
+					    	},
+					    	error: function(jqXHR, textStatus, errorThrown){
+					       	console.log("gamedisctop.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
+					    	}
+					 	});
+					});
+				</script>
 				
 				
 

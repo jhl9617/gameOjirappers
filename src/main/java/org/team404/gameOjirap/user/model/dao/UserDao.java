@@ -51,29 +51,6 @@ public class UserDao {
 		return session.update("userMapper.updateUser", user);
 	}
 	
-	
-	//////////////////////////////////////////////////////////////////////////
-	//즐찾등록요청처리용
-	public int insertFavorite(User user) {
-		return session.insert("userMapper.insertFavorite", user);
-	}
-	
-	//즐찾삭제요청처리용
-	public int deleteFavorite(String user_id) {
-		return session.delete("userMapper.deleteFavorite", user_id);
-	}
-	
-	//즐찾 갯수조회 => 게임과 아이디매칭
-	public User selectFavoriteCount(String user_id) {
-		return session.selectOne("userMapper.selectFavoriteCount", user_id);
-	}
-	//////////////////////////////////////////////////////////////////////////
-	
-
-
-	
-	
-	
 	public int levelMethod(User user_level) {
 		return session.insert("userMapper.levelMethod", user_level);
 	}
@@ -90,6 +67,19 @@ public class UserDao {
 	public int updateLoginok(User user) {
 		return session.update("userMapper.updateLoginok", user);
 	}
+	
+	// 유저 활동정지 처리용-------------------------------------------------
+	public void updateBan(User user) {
+		session.update("userMapper.updateBan", user);
+	}
+
+	// 유저 활동정지 해제처리용------------------------------------
+	public void updateBanRelease(User loginUser) {
+		session.update("userMapper.updateBanRelease", loginUser);
+		
+	}
+
+	
 
 	public ArrayList<CGroup> mybandtop5() {
 		List<CGroup> list = session.selectList("userMapper.mybandtop5");

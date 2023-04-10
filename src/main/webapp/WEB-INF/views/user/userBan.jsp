@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+    <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -73,7 +74,7 @@ function deletefunc() {
 
 <h3>포인트 : ${ user.user_point }</h3> &nbsp; <button id="sdpdtn" onclick="showDecP();">포인트차감</button>
 
-<form action="adminUDecPoint.do" id="decpoint" name="decpoint" >
+<form action="adminUDecPoint.do?user_id=${ user.user_id }" method="post" id="decpoint" name="decpoint" >
 	차감할 포인트 : 
 	<select id="selectp">
 		<option value="">선택</option>
@@ -83,13 +84,14 @@ function deletefunc() {
 		<option value="500">400</option>
 	</select>
 	<input type="hidden" id="selectpinput" name="selectpinput">
-	<br>차감사유 : <input name="cause">
+	<br>차감사유 : <input name="causep">
 </form>
-<button id="decpointbtn" onclick="decpFunc($('selectp').value);">차감</button>
+<button id="decpointbtn" onclick="decpFunc();">차감</button>
 
+<c:if test="${ user.user_status eq 'run' }"><h3>활동상태 : 활동가능</h3></c:if>
+<c:if test="${ user.user_status eq 'pause' }"><h3>활동상태 : 활동불가(${ user.ban_release_date } 까지)</h3></c:if>
 <br><br><button id="sbbtn" onclick="showUBan();">활동정지</button>
-<form action="adminUBan.do"  id="ban" name="ban" >
-	<input type="hidden" value="${ user.user_id }">
+<form action="adminUBan.do?user_id=${ user.user_id }"  method="post" id="ban" name="ban">
 	정지일
 	<select id="selectt">
 		<option value="">선택</option>
@@ -99,13 +101,11 @@ function deletefunc() {
 		<option value="1year">1년</option>
 	</select>
 	<input type="hidden" id="selecttinput" name="selecttinput">
-	<br>정지사유 : <input name="cause">
+	<br>정지사유 : <input name="causeb">
 </form>
 <button id="banbtn" onclick="banFunc();">정지</button>
 
-<form action="userDel.do?user_id=${ user.user_id }" id="delete" >
-	<input type="hidden" name="userid" value="${ user.user_id }">
-
+<form action="adminDel.do?user_id=${ user.user_id }" id="delete" >
 </form>
 <br><button onclick="deletefunc();">강제탈퇴</button>
 
