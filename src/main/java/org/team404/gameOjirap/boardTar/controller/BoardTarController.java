@@ -10,7 +10,9 @@ import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardTar.model.service.BoardTarService;
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
+
 import org.team404.gameOjirap.common.BoardLikeCount;
+
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.game.model.service.GameService;
@@ -101,11 +103,13 @@ public class BoardTarController {
     public ModelAndView moveGboardWrite(ModelAndView mv,
                                         @RequestParam("page") String page, @RequestParam("name") String name,
                                         @RequestParam("appid") String appid) {
+
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
         mv.addObject("page", currentPage);
+
         mv.addObject("name", name);
         mv.addObject("appid", appid);
         mv.setViewName("boardTar/gameBoardWrite");
@@ -120,6 +124,7 @@ public class BoardTarController {
                                  HttpServletRequest request) {
         String savePath = request.getSession().getServletContext().getRealPath("resources/Tar_files");
         int currentPage = 1;
+
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
@@ -147,6 +152,7 @@ public class BoardTarController {
         model.addAttribute("appid", boardTar.getAppid());
         return "redirect:movegameboard.do";
 
+
     }
 
     // 게시물 좋아요 증가
@@ -172,5 +178,6 @@ public class BoardTarController {
         model.addAttribute("page", currentPage);
         model.addAttribute("appid", appid);
         return "redirect:movetarboarddetail.do";
+
     }
 }

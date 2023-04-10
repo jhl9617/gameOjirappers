@@ -49,4 +49,5 @@ import java.util.ArrayList;
     public int updateTarLike(int boardNo) {
         return boardTarDao.updateTarLike(boardNo);
     }
+
 }

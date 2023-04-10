@@ -22,4 +22,5 @@ public interface BoardTarService {
     int selectTarLike(BoardLikeCount likeCount);
 
     int updateTarLike(int boardNo);
+
 }

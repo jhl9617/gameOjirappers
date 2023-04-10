@@ -44,4 +44,5 @@ public class BoardTarDao {
     public int updateTarLike(int boardNo) {
         return session.update("boardTarMapper.updateTarLike", boardNo);
     }
+
 }
