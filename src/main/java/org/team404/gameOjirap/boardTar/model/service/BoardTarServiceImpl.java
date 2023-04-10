@@ -23,4 +23,9 @@ public class BoardTarServiceImpl implements BoardTarService {
     public ArrayList<BoardTar> selectList(Paging paging) {
         return boardTarDao.selectList(paging);
     }
+
+    @Override
+    public int insertTarBoard(BoardTar boardTar) {
+        return boardTarDao.insertTarBoard(boardTar);
+    }
 }

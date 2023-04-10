@@ -224,7 +224,7 @@ section.notice {
 <section class="notice">
   <div class="page-title">
         <div class="container">
-            <h3>자유 게시판</h3>
+            <h3>${name} 게시판</h3>
         </div>
     </div>
 
@@ -257,21 +257,43 @@ section.notice {
                 </tr>
                 </thead>
                 <tbody>
-                <c:forEach items="${ requestScope.list }" var="boardGen">
+                <c:forEach items="${ requestScope.nlist }" var="TarNotice">
+                    <tr>
+                        <c:url var="dtview" value="/boardDetailView.do">
+                            <c:param name="board_no" value="${ boardTar.board_no }" />
+                            <c:param name="page" value="${ currentPage }"/>
+                            <c:param name="appid" value="${appid}"/>
+                            <c:param name="name" value="${name}"/>
+                        </c:url>
+
+                        <td>${ boardTar.board_count }</td>
+                        <th>
+                            <a href="${ dtview }">${ boardTar.board_title }</a>
+                        </th>
+                        <td><fmt:formatDate value="${ boardTar.board_date }" pattern="yyyy-MM-dd" /></td>
+                        <td>${ boardTar.user_id }</td>
+                        <td>${ boardTar.board_no }</td>
+                    </tr>
+                </c:forEach>
+                </tbody>
+                <tbody>
+                <c:forEach items="${ requestScope.list }" var="boardTar">
                 <tr>
                      <c:url var="dtview" value="/boardDetailView.do">
-                        <c:param name="board_no" value="${ boardGen.board_no }" />
+                        <c:param name="board_no" value="${ boardTar.board_no }" />
                         <c:param name="page" value="${ currentPage }"/>
+                         <c:param name="appid" value="${appid}"/>
+                         <c:param name="name" value="${name}"/>
                     </c:url>
                     
-                    <td>${ boardGen.board_count }</td>
+                    <td>${ boardTar.board_count }</td>
                     <th>
-                      <a href="${ dtview }">${ boardGen.board_title }</a>
+                      <a href="${ dtview }">${ boardTar.board_title }</a>
                       <p>테스트</p>
                     </th>
-                    <td><fmt:formatDate value="${ boardGen.board_date }" pattern="yyyy-MM-dd" /></td>
-                    <td>${ boardGen.user_id }</td>
-                    <td>${ boardGen.board_no }</td>
+                    <td><fmt:formatDate value="${ boardTar.board_date }" pattern="yyyy-MM-dd" /></td>
+                    <td>${ boardTar.user_id }</td>
+                    <td>${ boardTar.board_no }</td>
                 </tr>
                 
                 
@@ -279,7 +301,12 @@ section.notice {
                 </tbody>
                 <br>
         <div id="write" style="float:right;">
-        	<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">글작성</button>
+            <c:url var="gbwrite" value="/gbwriteform.do">
+                <c:param name="page" value="${ currentPage }"/>
+                <c:param name="appid" value="${appid}"/>
+                <c:param name="name" value="${name}"/>
+            </c:url>
+        	<button onclick="javascript:location.href='${gbwrite}';">글작성</button>
         	<br>
         </div>
             </table>

@@ -87,7 +87,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     //커뮤니티 메인 화면으로 이동하는 method
     @RequestMapping(value = "commuMain.do", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView moveCommuMain(@RequestParam(name = "page", required = false) String page,
-                                      @RequestParam(value = "message", required = false) String message,ModelAndView mv) {
+                                      @RequestParam(name = "message", required = false) String message,ModelAndView mv) {
 
         int currentPage = 1;
         if (page != null) {
@@ -160,7 +160,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping("viewgroup.do")
     public ModelAndView commuDetailMethod(ModelAndView mv, @RequestParam("communityid") int communityid
             , @RequestParam(name = "page", required = false) String page,
-            @RequestParam(value="message", required = false) String message, HttpSession session) {
+            @RequestParam(name="message", required = false) String message, HttpSession session) {
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
@@ -301,7 +301,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     // 커뮤니티 수정
     @RequestMapping(value = "updatecommu.do", method = RequestMethod.POST)
     public String updateCGroup(CGroup cGroup, Model model,
-                               @RequestParam(value = "delFlag", required = false) String delFlag,
+                               @RequestParam(name = "delFlag", required = false) String delFlag,
                                @RequestParam("orifile") MultipartFile mfile,
                                HttpServletRequest request) throws ServletException, IOException {
         if (!mfile.getContentType().startsWith("image/")) {

@@ -6,12 +6,16 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.multipart.MultipartFile;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardTar.model.service.BoardTarService;
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
+import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.game.model.service.GameService;
 
+import javax.servlet.http.HttpServletRequest;
+import java.io.File;
 import java.util.ArrayList;
 
 @Controller("boardTarController")
@@ -61,9 +65,52 @@ public class BoardTarController {
         return "boardTar/tarBoardDetail";
     }
 
-    // 게시글 등록
+    // 게시글 등록뷰 이동
+    @RequestMapping("gbwriteform.do")
+    public ModelAndView moveGboardWrite(ModelAndView mv,
+                                        @RequestParam("page") String page, @RequestParam("name") String name,
+                                        @RequestParam("appid") String appid) {
+        mv.addObject("page", page);
+        mv.addObject("name", name);
+        mv.addObject("appid", appid);
+        mv.setViewName("boardTar/gameBoardWrite");
+
+        return mv;
+    }
+
+    //게시글 등록
     @RequestMapping(value = "inserttarboard.do", method = RequestMethod.POST)
-    public ModelAndView insertBoard() {
-        return new ModelAndView();
+    public String insertTarBoard(BoardTar boardTar, Model model,
+                                 @RequestParam(name = "page", required = false) String page, @RequestParam(name = "upfile", required = false) MultipartFile mfile,
+                                 HttpServletRequest request) {
+        String savePath = request.getSession().getServletContext().getRealPath("resources/Tar_files");
+        int currentPage = 1;
+        if(page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        if (!mfile.isEmpty()) {
+            String fileName = mfile.getOriginalFilename();
+            if (fileName != null && fileName.length() > 0) {
+                String rename = FileNameChange.change(fileName, "yyyyMMddHHmmss");
+                File renameFile = new File(savePath + "\\" + rename);
+                try {
+                    mfile.transferTo(renameFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                boardTar.setBoard_orifile(fileName);
+                boardTar.setBoard_refile(rename);
+            }
+        }
+
+        if (boardTarService.insertTarBoard(boardTar) > 0) {
+            model.addAttribute("message", "게시글 등록 성공");
+        } else {
+            model.addAttribute("message", "게시글 등록 실패");
+        }
+        model.addAttribute("page", currentPage);
+        model.addAttribute("appid", boardTar.getAppid());
+        return "redirect:movegameboard.do";
+
     }
 }

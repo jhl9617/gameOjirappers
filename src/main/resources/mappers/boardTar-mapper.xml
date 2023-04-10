@@ -20,7 +20,7 @@
 	</select>
 
 	<!-- startPage 와 endPage 사이의 appid 가 일치하는 게시물 리스트 최신순-->
-	<select id="" parameterType="Paging" resultMap="pagingmap">
+	<select id="selectList" parameterType="Paging" resultMap="pagingmap">
 		SELECT RNUM, BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_LIKE, USER_ID
 		FROM (
 				 SELECT ROWNUM RNUM, BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_LIKE, USER_ID
@@ -31,6 +31,11 @@
 		WHERE RNUM BETWEEN ${startRow} AND ${endRow}
 	</select>
 
+	<!-- 게시글 입력 -->
+	<insert id="insertTarBoard" parameterType="BoardTar">
+		INSERT INTO TB_BOARD_TAR (board_no, board_title, board_content, board_date, board_count, board_like, user_id, appid, board_orifile, board_refile, board_notice)
+		VALUES (seq_board_tar.nextval, #{board_title}, #{board_content}, SYSDATE, 0, 0, #{user_id}, #{appid}, #{board_orifile}, #{board_refile}, #{board_notice})
+	</insert>
 </mapper>
 
 
