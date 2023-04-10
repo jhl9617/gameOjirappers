@@ -76,16 +76,21 @@ public class GameDao {
 		List<Game> list = session.selectList("gameMapper.selectSearchGenre", searchs);
 		return (ArrayList<Game>)list;
 	}
-
-	public ArrayList<Game> selectgamepSearch(String Keyword) {
-		return session.selectOne("gameMapper.selectSearchPrice",Keyword);
+	
+	
+	public ArrayList<Game> selectgamepSearch(GameSearchs searchs) {
+		List<Game> list = session.selectList("gameMapper.selectSearchPrice", searchs);
+		return (ArrayList<Game>)list;
 	}
+
 
 
 	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
 		List<Game> list = session.selectList("gameMapper.selectgameAllSearch", searchs);
 		return (ArrayList<Game>)list;
 	}
+
+	
 
 	/*
 	 * public ArrayList<Game> selectgamepSearch(GameSearchs searchs) { List<Game>

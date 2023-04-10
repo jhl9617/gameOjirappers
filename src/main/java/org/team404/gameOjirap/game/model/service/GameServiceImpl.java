@@ -76,11 +76,13 @@ public class GameServiceImpl implements GameService{
 	public ArrayList<Game> selectgamegSearch(GameSearchs searchs) {
 		return gameDao.selectgamegSearch(searchs);
 	}
-
+	
+	
 	@Override
-	public ArrayList<Game> selectgamepSearch(String Keyword) {
-		return gameDao.selectgamepSearch(Keyword);
+	public ArrayList<Game> selectgamepSearch(GameSearchs searchs) {
+		return gameDao.selectgamepSearch(searchs);
 	}
+
 
 
 
@@ -88,6 +90,8 @@ public class GameServiceImpl implements GameService{
 	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
 		return gameDao.selectgameAllSearch(searchs);
 	}
+
+	
 
 	/*
 	 * @Override public ArrayList<Game> selectgamepSearch(GameSearchs searchs) {

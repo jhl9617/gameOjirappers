@@ -37,13 +37,14 @@ public interface GameService {
 	 * ArrayList<Game> selectSearchGenre(Searchs searchs);
 	 */
 
-	ArrayList<Game> selectgamegSearch(GameSearchs searchs);
-
-	ArrayList<Game> selectgamepSearch(String Keyword);//초기값이 같은 값으로 검색
-
+	ArrayList<Game> selectgamegSearch(GameSearchs searchs); //게임 장르별로 검색
+	
+	ArrayList<Game> selectgamepSearch(GameSearchs searchs); //게임 가격별로 검색
 //	ArrayList<Game> selectgameAllSearch(GameSearchs searchs, Pagingnn paging);
 
 	ArrayList<Game> selectgameAllSearch(GameSearchs searchs);
+
+	
 	
 //	ArrayList<Game> selectgamepSearch(GameSearchs searchs);
 	

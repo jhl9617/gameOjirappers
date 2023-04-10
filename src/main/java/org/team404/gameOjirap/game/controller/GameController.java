@@ -272,39 +272,7 @@ public class GameController {
 		// servlet-context.xml 에 json string 내보내는 JsonView 라는 뷰리졸버 추가 등록해야 함
 
 	}
-//		// 게임 장르 할인  검색 처리용
-//		@RequestMapping(value = "gpsearch.do", method = RequestMethod.POST)
-//		public String gameSearchMethod(HttpServletRequest request, Model model) {
-//			// 전송온 값 꺼내기
-//			String action = request.getParameter("action");
-//			String keyword = null;
-//			
-//			keyword = request.getParameter("keyword");
-//			logger.info(keyword);
-//
-//			// 서비스 메소드가 리턴 하는 값을 받을 리스트 준비
-//			ArrayList<Game> list = null;
-//			Searchs searchs = new Searchs();
-//			//return job.toJSONString();
-//			switch (action) {
-//			case "price":
-//				list = gameService.selectSearchPrice(Integer.parseInt(keyword) );
-//				break;
-//			case "gender":
-//				searchs.setKeyword(keyword);
-//				list = gameService.selectSearchGenre(searchs);
-//				break;
-//
-//			}// switch
-//
-//			if (list != null && list.size() > 0) {
-//				model.addAttribute("list", list);
-//				return "game/gameDetailView";
-//			} else {
-//				model.addAttribute("message", action + "검색에 대한 결과가 존재하지 않습니다.");
-//				return "common/error";
-//			}
-//		}
+
 
 	// 게임 장르 할인 검색 처리용
 	@RequestMapping(value = "ggsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
@@ -320,61 +288,45 @@ public class GameController {
 	}
 
 	// 게임 초기 가격으로 검색
+//	@RequestMapping(value = "gpsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
+//	@ResponseBody
+//	public void gamepSearchMethod(@RequestParam("keyword") String Keyword) throws Exception {
+//		ArrayList<Game> list = gameService.selectgamepSearch(Keyword);
+//		logger.info("gpsearch.do : " + list.size());
+//
+//		// 전송용 json 객체 준비
+//		JSONObject sendJson = new JSONObject();
+//		// 리스트 저장할 json 배열 객체 준비
+//		JSONArray jarr = new JSONArray();
+//
+//		// list 를 jarr 에 옮기기 (복사)
+//		for (Game game : list) {
+//			JSONObject job = new JSONObject();
+//			job.put("appid", game.getAppid());
+//			job.put("name", game.getName());
+//			job.put("initialprice", game.getInitialprice());
+//			job.put("finalprice", game.getFinalprice());
+//			job.put("discountrate", game.getDiscountrate());
+//
+//			jarr.add(job);
+//		}
+//
+//		sendJson.put("list", jarr);
+//
+//	}
 	@RequestMapping(value = "gpsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
-	public void gamepSearchMethod(@RequestParam("keyword") String Keyword) throws Exception {
-		ArrayList<Game> list = gameService.selectgamepSearch(Keyword);
-		logger.info("gpsearch.do : " + list.size());
+	public ArrayList<Game> gamepSearchMethod(HttpServletRequest request, @RequestParam("keyword") String keyword,
+			@RequestParam("type") String type, Model model) throws Exception {
 
-		// 전송용 json 객체 준비
-		JSONObject sendJson = new JSONObject();
-		// 리스트 저장할 json 배열 객체 준비
-		JSONArray jarr = new JSONArray();
+		GameSearchs searchs = new GameSearchs();
+		searchs.setType(type);
+		searchs.setKeyword(keyword);
 
-		// list 를 jarr 에 옮기기 (복사)
-		for (Game game : list) {
-			JSONObject job = new JSONObject();
-			job.put("appid", game.getAppid());
-			job.put("name", game.getName());
-			job.put("initialprice", game.getInitialprice());
-			job.put("finalprice", game.getFinalprice());
-			job.put("discountrate", game.getDiscountrate());
-
-			jarr.add(job);
-		}
-
-		sendJson.put("list", jarr);
+		return gameService.selectgamepSearch(searchs);
 
 	}
 
-//	//게임 전체 검색용 페이지
-//	@RequestMapping(value = "gameAllsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
-//	@ResponseBody
-//	public ArrayList<Game> gameAllsearchMethod(HttpServletRequest request, @RequestParam("keyword") String keyword,
-//			@RequestParam("type") String type, 
-//			@RequestParam(name = "page", required = false) String page
-//			,Model model) throws Exception {
-//
-//		GameSearchs searchs = new GameSearchs();
-//		searchs.setType(type);
-//		searchs.setKeyword(keyword);
-//		
-//		 int currentPage = 1;
-//	      if (page != null) {
-//	         currentPage = Integer.parseInt(page);
-//	      }
-//	      int limit = 20;
-//	      int listCount = 0;
-//	      String url = "msearch2.do";
-//	      Pagingnn paging = new Pagingnn(listCount, currentPage, limit, url);
-//	      paging.setListCount(listCount);
-//	      paging.calculator();
-//
-//
-//
-//		return gameService.selectgameAllSearch(searchs ,paging);
-//
-//	}
 	
 	//게임 전체 검색용 페이지
 		@RequestMapping(value = "gameAllsearch.do", method = { RequestMethod.POST, RequestMethod.GET })

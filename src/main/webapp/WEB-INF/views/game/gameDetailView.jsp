@@ -57,36 +57,6 @@ function deleteinfo() {
     return false;
 }
 
-function sameGenre() {
-    const sameGenre = document.getElementById('sameGenre');
-    const samePrice = document.getElementById('samePrice');
-
-    if (sameGenre.style.display === 'none') {
-    	sameGenre.style.display = 'block';
-    	samePrice.style.display = 'none';
-    } else {
-    	sameGenre.style.display = 'none';
-    }
-    return false;
-}
-
-function samePrice() {
-	const sameGenre = document.getElementById('sameGenre');
-    const samePrice = document.getElementById('samePrice');
-
-    if (samePrice.style.display === 'none') {
-    	samePrice.style.display = 'block';
-    	sameGenre.style.display = 'none';
-    } else {
-    	samePrice.style.display = 'none';
-    }
-    return false;
-}
-// 게시판이동
-function movegameboard(){
-	location.href = "movegameboard.do?appid=${ requestScope.game.appid }&page=1";
-}
-
 </script>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
@@ -129,12 +99,12 @@ function movegameboard(){
 						<h3 align="center">
 						
 						<script type="text/javascript">
-						function gen2(){
-						var string = '${ requestScope.game.genre }';
-						genre2 = string.replace(/\//g, "#").slice(0,-1);
-						document.write("#"+genre2);
+						function genrenReplace(){
+						var genreRe = '${ requestScope.game.genre }';
+						genre = genreRe.replace(/\//g, "#").slice(0,-1);
+						document.write("#"+genre);
 						}
-						gen2();
+						genrenReplace();
 						</script>					
 						</h3>
 
@@ -193,15 +163,15 @@ function movegameboard(){
 					<header class="major">
 						<h2> ${ requestScope.game.name }의 대표이미지 </h2>
 					</header>
-					<span style="">
-					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }"></a>
+					<span style="all: none;">
+					<a href="${ requestScope.game.headerimg }"><img alt="${ requestScope.game.name }의게임대표이미지" src="${ requestScope.game.headerimg }" style="max-width: 100%; height: auto;"></a>
 					</span>					
 					
 
 				</section>
 				
-				<section>
-					<div class="content">
+				<section style="all: none;">
+					<div class="content" >
 					<header class="major">
 						<h2> 동영상 </h2>
 					</header>
@@ -219,7 +189,7 @@ function movegameboard(){
 					</span>
 				</section>			
 				
-				<section>
+				<section style="all: none;">
 				
 					<div>
 						<header class="major">
@@ -270,19 +240,46 @@ function movegameboard(){
 				
 				
 				<section>
-				<header class="major">
-					<h2> 장르별로 검색하세요! </h2>
-				</header>				
-				<div>
-					<form name="search-form1" autocomplete="off">
+				<span class="button" onclick="genreSearch();">장르로 검색하세요</span>
+				<span class="button" onclick="priceSearch();">가격으로 검색하기</span>
+				<div id="genreSearch" style="display: none;">			
+				<form name="search-form1" autocomplete="off">
 						<input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
-						<input type="button" onclick="gamegSearch()" id="search" value="검색">
-					</form>
+						<input type="button" onclick="gamegSearch();" id="search" value="검색">
+				</form>
+					<table id="genre" >
+					</table>
 				</div>
-				<table id="g" >
-				</table>
+				
+				<div id="priceSearch" style="display: none;">
+				<form name="search-form2" autocomplete="off">
+						<select name="type">
+							<option selected value="initialprice">출시가격</option>
+							<option value="finalprice">할인된가격</option>
+							<option value="discountrate">할인율</option>					
+						</select>
+						<input type="text" name="keyword" placeholder="검색할 가격 또는 할인율을 입력하세요" />
+						<input type="button" onclick="gamepSearch();" id="search" value="검색">
+					</form>
+					<table id="price" >
+					</table>
+				</div>
+				
+				
 				</section>
 				<script type="text/javascript">
+				function genreSearch(){
+					$("#genreSearch").show();
+					$("#priceSearch").hide();
+				}
+				function priceSearch(){
+					$("#priceSearch").show();
+					$("#genreSearch").hide();
+				}
+				</script>
+				<script type="text/javascript">
+							
+				
 				function gamegSearch(){
 					$.ajax({
 						type: 'GET',
@@ -290,22 +287,48 @@ function movegameboard(){
 						data : $("form[name=search-form1]").serialize(),
 						success : function(result){
 							//테이블 초기화
-							$('#g').empty();
-							var ge = '<tr><th>게임이름</th><th>게임장르</th><th>긍정 평가</th></tr>';
+							$('#genre').empty();
+							var genre = '<tr><th>게임이름</th><th>게임장르</th><th>좋아요</th></tr>';
 							
 							if(result.length>=1){								
 								result.forEach(function(item){
-									ge +="<tr><td><a href='moveGameDetail.do?appid="
-										+item.appid
-										+ "'>"+item.name+"</td>";
-									ge += "<td>"+item.genre+"</td>";
-									ge += "<td>"+item.positive+"</td>";
-									ge +="</tr>"			
+									genre +="<tr><td><a href='moveGameDetail.do?appid="
+										+item.appid+ "'>"+item.name+"</td>";
+									genre += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
+									+"</td>";
+									genre += "<td>"+item.positive+"</td>";
+									genre +="</tr>"			
 				        		});
-				        		$('#g').append(ge);
+				        		$('#genre').append(genre);
 							}
 						}
 					})
+				}
+				
+				function gamepSearch(){
+					$.ajax({
+						type: 'GET',
+						url : "gpsearch.do",
+						data : $("form[name=search-form2]").serialize(),
+						success : function(result){
+							//테이블 초기화
+							$('#price').empty();
+							var price = '<tr><td color="red">게임이름</td><td>게임장르</td><td>출시가격</td><td>할인된가격</td><td>할인율</td></tr>';
+							if(result.length>=1){								
+								result.forEach(function(item){
+									price +="<tr><td><a href='moveGameDetail.do?appid="
+										+item.appid+ "'>"+item.name+"</td>";
+									price += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
+									+"</td>";
+									price += "<td>"+item.initialprice+"</td>";									
+									price += "<td>"+item.finalprice+"</td>";
+									price += "<td>"+item.discountrate+"</td>";
+									price +="</tr>"			
+				        		});
+				        		$('#price').append(price);
+							}
+						}
+					});
 				}
 				</script>
 				
