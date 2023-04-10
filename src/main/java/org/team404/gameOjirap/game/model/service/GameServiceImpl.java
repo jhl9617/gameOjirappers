@@ -5,9 +5,9 @@ import java.util.ArrayList;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.common.Pagingnn;
-import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.vo.Game;
+import org.team404.gameOjirap.game.model.vo.GameSearchs;
 
 @Service("gameService")
 public class GameServiceImpl implements GameService{
@@ -73,14 +73,26 @@ public class GameServiceImpl implements GameService{
 	 */
 
 	@Override
-	public ArrayList<Game> selectgamegSearch(Searchs searchs) {
+	public ArrayList<Game> selectgamegSearch(GameSearchs searchs) {
 		return gameDao.selectgamegSearch(searchs);
 	}
 
 	@Override
-	public ArrayList<Game> selectgamepSearch(int finalprice) {
-		return gameDao.selectgamepSearch(finalprice);
+	public ArrayList<Game> selectgamepSearch(String Keyword) {
+		return gameDao.selectgamepSearch(Keyword);
 	}
+
+
+
+	@Override
+	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
+		return gameDao.selectgameAllSearch(searchs);
+	}
+
+	/*
+	 * @Override public ArrayList<Game> selectgamepSearch(GameSearchs searchs) {
+	 * return gameDao.selectgamepSearch(searchs); }
+	 */
 
 
 

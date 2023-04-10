@@ -1,5 +1,11 @@
 package org.team404.gameOjirap.user.controller;
 
+import java.io.UnsupportedEncodingException;
+import java.net.URLEncoder;
+import java.util.ArrayList;
+
+import org.json.simple.JSONArray;
+import org.json.simple.JSONObject;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -7,7 +13,11 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
+import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.service.UserService;
 import org.team404.gameOjirap.user.model.vo.User;
 
@@ -16,8 +26,10 @@ public class UpdateController {
 
 	//이 컨트롤러 클래스 안의 메소드들이 구동되었는지 확인하는 로그를 출력하기 위한 로그 객체를 생성
 	private static final Logger logger = LoggerFactory.getLogger(UpdateController.class);
-	@Autowired 											//자동 의존성 주입(DI 처리) : 자동 객체생성 됨 => memberService 클래스 Service어노테이션에 명시한 [ memberService ]를 가져와서 선언해준다. 
-	private UserService UserService;	//Service랑 연결시켜줬음
+	@Autowired 											
+	private UserService UserService;
+	@Autowired 										
+	private CGroupService CGroupService;	
 	@Autowired 
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
@@ -54,6 +66,47 @@ public class UpdateController {
 			return "common/error";
 		}
 	}//method close
+	
+	
+	
+	
+	
+	//내가 가입한 밴드 출력 처리용 --------------------------------------------------------------------------------
+	@RequestMapping(value="mybandtop5.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
+	@ResponseBody
+	public String mybandtop5Method() throws UnsupportedEncodingException  {
+			//최근 가입한 밴드  5개 조회해 옴
+			ArrayList<CGroup> list = UserService.mybandtop5();
+			logger.info("mybandtop5.do run ok : " + list.size());  //5 출력 확인
+			
+			//전송용 json 객체 준비
+			JSONObject sendJson = new JSONObject();
+			//리스트 저장할 json 배열 객체 준비
+			JSONArray jarr = new JSONArray();
+			
+			//list 를 jarr 에 옮기기 (복사)
+			for(CGroup cgroup : list) {
+				//notice 의 각 필드값 저장할 json 객체 생성함
+				JSONObject job = new JSONObject();
+				
+				job.put("Communityid", cgroup.getCommunityid());		//int
+				job.put("Communityname", URLEncoder.encode(cgroup.getCommunityname(), "utf-8"));
+				job.put("Communitydate", cgroup.getCommunitydate().toString());
+				
+				jarr.add(job);  //job 를 jarr 에 추가함
+			}//for
+			
+			//전송용 객체에 jarr 을 담음
+			sendJson.put("list", jarr);
+			
+			//json을 json string 타입으로 바꿔서 전송되게 함
+			return sendJson.toJSONString();  //뷰리졸버로 리턴함
+			//servlet-context.xml 에 json string 내보내는 
+			//JsonView 라는 뷰리졸버 추가 등록해야 함
+	}//method close
+	
+
+	
 	
 	
 }//class close

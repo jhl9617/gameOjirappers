@@ -6,6 +6,7 @@ import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.dao.CGroupDao;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CReport;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
@@ -28,12 +29,12 @@ public class CGroupServiceImpl implements CGroupService{
 
     @Override
     public int updateCGroup(CGroup cGroup) {
-        return 0;
+        return cGroupDao.updateCGroup(cGroup);
     }
 
     @Override
-    public int deleteCGroup(CGroup cGroup) {
-        return 0;
+    public int deleteCGroup(int communityId){
+    return cGroupDao.deleteCGroup(communityId);
     }
 
     @Override
@@ -77,5 +78,36 @@ public class CGroupServiceImpl implements CGroupService{
     @Override
     public CommunityReq selectRequest(int reqno) {
         return cGroupDao.selectRequest(reqno);
+    }
+
+    @Override
+    public int deleteRequest(int reqno) {
+        return cGroupDao.deleteRequest(reqno);
+    }
+
+    @Override
+    public ArrayList<CMember> selectMembers(int communityid) {
+        return cGroupDao.selectMembers(communityid);
+    }
+
+    @Override
+    public int deleteMember(CMember cmember) {
+        return cGroupDao.deleteMember(cmember);
+    }
+
+    @Override
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
+        return cGroupDao.searchCGroup(keyword, paging);
+    }
+
+    @Override
+    public int searchCGroupCount(String keyword) {
+        return cGroupDao.searchCGroupCount(keyword);
+
+    }
+
+    @Override
+    public int insertReport(CReport cReport) {
+        return cGroupDao.insertReport(cReport);
     }
 }

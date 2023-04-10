@@ -29,10 +29,76 @@
 		<result column="board_title" 				property="board_title" />				     	<!--내가 쓴 글 제목★가져올예정-->
 	</resultMap>
 	
+	<!-- 게임정보 즐겨찾기 -->
+	<resultMap type="User" id="hotlist">
+		<result property="favo_id" column="favo_id" />
+		<result property="appid" column="appid" />
+		<result property="user_id" column="user_id" />
+		<result property="like_dt" column="like_dt" />
+	</resultMap>
+
+	<!-- 밴드 -->
+	<resultMap type="CGroup" id="resultmybandtop5">
+		<result property="communityid" column="communityid" />
+		<result property="communityname" column="communityname" />
+		<result property="communitydate" column="communitydate" />		
+	</resultMap>
+
+<!-- 즐찾 ////////////////////////////////////////////////////////////////////////////////////////////////  -->
+	<!-- 즐찾등록  -->
+	<select id="insertFavorite" resultMap="hotlist">
+	<![CDATA[
+	insert 
+	into tb_hotlist (favo_id, appid, user_id, like_dt)
+	values (favo_id_seq.NEXTVAL, #{ appid }, #{ user_id }, sysdate)
+	]]>
+	</select>
+
+
+
+	<!-- 즐찾삭제  -->
+	<delete id="deleteFavorite" parameterType="string">
+	<![CDATA[
+	delete
+	from tb_hotlist
+	where appid = #{ appid }
+		and user_id = #{ user_id }
+	]]>
+	</delete>
+
+
+
+	<!-- 즐찾 갯수조회 => 게임과 아이디매칭  -->
+	<select id="selectFavoriteCount" resultMap="hotlist">
+	<![CDATA[
+	select count(favo_id)
+	from tb_hotlist
+	where appid = #{ appid }
+		and user_id = #{ user_id }
+	]]>
+	</select>
+
 
 
 <!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
+	<!-- mybandtop5 출력 처리용 -->
+	<select id="mybandtop5" resultMap="resultmybandtop5">
+		<![CDATA[
+		select *
+		from (select rownum rnum, communityid, communityname, communitydate
+		        from (select * 
+                from tb_community
+                order by communitydate desc, communityid desc))
+		where rnum >= 1 and rnum <= 5
+		]]>
+	</select>
+	
+	
+	
+	
+	
+	
 	<!-- 회원탈퇴 처리용 -->
 	<delete id="userDeleteMethod" parameterType="string">		<!-- insert & delete는 기본이 int로 리턴하기때문에  resultType이나 resultMap 작성할 수 없음 -->
 		delete 
@@ -96,7 +162,6 @@
 		values (
 			#{user_id}, default, #{user_pwd}, #{user_nickname}, #{user_name}, #{user_phone}, #{user_email}, #{user_birth}, 
 			default, default, default, default, default, default)
-		<!-- #{}안에 멤버변수명을 작성해주면 알아서 getter가 됨. (vo에 getter가 반드시 있어야 작동함) -->
 	</insert>
 	
 	<update id="updateBan" parameterType="User">
@@ -112,6 +177,15 @@
 			 ban_release_date = #{ban_release_date}
 		where user_id = #{user_id}
 	</update>
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

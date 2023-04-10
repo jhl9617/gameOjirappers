@@ -7,10 +7,12 @@ import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
+import org.team404.gameOjirap.community.cGroup.model.vo.CReport;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 
 @Repository("cGroupDao")
@@ -64,5 +66,42 @@ public class CGroupDao {
 
     public CommunityReq selectRequest(int reqno) {
         return session.selectOne("CGroupMapper.selectRequest", reqno);
+    }
+
+    public int deleteRequest(int reqno) {
+        return session.delete("CGroupMapper.deleteRequest", reqno);
+    }
+
+    public ArrayList<CMember> selectMembers(int communityid) {
+        List<CMember> list = session.selectList("CGroupMapper.selectMembers", communityid);
+        return (ArrayList<CMember>) list;
+    }
+
+    public int deleteMember(CMember cmember) {
+        return session.delete("CGroupMapper.deleteMember", cmember);
+    }
+
+    public int updateCGroup(CGroup cGroup) {
+        return session.update("CGroupMapper.updateCGroup", cGroup);
+    }
+
+    public int deleteCGroup(int communityId) {
+        return session.delete("CGroupMapper.deleteCGroup", communityId);
+    }
+
+
+    public int searchCGroupCount(String keyword) {
+        return session.selectOne("CGroupMapper.searchCGroupCount", keyword);
+    }
+
+    public ArrayList<CGroup> searchCGroup(String keyword, Paging paging) {
+        Map<String, Object> map = Map.of("keyword", keyword, "paging", paging);
+        List<CGroup> list = session.selectList("CGroupMapper.searchCGroup", map);
+        return (ArrayList<CGroup>) list;
+
+    }
+
+    public int insertReport(CReport cReport) {
+        return session.insert("CGroupMapper.insertReport", cReport);
     }
 }

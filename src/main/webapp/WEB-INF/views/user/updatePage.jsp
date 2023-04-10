@@ -10,19 +10,6 @@
 <%-- javascript 함수 사용 구문임 --%>
 <script type="text/javascript">
 
-
-
-//★유효성검사★  전송 보내기전 입력값들이 유효한지 검사
-	function validate(){
-		//[[ 암호확인의 포커스가 사라질 때 ]] 암호와 암호확인이 일치하는지 체크함 (밑에 두개 중 편한걸로 쓰면 됨)
-		var pwd1 = document.getElementById("upwd1").value;		//자바코드임
-		var pwd2 = $("#upwd2").val();											//jQuery코드임
-		
-		if(pwd1 !== pwd2) {		//pwd1과 pwd2 값이 다르다면,
-			alert ("암호와 암호확인이 일치하지 않습니다.\n다시 입력해주세요(ﾉ›_‹)ﾉ");
-			document.getElementById("upwd1").select();			//다시 입력하도록 함
-		}//if
-	}//close
 </script>
 </head>
 

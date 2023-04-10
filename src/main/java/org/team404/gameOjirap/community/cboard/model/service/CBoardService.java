@@ -27,4 +27,10 @@ public interface CBoardService {
     int updateCommuComment(CComment cComment);
 
     int deleteCommuComment(CComment cComment);
+
+    int deleteCommuPost(int cBoardNo);
+
+    int commuBoardSearchCount(String keyword, int communityid);
+
+    ArrayList<CBoard> commuBoardSearch(int communityid, String keyword, Paging paging);
 }

@@ -5,6 +5,7 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cboard.model.vo.CBoard;
 import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 
@@ -48,6 +49,9 @@ public class CBoardDao {
     public int updateCommuPost(CBoard cBoard) {
         return session.update("cBoardMapper.updateCommuPost", cBoard);
     }
+    public int deleteCommuPost(int cBoardNo) {
+        return session.delete("cBoardMapper.deleteCommuPost", cBoardNo);
+    }
 
     public ArrayList<CComment> selectCommuCList(int cBoardNo) {
 
@@ -67,5 +71,23 @@ public class CBoardDao {
 
     public int deleteCommuComment(CComment cComment) {
         return session.delete("cBoardMapper.deleteCommuComment", cComment);
+    }
+
+
+    public int commuBoardSearchCount(String keyword, int communityid) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("keyword", keyword);
+        params.put("communityid", communityid);
+        return session.selectOne("cBoardMapper.commuBoardSearchCount", params);
+    }
+
+    public ArrayList<CBoard> commuBoardSearch(int communityid, String keyword, Paging paging) {
+        Map<String, Object> params = new HashMap<>();
+        params.put("keyword", keyword);
+        params.put("paging", paging);
+        params.put("communityid", communityid);
+
+        List<CBoard> list = session.selectList("cBoardMapper.commuBoardSearch", params);
+        return (ArrayList<CBoard>) list;
     }
 }

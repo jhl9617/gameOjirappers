@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Repository("UserDao")
@@ -49,9 +50,7 @@ public class UserDao {
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);
 	}
-
-
-
+	
 	public int levelMethod(User user_level) {
 		return session.insert("userMapper.levelMethod", user_level);
 	}
@@ -81,6 +80,11 @@ public class UserDao {
 	}
 
 	
+
+	public ArrayList<CGroup> mybandtop5() {
+		List<CGroup> list = session.selectList("userMapper.mybandtop5");
+		return (ArrayList<CGroup>)list;
+	}
 
 
 

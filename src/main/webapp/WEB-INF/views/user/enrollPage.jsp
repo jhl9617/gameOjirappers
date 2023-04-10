@@ -9,28 +9,57 @@
 <title>enrollPage</title>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/enrollCss.css" />
 
-
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 
 
-//★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
-	function validate(){
-		//암호와 암호확인이 일치하는지 체크함 (밑에 두개 중 편한걸로 쓰면 됨)
-		var pwd1 = document.getElementById("user_pwd").value;		//자바코드임
-		var pwd2 = $("#user_pwd2").val();											//jQuery코드임
+
+	$(document).ready(function() {		//validate() 함수가 false를 리턴할 때 submit 작동 방지
+	  $("#next_form").on("submit", function(event) {
+	    if (!validate()) {
+	      event.preventDefault();
+	    }	//if
+	  });	//on submit
+	});	//document ready
+	
+	//★유효성검사★  전송 보내기전 (submit 버튼 클릭시) 입력값들이 유효한지 검사
+	function validate() {
+		  var pwd1 = $("#user_pwd1").val();
+		  var pwd2 = $("#user_pwd2").val();
+		  var id = $("#user_id").val();
 		
-		if(pwd1 !== pwd2) {		//pwd1과 pwd2 값이 다르다면,
-			alert ("암호와 암호확인이 일치하지 않습니다.\n다시 입력해주세요(ﾉ›_‹)ﾉ");
-			document.getElementById("upwd1").select();			//다시 입력하도록 함
-			return false;				//false로 끝내서, 입력값을 DB로 전송 X
-		}//if
-		return true;			//pwd1과 pwd2 값이 맞다면 DB로 전송함
-	}//close
+		//비번 입력 여부 확인
+		  if (pwd1 == '' || pwd2 == '') { 
+		    alert("비밀번호가 입력되지않았습니다. \n입력해주세용(ﾉ›_‹)ﾉ");
+		    $("#user_pwd1").val(""); 
+		    $("#user_pwd2").val("");
+		    $("#user_pwd1").focus();
+		    return false;
+		  }
+		
+		// 패스워드와 ID가 동일한지 확인
+		  if (pwd1 == id) { 
+		    alert("Password는 ID와 동일하면 안돼용(ﾉ›_‹)ﾉ");
+		    $("#user_pwd1").val(""); 
+		    $("#user_pwd2").val("");
+		    $("#user_pwd1").focus();
+		    return false;
+		  }
+		
+		  if (pwd1 !== pwd2) { 
+		    alert("비밀번호와 비밀번호확인이 일치하지 않습니다..\n다시 입력해주세용(ﾉ›_‹)ﾉ");
+		    $("#user_pwd1").val(""); 
+		    $("#user_pwd2").val("");
+		    $("#user_pwd1").focus();
+		    return false;
+		  }
+		
+		  alert("회원가입 완료 (✿˵•́ᴗ•̀˵)");
+		  return true;
+	} //validate close
 	
 	
-	
-	
+
 	//아이디 중복을 확인하기위한 ajax 요청 처리용 함수
 	function CheckId() {	//클릭이벤트가 다른 클릭들에 영향가지않도록 클릭설정 해제하는 메소드임 (따라서 return값이 false로 해줘야함)
 		$.ajax({
@@ -40,8 +69,14 @@
 
 			success: function (data){		
 				console.log("success : " + data);		
-				if(data == "ok"){
-					alert("사용 가능한 아이디입니다! (*●⁰ꈊ⁰●)ﾉ");
+				if($("#user_id").val() == '') {
+					alert("아이디를 입력해주세요 ✧٩(•́⌄•́๑)و ✧");
+					$("#user_id").focus();		
+					return false;
+				}	//if
+				
+				if(data == "ok" ){
+					alert("사용 가능한 아이디입니다💗");
 					$("#user_id").focus();		//다음칸인 비번 입력칸으로 포커스 옮김
 				}else{
 					alert("이미 사용중인 아이디입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
@@ -67,8 +102,14 @@
 
 			success: function (data){		
 				console.log("success : " + data);		
+				if($("#user_nickname").val() == '') {
+						alert("닉네임을 입력해주세요 ✧٩(•́⌄•́๑)و ✧");
+						$("#user_name").focus();		
+						return false;
+				}	//if
+				
 				if(data == "ok" ){
-					alert("사용 가능한 닉네임입니다! (*●⁰ꈊ⁰●)ﾉ");
+					alert("사용 가능한 닉네임입니다💗");
 					$("#user_name").focus();		
 				}else{
 					alert("이미 사용중인 닉네임입니다 •᷄⌓•᷅ \n다시 입력해주세요!");
@@ -82,13 +123,14 @@
 		return false; 		
 	}// CheckId close
 	
+
 </script>
 </head>
 
 
 <body>
 
-	<form action="enroll.do" method="post" onsubmit="return validate();">
+	<form action="enroll.do" id="next_form" method="post" onsubmit="validate(); " >
 		<div>
 			<div class="container">
 				<h2 align="center">회원가입 <br></h2>
@@ -102,7 +144,7 @@
 				
 				<label for="pwd">* 비밀번호<br> 
 					<input name="user_pwd" 
-								class="pw" id="user_pwd" type="password" required ><br>
+								class="pw" id="user_pwd1" type="password" required ><br>
 				<br><br>
 				</label> 
 				<label for="pwd2">* 비밀번호 확인<br> 

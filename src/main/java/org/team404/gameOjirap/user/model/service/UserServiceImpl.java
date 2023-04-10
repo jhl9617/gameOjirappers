@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.dao.UserDao;
 import org.team404.gameOjirap.user.model.vo.User;
 
@@ -13,7 +14,12 @@ public class UserServiceImpl implements UserService{
 	@Autowired			//자동 DI 처리됨 : 자동 객체 생성되어 연결된다.
 	UserDao userDao;
 
-	
+	@Override	//mybandtop5 출력 처리용
+	public ArrayList<CGroup> mybandtop5() {
+		return userDao.mybandtop5();
+	}
+
+
 	@Override		//1명 정보 조회
 	public User selectUser(String user_id) {		
 		return userDao.selectUser(user_id);
@@ -80,10 +86,7 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
-	
 
-
-	
 }//class close
 
 

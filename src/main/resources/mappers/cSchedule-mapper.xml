@@ -4,19 +4,6 @@
 "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="cScheduleMapper">
 
-<!--	<resultMap type="Board" id="resultBoard">
-		<result column="board_no" property="board_no"/>
-		<result column="board_title" property="board_title"/>
-		<result column="board_content" property="board_content"/>
-		<result column="board_date" property="board_date"/>
-		<result column="board_count" property="board_count"/>
-		<result column="appid" property="appid"/>
-		<result column="board_like" property="board_like"/>
-		<result column="board_orifile" property="board_orifile"/>
-		<result column="board_refile" property="board_refile"/>
-		<result column="user_id" property="user_id"/>
-		<result column="board_notice" property="board_notice"/>
-	</resultMap>-->
 	<resultMap type="ScheduleVote" id="ScheduleVotes">
 		<result column="schId" property="schId" />
 		<result column="user_id" property="user_id" />
@@ -52,4 +39,23 @@
 	insert into tb_community_sch (schId, schName, schDes, communityId, schStart, schEnd)
 	values (sch_seq.nextval,#{schName},#{schDes},#{communityId},#{schStart},#{schEnd})
 	</insert>
+
+	<!-- 일정 참가 -->
+	<insert id="insertOrUpdateVote" parameterType="CVote">
+		merge into tb_community_vote t
+		using (
+			select #{schId} as schId, #{user_id} as user_id, #{votePart} as votePart from dual
+		) s
+		on (t.schId = s.schId and t.user_id = s.user_id)
+		when matched then update set t.votePart = s.votePart
+		when not matched then insert (t.schId, t.user_id, t.votePart, t.voteDate) values (s.schId, s.user_id, s.votePart, sysdate)
+	</insert>
+
+	<!-- 투표 참가 여부 확인 -->
+	<select id="selectVote" parameterType="CVote" resultType="CVote">
+		select *
+		from tb_community_vote
+		where schId = #{schId}
+		and user_id = #{user_id}
+	</select>
 </mapper>

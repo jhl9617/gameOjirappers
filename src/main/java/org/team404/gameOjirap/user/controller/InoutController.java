@@ -75,7 +75,8 @@ public class InoutController {
 	//회원탈퇴 (삭제)요청 처리용  메소드
 	//삭제일때는 따로 정보를 보낼필요가 없음 (자동 로그아웃 처리) => String을 리턴한다.
 	@RequestMapping("userDel.do")
-	public String userDeleteMethod(@RequestParam(value="user_id", required=false) String user_id, 
+	public String userDeleteMethod(/* @RequestParam(value="user_pwd") String user_pwd, */
+													@RequestParam(value="user_id") String user_id, 
 													Model model) {
 		logger.info("삭제할 회원아이디 : " + user_id);
 		

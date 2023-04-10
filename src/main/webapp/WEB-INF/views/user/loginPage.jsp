@@ -7,6 +7,14 @@
 <meta charset="UTF-8">
 <title>loginPage</title>
 <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/loginCss.css" />
+    <script>
+        window.onload = function(){
+            if(${!empty message}){
+                alert("${message}");
+            }
+        };
+
+    </script>
 </head>
 
 

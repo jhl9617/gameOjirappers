@@ -3,6 +3,7 @@ package org.team404.gameOjirap.user.model.service;
 
 import java.util.ArrayList;
 
+import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.vo.User;
  
 
@@ -21,5 +22,9 @@ public interface UserService {
 	int updateLoginok (User user);										//로그인가능 확인용
 	void updateBan(User user);									// 유저 정지용
 	void updateBanRelease(User loginUser);					// 유저 정지 해제용
+
 	
+	int insertFavorite(User user);										//즐찾등록요청처리용
+	int deleteFavorite(String user_id);								//즐찾삭제요청처리용
+	User selectFavoriteCount(String user_id);					//즐찾 갯수조회 => 게임과 아이디매칭
 }

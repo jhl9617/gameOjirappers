@@ -7,8 +7,8 @@ import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Pagingnn;
-import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.game.model.vo.Game;
+import org.team404.gameOjirap.game.model.vo.GameSearchs;
 
 @Repository("gameDao")
 public class GameDao {
@@ -72,14 +72,25 @@ public class GameDao {
 	 * (ArrayList<Game>)list; }
 	 */
 
-	public ArrayList<Game> selectgamegSearch(Searchs searchs) {
+	public ArrayList<Game> selectgamegSearch(GameSearchs searchs) {
 		List<Game> list = session.selectList("gameMapper.selectSearchGenre", searchs);
 		return (ArrayList<Game>)list;
 	}
 
-	public ArrayList<Game> selectgamepSearch(int finalprice) {
-		List<Game> list = session.selectList("gameMapper.selectSearchPrice", finalprice);
+	public ArrayList<Game> selectgamepSearch(String Keyword) {
+		return session.selectOne("gameMapper.selectSearchPrice",Keyword);
+	}
+
+
+	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
+		List<Game> list = session.selectList("gameMapper.selectgameAllSearch", searchs);
 		return (ArrayList<Game>)list;
 	}
+
+	/*
+	 * public ArrayList<Game> selectgamepSearch(GameSearchs searchs) { List<Game>
+	 * list = session.selectList("gameMapper.selectSearchPrice", searchs); return
+	 * (ArrayList<Game>)list; }
+	 */
 
 }

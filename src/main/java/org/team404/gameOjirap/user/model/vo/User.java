@@ -21,11 +21,16 @@ public class User implements java.io.Serializable{
 	private String user_original_profile;	//원본프로필이미지
 	private String confirm_answer;  			 //본인확인용 질문
 	
-	private java.sql.Date board_click_day;//즐찾한 날짜 ★가져올예정
-	private String appid; 							//즐찾한 게임정보번호★가져올예정
+	//즐겨찾기
+	private String favo_id; 						//즐찾번호
+	private String appid; 							//즐찾한 게임게시물번호★가져올예정
+	private java.sql.Date like_dt ;				//즐찾한 날짜 ★가져올예정
+	
+	//마이페이지
 	private String bname;   						//밴드 이름★가져올예정
 	private String com_contents; 				//내가 쓴 코멘트 제목★가져올예정
 	private String board_title;  					//내가 쓴 글 제목★가져올예정
+	
 	
 	public User() {
 		super();
@@ -33,9 +38,11 @@ public class User implements java.io.Serializable{
 
 	public User(String user_id, String admin_id, String user_pwd, String user_nickname, String user_name,
 			String user_phone, String user_email, String user_birth, String user_level, String user_status,
+
 			Date ban_release_date, int user_point, Date user_access, String user_original_profile,
 			String confirm_answer, Date board_click_day, String appid, String bname, String com_contents,
 			String board_title) {
+
 		super();
 		this.user_id = user_id;
 		this.admin_id = admin_id;
@@ -52,8 +59,9 @@ public class User implements java.io.Serializable{
 		this.user_access = user_access;
 		this.user_original_profile = user_original_profile;
 		this.confirm_answer = confirm_answer;
-		this.board_click_day = board_click_day;
+		this.favo_id = favo_id;
 		this.appid = appid;
+		this.like_dt = like_dt;
 		this.bname = bname;
 		this.com_contents = com_contents;
 		this.board_title = board_title;
@@ -179,12 +187,12 @@ public class User implements java.io.Serializable{
 		this.confirm_answer = confirm_answer;
 	}
 
-	public java.sql.Date getBoard_click_day() {
-		return board_click_day;
+	public String getFavo_id() {
+		return favo_id;
 	}
 
-	public void setBoard_click_day(java.sql.Date board_click_day) {
-		this.board_click_day = board_click_day;
+	public void setFavo_id(String favo_id) {
+		this.favo_id = favo_id;
 	}
 
 	public String getAppid() {
@@ -193,6 +201,14 @@ public class User implements java.io.Serializable{
 
 	public void setAppid(String appid) {
 		this.appid = appid;
+	}
+
+	public java.sql.Date getLike_dt() {
+		return like_dt;
+	}
+
+	public void setLike_dt(java.sql.Date like_dt) {
+		this.like_dt = like_dt;
 	}
 
 	public String getBname() {
@@ -218,13 +234,6 @@ public class User implements java.io.Serializable{
 	public void setBoard_title(String board_title) {
 		this.board_title = board_title;
 	}
-
-
-
-	
-	
-	
-	
 	
 }//class close
 

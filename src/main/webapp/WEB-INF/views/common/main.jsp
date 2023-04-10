@@ -150,6 +150,57 @@ $(function(){
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 			<!-- Banner -->
+			<div>
+				<header class="major">
+					<h2> 게임검색하기 </h2>
+				</header>	
+				<table id="gameAll" >
+				</table>			
+				<div>
+					<form name="search-form1" autocomplete="off">
+						<select name="type">
+							<option selected value="">검색 내용 선택</option>
+							<option value="name">게임이름</option>
+							<option value="genre">게임장르</option>
+							<option value="initialprice">출시가격</option>
+							<option value="finalprice">할인된가격</option>							
+						</select>
+						<input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
+						<input type="button" onclick="gameAllSearch()" id="search" value="검색">
+					</form>
+				</div>				
+				</div>
+				<script type="text/javascript">
+				function gameAllSearch(){
+					$.ajax({
+						type: 'GET',
+						url : "gameAllsearch.do",
+						data : $("form[name=search-form1]").serialize(),
+						success : function(result){
+							//테이블 초기화
+							$('#gameAll').empty();
+							var ge = '<tr><th>게임이름</th><th>게임내용</th><th>게임장르</th><th>좋아요</th><th>출시가격</th><th>할인된가격</th><th>어제 접속자수</th><th>출시일</th><th>평점</th></tr>';
+							if(result.length>=1){								
+								result.forEach(function(item){
+									ge +="<tr><td><a href='moveGameDetail.do?appid="
+										+item.appid
+										+ "'>"+item.name+"</td>";
+									ge += "<td>"+item.short_description+"</td>";
+									ge += "<td>"+item.genre+"</td>";
+									ge += "<td>"+item.positive+"</td>";
+									ge += "<td>"+item.initialprice+"</td>";									
+									ge += "<td>"+item.finalprice+"</td>";
+									ge += "<td>"+item.ccu+"</td>";
+									ge += "<td>"+item.releasedate+"</td>";
+									ge += "<td>"+item.meta+"</td>";
+									ge +="</tr>"			
+				        		});
+				        		$('#gameAll').append(ge);
+							}
+						}
+					})
+				}
+				</script>
 			<section id="banner">
 				<div class="content">
 					<header>
@@ -166,6 +217,9 @@ $(function(){
 				<img src="<c:url value="/resources/images/main1.webp"/>" alt="" />
 				</span>
 			</section>
+				
+				
+			
 			
 
 			<!-- Section -->
