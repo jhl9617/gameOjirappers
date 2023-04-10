@@ -64,6 +64,26 @@
 		WHERE BOARD_NO = #{board_no}
 	</update>
 
+	<!--댓글 insert-->
+	<insert id="insertTarReply" parameterType="Comment">
+		INSERT INTO TB_COMMENT (COM_NO, COM_CONTENTS, COM_DATE, COM_LEV, COM_NO2, BOARD_NO, USER_ID)
+		VALUES (seq_comment.nextval, #{com_contents}, SYSDATE, 0, 0, #{board_no}, #{user_id})
+	</insert>
+
+	<!--댓글 리스트 select-->
+	<select id="selectTarReply" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM TB_COMMENT
+		WHERE BOARD_NO = #{board_no}
+		ORDER BY COM_NO
+	</select>
+
+	<!--댓글 수정-->
+	<update id="updateTarReply" parameterType="Comment">
+		UPDATE TB_COMMENT
+		SET COM_CONTENTS = #{com_contents}
+		WHERE COM_NO = #{com_no}
+	</update>
 </mapper>
 
 
