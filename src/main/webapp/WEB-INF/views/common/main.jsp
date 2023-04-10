@@ -22,7 +22,9 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/util.js">"></script>
 	<script type="text/javascript" src="<c:url value="/resources/js/main.js">"></script>
 --%>
+
 <body class="is-preload">
+
 <c:if test="${!empty message}">
    <script>
       alert("${message}");

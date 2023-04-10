@@ -10,8 +10,8 @@
 <style type="text/css">
 footer {
 	text-align: center;
-	background-color: Lavenderblush;
-	color: Indigo;
+	background-color: #1b1b1b;
+	color: azure;
 	font-size: 10px;
 	margin: 5px;
 	padding: 5px;

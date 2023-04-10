@@ -196,18 +196,17 @@ function deleteinfo() {
 						<h2> 게임 플랫폼 </h2>
 					</header>
 					<div>
-						<h3 align="center">${ requestScope.game.platform }</h3>
+						<h3 >${ requestScope.game.platform }</h3>
 					</div>
+						<br>
 					</div>
 					<div>			
 					<header class="major">
 						<h2> 게임 지원언어 </h2>
 					</header>
-					<div style="float:left; border:1px solid black;">		
-					<h3>${ requestScope.game.supported_languages }</h3>
-					</div>
+						<h3>${ requestScope.game.supported_languages }</h3>
 					</div>	
-				
+					<br>
 				
 					<div>				
 						<header class="major">
@@ -222,9 +221,9 @@ function deleteinfo() {
 					<header class="major">
 							<h2> 게임 권장사양 </h2>
 						</header>
-						<div style="float:left;">		
+						<br><br><br>
 						<p>${ requestScope.game.pcrecommended }</p>
-						</div>
+
 					</div>
 				</section>
 				
@@ -278,7 +277,7 @@ function deleteinfo() {
 				}
 				</script>
 				<script type="text/javascript">
-							
+
 				
 				function gamegSearch(){
 					$.ajax({
