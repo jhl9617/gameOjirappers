@@ -3,15 +3,15 @@ package org.team404.gameOjirap.common;
 import org.springframework.stereotype.Component;
 
 @Component
-public class BoardLikeCount {
+public class BoardLike {
 
     private String user_id;
     private int board_no;
 
-    public BoardLikeCount() {
+    public BoardLike() {
     }
 
-    public BoardLikeCount(String user_id, int board_no) {
+    public BoardLike(String user_id, int board_no) {
         this.user_id = user_id;
         this.board_no = board_no;
     }

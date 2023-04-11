@@ -78,7 +78,22 @@
         }
 
     </style>
-
+<script>
+    function btdelcheck() {
+        if (confirm("정말 삭제하시겠습니까?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    function btupcheck(){
+        if (confirm("정말 수정하시겠습니까?")) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+</script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
@@ -88,6 +103,13 @@
 <c:url value="/tarlike.do" var="likeUrl">
     <c:param name="board_no" value="${boardTar.board_no}"/>
     <c:param name="user_id" value="${loginUser.user_id}"/>
+    <c:param name="appid" value="${appid}"/>
+</c:url>
+<!-- 좋아요 수 감소용 url -->
+<c:url value="/tarlike2.do" var="likeUrl2">
+    <c:param name="board_no" value="${boardTar.board_no}"/>
+    <c:param name="user_id" value="${loginUser.user_id}"/>
+    <c:param name="appid" value="${appid}"/>
 </c:url>
 <center>
 
@@ -95,6 +117,7 @@
     <h4>조회수 : [${boardTar.board_count}]</h4>
     <h4>좋아요 수 : [${boardTar.board_like}]</h4> &nbsp;
     <c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
+    <c:if test="${checked ne 'n'}"><a href="${likeUrl2}">좋아요취소</a></c:if>
     <br>
     <table>
 
@@ -117,13 +140,48 @@
         </tr>
         <tr>
             <th>첨부파일</th>
-            <td></td>
+            <td>
+                <c:if test="${!empty boardTar.board_orifile}">
+                    <c:url var="bfd" value="/btfdown.do">
+                        <c:param name="ofile" value="${boardTar.board_orifile}"/>
+                        <c:param name="rfile" value="${boardTar.board_refile}"/>
+                    </c:url>
+                    <a href="${bfd}">${boardTar.board_orifile}</a>
+                </c:if>
+                <!-- 첨부파일이 없다면, 공백 처리 -->
+                <c:if test="${empty boardTar.board_orifile}">
+                    &nbsp;
+                </c:if>
+            </td>
         </tr>
         <tr>
             <th>내용</th>
             <td>${boardTar.board_content}</td>
         </tr>
-
+        <tr>
+            <td colspan="2">
+                <c:if test="${loginUser.user_id eq boardTar.user_id}">
+                    <c:url var="btd" value="/btdelete.do">
+                        <c:param name="board_no" value="${boardTar.board_no}"/>
+                        <c:param name="page" value="${page}"/>
+                        <c:param name="appid" value="${appid}"/>
+                    </c:url>
+                    <a href="${btd}" onclick="return btdelcheck();">삭제</a>
+                    <c:url var="btu" value="/btupdate.do">
+                        <c:param name="board_no" value="${boardTar.board_no}"/>
+                        <c:param name="page" value="${page}"/>
+                        <c:param name="appid" value="${appid}"/>
+                        <c:param name="name" value="${name}"/>
+                    </c:url>
+                    <a href="${btu}" onclick="return btupcheck();">수정</a>
+                </c:if>
+                <c:url var="btl" value="/movegameboard.do">
+                    <c:param name="page" value="${page}"/>
+                    <c:param name="appid" value="${appid}"/>
+                </c:url>
+                <a href="${btl}">목록으로</a>
+            </td>
+        </tr>
     </table>
 
 </center>
