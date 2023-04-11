@@ -142,20 +142,24 @@ cellpadding="50">
                   
                </c:forEach>
             </div>
-				
-			
-				<tr><th>댓글 작성</th>
-                  <td>
-                     <form action="commentwriteform.do" method="post">
-                        <%-- <input type="text" value="${comment.board_no}" name="board_no">
-                        <input type="text" value="${comment.user_id}" name="user_id"> --%>
-                        <textarea rows="5" cols="50" name="incoment"></textarea></td></tr>
-                        <tr><th colspan="2">
-                        &nbsp;
-                        <input type="submit" value="등록하기"> &nbsp;
-                        <input type="reset" value="작성취소"><br>
-                     </form>
-                  </tr>            
+
+
+<br>
+<%-- 댓글 리스트로 불러와서 보여주기--%>
+<c:import url="/WEB-INF/views/boardTar/gameReplyList.jsp"/>
+<div id="comments-end"></div>
+<%--댓글 입력 form--%>
+<form action="<c:url value="/genReplyWrite.do"/>" method="post">
+	<input type="hidden" name="board_no" value="${boardGen.board_no}">
+	<input type="hidden" name="user_id" value="${boardGen.user_id}">
+
+
+	<div class="form-group">
+		<label for="reply_contents">댓글 내용</label>
+		<textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary">댓글 작성</button>
+</form>
 
 		
     
