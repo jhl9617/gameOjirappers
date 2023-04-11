@@ -130,7 +130,7 @@
 
 <body>
 
-	<form action="enroll.do" id="next_form" method="post" onsubmit="validate(); " >
+	<form action="enroll.do" id="next_form" method="post" >
 		<div>
 			<div class="container">
 				<h2 align="center">회원가입 <br></h2>

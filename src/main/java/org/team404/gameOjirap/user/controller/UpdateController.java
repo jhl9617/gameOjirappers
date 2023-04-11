@@ -4,6 +4,9 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.json.simple.JSONArray;
 import org.json.simple.JSONObject;
 import org.slf4j.Logger;
@@ -16,8 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
+import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 import org.team404.gameOjirap.user.model.service.UserService;
 import org.team404.gameOjirap.user.model.vo.User;
 
@@ -37,12 +43,10 @@ public class UpdateController {
 
 
 	//회원정보수정 요청 처리용 메소드
-	@RequestMapping("moveUpdatePage.do")
-	public String updateUser(String user_id,Model model,
+	@RequestMapping(value="UpdateUser.do", method = RequestMethod.POST)
+	public String updateUser(User user,Model model,
 											@RequestParam(value="origin_user_pwd", required=false) String origin_user_pwd) {			//Commend 객체 사용함
-		logger.info("moveUpdatePage.do : " + user_id); 				//데이터 입력값이 잘 넘어갔는지 log로 확인하는 용도
-		User user = UserService.selectUser(user_id);
-		user.getUser_pwd();
+		logger.info("moveUpdatePage.do데이터넘어감 : " + user); 				//데이터 입력값이 잘 넘어갔는지 log로 확인하는 용도
 		
 		//새로운 암호가 전송왔다면, 패스워드 암호화 처리함
 		String user_pwd = user.getUser_pwd().trim();	//쓸모없는 공백이 딸려오는것을 방지하기위해 trim()메소드 사용
@@ -50,7 +54,7 @@ public class UpdateController {
 				//db테이블에 기록된 기존의 암호와 비교했을때 다른 값이라면? (원래 암호랑 새롭게 입력한 암호랑 비교작업이 필요함
 			if (! this.bcryptPasswordEncoder.matches(user_pwd,origin_user_pwd)) {		//새로운비번과 원래비번이 일치하지않는다면?
 				
-				//member에 새로운 패스워드를 암호화해서 기록함
+				//user에 새로운 패스워드를 암호화해서 기록함
 				user.setUser_pwd(this.bcryptPasswordEncoder.encode(user_pwd)); //새로운패스워드를 설정해서 바꾼다 =>인코딩처리 후 바꿔줌
 			}else{
 				//새로운 패스워드값이 없다면, user에 원래 패스워드를 보내준다
@@ -60,9 +64,9 @@ public class UpdateController {
 		if(UserService.updateUser(user) > 0) {		//수정이 성공했다면?		=> Controller의 다른 Method를 직접 호출할 수 있음.
 //			return "redirect:myinfo.do?userid=" + user.getUser_id();		
 			model.addAttribute("user", user);
-			return "user/updatePage";		
+			return "user/userDatailPage";		
 		}else {															//수정이 실패했다면?
-			model.addAttribute("message", user_id + " : 회원 정보 수정 실패! 요청사항을 다시 확인해주세요!");
+			model.addAttribute("message", user.getUser_id() + " : 회원 정보 수정 실패! 입력사항을 다시 확인해주세요!");
 			return "common/error";
 		}
 	}//method close
@@ -74,10 +78,12 @@ public class UpdateController {
 	//내가 가입한 밴드 출력 처리용 --------------------------------------------------------------------------------
 	@RequestMapping(value="mybandtop5.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
 	@ResponseBody
-	public String mybandtop5Method() throws UnsupportedEncodingException  {
+	public String mybandtop5Method(HttpServletRequest request, HttpSession session, Model model, 
+														@RequestParam("user_id") String user_id) throws UnsupportedEncodingException  {
+
 			//최근 가입한 밴드  5개 조회해 옴
-			ArrayList<CGroup> list = UserService.mybandtop5();
-			logger.info("mybandtop5.do run ok : " + list.size());  //5 출력 확인
+		    ArrayList<CGroup> list = UserService.mybandtop5(user_id);
+			logger.info("mybandtop5.do run ok : " + list.size());  // 출력 확인
 			
 			//전송용 json 객체 준비
 			JSONObject sendJson = new JSONObject();
@@ -89,9 +95,9 @@ public class UpdateController {
 				//notice 의 각 필드값 저장할 json 객체 생성함
 				JSONObject job = new JSONObject();
 				
+				job.put("Communitydate", cgroup.getCommunitydate().toString());
 				job.put("Communityid", cgroup.getCommunityid());		//int
 				job.put("Communityname", URLEncoder.encode(cgroup.getCommunityname(), "utf-8"));
-				job.put("Communitydate", cgroup.getCommunitydate().toString());
 				
 				jarr.add(job);  //job 를 jarr 에 추가함
 			}//for
@@ -105,7 +111,77 @@ public class UpdateController {
 			//JsonView 라는 뷰리졸버 추가 등록해야 함
 	}//method close
 	
+	
+	
+	
+	//자유게시판 내 글 TOP5 출력 처리용 --------------------------------------------------------------------------------
+	@RequestMapping(value="boardgentop5.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
+	@ResponseBody
+	public String boardgentop5Method(HttpServletRequest request, HttpSession session, Model model, 
+														@RequestParam("user_id") String user_id) throws UnsupportedEncodingException  {
+		//최근 작성 글  5개 조회해 옴
+		ArrayList<BoardGen> list = UserService.boardgentop5(user_id);
+		logger.info("boardgentop5.do run ok : " + list.size());  // 출력 확인
+		
+		//전송용 json 객체 준비
+		JSONObject sendJson = new JSONObject();
+		//리스트 저장할 json 배열 객체 준비
+		JSONArray jarr = new JSONArray();
+		
+		//list 를 jarr 에 옮기기 (복사)
+		for(BoardGen boardgen : list) {
+			//notice 의 각 필드값 저장할 json 객체 생성함
+			JSONObject job = new JSONObject();
+			
+			job.put("board_date", boardgen.getBoard_date().toString());
+			job.put("board_no", boardgen.getBoard_no());	
+			job.put("board_title", URLEncoder.encode(boardgen.getBoard_title(), "utf-8"));
+			job.put("board_count", boardgen.getBoard_count());	
+			job.put("board_like", boardgen.getBoard_like());	
+			
+			jarr.add(job);  //job 를 jarr 에 추가함
+		}//for
+		sendJson.put("list", jarr);
+		return sendJson.toJSONString();  //뷰리졸버로 리턴함
+	}//method close
+	
+	
+	
+	
+	//내가쓴 댓글 TOP5 출력 처리용 --------------------------------------------------------------------------------
+	@RequestMapping(value="comment_borderTop5.do", method= {RequestMethod.GET, RequestMethod.POST} ) 
+	@ResponseBody
+	public String comment_borderTop5Method(HttpServletRequest request, HttpSession session, Model model, 
+			@RequestParam("user_id") String user_id) throws UnsupportedEncodingException  {
+		//최근 작성 글  5개 조회해 옴
+		ArrayList<Comment> list = UserService.comment_borderTop5(user_id);
+		logger.info("comment_borderTop5.do run ok : " + list.size());  // 출력 확인
+		
+		JSONObject sendJson = new JSONObject();
+		JSONArray jarr = new JSONArray();
+		
+		for(Comment comment : list) {
+			JSONObject job = new JSONObject();
+			
+			job.put("com_date", comment.getCom_date().toString());
+			job.put("board_title", URLEncoder.encode(comment.getCom_contents(), "utf-8"));
+			
+			jarr.add(job);  //job 를 jarr 에 추가함
+		}//for
+		sendJson.put("list", jarr);
+		return sendJson.toJSONString();  //뷰리졸버로 리턴함
+	}//method close
+	
+	
+	
 
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
