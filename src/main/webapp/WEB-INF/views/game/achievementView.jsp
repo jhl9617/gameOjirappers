@@ -53,6 +53,7 @@ img {
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp" />
 			<!-- Content -->
+			<br><br><br>
 			<div class="inner">
 				<center>
 					<table style="width: 500px; border:1px solid gray;">

@@ -53,7 +53,7 @@
     </form>
 
 
-    <h3 align="center">총 커뮤니티 수 : ${ listCount } 개</h3>
+    <h3 align="center">총 커뮤니티 수 : ${listCount} 개</h3>
 
     <h2 class="my-4">커뮤니티 찾아보기</h2>
     <table class="table table-bordered">

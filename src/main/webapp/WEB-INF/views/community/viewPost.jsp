@@ -54,20 +54,20 @@
             <table class="table table-bordered">
                 <tbody>
                 <tr>
-                    <td>글제목</td>
+                    <th>글제목</th>
                     <td>${cBoard.cBoardTitle}</td>
                 </tr>
                 <tr>
-                    <td height="200px">글내용</td>
+                    <th height="200px">글내용</th>
                     <td><c:out value="${cBoard.cBoardContent}" escapeXml="false"/>
                     <img src="${pageContext.servletContext.contextPath}/resources/community_upfiles/${cBoard.cBoardRefile}"></td>
                 </tr>
                 <tr>
-                    <td>작성일</td>
+                    <th>작성일</th>
                     <td>${cBoard.cBoardDate}</td>
                 </tr>
                 <tr>
-                    <td>작성자</td>
+                    <th>작성자</th>
                     <td>${cBoard.user_id}</td>
                 </tr>
                 <tr>

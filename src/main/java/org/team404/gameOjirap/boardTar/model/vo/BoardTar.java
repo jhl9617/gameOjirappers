@@ -9,7 +9,7 @@ public class BoardTar implements java.io.Serializable{
 	private int board_no;
 	private String board_title;
 	private String board_content;
-	private Date date;
+	private Date board_date;
 	private int board_count;
 	private String appid;
 	private int board_like;
@@ -17,18 +17,15 @@ public class BoardTar implements java.io.Serializable{
 	private String board_refile;
 	private String user_id;
 	private String board_notice;
-	
+
 	public BoardTar() {
-		super();
 	}
 
-	public BoardTar(int board_no, String board_title, String board_content, Date date, int board_count, String appid,
-					int board_like, String board_orifile, String board_refile, String user_id, String board_notice) {
-		super();
+	public BoardTar(int board_no, String board_title, String board_content, Date board_date, int board_count, String appid, int board_like, String board_orifile, String board_refile, String user_id, String board_notice) {
 		this.board_no = board_no;
 		this.board_title = board_title;
 		this.board_content = board_content;
-		this.date = date;
+		this.board_date = board_date;
 		this.board_count = board_count;
 		this.appid = appid;
 		this.board_like = board_like;
@@ -62,12 +59,12 @@ public class BoardTar implements java.io.Serializable{
 		this.board_content = board_content;
 	}
 
-	public Date getDate() {
-		return date;
+	public Date getBoard_date() {
+		return board_date;
 	}
 
-	public void setDate(Date date) {
-		this.date = date;
+	public void setBoard_date(Date board_date) {
+		this.board_date = board_date;
 	}
 
 	public int getBoard_count() {
@@ -126,17 +123,20 @@ public class BoardTar implements java.io.Serializable{
 		this.board_notice = board_notice;
 	}
 
-	public static long getSerialversionuid() {
-		return serialVersionUID;
-	}
-
 	@Override
 	public String toString() {
-		return "BoardQna [board_no=" + board_no + ", board_title=" + board_title + ", board_content=" + board_content
-				+ ", date=" + date + ", board_count=" + board_count + ", appid=" + appid + ", board_like=" + board_like
-				+ ", board_orifile=" + board_orifile + ", board_refile=" + board_refile + ", user_id=" + user_id
-				+ ", board_notice=" + board_notice + "]";
+		return "BoardTar{" +
+				"board_no=" + board_no +
+				", board_title='" + board_title + '\'' +
+				", board_content='" + board_content + '\'' +
+				", board_date=" + board_date +
+				", board_count=" + board_count +
+				", appid='" + appid + '\'' +
+				", board_like=" + board_like +
+				", board_orifile='" + board_orifile + '\'' +
+				", board_refile='" + board_refile + '\'' +
+				", user_id='" + user_id + '\'' +
+				", board_notice='" + board_notice + '\'' +
+				'}';
 	}
-	
-	
 }

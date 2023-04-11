@@ -103,7 +103,6 @@ public class CGroupServiceImpl implements CGroupService{
     @Override
     public int searchCGroupCount(String keyword) {
         return cGroupDao.searchCGroupCount(keyword);
-
     }
 
     @Override

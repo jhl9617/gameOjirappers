@@ -2,6 +2,8 @@ package org.team404.gameOjirap.common.intercepter;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.servlet.ModelAndView;
 import org.springframework.web.servlet.handler.HandlerInterceptorAdapter;
 import org.team404.gameOjirap.community.cGroup.model.service.CGroupService;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
@@ -10,18 +12,23 @@ import org.team404.gameOjirap.user.model.vo.User;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.net.URLEncoder;
 import java.util.ArrayList;
 
 @SuppressWarnings("deprecation")
 public class MemberCheckInterceptor extends HandlerInterceptorAdapter {
 
     private Logger logger = LoggerFactory.getLogger(getClass());
-    private CGroupService cGroupService;
 
-    public MemberCheckInterceptor(CGroupService cGroupService){
-        this.cGroupService = cGroupService;
-    }
-    @Override
+    @Autowired
+    private CGroupService cGroupService;
+    
+    
+    public MemberCheckInterceptor() {
+	}
+
+
+	@Override
     public boolean preHandle(HttpServletRequest request,
                              HttpServletResponse response,
                              Object handler) throws Exception {
@@ -29,6 +36,7 @@ public class MemberCheckInterceptor extends HandlerInterceptorAdapter {
             //session 안에 저장된 loginMember 라는 이름의
             //저장 객체가 존재하는지 확인하는 방법
             HttpSession session = request.getSession();
+
             User loginUser =
                     (User) session.getAttribute("loginUser");
             int communityid = Integer.parseInt(request.getParameter("communityid"));
@@ -68,8 +76,10 @@ public class MemberCheckInterceptor extends HandlerInterceptorAdapter {
                         origin + request.getContextPath(), "");
 
                 request.setAttribute("loc", location);
-                request.setAttribute("message", "커뮤니티에 가입해야 이용할 수 있는 서비스입니다.");
-                request.getRequestDispatcher("/WEB-INF/views/community/commuMain.jsp").forward(request, response);
+
+                response.setContentType("text/html; charset=utf-8");
+                String message1 = URLEncoder.encode("커뮤니티에 가입해야 이용할 수 있는 서비스입니다.", "UTF-8");
+                response.sendRedirect(request.getContextPath() + "/commuMain.do?page=1&message=" + message1);
 
                 return false;
             }
@@ -78,8 +88,9 @@ public class MemberCheckInterceptor extends HandlerInterceptorAdapter {
             return super.preHandle(request, response, handler);
         } catch (Exception e) {
             e.printStackTrace();
-            request.setAttribute("message", "회원정보가 없는 커뮤니티입니다. 관리자에게 문의하세요.");
-            request.getRequestDispatcher("/WEB-INF/views/community/commuMain.jsp").forward(request, response);
+            String message2 = URLEncoder.encode("회원정보가 없는 커뮤니티입니다. 관리자에게 문의하세요.", "UTF-8");
+            response.sendRedirect(request.getContextPath() + "/commuMain.do?page=1&message=" + message2);
+
             return false;
         }
     } //end preHandle

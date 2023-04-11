@@ -81,7 +81,7 @@ public class MoveController {
 		} // if
 	}// method close
 
-
+}
 
 =======
 package org.team404.gameOjirap.user.controller;

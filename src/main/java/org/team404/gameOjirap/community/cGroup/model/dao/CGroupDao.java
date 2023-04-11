@@ -98,7 +98,6 @@ public class CGroupDao {
         Map<String, Object> map = Map.of("keyword", keyword, "paging", paging);
         List<CGroup> list = session.selectList("CGroupMapper.searchCGroup", map);
         return (ArrayList<CGroup>) list;
-
     }
 
     public int insertReport(CReport cReport) {

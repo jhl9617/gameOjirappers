@@ -87,6 +87,21 @@ public class UserServiceImpl implements UserService{
 		
 	}
 
+	@Override
+	public int insertFavorite(User user) {
+		return 0;
+	}
+
+	@Override
+	public int deleteFavorite(String user_id) {
+		return 0;
+	}
+
+	@Override
+	public User selectFavoriteCount(String user_id) {
+		return null;
+	}
+
 
 }//class close
 

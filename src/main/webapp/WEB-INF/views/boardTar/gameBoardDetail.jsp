@@ -84,8 +84,49 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
 <br>
-<form action="tarboard.do" method="post" enctype="multipart/form-data">
-    <input type="hidden" name="appid" value="${appid}">
+<!-- 좋아요 수 증가용 url -->
+<c:url value="/tarlike.do" var="likeUrl">
+    <c:param name="board_no" value="${boardTar.board_no}"/>
+    <c:param name="user_id" value="${loginUser.user_id}"/>
+</c:url>
+<center>
+
+    <h2>${boardTar.board_no}번 게시물</h2>
+    <h4>조회수 : [${boardTar.board_count}]</h4>
+    <h4>좋아요 수 : [${boardTar.board_like}]</h4> &nbsp;
+    <c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
+    <br>
+    <table>
+
+        <tr>
+            <th>제목</th>
+            <td>${boardTar.board_title}</td>
+        </tr>
+
+        <tr>
+            <th>게임이름</th>
+            <td>${name}</td>
+        </tr>
+        <tr>
+            <th>작성자</th>
+            <td>${boardTar.user_id}</td>
+        </tr>
+        <tr>
+            <th>작성날짜</th>
+            <td>${boardTar.board_date}</td>
+        </tr>
+        <tr>
+            <th>첨부파일</th>
+            <td></td>
+        </tr>
+        <tr>
+            <th>내용</th>
+            <td>${boardTar.board_content}</td>
+        </tr>
+
+    </table>
+
+</center>
 
 
 </form>
