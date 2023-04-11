@@ -97,7 +97,7 @@ function deleteinfo() {
 					<header class="main">
 						<h1 align="center">${ requestScope.game.name }</h1>
 						<h3 align="center">
-						
+						<c:if test="">
 						<script type="text/javascript">
 						function genrenReplace(){
 						var genreRe = '${ requestScope.game.genre }';
@@ -105,7 +105,8 @@ function deleteinfo() {
 						document.write("#"+genre);
 						}
 						genrenReplace();
-						</script>					
+						</script>
+						</c:if>				
 						</h3>
 
 
@@ -147,12 +148,30 @@ function deleteinfo() {
                   
 
 						<h3 align="center">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
-						<h3 align="center">게임 카테고리: [${ requestScope.game.category }]</h3>
+						<!-- <h3 align="center">게임 카테고리:
+						<script type="text/javascript">
+						function categoryReplace(){
+							var category = '${ requestScope.game.category }';
+							category = category.replace(/\//g, "<br>#").slice(0,-1);
+							document.write("#"+category);
+							}
+							categoryReplace();
+						</script></h3> -->
 						<h3 align="center">게임 출시일: [${ requestScope.game.releasedate }]</h3>
-						<h3 align="center">게임 좋아요수: [${ requestScope.game.positive }]</h3>
-						<h3 align="center">전일 게임접속사 수: [${ requestScope.game.ccu }]</h3>
-						<h3 align="center">게임 간단한 설명: [${ requestScope.game.short_description }]</h3>
-						<h2 align="center">개발자:[${ requestScope.game.developer }]</h2>
+						<script type="text/javascript">
+						</script>
+						<c:if test="${ requestScope.game.positive !=0 }">	
+						<h3 align="center">positive: [${ requestScope.game.positive }]</h3>
+						</c:if>
+						<c:if test="${ requestScope.game.positive ==0 }">	
+						</c:if>
+						<c:if test="${ requestScope.game.ccu !=0}">	
+						<h3 align="center">Concurrent Users: [${ requestScope.game.ccu }]</h3>
+						</c:if>
+						<c:if test="${ requestScope.game.ccu == 0}"></c:if>
+						<%-- <c:if test=""></c:if>	
+						<h3 align="center">게임 간단한 설명: [${ requestScope.game.short_description }]</h3> --%>
+						<h2 align="center">개발자:[${ requestScope.game.developer }]</h2>	
 						<h2 align="center">배급사:[${ requestScope.game.publisher }]</h2>
 						
 						
@@ -181,70 +200,132 @@ function deleteinfo() {
 					</div>
 					<span class="object">
 							<div style=" border:1px solid black; ">
+							<c:if test="${ requestScope.game.initialprice != 0}">	
 							<h2 align="center" >출시된 가격:[${ requestScope.game.initialprice }원]</h2>
-							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
-							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2>
+							<c:if test="${ requestScope.game.discountrate !=0}">	
+							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>	
+							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2></c:if>
+							<c:if test="${ requestScope.game.discountrate == 0}">
+							<h2 align="center">할인중이 아닙니다!</h2>
+							</c:if>
+							</c:if>
+							<c:if test="${ requestScope.game.initialprice == 0}">	
+							<h2 align="center" >무료로 출시한 게임입니다!</h2>
+							</c:if>
 							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 보러가기</a></h2>
 							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button">유튜브 영상 보러가기</a></h2>
+							<!--  <h2 align="center"><a href="${ pageContext.servletContext.contextPath }/news.do?appid=${ requestScope.game.appid }" class="button">관련 뉴스 보러가기</a></h2>-->
 							</div>
 					</span>
 				</section>			
 				
 				<section style="all: none;">
-				
+					<c:if test="${ requestScope.game.platform != null}">
 					<div>
 						<header class="major">
 						<h2> 게임 플랫폼 </h2>
 					</header>
 					<div>
-						<h3 align="center">${ requestScope.game.platform }</h3>
+					
+					<h3>
+					<script type="text/javascript">
+					platformReplace();
+					function platformReplace(){
+						var platformRe = '${ requestScope.game.platform }';
+						platform = platformRe.replace(/\{/g, "").replace(/\}/g, "").replace(/\,/g, "<br>").replace(/=true/gi, " : 지원").replace(/=false/gi, " : 미지원");
+						document.write(platform);
+					}
+					</script></div></h3>
 					</div>
-					</div>
+					</c:if>
+					<c:if test="${ requestScope.game.platform != null}"></c:if>
 					<div>			
 					<header class="major">
 						<h2> 게임 지원언어 </h2>
 					</header>
-					<div style="float:left; border:1px solid black;">		
+					<div style="float:left; border:1px solid black;">
+					<c:if test=""></c:if>			
 					<h3>${ requestScope.game.supported_languages }</h3>
 					</div>
 					</div>	
 				
-				
+				<c:if test="${ requestScope.game.pcminimum != null}">
 					<div>				
 						<header class="major">
 							<h2> 게임 최소사양 </h2>
 						</header>
-						<div style="float:left;">		
-						<p>${ requestScope.game.pcminimum }</p>
-						</div>
-					</div>
-				
+						<div style="float:left;">
+								
+						<h3>							
+						<script type="text/javascript">
+						pcminimumReplace();
+						function pcminimumReplace(){
+							var pcminimumRe = '${ requestScope.game.pcminimum }';
+							pcminimum = pcminimumRe.replace("<strong>최소:</strong>", "");
+							document.write(pcminimum);
+						}
+						</script></div></h3>
+					</div></c:if>
+					<c:if test="${ requestScope.game.pcminimum == null}">
+					
+					</c:if>
+				<c:if test="${ requestScope.game.pcrecommended != null}">
 					<div>
 					<header class="major">
 							<h2> 게임 권장사양 </h2>
 						</header>
-						<div style="float:left;">		
-						<p>${ requestScope.game.pcrecommended }</p>
+						<div style="float:left;">
+							
+						<h3>
+						<script type="text/javascript">
+						pcminimumReplace();
+						function pcrecommendedReplace(){
+							var pcrecommendedRe = '${ requestScope.game.pcrecommended }';
+							pcrecommended = pcrecommendedRe.replace("<strong>권장:</strong>", "");
+							document.write(pcrecommended);
+						}
+						</script>
+						</h3>
 						</div>
 					</div>
+					</c:if>
+					<c:if test="${ requestScope.game.pcrecommended == null}">
+					</c:if>
 				</section>
 				
 				<!-- 게임 소개글 -->
-				<section>				
+				<%-- <section>
+				<c:if test="${ requestScope.game.description != null}">					
 					<header class="major">
 						<h2> 게임 소개글 </h2>
 					</header>
-				<div style="float:left;">		
-					<p>${ requestScope.game.description }</p>
-				</div>
-				</section>
+				<div style="float:left;">
 				
+					<h3>${ requestScope.game.description }</h3>		
+				
+				</div></c:if>
+				<c:if test="${ requestScope.game.description == null}">
+				</c:if>
+				</section> --%>
+				<section>
+				<c:choose>
+					<c:when test="${ requestScope.game.description != null}">
+						<header class="major">
+							<h2> 게임 소개글 </h2>
+						</header>
+						<div style="float:left;">
+						<h3>${ requestScope.game.description }</h3>
+						</div>
+					</c:when>
+					<c:otherwise></c:otherwise>
+				</c:choose>
+				</section>
 				
 				<section>
 				<span class="button" onclick="genreSearch();">장르로 검색하세요</span>
 				<span class="button" onclick="priceSearch();">가격으로 검색하기</span>
 				<div id="genreSearch" style="display: none;">			
-				<form name="search-form1" autocomplete="off">
+				<form name="search-genre" autocomplete="off">
 						<input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
 						<input type="button" onclick="gamegSearch();" id="search" value="검색">
 				</form>
@@ -253,7 +334,7 @@ function deleteinfo() {
 				</div>
 				
 				<div id="priceSearch" style="display: none;">
-				<form name="search-form2" autocomplete="off">
+				<form name="search-price" autocomplete="off">
 						<select name="type">
 							<option selected value="initialprice">출시가격</option>
 							<option value="finalprice">할인된가격</option>
@@ -285,7 +366,7 @@ function deleteinfo() {
 					$.ajax({
 						type: 'GET',
 						url : "ggsearch.do",
-						data : $("form[name=search-form1]").serialize(),
+						data : $("form[name=search-genre]").serialize(),
 						success : function(result){
 							//테이블 초기화
 							$('#genre').empty();
@@ -310,7 +391,7 @@ function deleteinfo() {
 					$.ajax({
 						type: 'GET',
 						url : "gpsearch.do",
-						data : $("form[name=search-form2]").serialize(),
+						data : $("form[name=search-price]").serialize(),
 						success : function(result){
 							//테이블 초기화
 							$('#price').empty();
