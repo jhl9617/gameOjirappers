@@ -1,11 +1,13 @@
 package org.team404.gameOjirap.boardTar.model.service;
 
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
+import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.common.BoardLike;
 
 import java.util.ArrayList;
+import java.util.Map;
 
 public interface BoardTarService {
 
@@ -39,4 +41,7 @@ public interface BoardTarService {
 
     int updateTarReply(Comment comment);
 
+    int selectSearchListCount(Searchs searchs);
+
+    ArrayList<BoardTar> selectSearchList(Map map);
 }
