@@ -13,6 +13,7 @@ import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 
 import org.team404.gameOjirap.common.BoardLike;
 
+import org.team404.gameOjirap.common.Searchs;
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
@@ -21,6 +22,8 @@ import org.team404.gameOjirap.game.model.service.GameService;
 import javax.servlet.http.HttpServletRequest;
 import java.io.File;
 import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.Map;
 
 @Controller("boardTarController")
 public class BoardTarController {
@@ -58,6 +61,7 @@ public class BoardTarController {
         model.addAttribute("paging", paging);
         model.addAttribute("appid", appid);
         model.addAttribute("name", name);
+        model.addAttribute("page", currentPage);
         return "boardTar/gameBoard";
     }
 
@@ -220,7 +224,7 @@ public class BoardTarController {
     @RequestMapping("gameReplyWrite.do")
     public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
                                        @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
-                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String board_content, @RequestParam("name") String name){
+                                       @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_content, @RequestParam("name") String name){
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
@@ -377,4 +381,52 @@ public class BoardTarController {
         return "redirect:movetarboarddetail.do";
     }
 
+    // 검색
+    @RequestMapping(value="gameboardsearch.do", method=RequestMethod.POST)
+    public String gameBoardSearch(@RequestParam("appid") String appid, @RequestParam("page") String page,
+                                  @RequestParam("action") String action, @RequestParam("keyword") String keyword,
+                                  Model model){
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        switch (action){
+            case "title":
+                action = "board_title";
+                break;
+            case "content":
+                action = "board_content";
+                break;
+            case "id":
+                action = "user_id";
+                break;
+        }
+        Searchs searchs = new Searchs(keyword, action, appid);
+        int limit = 10;
+        int listCount = boardTarService.selectSearchListCount(searchs);
+        String url = "gameboardsearch.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url, appid);
+        paging.calculator();
+        Map map = new HashMap();
+        map.put("appid", appid);
+        map.put("action", action);
+        map.put("keyword", keyword);
+        map.put("startRow", paging.getStartRow());
+        map.put("endRow", paging.getEndRow());
+        ArrayList<BoardTar> list = boardTarService.selectSearchList(map);
+        if(list != null){
+            model.addAttribute("list", list);
+            model.addAttribute("paging", paging);
+            model.addAttribute("appid", appid);
+            model.addAttribute("action", action);
+            model.addAttribute("keyword", keyword);
+            model.addAttribute("page", currentPage);
+            return "boardTar/gameBoard";
+        }else {
+            model.addAttribute("message", "게시글 검색 실패");
+            model.addAttribute("appid", appid);
+            model.addAttribute("page", 1);
+            return "redirect:movegameboard.do";
+        }
+    }
 }

@@ -14,6 +14,14 @@
 		<result property="user_id" column="user_id"/>
 	</resultMap>
 
+	<resultMap id="searchtarmap" type="BoardTar">
+		<result property="board_no" column="board_no"/>
+		<result property="board_title" column="board_title"/>
+		<result property="board_date" column="board_date"/>
+		<result property="board_count" column="board_count"/>
+		<result property="user_id" column="user_id"/>
+	</resultMap>
+
 	<!-- 게시물 숫자 카운트 -->
 	<select id="selectListCount" resultType="int">
 		SELECT COUNT(*) FROM tb_board_tar
@@ -98,7 +106,7 @@
 		UPDATE TB_BOARD_TAR
 		SET board_like = board_like - 1
 		WHERE BOARD_NO = #{board_no}
-    
+	</update>
 	<!--댓글 insert-->
 	<insert id="insertTarReply" parameterType="Comment">
 		INSERT INTO TB_COMMENT (COM_NO, COM_CONTENTS, COM_DATE, COM_LEV, COM_NO2, BOARD_NO, USER_ID)
@@ -119,6 +127,26 @@
 		SET COM_CONTENTS = #{com_contents}
 		WHERE COM_NO = #{com_no}
 	</update>
+
+	<!-- 검색용 리스트 카운트 -->
+	<select id="selectSearchListCount" parameterType="Searchs" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD_TAR
+		WHERE appid = #{appid}
+		and ${action} LIKE '%'||#{keyword}||'%'
+	</select>
+
+	<!-- 검색한 리스트 10개 최신순 -->
+	<select id="selectSearchList" parameterType="map" resultMap="searchtarmap">
+		SELECT RNUM, board_count, board_title, board_date, user_id, board_no
+		FROM (
+				 SELECT ROWNUM RNUM, board_count, board_title, board_date, user_id, board_no
+				 FROM TB_BOARD_TAR
+				 WHERE appid = #{appid}
+				 and ${action} LIKE '%'||#{keyword}||'%'
+				 ORDER BY BOARD_DATE DESC
+			 )
+		WHERE RNUM BETWEEN ${startRow} AND ${endRow}
+	</select>
 </mapper>
 
 
