@@ -17,8 +17,7 @@
 		<result column="user_id" property="user_id"/>
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>
-	
-	
+
 	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
 		<![CDATA[
 		select *  
@@ -89,9 +88,9 @@
 	
 	<delete id="deleteBoardLike"></delete>
 
+	<!--댓글 insert-->
+	<insert id="genReplyWrite" parameterType="Comment">
+		insert into TB_COMMENT(COM_NO, COM_CONTENTS, COM_DATE, BOARD_NO, USER_ID, com_lev)
+		values(seq_comment.nextval,#{com_contents}, sysdate, #{board_no}, #{user_id}, 0)
+	</insert>
 </mapper>
-
-
-
-
-

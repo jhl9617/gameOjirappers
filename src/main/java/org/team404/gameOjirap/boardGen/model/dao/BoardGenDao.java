@@ -8,6 +8,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Repository("boardDao")
 public class BoardGenDao {
@@ -63,4 +64,7 @@ public class BoardGenDao {
 	}
 
 
+	public int genReplyWrite(Comment comment) {
+		return session.insert("boardGenMapper.genReplyWrite", comment);
+	}
 }

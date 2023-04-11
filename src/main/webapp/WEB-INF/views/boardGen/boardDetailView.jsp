@@ -10,7 +10,86 @@
 <head>
 
 <meta charset="UTF-8">
+	<style>
+		table {
+			border-collapse: collapse;
+			width: 40%;
+			margin: auto;
+		}
 
+		th, td {
+			padding: 10px;
+			text-align: center;
+			border: 1px solid #ddd;
+		}
+
+		th {
+			background-color: #f2f2f2;
+		}
+
+		td:first-child {
+			font-weight: bold;
+		}
+
+		button {
+			-moz-appearance: none;
+			-webkit-appearance: none;
+			-ms-appearance: none;
+			appearance: none;
+			-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+			background-color: transparent;
+			border-radius: 0.375em;
+			border: 0;
+			box-shadow: inset 0 0 0 2px #f56a6a;
+			color: #f56a6a !important;
+			cursor: pointer;
+			display: inline-block;
+			font-family: "Roboto Slab", serif;
+			font-size: 0.8em;
+			font-weight: 700;
+			height: 3.5em;
+			letter-spacing: 0.075em;
+			line-height: 3.5em;
+			padding: 0 2.25em;
+			text-align: center;
+			text-decoration: none;
+			text-transform: uppercase;
+			white-space: nowrap;
+		}
+
+
+		a {
+			background-color: #008CBA;
+			color: white;
+			border: none;
+			padding: 10px 20px;
+			text-align: center;
+			text-decoration: none;
+			display: inline-block;
+			font-size: 14px;
+			margin: 4px 2px;
+			cursor: pointer;
+		}
+	</style>
+	<script>
+		function btdelcheck() {
+			if (confirm("정말 삭제하시겠습니까?")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+		function btupcheck(){
+			if (confirm("정말 수정하시겠습니까?")) {
+				return true;
+			} else {
+				return false;
+			}
+		}
+	</script>
 <title></title>
 
 <style>
@@ -114,7 +193,7 @@ cellpadding="50">
 		&nbsp; 
 		
 		<c:url var="bup" value="bgupdate.do">
-			<c:param name="board_no" value="${boardGen.board_no}" />
+			<c:param name="board_no" value="${boardGen.board_no}"/>
 			<c:param name="page" value="${ currentPage }"/>
 		</c:url>
 			<a href="${ bup }">[수정페이지]</a> &nbsp;
@@ -130,32 +209,23 @@ cellpadding="50">
 
 <hr />
 
-			<div>
-               <c:forEach var="comment" items="${comment}">
-                  
-                  <input type="hidden" name="${comment.com_no}">
-                  <p>[닉네임: ${comment.user_id}]&nbsp;&nbsp;&nbsp;<fmt:formatDate value="${comment.com_date}" type="date"
-                  pattern="yyyy-MM-dd"/></p>
-                  &nbsp;${comment.com_contents}
-                <%--   <p>&nbsp;&nbsp;&nbsp;*${comment.com_contents}</p> --%>
-                  
-                  
-               </c:forEach>
-            </div>
-				
-			
-				<tr><th>댓글 작성</th>
-                  <td>
-                     <form action="commentwriteform.do" method="post">
-                        <%-- <input type="text" value="${comment.board_no}" name="board_no">
-                        <input type="text" value="${comment.user_id}" name="user_id"> --%>
-                        <textarea rows="5" cols="50" name="incoment"></textarea></td></tr>
-                        <tr><th colspan="2">
-                        &nbsp;
-                        <input type="submit" value="등록하기"> &nbsp;
-                        <input type="reset" value="작성취소"><br>
-                     </form>
-                  </tr>            
+<!-- 댓글 리스트 -->
+<c:import url="/WEB-INF/views/boardGen/genReplyList.jsp"/>
+<br>
+
+
+
+<div id="comments-end"></div>
+<%--댓글 입력 form--%>
+<form action="<c:url value="/genReplyWrite.do"/>" method="post">
+	<input type="hidden" name="board_no" value="${boardGen.board_no}">
+	<input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}">
+	<div class="form-group">
+		<label for="reply_contents">댓글 내용</label>
+		<textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
+	</div>
+	<button type="submit" class="btn btn-primary">댓글 작성</button>
+</form>
 
 		
     

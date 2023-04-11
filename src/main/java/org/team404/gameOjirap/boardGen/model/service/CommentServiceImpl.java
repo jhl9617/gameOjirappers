@@ -12,11 +12,7 @@ public class CommentServiceImpl implements CommentService{
 
 	@Autowired
 	private CommentDao commentDao;
-	
-	@Override
-	public ArrayList<Comment> selectList(int board_no) {
-		return commentDao.selectList(board_no);
-	}
+
 
 	
 
@@ -35,6 +31,10 @@ public class CommentServiceImpl implements CommentService{
 		return commentDao.deleteComment(comment);
 	}
 
+	@Override
+	public ArrayList<Comment> selectCommentList(int boardNo) {
+		return commentDao.selectCommentList(boardNo);
+	}
 
 
 	@Override

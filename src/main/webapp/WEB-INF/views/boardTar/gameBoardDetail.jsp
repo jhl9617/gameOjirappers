@@ -187,11 +187,11 @@
 </form>
 <br>
 <br>
-<%--커뮤니티 댓글 리스트로 불러와서 보여주기--%>
+<%-- 댓글 리스트로 불러와서 보여주기--%>
 <c:import url="/WEB-INF/views/boardTar/gameReplyList.jsp"/>
 <div id="comments-end"></div>
 <%--댓글 입력 form--%>
-<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
+<form action="<c:url value="/genReplyWrite.do"/>" method="post">
     <input type="hidden" name="board_no" value="${boardTar.board_no}">
     <input type="hidden" name="user_id" value="${boardTar.user_id}">
     <input type="hidden" name="appid" value="${appid}">
