@@ -102,4 +102,9 @@ import java.util.Map;
         return boardTarDao.selectSearchList(map);
     }
 
+    @Override
+    public int deleteTarReply(int comNo) {
+        return boardTarDao.deleteTarReply(comNo);
+    }
+
 }

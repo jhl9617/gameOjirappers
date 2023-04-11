@@ -27,7 +27,7 @@
             $(document).on("click", ".update-comment", function() {
                 var com_no = $(this).data("com_no");
                 var editedContent = $("#edit-content-" + com_no).val();
-                var board_no = $(this).data("board_no");
+                var board_no = $("#board_no").val();
 
                 // Perform AJAX request to update the comment on the server
                 $.ajax({
@@ -35,9 +35,9 @@
                     type: 'POST',
                     data: {
                         com_no: com_no,
-                        com_content : editedContent,
+                        com_contents : editedContent,
                         board_no: board_no,
-
+                        user_id: $("#author-" + com_no).text()
                     },
                     success: function(response) {
                         // Update the content and restore the buttons
@@ -81,7 +81,7 @@
         <div class="comment-content">
             <span class="comment-author" id="author-${comment.com_no}">${comment.user_id}</span>
             <span class="comment-date" id="date-${comment.com_no}">${comment.com_date}</span>
-            <h3><p id="content-${comment.com_no}">${comment.com_content}</p></h3>
+            <h3><p id="content-${comment.com_no}">${comment.com_contents}</p></h3>
         <%--수정삭제버튼--%>
 
             <div class="comment-btn">

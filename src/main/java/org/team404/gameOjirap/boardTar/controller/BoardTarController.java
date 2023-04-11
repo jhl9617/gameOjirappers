@@ -20,6 +20,7 @@ import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.game.model.service.GameService;
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -224,13 +225,13 @@ public class BoardTarController {
     @RequestMapping("gameReplyWrite.do")
     public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
                                        @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
-                                       @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_content, @RequestParam("name") String name){
+                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String board_contents, @RequestParam("name") String name){
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
 
-        Comment comment = new Comment(board_no, user_id, board_content);
+        Comment comment = new Comment(board_contents, board_no, user_id);
         if (boardTarService.insertTarReply(comment) > 0) {
             mv.addObject("message", "댓글 등록 성공");
         } else {
@@ -244,19 +245,16 @@ public class BoardTarController {
         return mv;
     }
 
+    //boardTar 댓글 update
     @RequestMapping("updateGameComment.do")
-    public ModelAndView updateGameComment(ModelAndView mv, @RequestParam("board_no") int board_no, @RequestParam("user_id") String user_id,
-                                          @RequestParam("com_contents") String reply_content){
+    public void updateGameComment(HttpServletResponse response, Comment comment){
+        int result = boardTarService.updateTarReply(comment);
+    }
 
-        Comment comment = new Comment(board_no, user_id, reply_content);
-        if (boardTarService.updateTarReply(comment) > 0) {
-            mv.addObject("message", "댓글 수정 성공");
-        } else {
-            mv.addObject("message", "댓글 수정 실패");
-        }
-        mv.addObject("board_no", board_no);
-        mv.setViewName("redirect:movetarboarddetail.do");
-        return mv;
+    //boardTar 댓글 delete
+    @RequestMapping("deleteGameComment.do")
+    public void deleteGameComment(HttpServletResponse response, @RequestParam("com_no") int com_no){
+        int result = boardTarService.deleteTarReply(com_no);
     }
 
     // 게시물 좋아요 감소

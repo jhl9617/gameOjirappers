@@ -17,11 +17,10 @@ public class Comment implements java.io.Serializable{
 		super();
 	}
 
-	public Comment( int board_no, String user_id, String com_contents) {
-		super();
+	public Comment(String com_contents, int board_no, String user_id) {
+		this.com_contents = com_contents;
 		this.board_no = board_no;
 		this.user_id = user_id;
-		this.com_contents = com_contents;
 	}
 
 	public int getCom_no() {
