@@ -4,7 +4,10 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
+import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 import org.team404.gameOjirap.user.model.dao.UserDao;
 import org.team404.gameOjirap.user.model.vo.User;
 
@@ -15,9 +18,18 @@ public class UserServiceImpl implements UserService{
 	UserDao userDao;
 
 	@Override	//mybandtop5 출력 처리용
-	public ArrayList<CGroup> mybandtop5() {
-		return userDao.mybandtop5();
+	public ArrayList<CGroup> mybandtop5(String user_id) {
+		return userDao.mybandtop5(user_id);
 	}
+	@Override	//자유게시판 글 top5 출력 처리용
+	public ArrayList<BoardGen> boardgentop5(String user_id) {
+		return userDao.boardgentop5(user_id);
+	}
+	@Override	//게시글 댓글 top5 출력 처리용
+	public ArrayList<Comment> comment_borderTop5(String user_id) {
+		return userDao.comment_borderTop5(user_id);
+	}
+
 
 
 	@Override		//1명 정보 조회
@@ -100,6 +112,7 @@ public class UserServiceImpl implements UserService{
 	public User selectFavoriteCount(String user_id) {
 		return null;
 	}
+
 
 
 }//class close

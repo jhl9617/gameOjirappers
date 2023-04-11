@@ -5,9 +5,9 @@ import java.sql.Date;
 public class Comment implements java.io.Serializable{
 	private static final long serialVersionUID = 5859499308961360323L;
 
-	private int com_no;
-	private String com_contents;
-	private Date com_date;
+	private int com_no;	
+	private String com_contents;	//댓글내용
+	private Date com_date;				//댓글작성날짜
 	private int com_lev;
 	private int com_no2;
 	private int board_no;
