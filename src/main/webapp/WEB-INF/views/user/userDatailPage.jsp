@@ -22,8 +22,8 @@
 	p{
 	top: -100px;
 	width: 700px;
-	width: 50px; 	          /* 가로너비 */
-	height: 2px;	          /* 세로너비 */
+	width: 50px; 	          	/* 가로너비 */
+	height: 2px;	          		/* 세로너비 */
 	color:#424242;            /* 글씨색상*/
 	border-collapse: collapse;
 	background-color: transparent;
@@ -57,40 +57,48 @@
       position: relative;
       top: 0px;
       width: 700px;
-      height: 80px;
+      height: 100px;
       background: pink;
+/* 	  padding:5; */
+/*       margin: 0; */
       }
       
     .user_community {
 	position: relative;
-	top: -30px;
+	top: -20px;
 	width: 700px;
-	height: 200px;
-	background: pink;        
+	height: 140px;
+	background: pink;     
+	text-align: center;
+	font-size: 9pt;
     }
     
-	
-	
-    .user_board {
+    .user_boardgen {
       position: relative;
-      top: -60px;
+      top: -20px;
       width: 700px;
-      height: 150px;
+      height: 140px;
       background: pink;
+      text-align: center;
+      font-size: 9pt;
       }
-    .user_commont_comment {
+    .user_comment_border {
       position: relative;
-      top: -90px;
+      top: -20px;
       width: 700px;
-      height: 150px;
+      height: 140px;
       background: pink;
+      text-align: center;
+      font-size: 9pt;
       }
     .user_gamelist {
       position: relative;
-      top: -120px;
+      top: -20px;
       width: 700px;
-      height: 150px;
+      height: 140px;
       background: pink;
+      text-align: center;
+      font-size: 9pt;
       }
       
 	input[type="submit"],
@@ -124,56 +132,22 @@
 	  text-transform: uppercase;
 	  white-space: nowrap; }
     </style>
-    
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <script type="text/javascript">
-	$(function(){
-		//최근 가입한 밴드 top5개 출력
-		var values = $('#user_community').html();
-		console.log("values : " + values);
-		
-		$.ajax({
-			url: "mybandtop5.do" , 
-			type: "post",
-			dataType: "json",
-			success: function(data){
-				console.log("success : " + JSON.stringify(data));  			//Object 로 출력
-				var json = JSON.parse(JSON.stringify(data));			//string => json 객체로 바꿈
-				
-				for(var i in json.list){
-					if(json.list[i] == null) {
-						break;
-					}//if
-					values += "<tr border: 2px solid black>"
-								+"<td>" + json.list[i].Communitydate + "</td>"
-								+"<td>" + json.list[i].Communityid + "</td>"
-								+"<td>" + decodeURIComponent(json.list[i].Communityname).replace(/\+/gi, " ") + "</td>"
-								+"</tr><br>";
-				}  //for in
-				
-				$('#user_community').html(values);
-			},	//success
-			error: function(jqXHR, textStatus, errorThrown){
-				console.log("mybandtop5.do error : " + jqXHR + ", " + textStatus + ", "	+ errorThrown);
-			}	//error
-		});  //mybandtop5.do ajax
-	});  //document ready
-
-</script>   
-    
 </head>
-<body>
-<%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
 
-<br> <br>
+
+<body>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+
+ 
     <div class="table-container">
       <div class="menu">
         <form>
-        <br>
+   		<input type="hidden" name="user_id" value="${requestScope.user.user_id }">	<%--value가 암호화되어있는 값임 --%>
+        <br> <%-- 이 br은 안지움 --%>
           <p>
 			<p>${ sessionScope.loginUser.user_nickname } 님</p>
 			<p>내 등급 : ${ sessionScope.loginUser.user_level } </p>
-			<p>내 포인트 : ${ sessionScope.loginUser.user_point } </p>
 		<div class="menuButton">
 			<input type="button" onclick="location.href = 'moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="내 정보수정"><br>
 			<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br>
@@ -182,69 +156,168 @@
         </form>
       </div>
       
-
-      
-      <br>
+	<%-- div start --%>
       <div class="user">
+      
       <h4>마이페이지</h4>
       <div class="user_point">
-        <h5>누적적립포인트</h5>
+        <h5>내 포인트</h5>
         <table>
           <tr>
-            <th>누적적립포인트 출력예정</td>
+            <th style="color:red; font-size: 20pt;"> ${ sessionScope.loginUser.user_point } Point </th>
           </tr>
         </table>
       </div>
       
-      <br>
-      <div class="user_community" id="user_community">
+      
+<%--내가 가입한 밴드 top5  --%>         
+      <div class="div_table"> <%-- class명 수정하지말것 --%>
         <h5>내가 가입한 밴드</h5>
-        <table >
+        <table class="user_community" >
           <tr>
-				<th>밴드생성일</th>
-				<th>글번호</th>
+				<th>밴드생일</th>
 				<th>밴드이름</th>
           </tr>
         </table>
       </div>
+<script type="text/javascript">
+$(function(){
+	var values = $('.user_community').html();
+	
+	$.ajax({
+		url: "mybandtop5.do" , 
+		type: "post",
+        data: {"user_id" : "${loginUser.user_id}" },
+		dataType: "json",
+		success: function(data){
+			console.log("success : " + JSON.stringify(data));  			//Object 로 출력
+			var json = JSON.parse(JSON.stringify(data));				//string => json 객체로 바꿈
+			
+			for(var i in json.list){
+				if(json.list[i] == null) {
+					break; 
+				}//if
+				values += "<tr border: 2px solid black>"
+							+"<td>" + json.list[i].Communitydate + "</td>"
+							+"<td>" + decodeURIComponent(json.list[i].Communityname).replace(/\+/gi, " ") + "</td>"
+							+"</tr>";
+			}  //for in
+			
+			$('.user_community').html(values);
+		},	//success
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("mybandtop5.do error : " + jqXHR + ", " + textStatus + ", "	+ errorThrown);
+		}	//error
+	});  //mybandtop5.do ajax
+});  //document ready
+</script>      
       
-      <br>
-      <div class="user_board">
-        <h5>내가 쓴 글 </h5>
-        <table>
+      
+  <%--내가 쓴 글 최신글top5  --%>    
+      <div class="div_table"> <%-- class명 수정하지말것 --%>
+        <h5>내가 쓴 게시글(자유)</h5>
+        <table class="user_boardgen">
           <tr>
-				<th>글번호</th>
-				<th>글제목</th>
 				<th>글작성일</th>
+				<th>글제목</th>
+				<th>조회수</th>
+				<th>좋아요</th>
           </tr>
         </table>
       </div>
-      
-      <br>
-      <div class="user_commont_comment" >
-        <h5>내가 쓴 댓글 보기</h5>
-         <table>
+<script type="text/javascript">
+$(function(){
+	var values = $('.user_boardgen').html();
+	
+	$.ajax({
+		url: "boardgentop5.do" , 
+		type: "post",
+        data: {"user_id" : "${loginUser.user_id}" },	//보내는 값
+		dataType: "json",											//받는 값
+		success: function(data){
+			console.log("success : " + JSON.stringify(data));  			//Object 로 출력
+			var json = JSON.parse(JSON.stringify(data));			//string => json 객체로 바꿈
+			
+			for(var i in json.list){
+				if(json.list[i] == null) {
+					console.log("실패");
+					break;
+				}//if
+				values += "<tr>"
+							+"<td>" + json.list[i].board_date + "</td>"
+							+"<td>" + decodeURIComponent(json.list[i].board_title).replace(/\+/gi, " ") + "</td>"
+							+"<td>" + json.list[i].board_count + "</td>"
+							+"<td>" + json.list[i].board_like + "</td>"
+							+"</tr>";
+			}  //for in
+			
+			$('.user_boardgen').html(values);
+		},	//success
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("boardgentop5.do error : " + jqXHR + ", " + textStatus + ", "	+ errorThrown);
+		}	//error
+	});  //myboardtop5.do ajax
+});  //document ready
+</script>      
+
+
+
+ <%--내가 쓴 댓글 최신글top5  --%>          
+      <div class="div_table"> <%-- class명 수정하지말것 --%>
+        <h5>내가 쓴 댓글</h5>
+         <table class="user_comment_border">
           <tr>
-				<th>댓글번호</th>
-				<th>댓글제목</th>
 				<th>댓글작성일</th>
+				<th>댓글제목</th>
           </tr>
         </table>
       </div>
+ <script type="text/javascript">
+$(function(){
+	var values = $('.user_comment_border').html();
+	
+	$.ajax({
+		url: "comment_borderTop5.do" , 
+		type: "post",
+        data: {"user_id" : "${loginUser.user_id}" },	//보내는 값
+		dataType: "json",											//받는 값
+		success: function(data){
+			console.log("success : " + JSON.stringify(data));  			//Object 로 출력
+			var json = JSON.parse(JSON.stringify(data));			//string => json 객체로 바꿈
+			
+			for(var i in json.list){
+				if(json.list[i] == null) {
+					console.log("실패");
+					break;
+				}//if
+				values += "<tr>"
+							+"<td>" + json.list[i].com_date + "</td>"
+							+"<td>" + decodeURIComponent(json.list[i].com_contents).replace(/\+/gi, " ") + "</td>"
+							+"</tr>";
+			}  //for in
+			$('.user_comment_border').html(values);
+		},	//success
+		error: function(jqXHR, textStatus, errorThrown){
+			console.log("comment_borderTop5.do error : " + jqXHR + ", " + textStatus + ", "	+ errorThrown);
+		}	//error
+	});  //omment_borderTop5.do ajax
+});  //document ready
+</script>           
       
-      <br>
-      <div class="user_gamelist">
-        <h5>즐겨찾기한 게임리스트</h5>
-         <table>
+      
+      
+      <div class="div_table"> <%-- class명 수정하지말것 --%>
+        <h5>게임 즐겨찾기</h5>
+         <table class="user_gamelist">
           <tr>
 				<th>즐찾번호</th>
 				<th>즐찾게임제목</th>
           </tr>
         </table>
       </div>
-      
-      
+      </div>
     </div><%-- all div close --%>
-<%-- 	<c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
+    
+	<c:import url="/WEB-INF/views/common/footer.jsp" />
 </body>
 </html>

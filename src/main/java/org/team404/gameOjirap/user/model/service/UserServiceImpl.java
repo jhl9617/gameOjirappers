@@ -1,127 +1,39 @@
 package org.team404.gameOjirap.user.model.service;
 
+
 import java.util.ArrayList;
 
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cboard.model.vo.CComment;
-import org.team404.gameOjirap.user.model.dao.UserDao;
 import org.team404.gameOjirap.user.model.vo.User;
+ 
 
-@Service("UserService")	
-public class UserServiceImpl implements UserService{
+public interface UserService {
 
-	@Autowired			//자동 DI 처리됨 : 자동 객체 생성되어 연결된다.
-	UserDao userDao;
-
-	@Override	//mybandtop5 출력 처리용
-	public ArrayList<CGroup> mybandtop5(String user_id) {
-		return userDao.mybandtop5(user_id);
-	}
-	@Override	//자유게시판 글 top5 출력 처리용
-	public ArrayList<BoardGen> boardgentop5(String user_id) {
-		return userDao.boardgentop5(user_id);
-	}
-	@Override	//게시글 댓글 top5 출력 처리용
-	public ArrayList<Comment> comment_borderTop5(String user_id) {
-		return userDao.comment_borderTop5(user_id);
-	}
-
-
-
-	@Override		//1명 정보 조회
-	public User selectUser(String user_id) {		
-		return userDao.selectUser(user_id);
-	}
-
-	@Override		//회원가입처리용
-	public int userInsertMethod(User user) {
-		return userDao.userInsertMethod(user);
-	}
 	
-	@Override
-	public int selectDupCheckId(String user_id) {
-		return userDao.selectDupCheckId(user_id);
-	}
+	ArrayList<CGroup> mybandtop5(String user_id);			//mybandtop5 출력 처리용
+	ArrayList<BoardGen> boardgentop5(String user_id);	//자유게시글top5 출력 처리용
+	ArrayList<Comment> comment_borderTop5(String user_id);			//게시글 댓글 top5 출력 처리용
+
+	User selectUser(String user_id);									// 회원 1명 조회
+	ArrayList<User> selectUserList();								//회원 리스트 조회
+	int userInsertMethod(User user);    								// 회원가입 요청처리용
+	int selectDupCheckId(String user_id); 							// 아이디 중복확인용
+	int selectDupCheckNick(String user_nickname);			// 닉네임 중복확인용
+	int userDeleteMethod(String user_id);  						// 회원탈퇴 요청처리용
 	
-	@Override
-	public int selectDupCheckNick(String user_nickname) {
-		return userDao.selectDupCheckNick(user_nickname);
-	}
+	int updateUser(User user);											//회원 정보수정처리용
+	int levelMethod(User user_level);     							// 현재등급 출력용
+	int checkanswer(String confirm_answer);						//본인확인 질문 확인용
+	int updateLoginok (User user);										//로그인가능 확인용
+	void updateBan(User user);											// 유저 정지용
+	void updateBanRelease(User loginUser);						// 유저 정지 해제용
+
 	
-	@Override
-	public ArrayList<User> selectUserList() {
-		return userDao.selectUserList();
-	}
-	
-	//회원탈퇴요청처리용
-	@Override
-	public int userDeleteMethod(String user_id) {
-		return userDao.userDeleteMethod(user_id);
-	}
-	
-	
-	//정보수정요청처리
-	@Override
-	public int updateUser(User user)	{
-	return userDao.updateUser(user);
-	}
+	int insertFavorite(User user);										//즐찾등록요청처리용
+	int deleteFavorite(String user_id);								//즐찾삭제요청처리용
+	User selectFavoriteCount(String user_id);					//즐찾 갯수조회 => 게임과 아이디매칭
 
-	@Override
-	public int levelMethod(User user_level) {
-		return userDao.levelMethod(user_level);
-	}
-
-
-	@Override
-	public int checkanswer(String confirm_answer) {
-		return userDao.checkanswer(confirm_answer);
-	}
-
-	@Override
-	public int updateLoginok(User user) {
-		return userDao.updateLoginok(user);
-	}
-
-	@Override
-	public void updateBan(User user) {
-		userDao.updateBan(user);
-		
-	}
-	
-	@Override
-	public void updateBanRelease(User loginUser) {
-		userDao.updateBanRelease(loginUser);
-		
-	}
-
-	@Override
-	public int insertFavorite(User user) {
-		return 0;
-	}
-
-	@Override
-	public int deleteFavorite(String user_id) {
-		return 0;
-	}
-
-	@Override
-	public User selectFavoriteCount(String user_id) {
-		return null;
-	}
-
-
-
-}//class close
-
-
-
-
-
-
-
-
-
+}
