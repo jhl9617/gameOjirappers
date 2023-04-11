@@ -41,6 +41,9 @@ public class CommentDao {
 		return session.selectOne("commentMapper.selectUserId", board_no);
 	}
 
-	
-	
+
+    public ArrayList<Comment> selectCommentList(int boardNo) {
+		List<Comment> list = session.selectList("commentMapper.selectCommentList", boardNo);
+		return (ArrayList<Comment>)list;
+    }
 }
