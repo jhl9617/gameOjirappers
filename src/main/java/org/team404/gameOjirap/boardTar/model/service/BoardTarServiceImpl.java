@@ -66,4 +66,9 @@ import java.util.ArrayList;
         return boardTarDao.updateTarReply(comment);
     }
 
+    @Override
+    public int deleteTarReply(int comNo) {
+        return boardTarDao.deleteTarReply(comNo);
+    }
+
 }

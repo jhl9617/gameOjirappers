@@ -28,4 +28,6 @@ public interface BoardTarService {
     ArrayList<Comment> selectComments(int boardNo);
 
     int updateTarReply(Comment comment);
+
+    int deleteTarReply(int comNo);
 }

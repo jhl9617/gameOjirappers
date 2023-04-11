@@ -59,4 +59,8 @@ public class BoardTarDao {
     public int updateTarReply(Comment comment) {
         return session.update("boardTarMapper.updateTarReply", comment);
     }
+
+    public int deleteTarReply(int comNo) {
+        return session.delete("boardTarMapper.deleteTarReply", comNo);
+    }
 }

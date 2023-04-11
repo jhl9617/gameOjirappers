@@ -84,6 +84,14 @@
 		SET COM_CONTENTS = #{com_contents}
 		WHERE COM_NO = #{com_no}
 	</update>
+
+	<!--댓글 삭제-->
+	<delete id="deleteTarReply" parameterType="int">
+		DELETE FROM TB_COMMENT
+		WHERE COM_NO = #{com_no}
+	</delete>
+
+
 </mapper>
 
 

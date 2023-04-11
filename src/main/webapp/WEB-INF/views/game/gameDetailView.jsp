@@ -57,6 +57,11 @@ function deleteinfo() {
     return false;
 }
 
+// 게시판이동
+function movegameboard(){
+	location.href = "movegameboard.do?appid=${ requestScope.game.appid }&page=1";
+}
+
 </script>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
