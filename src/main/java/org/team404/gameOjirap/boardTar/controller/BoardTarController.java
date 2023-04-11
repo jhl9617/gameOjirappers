@@ -213,7 +213,7 @@ public class BoardTarController {
 
     @RequestMapping("updateGameComment.do")
     public ModelAndView updateGameComment(ModelAndView mv, @RequestParam("board_no") int board_no, @RequestParam("user_id") String user_id,
-                                          @RequestParam("user_id") String user_id, @RequestParam("com_contents") String reply_content){
+                                          @RequestParam("com_contents") String reply_content){
 
         Comment comment = new Comment(board_no, user_id, reply_content);
         if (boardTarService.updateTarReply(comment) > 0) {
