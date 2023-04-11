@@ -11,7 +11,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardTar.model.service.BoardTarService;
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 
-import org.team404.gameOjirap.common.BoardLikeCount;
+import org.team404.gameOjirap.common.BoardLike;
 
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
@@ -58,27 +58,27 @@ public class BoardTarController {
         model.addAttribute("paging", paging);
         model.addAttribute("appid", appid);
         model.addAttribute("name", name);
-        model.addAttribute("message", name + "게시판에 오신것을 환영합니다.");
         return "boardTar/gameBoard";
     }
 
     // 게시글 상세보기
     @RequestMapping("movetarboarddetail.do")
-    public String moveTarBoardDetail(Model model,
+    public String moveTarBoardDetail(Model model, @RequestParam(name="checked", required = false) String checked,
+                                     @RequestParam(name="user_id", required = false) String user_id,
                                      @RequestParam(name = "page", required = false) String page, @RequestParam("name") String name,
                                      @RequestParam("appid") String appid, @RequestParam("board_no") int board_no,
                                      HttpServletRequest request) {
-        String user_id = (String) request.getSession().getAttribute("user_id");
         System.out.println("movetarboarddetail.do userid : " + user_id);
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
+        BoardLike blike = new BoardLike(user_id, board_no);
         // 조회수 1 증가 처리
         boardTarService.updateReadCount(board_no);
-        String checked = "n";
-        BoardLikeCount likeCount = new BoardLikeCount(user_id, board_no);
-        if (boardTarService.selectTarLike(likeCount) > 0) {
+        checked = "n";
+        // 좋아요 체크
+        if (boardTarService.selectTarLike(blike) > 0) {
             checked = "y";
         }
         BoardTar boardTar = boardTarService.selectBoard(board_no);
@@ -115,6 +115,32 @@ public class BoardTarController {
         mv.setViewName("boardTar/gameBoardWrite");
 
         return mv;
+    }
+
+    // 게시글 업데이트 뷰 이동
+    @RequestMapping("btupdate.do")
+    public String boardTarUpdateView(@RequestParam("board_no") int board_no,
+                                     @RequestParam("name") String name,
+                                     @RequestParam("appid") String appid,
+                                     @RequestParam(name="page", required = false) String page,
+                                     Model model){
+        int currentPage = 1;
+        if(page != null){
+            currentPage = Integer.parseInt(page);
+        }
+        BoardTar boardTar = boardTarService.selectBoard(board_no);
+        model.addAttribute("page", currentPage);
+        model.addAttribute("appid", appid);
+        model.addAttribute("board_no", board_no);
+        model.addAttribute("name", name);
+        if(boardTar != null){
+            model.addAttribute("boardTar", boardTar);
+            return "boardTar/gameBoardUpdateForm";
+        }else{
+            model.addAttribute("message", "게시글 수정 페이지 이동 실패");
+            return "redirect:movetarboarddetail.do";
+        }
+
     }
 
     //게시글 등록
@@ -164,19 +190,22 @@ public class BoardTarController {
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
+        BoardLike blike = new BoardLike(user_id, board_no);
         String checked = "n";
-        BoardLikeCount likeCount = new BoardLikeCount(user_id, board_no);
-        if (boardTarService.selectTarLike(likeCount) > 0) {
+
+        if (boardTarService.selectTarLike(blike) > 0) {
             checked = "y";
+        }else{
+        if(boardTarService.insertTarLike(blike)>0){
+            boardTarService.updateTarLike(board_no);
         }
-        if (boardTarService.updateTarLike(board_no) > 0) {
-            model.addAttribute("message", board_no+"번 게시물 좋아요 등록했습니다.");
-        } else {
-            model.addAttribute("message", board_no+"번 게시물 좋아요 등록에 실패했습니다.");
         }
         model.addAttribute("checked", checked);
+        model.addAttribute("name", gameService.selectGame(appid).getName());
+        model.addAttribute("board_no", board_no);
         model.addAttribute("page", currentPage);
         model.addAttribute("appid", appid);
+        model.addAttribute("user_id", user_id);
         return "redirect:movetarboarddetail.do";
     }
 /*<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
@@ -224,6 +253,128 @@ public class BoardTarController {
         mv.addObject("board_no", board_no);
         mv.setViewName("redirect:movetarboarddetail.do");
         return mv;
+    }
+
+    // 게시물 좋아요 감소
+    @RequestMapping("tarlike2.do")
+    public String tarLike2(Model model, @RequestParam("board_no") int board_no,
+                          @RequestParam("appid") String appid, @RequestParam(name="page", required = false) String page,
+                          @RequestParam("user_id") String user_id) {
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        BoardLike blike = new BoardLike(user_id, board_no);
+        String checked = "n";
+
+
+        if(boardTarService.deleteTarLike(blike)>0){
+            boardTarService.updateTarLikedis(board_no);
+        }
+
+        model.addAttribute("checked", checked);
+        model.addAttribute("name", gameService.selectGame(appid).getName());
+        model.addAttribute("board_no", board_no);
+        model.addAttribute("page", currentPage);
+        model.addAttribute("appid", appid);
+        model.addAttribute("user_id", user_id);
+        return "redirect:movetarboarddetail.do";
+
+    }
+
+    // 첨부파일 다운로드
+    @RequestMapping("btfdown.do")
+    public ModelAndView fileDown(ModelAndView mv, HttpServletRequest request,
+                                 @RequestParam("ofile") String originalFileName, @RequestParam("rfile") String renameFileName){
+        // 저장폴더 path 지정
+        String savePath = request.getSession().getServletContext().getRealPath("resources/Tar_files");
+
+        // 읽은 파일 이름에 대한 객체 생성
+        File renameFile = new File(savePath + "//" + renameFileName);
+        // 다운시 다시 원래이름으로 변경
+        File originFile = new File(originalFileName);
+
+        // 다운로드 뷰로 전달할 정보 저장
+        mv.setViewName("filedown");
+        mv.addObject("renameFile", renameFile);
+        mv.addObject("originFile", originFile);
+        return mv;
+    }
+
+    // 게시글 삭제
+    @RequestMapping("btdelete.do")
+    public String boardTarDelete(@RequestParam("board_no") int board_no,
+                                 @RequestParam("appid") String appid,
+                                 @RequestParam(name="page", required = false) String page,
+                                 Model model){
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+
+        if(boardTarService.deleteBoard(board_no) > 0){
+            model.addAttribute("message", "게시글 삭제 성공");
+        }else{
+            model.addAttribute("message", "게시글 삭제 실패");
+        }
+        model.addAttribute("appid", appid);
+        model.addAttribute("page", currentPage);
+        return "redirect:movegameboard.do";
+    }
+
+    // 게시글 수정
+    @RequestMapping(value = "boardTarUpdate.do", method = RequestMethod.POST)
+    public String boardTarUpdate(BoardTar boardTar, Model model,
+                                 @RequestParam(name = "page", required = false) String page, @RequestParam(name = "upfile", required = false) MultipartFile mfile,
+                                 @RequestParam(name="delflag", required = false) String delflag,
+                                 HttpServletRequest request) {
+        String savePath = request.getSession().getServletContext().getRealPath("resources/Tar_files");
+        if(boardTar.getBoard_content().equals("")){
+            boardTar.setBoard_content(boardTarService.selectBoard(boardTar.getBoard_no()).getBoard_content());
+        }
+        int currentPage = 1;
+
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        String name = gameService.selectGame(boardTar.getAppid()).getName();
+        String refile = boardTar.getBoard_refile();
+        if(boardTar.getBoard_orifile() != null && delflag != null && delflag.equals("yes")){
+            new File(savePath + "\\" + refile).delete();
+            boardTar.setBoard_orifile(null);
+            boardTar.setBoard_refile(null);
+        }
+        if (!mfile.isEmpty()) {
+            if(refile != null){
+                new File(savePath + "\\" + refile).delete();
+                boardTar.setBoard_orifile(null);
+                boardTar.setBoard_refile(null);
+            }
+
+            String fileName = mfile.getOriginalFilename();
+            if (fileName != null && fileName.length() > 0) {
+                String rename = FileNameChange.change(fileName, "yyyyMMddHHmmss");
+                File renameFile = new File(savePath + "\\" + rename);
+                try {
+                    mfile.transferTo(renameFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                boardTar.setBoard_orifile(fileName);
+                boardTar.setBoard_refile(rename);
+            }
+        }
+
+        if (boardTarService.updateBoard(boardTar) > 0) {
+            model.addAttribute("message", "게시글 수정 성공");
+        } else {
+            model.addAttribute("message", "게시글 수정 실패");
+        }
+        model.addAttribute("board_no", boardTar.getBoard_no());
+        model.addAttribute("name", name);
+        model.addAttribute("page", currentPage);
+        model.addAttribute("appid", boardTar.getAppid());
+        return "redirect:movetarboarddetail.do";
     }
 
 }

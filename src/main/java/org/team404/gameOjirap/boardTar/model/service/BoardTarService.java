@@ -1,9 +1,9 @@
 package org.team404.gameOjirap.boardTar.model.service;
 
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
-import org.team404.gameOjirap.common.BoardLikeCount;
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.BoardLike;
 
 import java.util.ArrayList;
 
@@ -19,13 +19,24 @@ public interface BoardTarService {
 
     BoardTar selectBoard(int board_no);
 
-    int selectTarLike(BoardLikeCount likeCount);
+    int selectTarLike(BoardLike likeCount);
 
     int updateTarLike(int boardNo);
+
+    int deleteBoard(int boardNo);
+
+    int updateBoard(BoardTar boardTar);
+
+    int insertTarLike(BoardLike blike);
+
+    int deleteTarLike(BoardLike blike);
+
+    int updateTarLikedis(int boardNo);
 
     int insertTarReply(Comment comment);
 
     ArrayList<Comment> selectComments(int boardNo);
 
     int updateTarReply(Comment comment);
+
 }

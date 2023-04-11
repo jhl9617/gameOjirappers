@@ -1,3 +1,4 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
@@ -209,6 +210,17 @@ section.notice {
 }
 
 </style>
+    <script>
+        window.onload = function(){
+            if(${!empty message && message ne '${name}게시판에 오신것을 환영합니다.' }){
+                alert("${message}");
+                history.pushState({"appid":${appid}}, null, "movegameboard.do");
+                window.onpopstate = function(event) {
+                    history.go(1);
+                };
+            }
+        }
+    </script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
@@ -257,28 +269,7 @@ section.notice {
                     <th scope="col" class="th-num">번호</th>
                 </tr>
                 </thead>
-                <tbody>
-                <c:forEach items="${ requestScope.nlist }" var="TarNotice">
-                    <tr>
-                        <c:url var="dtview" value="/boardDetailView.do">
-                            <c:param name="board_no" value="${ boardTar.board_no }" />
-                            <c:param name="page" value="${ currentPage }"/>
-                            <c:param name="appid" value="${appid}"/>
-                            <c:param name="name" value="${name}"/>
-                        </c:url>
 
-                        <td>${ boardTar.board_count }</td>
-                        <th>
-                            <a href="${ dtview }">${ boardTar.board_title }</a>
-                        </th>
-                        
-                        <td><fmt:formatDate value="${ boardTar.board_date }" pattern="yyyy-MM-dd"/></td>
-
-                        <td>${ boardTar.user_id }</td>
-                        <td>${ boardTar.board_no }</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
                 <tbody>
                 <c:forEach items="${ requestScope.list }" var="boardTar">
 
@@ -288,6 +279,7 @@ section.notice {
                             <c:param name="page" value="${ currentPage }"/>
                             <c:param name="appid" value="${appid}"/>
                             <c:param name="name" value="${name}"/>
+                            <c:param name="user_id" value="${ loginUser.user_id }"/>
                         </c:url>
 
                         <td>${ boardTar.board_count }</td>

@@ -51,19 +51,54 @@
 		WHERE board_no = #{board_no}
 	</select>
 
-	<!-- 좋아요 눌렀는지 체크 -->
-	<select id="selectTarLike" parameterType="BoardLikeCount" resultType="_int">
-		SELECT COUNT(*) FROM TB_BOARD_TAR
+	<!-- 좋아요 숫자 체크 -->
+	<select id="selectTarLike" parameterType="BoardLike" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD_like
 		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
 	</select>
 
 	<!-- 좋아요 숫자 증가 -->
-	<update id="updateTarLike" parameterType="BoardLikeCount">
+	<update id="updateTarLike" parameterType="BoardLike">
 		UPDATE TB_BOARD_TAR
 		SET board_like = board_like + 1
 		WHERE BOARD_NO = #{board_no}
 	</update>
 
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE FROM TB_BOARD_TAR
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+
+	<!-- 게시글 업데이트 -->
+	<update id="updateBoard" parameterType="BoardTar">
+		UPDATE TB_BOARD_TAR
+		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
+		  <if test="board_orifile != null">
+		  , BOARD_ORIFILE = #{board_orifile}, BOARD_REFILE = #{board_refile}
+		  </if>
+		<if test="board_orifile == null">
+			, BOARD_ORIFILE =null, BOARD_REFILE = null
+		</if>
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!-- 게시글 좋아요 정보 저장 -->
+	<insert id="insertTarLike" parameterType="BoardLike">
+		INSERT INTO TB_BOARD_LIKE (board_no, user_id, like_date)
+		VALUES (#{board_no}, #{user_id}, sysdate)
+	</insert>
+
+	<delete id="deleteTarLike" parameterType="BoardLike">
+		DELETE FROM TB_BOARD_LIKE
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</delete>
+
+	<update id="updateTarLikedis" parameterType="_int">
+		UPDATE TB_BOARD_TAR
+		SET board_like = board_like - 1
+		WHERE BOARD_NO = #{board_no}
+    
 	<!--댓글 insert-->
 	<insert id="insertTarReply" parameterType="Comment">
 		INSERT INTO TB_COMMENT (COM_NO, COM_CONTENTS, COM_DATE, COM_LEV, COM_NO2, BOARD_NO, USER_ID)
