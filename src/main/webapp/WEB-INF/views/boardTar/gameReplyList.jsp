@@ -35,7 +35,7 @@
                     type: 'POST',
                     data: {
                         com_no: com_no,
-                        com_contents : editedContent,
+                        com_content : editedContent,
                         board_no: board_no,
 
                     },
@@ -81,7 +81,7 @@
         <div class="comment-content">
             <span class="comment-author" id="author-${comment.com_no}">${comment.user_id}</span>
             <span class="comment-date" id="date-${comment.com_no}">${comment.com_date}</span>
-            <h3><p id="content-${comment.com_no}">${comment.com_contents}</p></h3>
+            <h3><p id="content-${comment.com_no}">${comment.com_content}</p></h3>
         <%--수정삭제버튼--%>
 
             <div class="comment-btn">

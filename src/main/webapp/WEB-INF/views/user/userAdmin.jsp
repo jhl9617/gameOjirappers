@@ -87,8 +87,7 @@ function showDiv(){
 		 <c:if test="${ u.user_status eq 'pause' }">활동불가</c:if>
 		 </td>
          <td>
-            <fmt:formatDate value="${ u.board_click_day }" 
-               pattern="yyyy-MM-dd"/>
+            <%--추가 예정--%>
          </td>
          
          <td>
