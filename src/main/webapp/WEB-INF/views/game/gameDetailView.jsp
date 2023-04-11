@@ -140,8 +140,8 @@ function deleteinfo() {
 						    function (request, status, error){  
 						      alert("즐겨찾기 실패")                  
 						    }	//error
-						  });
-					}
+						  });	//ajax
+					}	//document ready => like
 					</script>
 					<%--즐찾기능 END --%>
                   
