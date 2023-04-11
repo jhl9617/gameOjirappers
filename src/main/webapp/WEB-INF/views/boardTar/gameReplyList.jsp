@@ -27,7 +27,7 @@
             $(document).on("click", ".update-comment", function() {
                 var com_no = $(this).data("com_no");
                 var editedContent = $("#edit-content-" + com_no).val();
-                var board_no = $(this).data("board_no");
+                var board_no = $("#board_no").val();
 
                 // Perform AJAX request to update the comment on the server
                 $.ajax({
@@ -37,7 +37,7 @@
                         com_no: com_no,
                         com_contents : editedContent,
                         board_no: board_no,
-
+                        user_id: $("#author-" + com_no).text()
                     },
                     success: function(response) {
                         // Update the content and restore the buttons

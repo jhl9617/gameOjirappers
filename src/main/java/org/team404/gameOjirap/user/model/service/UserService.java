@@ -3,14 +3,19 @@ package org.team404.gameOjirap.user.model.service;
 
 import java.util.ArrayList;
 
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
+import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 import org.team404.gameOjirap.user.model.vo.User;
  
 
 public interface UserService {
 
-	//mybandtop5 출력 처리용
-	ArrayList<CGroup> mybandtop5();
+	
+	ArrayList<CGroup> mybandtop5(String user_id);			//mybandtop5 출력 처리용
+	ArrayList<BoardGen> boardgentop5(String user_id);	//자유게시글top5 출력 처리용
+	ArrayList<Comment> comment_borderTop5(String user_id);			//게시글 댓글 top5 출력 처리용
 
 	User selectUser(String user_id);									// 회원 1명 조회
 	ArrayList<User> selectUserList();								//회원 리스트 조회
@@ -30,4 +35,5 @@ public interface UserService {
 	int insertFavorite(User user);										//즐찾등록요청처리용
 	int deleteFavorite(String user_id);								//즐찾삭제요청처리용
 	User selectFavoriteCount(String user_id);					//즐찾 갯수조회 => 게임과 아이디매칭
+
 }

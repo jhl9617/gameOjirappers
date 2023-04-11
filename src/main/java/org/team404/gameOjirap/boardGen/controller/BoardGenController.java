@@ -321,21 +321,4 @@ public class BoardGenController {
 			return "common/error";
 		}
 	}
-	
-
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

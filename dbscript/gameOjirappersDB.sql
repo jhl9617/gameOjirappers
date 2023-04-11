@@ -223,7 +223,6 @@ comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
 
 
 DROP TABLE GAME cascade constraints;
-DROP TABLE GAME cascade constraints;
 
 CREATE TABLE GAME (
      "APPID" VARCHAR2(30 BYTE),
@@ -408,7 +407,7 @@ CREATE TABLE TB_BOARD_TAR (
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
-					board_notice VARCHAR2(50)
+                            board_notice VARCHAR2(50)
 );
 
 comment on column TB_BOARD_TAR.board_no is '게시글 번호';
@@ -765,12 +764,29 @@ alter table tb_community_req add reqno number default 1 not null unique;
 
 comment on column tb_community_req.reqno is '신청번호';
 
+
+drop sequence req_seq;
 create SEQUENCE req_seq
     start with 1
     increment by 1;
 
+drop sequence seq_comment;
 create SEQUENCE seq_comment
     start with 1
     increment by 1;
+
+
+
+
+
+
+
+
+
+drop sequence seq_board_tar;
+create sequence seq_board_tar
+    start with 1
+    increment by 1;
+
 commit;
    

@@ -1,10 +1,11 @@
+
 <%@ page language="java" contentType="text/html; charset=UTF-8" pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %> 
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %> 
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %> 
 
 <c:set var="ListCount" value="${ requestScope.paging.listCount }" />
-<c:set var="currentPage" value="${ requestScope.paging.currentPage }" />     
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -162,17 +163,7 @@ section.notice {
 .btn-dark {
   background: #555;
   color: #fff;
-}
-
-.btn-dark:hover, .btn-dark:focus {
-  background: #373737;
-  border-color: #373737;
-  color: #fff;
-}
-
-.btn-dark {
-  background: #555;
-  color: #fff;
+  padding: 10px 20px;
 }
 
 .btn-dark:hover, .btn-dark:focus {
@@ -190,11 +181,6 @@ section.notice {
   margin: 0;
   box-sizing: border-box;
 }
-.clearfix:after {
-  content: '';
-  display: block;
-  clear: both;
-}
 .container {
   width: 1100px;
   margin: 0 auto;
@@ -209,6 +195,17 @@ section.notice {
 }
 
 </style>
+    <script>
+        window.onload = function(){
+            if(${!empty message && message ne '${name}게시판에 오신것을 환영합니다.' }){
+                alert("${message}");
+                history.pushState({"appid":${appid}}, null, "movegameboard.do");
+                window.onpopstate = function(event) {
+                    history.go(1);
+                };
+            }
+        }
+    </script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
@@ -231,10 +228,17 @@ section.notice {
     <div id="board-search">
         <div class="container">
             <div class="search-window">
-                <form action="bgsearchTitle.do" method="post">
+                <form action="gameboardsearch.do" method="post">
+                    <input type="hidden" name="appid" value="${appid}">
+                    <input type="hidden" name="page" value="${page}">
                     <div class="search-wrap">
-                        <label for="search" class="blind">공지사항 내용 검색</label>
-                        <input id="search" type="search" name="search" placeholder="제목으로 검색하세요." value="">
+                        <label for="search" class="blind">게임게시판 검색</label>
+                        <select name="action">
+                            <option value="title">제목</option>
+                            <option value="content">내용</option>
+                            <option value="id">아이디</option>
+                        </select>
+                        <input id="search" type="search" name="keyword" placeholder="검색할 내용을 입력하세요">
                         <button type="submit" class="btn btn-dark">검색</button>
                     </div>
                 </form>
@@ -257,37 +261,17 @@ section.notice {
                     <th scope="col" class="th-num">번호</th>
                 </tr>
                 </thead>
-                <tbody>
-                <c:forEach items="${ requestScope.nlist }" var="TarNotice">
-                    <tr>
-                        <c:url var="dtview" value="/boardDetailView.do">
-                            <c:param name="board_no" value="${ boardTar.board_no }" />
-                            <c:param name="page" value="${ currentPage }"/>
-                            <c:param name="appid" value="${appid}"/>
-                            <c:param name="name" value="${name}"/>
-                        </c:url>
 
-                        <td>${ boardTar.board_count }</td>
-                        <th>
-                            <a href="${ dtview }">${ boardTar.board_title }</a>
-                        </th>
-                        
-                        <td><fmt:formatDate value="${ boardTar.board_date }" pattern="yyyy-MM-dd"/></td>
-
-                        <td>${ boardTar.user_id }</td>
-                        <td>${ boardTar.board_no }</td>
-                    </tr>
-                </c:forEach>
-                </tbody>
                 <tbody>
                 <c:forEach items="${ requestScope.list }" var="boardTar">
 
                     <tr>
                         <c:url var="dtview" value="/movetarboarddetail.do">
                             <c:param name="board_no" value="${ boardTar.board_no }"/>
-                            <c:param name="page" value="${ currentPage }"/>
+                            <c:param name="page" value="${ page }"/>
                             <c:param name="appid" value="${appid}"/>
                             <c:param name="name" value="${name}"/>
+                            <c:param name="user_id" value="${ loginUser.user_id }"/>
                         </c:url>
 
                         <td>${ boardTar.board_count }</td>
@@ -306,7 +290,7 @@ section.notice {
                 <br>
                 <div id="write" style="float:right;">
                     <c:url var="gbwrite" value="/gbwriteform.do">
-                        <c:param name="page" value="${ currentPage }"/>
+                        <c:param name="page" value="${page}"/>
                         <c:param name="appid" value="${appid}"/>
                         <c:param name="name" value="${name}"/>
                     </c:url>

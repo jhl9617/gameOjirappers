@@ -30,7 +30,7 @@
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.CVote" alias="CVote"/>
 		<typeAlias type="org.team404.gameOjirap.user.model.vo.User" alias="User" />
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.ScheduleVote" alias="ScheduleVote" />
-		<typeAlias type="org.team404.gameOjirap.common.BoardLikeCount" alias="BoardLikeCount" />
+		<typeAlias type="org.team404.gameOjirap.common.BoardLike" alias="BoardLike" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->
