@@ -191,13 +191,13 @@ public class BoardTarController {
     @RequestMapping("gameReplyWrite.do")
     public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
                                        @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
-                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String reply_content, @RequestParam("name") String name){
+                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String board_content, @RequestParam("name") String name){
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
 
-        Comment comment = new Comment(board_no, user_id, reply_content);
+        Comment comment = new Comment(board_no, user_id, board_content);
         if (boardTarService.insertTarReply(comment) > 0) {
             mv.addObject("message", "댓글 등록 성공");
         } else {
