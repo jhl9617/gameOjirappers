@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.boardTar.model.dao.BoardTarDao;
 import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.BoardLike;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.common.BoardLike;
 
@@ -74,6 +75,20 @@ import java.util.ArrayList;
     @Override
     public int updateTarLikedis(int boardNo) {
         return boardTarDao.updateTarLikedis(boardNo);
+
+    public int insertTarReply(Comment comment) {
+        return boardTarDao.insertTarReply(comment);
+    }
+
+    @Override
+    public ArrayList<Comment> selectComments(int boardNo) {
+        return boardTarDao.selectComments(boardNo);
+    }
+
+    @Override
+    public int updateTarReply(Comment comment) {
+        return boardTarDao.updateTarReply(comment);
+
     }
 
 }

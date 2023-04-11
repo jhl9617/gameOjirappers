@@ -6,9 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
-import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Repository("commentDao")
 public class CommentDao {

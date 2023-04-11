@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.io.UnsupportedEncodingException;
 import java.net.URLEncoder;
 import java.util.ArrayList;
-import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -22,11 +21,11 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
-import org.team404.gameOjirap.common.Pagingnn;
-import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 import org.team404.gameOjirap.game.model.vo.GameSearchs;
+import org.team404.gameOjirap.game.model.vo.Youtube;
+import org.team404.gameOjirap.game.model.vo.Youtube;
 
 @Controller("gameController")
 public class GameController {
@@ -341,5 +340,39 @@ public class GameController {
 			return gameService.selectgameAllSearch(searchs);
 
 		}
+		
+	//유튜브 영상 넣기
+		@RequestMapping(value ="youTube.do",method = { RequestMethod.POST, RequestMethod.GET })
+		public ModelAndView moveYouTubeView(HttpServletRequest request, @RequestParam("appid") String appid, ModelAndView mv) throws Exception {
+		//public String moveYouTubeView() throws Exception {
+	
+			Game game = gameService.selectYoutube(appid);
+			if(game != null) {
+				mv.addObject("game", game);
+				
+				mv.setViewName("youTube/youTubepage");
+			}else {
+				mv.addObject("message", appid + "번 게임 유튜 조회 실패");
+				mv.setViewName("common/error");
+			}
+			
+			return mv;
+			//Youtube youtubeurl = new Youtube();
+			//return "youTube/youTubepage";
+			
+			/*
+			 * if (game != null) {
+			mv.addObject("game", game);
+			mv.addObject("currentPage", currentPage);
+
+			mv.setViewName("game/gameDetailView");
+		} else {
+			mv.addObject("message", appid + "번 게임 정보 조회 실패");
+			mv.setViewName("common/error");
+		}
+		return mv;
+			 * */
+		}
+
 
 }

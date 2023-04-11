@@ -90,6 +90,16 @@ public class GameDao {
 		return (ArrayList<Game>)list;
 	}
 
+	public Game selectYoutube(String appid) {
+		// TODO Auto-generated method stub
+		return session.selectOne("gameMapper.selectYoutube", appid);
+	}
+
+
+//	public String selectYoutube(String appid) {
+//		return session.selectOne("gameMapper.selectYoutube", appid);
+//	}
+
 	
 
 	/*

@@ -56,10 +56,7 @@ function deleteinfo() {
     }
     return false;
 }
-// 게시판이동
-function movegameboard(){
-	location.href = "movegameboard.do?appid=${ requestScope.game.appid }&page=1";
-}
+
 </script>
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
@@ -187,7 +184,8 @@ function movegameboard(){
 							<h2 align="center" >출시된 가격:[${ requestScope.game.initialprice }원]</h2>
 							<h2 align="center">할인율:[${ requestScope.game.discountrate }%]</h2>
 							<h2 align="center">할인된 가격:[${ requestScope.game.finalprice }원]</h2>
-							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 링크</a></h2>
+							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 보러가기</a></h2>
+							<h2 align="center"><a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button">유튜브 영상 보러가기</a></h2>
 							</div>
 					</span>
 				</section>			
@@ -199,17 +197,18 @@ function movegameboard(){
 						<h2> 게임 플랫폼 </h2>
 					</header>
 					<div>
-						<h3 >${ requestScope.game.platform }</h3>
+						<h3 align="center">${ requestScope.game.platform }</h3>
 					</div>
-						<br>
 					</div>
 					<div>			
 					<header class="major">
 						<h2> 게임 지원언어 </h2>
 					</header>
-						<h3>${ requestScope.game.supported_languages }</h3>
+					<div style="float:left; border:1px solid black;">		
+					<h3>${ requestScope.game.supported_languages }</h3>
+					</div>
 					</div>	
-					<br>
+				
 				
 					<div>				
 						<header class="major">
@@ -224,9 +223,9 @@ function movegameboard(){
 					<header class="major">
 							<h2> 게임 권장사양 </h2>
 						</header>
-						<br><br><br>
+						<div style="float:left;">		
 						<p>${ requestScope.game.pcrecommended }</p>
-
+						</div>
 					</div>
 				</section>
 				
@@ -280,7 +279,7 @@ function movegameboard(){
 				}
 				</script>
 				<script type="text/javascript">
-
+							
 				
 				function gamegSearch(){
 					$.ajax({

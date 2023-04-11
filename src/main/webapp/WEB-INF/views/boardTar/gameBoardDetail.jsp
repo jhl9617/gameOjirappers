@@ -76,7 +76,6 @@
             margin: 4px 2px;
             cursor: pointer;
         }
-
     </style>
 <script>
     function btdelcheck() {
@@ -182,14 +181,27 @@
                 <a href="${btl}">목록으로</a>
             </td>
         </tr>
+
     </table>
-
 </center>
-
-
 </form>
 <br>
 <br>
+<%--커뮤니티 댓글 리스트로 불러와서 보여주기--%>
+<c:import url="/WEB-INF/views/boardTar/gameReplyList.jsp"/>
+<div id="comments-end"></div>
+<%--댓글 입력 form--%>
+<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
+    <input type="hidden" name="board_no" value="${boardTar.board_no}">
+    <input type="hidden" name="user_id" value="${boardTar.user_id}">
+    <input type="hidden" name="appid" value="${appid}">
+    <input type="hidden" name="name" value="${name}">
+    <div class="form-group">
+        <label for="reply_content">댓글 내용</label>
+        <textarea class="form-control" id="reply_content" name="reply_content" rows="3"></textarea>
+    </div>
+    <button type="submit" class="btn btn-primary">댓글 작성</button>
+</form>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

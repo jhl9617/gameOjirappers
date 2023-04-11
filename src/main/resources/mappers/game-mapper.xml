@@ -6,7 +6,6 @@
 
 	<resultMap type="Game" id="resultGameTop">
 		<result property="appid" column="appid"/>
-
 		<result property="name" column="name"/>
 		<result property="headerimg" column="headerimg"/>
 		<result property="short_description" column="short_description"/>
@@ -71,8 +70,12 @@
 		<result property="genre" column="genre"/>
 		<result property="positive" column="positive"/>
 		<result property="ccu" column="ccu"/>
-		<result property="releasedate" column="releasedate"/>
-		
+		<result property="releasedate" column="releasedate"/>		
+	</resultMap>
+	
+	<resultMap type="Game" id="youtube">
+		<result property="appid" column="appid"/>
+		<result property="name" column="name"/>
 	</resultMap>
 
 
@@ -176,7 +179,7 @@
 	 
 	 <!-- 게임 검색 모두 갖고 오기 -->
 	<select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
-	 	select  name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta, discountrate
+	 	select  appid, name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta, discountrate
 	 	from game where
 	 	<choose>
 	 		<when test="type !=null and type.equals('name')" >
@@ -198,7 +201,7 @@
 		 	<when test="type !=null and type.equals('discountrate')" >
 		 	<![CDATA[
 		 	  discountrate =  #{ keyword } order by discountrate
-		 	  ]]>
+		 	  ]]> 
 		 	</when>
 		 </choose>
 	 </select>
@@ -214,18 +217,9 @@
       where appid = #{appid}
    </select>
 	 
-	<!--  <select id="selectListCount" resultType="_int">
-	 	select count(*) from game
-	 </select>
-	 <select id="selectList" parameterType="Pagingnn" resultMap="allGame">
-	 	<![CDATA[
-	 	select *
-		from(select rownum rnum, 
-        from (select * from game
-                            order by  asc))
-		where rnum >=#{startRow} and rnum <=#{endRow} 
-		]]>
-	 </select> -->
+	<select id="selectYoutube" resultMap="youtube">
+		select appid, name from game where appid = #{appid}
+	</select>
 
 
 

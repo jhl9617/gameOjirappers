@@ -30,4 +30,5 @@ public interface UserService {
 	int insertFavorite(User user);										//즐찾등록요청처리용
 	int deleteFavorite(String user_id);								//즐찾삭제요청처리용
 	User selectFavoriteCount(String user_id);					//즐찾 갯수조회 => 게임과 아이디매칭
+
 }

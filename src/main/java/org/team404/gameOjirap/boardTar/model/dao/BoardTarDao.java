@@ -54,6 +54,7 @@ public class BoardTarDao {
         return session.update("boardTarMapper.updateBoard", boardTar);
     }
 
+    // 좋아요
     public int insertTarLike(BoardLike blike) {
         return session.insert("boardTarMapper.insertTarLike", blike);
     }
@@ -64,5 +65,19 @@ public class BoardTarDao {
 
     public int updateTarLikedis(int boardNo) {
         return session.update("boardTarMapper.updateTarLikedis", boardNo);
+
+    public int insertTarReply(Comment comment) {
+        return session.insert("boardTarMapper.insertTarReply", comment);
+    }
+
+    //댓글 리스트
+    public ArrayList<Comment> selectComments(int boardNo) {
+        List<Comment> list = session.selectList("boardTarMapper.selectTarReply", boardNo);
+        return (ArrayList<Comment>) list;
+    }
+
+    public int updateTarReply(Comment comment) {
+        return session.update("boardTarMapper.updateTarReply", comment);
+
     }
 }

@@ -13,6 +13,7 @@ import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 
 import org.team404.gameOjirap.common.BoardLike;
 
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.game.model.service.GameService;
@@ -58,7 +59,6 @@ public class BoardTarController {
         model.addAttribute("appid", appid);
         model.addAttribute("name", name);
         return "boardTar/gameBoard";
-
     }
 
     // 게시글 상세보기
@@ -82,12 +82,14 @@ public class BoardTarController {
             checked = "y";
         }
         BoardTar boardTar = boardTarService.selectBoard(board_no);
+        ArrayList<Comment> commentList = boardTarService.selectComments(board_no);
         if (boardTar != null) {
             model.addAttribute("checked", checked);
             model.addAttribute("boardTar", boardTar);
             model.addAttribute("name", name);
             model.addAttribute("appid", appid);
             model.addAttribute("page", currentPage);
+            model.addAttribute("commentList", commentList);
             return "boardTar/gameBoardDetail";
         } else {
             model.addAttribute("message", "게시글 상세보기 실패");
@@ -95,7 +97,6 @@ public class BoardTarController {
             model.addAttribute("page", currentPage);
             return "redirect:movegameboard.do";
         }
-
     }
 
     // 게시글 등록뷰 이동
@@ -109,7 +110,6 @@ public class BoardTarController {
             currentPage = Integer.parseInt(page);
         }
         mv.addObject("page", currentPage);
-
         mv.addObject("name", name);
         mv.addObject("appid", appid);
         mv.setViewName("boardTar/gameBoardWrite");
@@ -207,7 +207,52 @@ public class BoardTarController {
         model.addAttribute("appid", appid);
         model.addAttribute("user_id", user_id);
         return "redirect:movetarboarddetail.do";
+    }
+/*<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
+    <input type="hidden" name="board_no" value="${boardTar.board_no}">
+    <input type="hidden" name="user_id" value="${boardTar.user_id}">
 
+    <div class="form-group">
+        <label for="gamecomment">댓글 내용</label>
+        <textarea class="form-control" id="gamecomment" name="gamecomment" rows="3"></textarea>
+*/
+    //Tar 게시판 댓글 등록
+    @RequestMapping("gameReplyWrite.do")
+    public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
+                                       @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
+                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String reply_content, @RequestParam("name") String name){
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+
+        Comment comment = new Comment(board_no, user_id, reply_content);
+        if (boardTarService.insertTarReply(comment) > 0) {
+            mv.addObject("message", "댓글 등록 성공");
+        } else {
+            mv.addObject("message", "댓글 등록 실패");
+        }
+        mv.addObject("board_no", board_no);
+        mv.addObject("name", name);
+        mv.addObject("page", currentPage);
+        mv.addObject("appid", appid);
+        mv.setViewName("redirect:movetarboarddetail.do");
+        return mv;
+    }
+
+    @RequestMapping("updateGameComment.do")
+    public ModelAndView updateGameComment(ModelAndView mv, @RequestParam("board_no") int board_no, @RequestParam("user_id") String user_id,
+                                          @RequestParam("com_contents") String reply_content){
+
+        Comment comment = new Comment(board_no, user_id, reply_content);
+        if (boardTarService.updateTarReply(comment) > 0) {
+            mv.addObject("message", "댓글 수정 성공");
+        } else {
+            mv.addObject("message", "댓글 수정 실패");
+        }
+        mv.addObject("board_no", board_no);
+        mv.setViewName("redirect:movetarboarddetail.do");
+        return mv;
     }
 
     // 게시물 좋아요 감소
@@ -331,4 +376,5 @@ public class BoardTarController {
         model.addAttribute("appid", boardTar.getAppid());
         return "redirect:movetarboarddetail.do";
     }
+
 }
