@@ -91,6 +91,16 @@ public class GameServiceImpl implements GameService{
 		return gameDao.selectgameAllSearch(searchs);
 	}
 
+	@Override
+	public Game selectYoutube(String appid) {
+		return gameDao.selectYoutube(appid);
+	}
+
+//	@Override
+//	public String selectYoutube(String appid) {
+//		return gameDao.selectYoutube(appid);
+//	}
+
 	
 
 	/*
