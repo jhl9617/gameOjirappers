@@ -225,7 +225,7 @@ public class BoardTarController {
     @RequestMapping("gameReplyWrite.do")
     public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
                                        @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
-                                       @RequestParam("user_id") String user_id, @RequestParam("reply_content") String board_contents, @RequestParam("name") String name){
+                                       @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents, @RequestParam("name") String name){
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
