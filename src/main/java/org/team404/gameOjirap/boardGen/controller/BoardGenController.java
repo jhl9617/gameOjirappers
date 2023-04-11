@@ -18,7 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardGen.model.service.BoardGenService;
 import org.team404.gameOjirap.boardGen.model.service.CommentService;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 

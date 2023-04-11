@@ -1,4 +1,4 @@
-package org.team404.gameOjirap.boardGen.model.vo;
+package org.team404.gameOjirap.common.board;
 
 import java.sql.Date;
 
@@ -17,15 +17,11 @@ public class Comment implements java.io.Serializable{
 		super();
 	}
 
-	public Comment(int com_no, String com_contents, Date com_date, int com_lev, int com_no2, int board_no, String user_id) {
+	public Comment( int board_no, String user_id, String com_contents) {
 		super();
-		this.com_no = com_no;
-		this.com_contents = com_contents;
-		this.com_date = com_date;
-		this.com_lev = com_lev;
-		this.com_no2 = com_no2;
 		this.board_no = board_no;
 		this.user_id = user_id;
+		this.com_contents = com_contents;
 	}
 
 	public int getCom_no() {
