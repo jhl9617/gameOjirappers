@@ -19,12 +19,12 @@ public interface UserService {
 	int selectDupCheckNick(String user_nickname);			// 닉네임 중복확인용
 	int userDeleteMethod(String user_id);  						// 회원탈퇴 요청처리용
 	
-	int updateUser(User user);
+	int updateUser(User user);											//회원 정보수정처리용
 	int levelMethod(User user_level);     							// 현재등급 출력용
 	int checkanswer(String confirm_answer);						//본인확인 질문 확인용
 	int updateLoginok (User user);										//로그인가능 확인용
-	void updateBan(User user);									// 유저 정지용
-	void updateBanRelease(User loginUser);					// 유저 정지 해제용
+	void updateBan(User user);											// 유저 정지용
+	void updateBanRelease(User loginUser);						// 유저 정지 해제용
 
 	
 	int insertFavorite(User user);										//즐찾등록요청처리용

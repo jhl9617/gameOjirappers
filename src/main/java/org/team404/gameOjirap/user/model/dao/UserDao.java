@@ -47,6 +47,7 @@ public class UserDao {
 		return (ArrayList<User>)list;
 	}
 	
+	//정보수정용
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);
 	}

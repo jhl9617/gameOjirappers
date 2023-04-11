@@ -52,11 +52,11 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	
-	
+	//정보수정요청처리
 	@Override
 	public int updateUser(User user)	{
 	return userDao.updateUser(user);
-}
+	}
 
 	@Override
 	public int levelMethod(User user_level) {

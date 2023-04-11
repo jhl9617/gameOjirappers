@@ -18,7 +18,16 @@
     font-weight: normal;
     font-style: normal;
 	}
-
+	
+	p{
+	top: -100px;
+	width: 700px;
+	width: 50px; 	          /* 가로너비 */
+	height: 2px;	          /* 세로너비 */
+	color:#424242;            /* 글씨색상*/
+	border-collapse: collapse;
+	background-color: transparent;
+	}
     
     .table-container {
       display: flex;
@@ -160,16 +169,16 @@
     <div class="table-container">
       <div class="menu">
         <form>
-        <br> <br> <br><br>
+        <br>
           <p>
-         	<input type="button" onclick="#"  value="프로필이미지">
-        	<input type="button" onclick="#"  value="프로필이미지수정"><br>
-			<input type="button" onclick="#"  value="닉네임"><br>
-			<input type="button" onclick="#"  value="내 등급"><br>
-<%-- 			<a href="${ pageContext.servletContext.contextPath }/moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }" class="button"><span class="label">회원정보관리</span></a> --%>
+			<p>${ sessionScope.loginUser.user_nickname } 님</p>
+			<p>내 등급 : ${ sessionScope.loginUser.user_level } </p>
+			<p>내 포인트 : ${ sessionScope.loginUser.user_point } </p>
+		<div class="menuButton">
 			<input type="button" onclick="location.href = 'moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="내 정보수정"><br>
-			<input type="button" onclick="#"  value="메인화면으로"><br>
+			<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br>
 			<input type="button" onclick="location.href = 'delPage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="탈퇴하기"><br>
+		</div>
         </form>
       </div>
       

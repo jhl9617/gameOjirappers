@@ -112,7 +112,7 @@
 		update tb_user
 		set user_pwd= #{user_pwd},
 			 user_phone= #{user_phone}, 
-			 email= #{email},
+			 user_email= #{user_email}
 		where user_id = #{user_id}		
 	</update>
 
