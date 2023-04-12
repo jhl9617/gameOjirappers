@@ -74,14 +74,14 @@
 
 </head>
 <body>
-<%--CComment 리스트로 가져와서 댓글 보여주기--%>
+
 <c:forEach var="comment" items="${comment}" >
 <div class="comment">
   <div class="comment-content">
     <span class="comment-author" id="author-${comment.com_no}">${comment.user_id}</span>
     <span class="comment-date" id="date-${comment.com_no}">${comment.com_date}</span>
     <h3><p id="content-${comment.com_no}">${comment.com_contents}</p></h3>
-      <%--수정삭제버튼--%>
+      <%--수정삭제버튼 if 문 확인해야함--%>
     <div class="comment-btn">
       <c:if test="${comment.user_id == sessionScope.loginUser.user_id} || ${sessionScope.loginUser.admin_id == 'Y'}">
         <a href="javascript:void(0)" class="edit-comment" data-com_no="${comment.com_no}">수정</a> &nbsp;

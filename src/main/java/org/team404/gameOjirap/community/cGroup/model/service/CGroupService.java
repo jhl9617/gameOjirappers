@@ -45,4 +45,10 @@ public interface CGroupService {
     int searchCGroupCount(String keyword);
 
     int insertReport(CReport cReport);
+
+
+	ArrayList<CReport> selectCReportList();
+
+    int selectMemberListCount(int communityid);
+
 }

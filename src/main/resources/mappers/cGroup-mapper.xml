@@ -23,8 +23,8 @@
 
 <!--커뮤 생성-->
     <insert id="insertCGroup" parameterType="CGroup" >
-        INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc)
-        VALUES ((SELECT MAX(communityId) + 1 FROM TB_Community), #{communityname}, SYSDATE, #{user_id}, #{communitydesc})
+        INSERT INTO TB_Community (communityId, communityName, communityDate, user_id, communityDesc, communityimgori, communityimgrename)
+        VALUES ((SELECT MAX(communityId) + 1 FROM TB_Community), #{communityname}, SYSDATE, #{user_id}, #{communitydesc}, #{communityimgori}, #{communityimgrename})
     </insert>
 
     <!--커뮤 id 받아오는 구문-->
@@ -153,5 +153,15 @@
         insert into tb_community_report (user_id, communityId, c_report_time, c_report_desc, c_rep_type)
         values (#{user_id}, #{communityid}, sysdate, #{c_report_desc}, #{c_rep_type})
     </insert>
+    
+    <select id="selectCReportList" resultType="CReport">
+    	select * from TB_COMMUNITY_REPORT
+    </select>
 
+    <!-- 멤버 페이지 페이징용 리스트 카운트 -->
+    <select id="selectMemberListCount" parameterType="_int" resultType="_int">
+        select count(*)
+        from tb_community_member
+        where communityid = #{communityid}
+    </select>
 </mapper>

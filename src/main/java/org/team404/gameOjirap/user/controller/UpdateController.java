@@ -164,7 +164,7 @@ public class UpdateController {
 			JSONObject job = new JSONObject();
 			
 			job.put("com_date", comment.getCom_date().toString());
-			job.put("board_title", URLEncoder.encode(comment.getCom_contents(), "utf-8"));
+			job.put("com_contents", URLEncoder.encode(comment.getCom_contents(), "utf-8"));
 			
 			jarr.add(job);  //job 를 jarr 에 추가함
 		}//for

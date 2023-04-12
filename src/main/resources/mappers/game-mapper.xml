@@ -237,6 +237,24 @@
 		select appid, name from game where appid = #{appid}
 	</select>
 
+	<!--해당게임 글 리스트 10개 가져오기-->
+	<select id="selectTarBoardList" parameterType="_int" resultType="BoardTar">
+		SELECT *
+		FROM (
+				 SELECT ROWNUM RNUM, C.*
+				 FROM (
+						  SELECT *
+						  FROM TB_BOARD_TAR
+						  WHERE APPID = #{appid}
+						  and BOARD_NOTICE ='Y'
+						  ORDER BY BOARD_NO DESC
+					  ) C
+			 )
+		<![CDATA[
+		where rnum >= 1 and rnum <=10
+		]]>
+	</select>
+
 
 
 

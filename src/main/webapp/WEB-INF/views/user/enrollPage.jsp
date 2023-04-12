@@ -7,12 +7,167 @@
 <head>
 <meta charset="UTF-8">
 <title>enrollPage</title>
-<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/enrollCss.css" />
+<style>
+	@font-face {
+	    font-family: 'GyeonggiTitleM';		/* 글씨체: '경기천년제목' */
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+
+    bady{
+    margin-bottom:0px;
+    font-family: 'GyeonggiTitleM';
+    }
+    
+
+	input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 40px;
+	  width: 150px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
+	  
+	  
+	  .userInfo{
+	  padding:25px;
+	  position: relative;
+      top: -20px;
+      width: 550px;
+      height: 700px;
+      border-radius: 20px;		 										/* 박스 모서리 라운드 처리 */
+	  box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
+	  }
+	  
+	  
+</style>
+
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+</head>
+
+
+<body bgcolor= '#081c2b'>
+<%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
+<br>
+<br>
+<h1 align ="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' " > 회원가입 </h1>
+<br>
+<div>
+
+<form action="enroll.do" id="next_form" method="post" >
+		<table class= "userInfo"  align="center" width="500"
+				  style="padding:'5' ; color: #f56a6a; font-family:'GyeonggiTitleM'; font-weight: 300; font-size: 0.9em;" >		
+				  
+				  
+			<tr>
+				<th height= "30px;" style="color:Lightgray; " align="left" > * 아이디</th>
+				<td>	
+					<input name="user_id" type="text" id="user_id"  required
+							  style="width:200px; height:37px; border-radius: 8px; font-size:13px; "> &nbsp;&nbsp;
+					<input type="button"	value="아이디 중복확인" onclick="return CheckId()">
+				</td>
+			</tr>
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" > * 비밀번호</th>
+				<td>
+					<input height= "30px;" name="user_pwd" class="pw" id="user_pwd1" type="password" required 
+							  style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >* 비밀번호 확인</th>
+				<td>
+					<input class="pw" id="user_pwd2" type="password" required
+							  style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >* 닉네임</th> 
+				<td>
+					<input name="user_nickname" type="text" id="user_nickname" required  
+							  style="width:200px; height:37px; border-radius: 8px; font-size:13px; " > &nbsp;&nbsp;
+					<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()">
+				</td>
+			</tr>
+			
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >* 이 름 </th>
+				<td>
+					<input name="user_name" type="text" id="user_name" required
+					 		  style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >* 전화번호(-제외) </th>
+				<td>
+					<input name="user_phone" type="tel" id="user_phone" required
+							  style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+				
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >* 이메일 </th>
+				<td>
+					<input name="user_email" type="text" id="user_email" required
+							  style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+			
+			<tr>
+				<th height= "30px;" style="color:Lightgray;" align="left" >생일 </th>
+				<td>
+					<input name="user_birth" type="date" id="user_birth" required
+							  style="width:370px; height:37px; font-size:13px; border-radius: 8px;">
+				</td>
+			</tr>
+			
+			<tr>
+				<th height= "30px;" colspan="2" height= "50">
+					<input type="submit" value="가입하기">&nbsp;&nbsp;
+					&nbsp;
+					<input type="button" onclick="location.href = 'javascript:history.go(-1);'"  value="이전 페이지로">&nbsp;&nbsp;
+					&nbsp;
+					<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br>
+				</th>
+			</tr>	
+				
+			
+		</table>
+	</form>
+</div>		
 <script type="text/javascript">
-
-
 
 	$(document).ready(function() {		//validate() 함수가 false를 리턴할 때 submit 작동 방지
 	  $("#next_form").on("submit", function(event) {
@@ -125,86 +280,9 @@
 	
 
 </script>
-</head>
-
-
-<body>
-
-	<form action="enroll.do" id="next_form" method="post" >
-		<div>
-			<div class="container">
-				<h2 align="center">회원가입 <br></h2>
-
-				<label for="id" style="padding: 2px">* 아이디<br>
-					<input name="user_id" 
-								type="text" id="user_id"  required> 
-					<input type="button"	value="아이디 중복확인" onclick="return CheckId()">
-				<br><br>
-				</label> 
-				
-				<label for="pwd">* 비밀번호<br> 
-					<input name="user_pwd" 
-								class="pw" id="user_pwd1" type="password" required ><br>
-				<br><br>
-				</label> 
-				<label for="pwd2">* 비밀번호 확인<br> 
-					<input class="pw" id="user_pwd2" type="password" required><br>
-				<br><br>
-				</label> 
-				
-				<label for="nickname">* 닉네임<br> 
-				<input name="user_nickname"
-							type="text" id="user_nickname" required>
-				<input type="button" value="닉네임 중복확인" onclick="return CheckNickname()"><br>
-				<br><br>
-				</label> 
-				
-				<label for="name">* 이 름<br> 
-					<input name="user_name"
-								type="text" id="user_name" required><br>
-				<br><br>
-				</label> 
-				
-				<label for="phone">* 전화번호(-제외하고 입력)<br> 
-					<input name="user_phone"
-								type="tel" id="user_phone" required><br>
-				<br><br>
-				</label> 
-				
-				<label for="email">* 이메일<br> 
-					<input name="user_email"
-								type="text" id="user_email" required><br>
-				<br><br>
-				</label> 
-				
-				<label for="date">생일<br>
-					<input name="user_birth"
-								type="date" id="user_birth" required><br>
-				<br><br>
-				</label> 
-				<label for="answer">본인확인 질문
-					<select id ="onfirm_answer_select" style= "background:Oldlace; color:gray; font-size: 13pt; ">
-					    <option value="">선택</option>
-						<option value="1">당신의 이름은 무엇입니까?</option>
-						<option value="2">당신의 생년월일은 언제입니까?</option>
-						<option value="3">당신의 최고 학력은 무엇입니까?</option>
-						<option value="4">가장 좋아하는 어린 시절 애완 동물의 이름은 무엇입니까?</option>
-						<option value="5">당신이 태어난 도시는 어디입니까?</option>
-					</select>
-						<input name="confirm_answer"
-									type="text" id="onfirm_answer" placeholder="답변 입력" required > <br>
-				</label>
-				<br>
-			</div>
-			<input type="submit" value="가입하기">
-		</div>
-	</form>
-				
 
 
 
-
-	<br><br><br><br><br><br><br><br><br>
 <%-- <c:import url="/WEB-INF/views/common/footer.jsp" /> --%>
 </body>
 </html>

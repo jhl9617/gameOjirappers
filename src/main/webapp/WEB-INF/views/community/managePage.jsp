@@ -5,32 +5,89 @@
     <title></title>
     <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
     <style>
-        nav ul li {
-            margin-top: 20px;
-            display: block;
+        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
+
+        body {
+            background-color: #020d21;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            font-size: 16px;
+            font-weight: 400;
+            text-rendering: optimizeLegibility;
         }
 
-        div {
-            display: none;
-            margin-right: 20%;
-            padding: 0;
-            border: 1px solid crimson;
+        div.table-title {
+            display: block;
+            margin: auto;
+            max-width: 600px;
+            padding:5px;
+            width: 100%;
+        }
+
+        .table-title h3 {
+            color: #dcd9d9;
+            font-size: 30px;
+            font-weight: 400;
+            font-style:normal;
+            font-family: "Roboto", helvetica, arial, sans-serif;
+            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
+            text-transform:uppercase;
+        }
+
+
+        /*** Table Styles **/
+
+        .table-fill {
+            background: #b6b6b8;
+            border: 2px solid #ffd0e4;
+            border-radius:3px;
+            border-collapse: collapse;
+            margin: auto;
+            max-width: 600px;
+            padding:5px;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: float 5s infinite;
         }
 
         th {
-            border: 1px solid white;
-            background-color: #956565;
-            text-align: center;
+            color:#fef2dc;;
+            background:#343a45;
+            border-bottom:4px solid #9ea7af;
+            border-right: 1px solid #343a45;
+            border-left: 2px solid #ffd0e4;
+            border-bottom: #ffd0e4;
+            font-size:23px;
+            font-weight: 100;
+            padding:24px;
+            text-align:left;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            vertical-align:middle;
         }
 
-        nav {
-            margin: 0;
-            padding: 0;
-            width: 30%;
+        th:first-child {
+            border-top-left-radius:5px;
         }
 
-        table tr {
-            text-align: center;
+        th:last-child {
+            border-top-right-radius:5px;
+            border-right:none;
+        }
+
+        tr {
+            border-bottom-: 1px solid #ffd0e4;
+            border-top: 1px solid #ffd0e4;
+            color:#666B85;
+            font-size:16px;
+            font-weight:normal;
+            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        }
+
+
+        td {
+            background:#4E5066;
+            color:#fef2dc;
+            border-top: 1px solid #ffd0e4;
+            border-left: 2px solid #ffd0e4;
         }
     </style>
 </head>
@@ -60,8 +117,10 @@
         </td>
         <td>
             <div id="mdiv1">
+                <div class="table-title">
                 <h2 align="center">가입신청 관리</h2>
-                <table>
+                </div>
+                <table class="table-fill">
                     <tr>
                         <th>신청 번호</th>
                         <th>신청자 id</th>
@@ -85,8 +144,10 @@
                 </table>
             </div>
             <div id="mdiv2">
+                <div class="table-title">
                 <h2 align="center">커뮤니티 멤버 관리</h2>
-                <table id="membertable">
+                </div>
+                <table id="membertable" class="table-fill">
                     <tr>
                         <th>멤버 아이디</th>
                         <th>멤버 닉네임</th>
@@ -98,7 +159,7 @@
             </div>
             <div id="mdiv3">
                 <!-- 커뮤니티 이미지, 이름, 생성일 , 생성자 설명 보여주는 테이블 -->
-                <table id="upform1">
+                <table id="upform1" class="table-fill">
                     <tr>
                         <th>커뮤니티 이름</th>
                         <td>${group.communityname}</td>
@@ -134,7 +195,7 @@
                 </table>
                 <form action="updatecommu.do" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="communityid" value="${group.communityid}">
-                    <table id="upform2">
+                    <table id="upform2" class="table-fill">
                         <tr>
                             <th>커뮤니티 이름</th>
                             <td><input name="communityname" placeholder="${group.communityname}"></td>
@@ -174,11 +235,14 @@
             <script>
                 $(function () {
                     document.getElementById("mdiv1").style.display = "block";
+                    document.getElementById("mdiv2").style.display = "none";
+                    document.getElementById("mdiv3").style.display = "none";
                     $('#upform2').css("display", "none");
                 });
 
-                function deletemember(num) {
-                    location.href = "deletemember.do?user_id=" + num + "&communityid=${communityid}";
+                function deletemember(id) {
+                    var user_id = id;
+                    location.href = "deletemember.do?user_id=" + user_id + "&communityid=${communityid}";
                     return false;
                 }
 
@@ -205,13 +269,13 @@
 
                                 for (var i in json.list) {
                                     var role = '';
-                                    if (json.list[i].user_id == "${group.user_id}" || "${sessionScope.loginUser.admin_id}" == 'Y') {
+                                    if (json.list[i].user_id == "${group.user_id}" || json.list[i].admin_id  == 'Y') {
                                         role = '관리자';
                                     } else {
                                         role = '회원';
                                     }
-
-                                    members += "<tr><td>" + json.list[i].user_id + "</td><td>" + json.list[i].user_nickname + "</td><td>" + role + "</td><td>" + "<button onclick=\"deletemember(" + json.list[i].user_id + ");\">탈퇴</button></td></tr>";
+                                    var user_id = json.list[i].user_id;
+                                    members += "<tr><td>" + json.list[i].user_id + "</td><td>" + json.list[i].user_nickname + "</td><td>" + role + "</td><td>" + "<button onclick=\"deletemember('"+user_id+"');\">탈퇴</button></td></tr>";
 
                                 }
                                 $("#membertable").html(members);
