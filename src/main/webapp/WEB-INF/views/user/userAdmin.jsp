@@ -10,6 +10,10 @@
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function() {
+	<c:if test="${not empty message}">
+    	alert("${message}");
+    </c:if>
+	
 	$('#useridDiv').css('display','none');
     $('#usernameDiv').css('display','none');
     
@@ -44,17 +48,17 @@ function showDiv(){
    <input type="radio" name="item" value="username" > 이름
 </div>
 <div id="useridDiv">
-   <form action="searchUserid.do" method="post">
+   <form action="aSearchUID.do" method="post">
       <label>검색할 회원아이디를 입력하세요 : 
-         <input type="search" name="uid">
+         <input type="search" name="keyword">
       </label>
       <input type="submit" value="검색">
    </form>
 </div>
 <div id="usernameDiv">
-   <form action="searchUserName.do" method="post">
-      <label>검색할 회원이름을 입력하세요 : 
-         <input type="seach" name="uname">
+   <form action="aSearchUN.do" method="post">
+      <label>검색할 회원닉네임을 입력하세요 : 
+         <input type="seach" name="keyword">
       </label>
       <input type="submit" value="검색">
    </form>
@@ -87,7 +91,8 @@ function showDiv(){
 		 <c:if test="${ u.user_status eq 'pause' }">활동불가</c:if>
 		 </td>
          <td>
-            <%--추가 예정--%>
+				추가구현
+
          </td>
          
          <td>
@@ -102,10 +107,11 @@ function showDiv(){
    </c:forEach>
 </table>
 <hr>
+<form action="showCReportAdmin.do">
+	<input type="submit" value="커뮤니티 신고글 보기">
+</form>
 
 <!-- Footer -->
-<footer id="footer">
-   <p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-</footer>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

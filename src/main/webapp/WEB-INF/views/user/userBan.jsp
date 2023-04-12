@@ -9,6 +9,10 @@
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js" ></script>
 <script type="text/javascript">
 $(function() {
+	<c:if test="${not empty message}">
+    	alert("${message}");
+    </c:if>
+	
 	$('#decpoint').css('display','none');
 	$('#ban').css('display','none');
 	$('#decpointbtn').css('display','none');
@@ -47,8 +51,8 @@ function showUBan(){
  }; 
  
  function decpFunc() {
-	 $("#selectpinput").value = $("#selectp")[0].vlaue;
-	var rtn = confirm( "${ user.user_name }(${ user.user_id })님의 포인트를" + $("#selectp option:selected").text() + "만큼 차감하시겠습니까?"); 
+	 $("#selectpinput")[0].value = $("#selectp")[0].value;
+	var rtn = confirm( "${ user.user_name }(${ user.user_id })님의 포인트를 " + $("#selectp option:selected").text() + "만큼 차감하시겠습니까?"); 
 	
 	if(rtn) {
 		$("#decpoint").submit();
@@ -62,17 +66,29 @@ function deletefunc() {
 	      $("#delete").submit();
 	   }
 };
+
+function adminBanR() {
+	var rtn = confirm("${ user.user_name }(${ user.user_id })님을 정지 해제 처리하시겠습니까?");
+	
+	if(rtn) {
+		$("#banr").submit();
+	}
+}
 </script>
 </head>
 <body>
 <h1>회원 활동정지 처리 페이지</h1>
 <hr>
 <br>
-<h2 align="left">${ user.user_name }(${ user.user_id }) 님</h2>
+<h1 align="left">${ user.user_name }(${ user.user_id }) 님</h1>
+<br>
+<h2>닉네임 : ${ user.user_nickname }</h2>
+<br>
+<h3>가입일 : 추가예정</h3>
 <br>
 <h3>회원등급 : ${ user.user_level }</h3><br>
 
-<h3>포인트 : ${ user.user_point }</h3> &nbsp; <button id="sdpdtn" onclick="showDecP();">포인트차감</button>
+<h3>포인트 : ${ user.user_point }</h3> &nbsp; <button id="sdpdtn" onclick="showDecP();">포인트차감</button> 
 
 <form action="adminUDecPoint.do?user_id=${ user.user_id }" method="post" id="decpoint" name="decpoint" >
 	차감할 포인트 : 
@@ -81,7 +97,7 @@ function deletefunc() {
 		<option value="100">100</option>
 		<option value="200">200</option>
 		<option value="300">300</option>
-		<option value="500">400</option>
+		<option value="400">400</option>
 	</select>
 	<input type="hidden" id="selectpinput" name="selectpinput">
 	<br>차감사유 : <input name="causep">
@@ -89,8 +105,13 @@ function deletefunc() {
 <button id="decpointbtn" onclick="decpFunc();">차감</button>
 
 <c:if test="${ user.user_status eq 'run' }"><h3>활동상태 : 활동가능</h3></c:if>
-<c:if test="${ user.user_status eq 'pause' }"><h3>활동상태 : 활동불가(${ user.ban_release_date } 까지)</h3></c:if>
-<br><br><button id="sbbtn" onclick="showUBan();">활동정지</button>
+<c:if test="${ user.user_status eq 'pause' && user.ban_release_date ne null }">
+	<h3>활동상태 : 활동불가(${ user.ban_release_date } 까지) &nbsp; <button onclick="adminBanR();">활동정지해제</button></h3> 
+</c:if> 
+<form action="adminUBanR.do?user_id=${ user.user_id }"  method="post" id="banr"></form>
+<c:if test="${ user.user_status eq 'pause' && user.ban_release_date eq null }">
+	<h3>활동상태 : 활동불가(영구) &nbsp; <button onclick="adminBanR();">활동정지해제</button></h3> </c:if>
+<br><br><button id="sbbtn" onclick="showUBan();">활동정지</button> 
 <form action="adminUBan.do?user_id=${ user.user_id }"  method="post" id="ban" name="ban">
 	정지일
 	<select id="selectt">
@@ -110,8 +131,6 @@ function deletefunc() {
 <br><button onclick="deletefunc();">강제탈퇴</button>
 
 	<!-- Footer -->
-<footer id="footer">
-	<p class="copyright">&copy; Untitled. All rights reserved. Demo Images: <a href="https://unsplash.com">Unsplash</a>. Design: <a href="https://html5up.net">HTML5 UP</a>.</p>
-</footer>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

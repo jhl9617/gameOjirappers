@@ -110,8 +110,15 @@ public class CGroupServiceImpl implements CGroupService{
         return cGroupDao.insertReport(cReport);
     }
 
+
+	@Override
+	public ArrayList<CReport> selectCReportList() {
+		return cGroupDao.selectCReportList();
+	}
+
     @Override
     public int selectMemberListCount(int communityid) {
         return cGroupDao.selectMemberListCount(communityid);
     }
+
 }

@@ -6,6 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
@@ -45,8 +46,8 @@ public class UserDao {
 	}
 	
 	
-	public ArrayList<User> selectUserList() {
-		List<User> list = session.selectList("userMapper.selectUserList");	
+	public ArrayList<User> selectUserList(Paging page) {
+		List<User> list = session.selectList("userMapper.selectUserList", page);	
 		return (ArrayList<User>)list;
 	}
 	
@@ -100,6 +101,26 @@ public class UserDao {
 		return (ArrayList<Comment>)list;
 	}
 
+
+	public void updateDecPoint(User user) {
+		session.update("userMapper.updateDecPoint", user);
+		
+	}
+
+	public int selectListCount() {
+		return session.selectList("userMapper.selectUserListCount").size();
+		
+	}
+
+	public ArrayList<User> selectSearchUID(String keyword) {
+		List<User> list = session.selectList("userMapper.selectSearchUID", keyword);
+		return (ArrayList<User>)list;
+	}
+
+	public ArrayList<User> selectSearchUN(String keyword) {
+		List<User> list = session.selectList("userMapper.selectSearchUN", keyword);
+		return (ArrayList<User>)list;
+	}
 
 
 
