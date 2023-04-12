@@ -7,21 +7,23 @@
 <meta charset="UTF-8">
 <title>UserDatailPage</title>
     <style>
-    bady{
-    margin-bottom:0px;
-    font-family: 'HSSaemaul-Regular';
-    }
-    
-    @font-face {
-    font-family: 'HSSaemaul-Regular'; 
-    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_2108@1.1/HSSaemaul-Regular.woff') format('woff');
-    font-weight: normal;
-    font-style: normal;
+	@font-face {
+	    font-family: 'GyeonggiTitleM';		/* 글씨체: 경기천년제목 */
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
 	}
 	
-	p{
+
+    bady{
+    margin-bottom:0px;
+    font-family: 'GyeonggiTitleM';
+    }
+	
+	
+	p{		/* ~님, 내등급:마스터 부분임 */
+	font-family: 'GyeonggiTitleM';
 	top: -100px;
-	width: 700px;
 	width: 50px; 	          	/* 가로너비 */
 	height: 2px;	          		/* 세로너비 */
 	color:#424242;            /* 글씨색상*/
@@ -30,6 +32,7 @@
 	}
     
     .table-container {
+    font-family: 'GyeonggiTitleM';
       display: flex;
       flex-direction: row;
       border-collapse: collapse;
@@ -50,17 +53,24 @@
     
     /* ////////////////////////////////// */
     .div {
+    font-family: 'GyeonggiTitleM';
     position: static;
+    
+    }
+    
+    .user{
+    position: relative;
+    top: -20px;
     }
     
     .user_point { 
       position: relative;
-      top: 0px;
+      top: -20px;
       width: 700px;
-      height: 100px;
-      background: pink;
-/* 	  padding:5; */
-/*       margin: 0; */
+      height: 80px;
+      background: Lightgray;
+      border-radius: 20px;		 									/* 박스 모서리 라운드 처리 */
+	  box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
       }
       
     .user_community {
@@ -68,9 +78,11 @@
 	top: -20px;
 	width: 700px;
 	height: 140px;
-	background: pink;     
+	background: Lightgray;     
 	text-align: center;
 	font-size: 9pt;
+	border-radius: 20px;		 									/* 박스 모서리 라운드 처리 */
+	box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
     }
     
     .user_boardgen {
@@ -78,32 +90,39 @@
       top: -20px;
       width: 700px;
       height: 140px;
-      background: pink;
+      background: Lightgray;
       text-align: center;
       font-size: 9pt;
+      border-radius: 20px;		 										/* 박스 모서리 라운드 처리 */
+	  box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
       }
     .user_comment_border {
       position: relative;
       top: -20px;
       width: 700px;
       height: 140px;
-      background: pink;
+      background: Lightgray;
       text-align: center;
       font-size: 9pt;
+      border-radius: 20px;		 										/* 박스 모서리 라운드 처리 */
+	  box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
       }
     .user_gamelist {
       position: relative;
       top: -20px;
       width: 700px;
       height: 140px;
-      background: pink;
+      background: Lightgray;
       text-align: center;
       font-size: 9pt;
+      border-radius: 20px;		 										/* 박스 모서리 라운드 처리 */
+	  box-shadow: 2px 2px 2px 2px #555555;				/* 그림자 효과  */
       }
       
 	input[type="submit"],
-	input[type="button"],
+	input[type="button"], 
 	.button {
+	font-family: 'GyeonggiTitleM';
 	  -moz-appearance: none;
 	  -webkit-appearance: none;
 	  -ms-appearance: none;
@@ -113,16 +132,15 @@
 	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 	  background-color: transparent;
-	  border-radius: 0.375em;
-	  border: 0;
-	  box-shadow: inset 0 0 0 2px #f56a6a;
-	  color: #f56a6a !important;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
 	  cursor: pointer;
 	  display: inline-block;
-	  font-family: 'Noto Sans KR', sans-serif;
 	  font-size: 0.8em;
 	  font-weight: 700;
-	  height: 3.5em;
+	  height: 40px;
 	  width: 150px;
 	  letter-spacing: 0.075em;
 	  line-height: 3.5em;
@@ -132,39 +150,39 @@
 	  text-transform: uppercase;
 	  white-space: nowrap; }
     </style>
+    
+    
+    
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 </head>
 
 
-<body>
-<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+<body bgcolor= '#081c2b'>
+<%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
+<br><br><br>
 
- 
     <div class="table-container">
       <div class="menu">
         <form>
    		<input type="hidden" name="user_id" value="${requestScope.user.user_id }">	<%--value가 암호화되어있는 값임 --%>
-        <br> <%-- 이 br은 안지움 --%>
-          <p>
-			<p>${ sessionScope.loginUser.user_nickname } 님</p>
-			<p>내 등급 : ${ sessionScope.loginUser.user_level } </p>
+        <br> <br>  <br><%-- 이 br은 안지움 --%>
+			<p style="color:#f56a6a; font-size: 15pt;" > ${ sessionScope.loginUser.user_nickname } 님</p>
+			<p style="color:#f56a6a; font-size: 15pt;" > 내 등급 : ${ sessionScope.loginUser.user_level } </p>
 		<div class="menuButton">
-			<input type="button" onclick="location.href = 'moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="내 정보수정"><br>
-			<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br>
+			<input type="button" onclick="location.href = 'moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="내 정보수정"><br><br>
+			<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br><br>
 			<input type="button" onclick="location.href = 'delPage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="탈퇴하기"><br>
 		</div>
         </form>
       </div>
       
 	<%-- div start --%>
-      <div class="user">
-      
-      <h4>마이페이지</h4>
-      <div class="user_point">
-        <h5>내 포인트</h5>
-        <table>
+      <div class="user" >
+      <div>
+        <h5  style="color:Lightgray;" >&nbsp;&nbsp; 현재 포인트</h5>
+        <table class="user_point">
           <tr>
-            <th style="color:red; font-size: 20pt;"> ${ sessionScope.loginUser.user_point } Point </th>
+            <th style="color:#f56a6a; font-size: 20pt; " align=left>&nbsp;&nbsp; ${ sessionScope.loginUser.user_point } Point </th>
           </tr>
         </table>
       </div>
@@ -172,7 +190,7 @@
       
 <%--내가 가입한 밴드 top5  --%>         
       <div class="div_table"> <%-- class명 수정하지말것 --%>
-        <h5>내가 가입한 밴드</h5>
+        <h5  style="color:Lightgray;">&nbsp;&nbsp; 내가 가입한 밴드</h5>
         <table class="user_community" >
           <tr>
 				<th>밴드생일</th>
@@ -215,7 +233,7 @@ $(function(){
       
   <%--내가 쓴 글 최신글top5  --%>    
       <div class="div_table"> <%-- class명 수정하지말것 --%>
-        <h5>내가 쓴 게시글(자유)</h5>
+        <h5  style="color:Lightgray;">&nbsp;&nbsp; 내가 쓴 게시글(자유)</h5>
         <table class="user_boardgen">
           <tr>
 				<th>글작성일</th>
@@ -264,7 +282,7 @@ $(function(){
 
  <%--내가 쓴 댓글 최신글top5  --%>          
       <div class="div_table"> <%-- class명 수정하지말것 --%>
-        <h5>내가 쓴 댓글</h5>
+        <h5  style="color:Lightgray;">&nbsp;&nbsp; 내가 쓴 댓글</h5>
          <table class="user_comment_border">
           <tr>
 				<th>댓글작성일</th>
@@ -307,7 +325,7 @@ $(function(){
       
       
       <div class="div_table"> <%-- class명 수정하지말것 --%>
-        <h5>게임 즐겨찾기</h5>
+        <h5  style="color:Lightgray;">&nbsp;&nbsp; 게임 즐겨찾기</h5>
          <table class="user_gamelist">
           <tr>
 				<th>즐찾번호</th>
