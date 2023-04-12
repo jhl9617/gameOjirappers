@@ -24,8 +24,9 @@
 		text-align: center;
 		border: 1px solid #ddd;
 	}
+	
 	th {
-		background-color: #f2f2f2;
+		background-color: #000;
 	}
 	td:first-child {
 		font-weight: bold;
@@ -73,13 +74,25 @@
 	}
 	
 </style>
+<link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
+<script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+
 
 </head>
 <body>
-<!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
+<div id="wrapper">
 
+	<!-- Main -->
+	<div id="main">
+	
+		<div class="inner">
+			<!-- Header -->
+			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+			<!-- Banner -->
+<div>
+<!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 <hr>
-<h2 align="center">${ requestScope.boardGen.board_no } 번 게시글 </h2>
+<h2 align="center">${ requestScope.boardGen.board_title }</h2>
 <br>
 <table align="center" width="50" border="1" cellspacing="0"
 cellpadding="50">
@@ -110,27 +123,61 @@ cellpadding="50">
 	
 	<tr><th>내용</th><td>${ boardGen.board_content }</td></tr>
 	<tr><th colspan="2">
-		<button onclick="javascript:location.href='blist.do?page=${ currentPage }';">목록</button>
-		&nbsp; 
-		
-		<c:url var="bup" value="bgupdate.do">
-			<c:param name="board_no" value="${boardGen.board_no}" />
-			<c:param name="page" value="${ currentPage }"/>
+		<button onclick="javascript:location.href='blist.do?page=${ currentPage }';">목록</button> &nbsp;&nbsp; 
+		<c:if test="${ requestScope.board.board_writer ne sessionScope.loginMember.userid }">
+		<c:url var="bup" value="/bgupdate.do">
+				<c:param name="board_no" value="${ board.board_no }" />
+				<c:param name="page" value="${ currentPage }"></c:param>
 		</c:url>
-			<a href="${ bup }">[수정페이지]</a> &nbsp;
-			
+		<a href="${ bup }">[수정페이지로 이동]</a> &nbsp;
+		<c:url var="bdl" value="/bgdelete.do">
+			<c:param name="board_no" value="${boardGen.board_no}" />
+			<c:param name="board_refile" value="${ board.board_refile }" />
+		</c:url>
+		<a href="${ bdl }">[글삭제]</a> &nbsp;
+		</c:if>
+		
+		<%-- <!-- 글작성자가 아닌 로그인 회원인 경우 댓글달기 기능 제공  -->
+		<c:if test="${ requestScope.board.board_writer ne sessionScope.loginMember.userid }">
+			<c:url var="brf" value="/breplyform.do">
+				<c:param name="board_num" value="${ board.board_num }" />
+				<c:param name="page" value="${ currentPage }"></c:param>
+			</c:url>
+			<a href="${ brf }">[댓글달기]</a> &nbsp;
+		</c:if> --%>
+		<%-- <!-- 본인이 등록한 게시글일 때는 수정과 삭제 기능 제공 -->
+		<c:if test="${ requestScope.board.board_writer eq sessionScope.loginMember.userid }">
+			<c:url var="bup" value="/bgupdate.do">
+				<c:param name="board_no" value="${ board.board_no }" />
+				<c:param name="page" value="${ currentPage }"></c:param>
+			</c:url>
+			<a href="${ bup }">[수정페이지로 이동]</a> &nbsp;
 			<c:url var="bdl" value="/bgdelete.do">
 				<c:param name="board_no" value="${boardGen.board_no}" />
+				<c:param name="board_refile" value="${ board.board_refile }" />
+			</c:url>
+			<a href="${ bdl }">[글삭제]</a> &nbsp;
+		</c:if> --%>
+		
+		<%-- <c:url var="bup" value="bgupdate.do">
+			<c:param name="board_no" value="${boardGen.board_no}" />
+			<c:param name="page" value="${ currentPage }"/>
+		</c:url> --%>
+			<%-- <a href="${ bup }">[수정페이지]</a> &nbsp; --%>
+			
+		<%-- <c:url var="bdl" value="/bgdelete.do">
+				<c:param name="board_no" value="${boardGen.board_no}" />
 				<c:param name="board_refile" value="${ boardGen.board_refile }" />
-		</c:url>
-			<a href="${ bdl }">[삭제]</a>
+		</c:url> --%>
+			<%-- <a href="${ bdl }">[삭제]</a> --%>
 		
 	</th></tr>
 </table>
 
-<hr />
+<hr>
 
 			<div>
+			<c:if test="${ requestScope.board.board_writer ne sessionScope.loginMember.userid }">
                <c:forEach var="comment" items="${comment}">
                   
                   <input type="hidden" name="${comment.com_no}">
@@ -141,21 +188,22 @@ cellpadding="50">
                   
                   
                </c:forEach>
+             </c:if>
             </div>
 				
-			
+			<c:if test="${ requestScope.board.board_writer ne sessionScope.loginMember.userid }">
 				<tr><th>댓글 작성</th>
                   <td>
                      <form action="commentwriteform.do" method="post">
                         <%-- <input type="text" value="${comment.board_no}" name="board_no">
                         <input type="text" value="${comment.user_id}" name="user_id"> --%>
                         <textarea rows="5" cols="50" name="incoment"></textarea></td></tr>
-                        <tr><th colspan="2">
-                        &nbsp;
+                        <tr><th colspan="2">&nbsp;
                         <input type="submit" value="등록하기"> &nbsp;
                         <input type="reset" value="작성취소"><br>
                      </form>
-                  </tr>            
+                  </tr> 
+              </c:if>          
 
 		
     
@@ -164,7 +212,13 @@ cellpadding="50">
 
 
 <br>
+		</div>
+
+	</div>
 <hr>
-<c:import url="/WEB-INF/views/common/footer.jsp"/>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>	
+</div>
+
+</div>
 </body>
 </html>

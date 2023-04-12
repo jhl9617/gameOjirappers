@@ -43,25 +43,29 @@
 				<header class="major">
 					<h2> 게임검색하기 </h2>
 				</header>	
-				<table id="gameAll" >
-				</table>
-				
-							
-				<div>
+				<!-- <table id="gameAll" >
+				</table> -->
+				<table style="border:none;">
 					<form name="search-game" autocomplete="no">
-					
-						<select name="type" style="width:150px;">
-							<option selected value="name">검색 내용 선택</option>
-							<option value="name">게임이름</option>
-							<option value="genre">게임장르</option>
-							<option value="initialprice">출시가격</option>
-							<option value="finalprice">할인된가격</option>
-							<option value="discountrate">할인율</option>
+					<td style="width:200px; background-color:#000;border:none;">
+						<select name="type" style="color:Lightgray;">
+							<option  selected value="name">게임이름으로 검색</option>
+							<option value="genre">게임장르로 검색</option>
+							<option value="initialprice">출시가격으로 검색</option>
+							<option value="finalprice">할인된가격으로 검색</option>
+							<option value="discountrate">할인율로 검색</option>
 						</select>
-							<input type="text" style="width:150px;" name="keyword" placeholder="입력하세요" />
-						<input type="button" onclick="gameAllSearch()" id="search" value="검색">
+					</td>
+					<td style="background-color:#000;border:none;">
+						<input type="text" style="align:center;width:100%;" name="keyword" placeholder="입력하세요" />
+					</td>
+					<td align="center" style="background-color:#000;border:none;">
+						<input type="button"  align="center" style="width:100px;" onclick="gameAllSearch()" id="search" value="검색">
+					</td>	
 					</form>
-				</div>				
+					</table>
+					<table id="gameAll" >
+					</table>		
 				</div>
 				<script type="text/javascript">
 				function gameAllSearch(){
@@ -204,7 +208,7 @@
 				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
 				                +"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><h3>"+json.list[i].name+"</h3></a>"
 				                		+"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
-				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p></a><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
+				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p></a><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>출시일:"
 				                +json.list[i].releasedate+"</p></a>"
 				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='button'>More</a></li></ul></article>";
 							
@@ -254,25 +258,13 @@
 					<th><img src="" class="flag" alt="" width="18" height="18"> 할인율</th>
 				</tr> -->
 				<table id="disclist">
-				<tr><td class='table-title' colspan='2'>game name</td>
-				<td>초기 가격</td><td>최종가격</td><td>전일 접속</td><td>할인율</td></td></table>
+				<tr align="center"><td class='table-title' colspan='2'>game name</td>
+				<td>출시가격</td><td>할인율</td><td>할인한가격</td></td></table>
 				
 				
 				</thead>
 				</tbody>
 				</table>
-				<!-- <table id="disclist" border="1" cellspacing="0">
-				<tr class="app" data-appid="2050650" data-cache="1679986748">
-				 
-				<tr>
-					<th><a href="" class="css-truncate">GameName</a></th>
-					<th class="text-center green">초기 가격</th>
-					<th class="text-center">최종가격</th>
-					<th class="text-center">전날 최고 동시 접속사</th>
-					<th class="text-center">할인율</th>
-				</tr>
-				</table> -->
-
 				</div>
 				
 				</section>
@@ -293,14 +285,12 @@
 					       var gdvalues = $('#disclist').html();
 
 							for(var i in json.list){
-								gdvalues +="<tr><td colspan='2'><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
+								gdvalues +="<tr align='center'><td colspan='2'><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'>"
 										+json.list[i].name
 										+"</td><td>" + decodeURIComponent(json.list[i].initialprice)
-					                     +"</td><td>" + decodeURIComponent(json.list[i].finalprice).replace(/\+/gi, " ")
-					                     +"</td><td>" + json.list[i].ccu
 					                     +"</td><td>" + json.list[i].discountrate
-					                     +"%</td></tr>";
-								
+					                     +"%</td><td>" + decodeURIComponent(json.list[i].finalprice)
+					                     +"원</td></tr>";
 								
 							}
 
