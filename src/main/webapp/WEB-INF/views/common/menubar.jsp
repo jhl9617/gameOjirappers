@@ -35,7 +35,7 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" class="button"><span class="label">밴드</span></a><li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do" class="button"><span class="label">자유게시판</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/moveup.do?user_id=${ sessionScope.loginUser.user_id }" class="button"><span class="label">마이페이지</span></a></li> <%--임시--%>
-			<li><a href="${ pageContext.servletContext.contextPath }/uadmin.do" class="button"><span class="label">관리자</span></a></li> 
+			<li><a href="${ pageContext.servletContext.contextPath }/uadmin.do?page=1" class="button"><span class="label">관리자</span></a></li> 
  		</ul> 
  	</c:if> 
 	<!-- 로그인한 경우 : 일반회원인 경우 -->

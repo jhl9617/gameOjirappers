@@ -1,6 +1,10 @@
 package org.team404.gameOjirap.community.cGroup.model.dao;
 
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
@@ -9,10 +13,6 @@ import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.community.cGroup.model.vo.CMember;
 import org.team404.gameOjirap.community.cGroup.model.vo.CReport;
 import org.team404.gameOjirap.community.cGroup.model.vo.CommunityReq;
-
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 
 @Repository("cGroupDao")
@@ -104,4 +104,10 @@ public class CGroupDao {
     public int insertReport(CReport cReport) {
         return session.insert("CGroupMapper.insertReport", cReport);
     }
+
+
+	public ArrayList<CReport> selectCReportList() {
+		List<CReport> list = session.selectList("CGroupMapper.selectCReportList");
+		return (ArrayList<CReport>)list;
+	}
 }

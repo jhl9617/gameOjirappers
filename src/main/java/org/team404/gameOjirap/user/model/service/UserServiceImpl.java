@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.dao.UserDao;
 import org.team404.gameOjirap.user.model.vo.User;
@@ -41,8 +42,8 @@ public class UserServiceImpl implements UserService{
 	}
 	
 	@Override
-	public ArrayList<User> selectUserList() {
-		return userDao.selectUserList();
+	public ArrayList<User> selectUserList(Paging page) {
+		return userDao.selectUserList(page);
 	}
 	
 	//회원탈퇴요청처리용
@@ -99,6 +100,31 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public User selectFavoriteCount(String user_id) {
 		return null;
+	}
+
+
+	@Override
+	public void updateDecPoint(User user) {
+		userDao.updateDecPoint(user);
+		
+	}
+
+
+	@Override
+	public int selectListCount() {
+		return userDao.selectListCount();
+	}
+
+
+	@Override
+	public ArrayList<User> selectSearchUID(String keyword) {
+		return userDao.selectSearchUID(keyword);
+	}
+
+
+	@Override
+	public ArrayList<User> selectSearchUN(String keyword) {
+		return userDao.selectSearchUN(keyword);
 	}
 
 

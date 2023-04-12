@@ -153,5 +153,9 @@
         insert into tb_community_report (user_id, communityId, c_report_time, c_report_desc, c_rep_type)
         values (#{user_id}, #{communityid}, sysdate, #{c_report_desc}, #{c_rep_type})
     </insert>
+    
+    <select id="selectCReportList" resultType="CReport">
+    	select * from TB_COMMUNITY_REPORT
+    </select>
 
 </mapper>
