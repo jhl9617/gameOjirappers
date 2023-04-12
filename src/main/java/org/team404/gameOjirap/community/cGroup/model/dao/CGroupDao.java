@@ -103,4 +103,8 @@ public class CGroupDao {
     public int insertReport(CReport cReport) {
         return session.insert("CGroupMapper.insertReport", cReport);
     }
+
+    public int selectMemberListCount(int communityid) {
+        return session.selectOne("CGroupMapper.selectMemberListCount", communityid);
+    }
 }
