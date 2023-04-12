@@ -98,7 +98,6 @@ public class CGroupDao {
         Map<String, Object> map = Map.of("keyword", keyword, "paging", paging);
         List<CGroup> list = session.selectList("CGroupMapper.searchCGroup", map);
         return (ArrayList<CGroup>) list;
-
     }
 
     public int insertReport(CReport cReport) {
@@ -106,8 +105,14 @@ public class CGroupDao {
     }
 
 
+
 	public ArrayList<CReport> selectCReportList() {
 		List<CReport> list = session.selectList("CGroupMapper.selectCReportList");
 		return (ArrayList<CReport>)list;
 	}
+
+    public int selectMemberListCount(int communityid) {
+        return session.selectOne("CGroupMapper.selectMemberListCount", communityid);
+    }
+
 }

@@ -6,7 +6,9 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.boardGen.model.dao.BoardGenDao;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.BoardLike;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Service("boardGenService")
 public class BoardGenServiceImpl implements BoardGenService {
@@ -67,6 +69,41 @@ public class BoardGenServiceImpl implements BoardGenService {
 	@Override
 	public int updateBoardReadCount(int board_no) {
 		return boardDao.updateBoardReadCount(board_no);
+	}
+
+	@Override
+	public int genReplyWrite(Comment comment) {
+		return boardDao.genReplyWrite(comment);
+	}
+
+	@Override
+	public int selectGenLike(BoardLike blike) {
+		return boardDao.selectGenLike(blike);
+	}
+
+	@Override
+	public int insertGenLike(BoardLike blike) {
+		return boardDao.insertGenLike(blike);
+	}
+
+	@Override
+	public int updateGenLike(int boardNo) {
+		return boardDao.updateGenLike(boardNo);
+	}
+
+	@Override
+	public int deleteGenLike(BoardLike blike) {
+		return boardDao.deleteGenLike(blike);
+	}
+
+	@Override
+	public int updateGenLikedis(int boardNo) {
+		return boardDao.updateGenLikedis(boardNo);
+	}
+
+	@Override
+	public int updateUserPoint(String user_id, int point) {
+		return boardDao.updateUserPoint(user_id, point);
 	}
 
 }

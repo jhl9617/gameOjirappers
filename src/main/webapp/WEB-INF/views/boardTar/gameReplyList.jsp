@@ -1,11 +1,4 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: ICT02-14
-  Date: 2023-04-04
-  Time: PM 2:18
-  To change this template use File | Settings | File Templates.
---%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -22,30 +15,33 @@
 
             //수정 버튼 눌렀을 때 수정창 띄우기
             $(".edit-comment").on("click", function() {
-                var ccomno = $(this).data("ccomno");
-                var contentElem = $("#content-" + ccomno);
+                var com_no = $(this).data("com_no");
+                var contentElem = $("#content-" + com_no);
                 var content = htmlDecode(contentElem.html());
-                contentElem.html('<textarea id="edit-content-' + ccomno + '" class="form-control" rows="3">' + content + '</textarea>');
+                contentElem.html('<textarea id="edit-content-' + com_no + '" class="form-control" rows="3">' + content + '</textarea>');
                 $(this).hide();
-                $(this).after('<a href="javascript:void(0)" class="update-comment" data-ccomno="' + ccomno + '">Confirm</a>');
+                $(this).after('<a href="javascript:void(0)" class="update-comment" data-com_no="' + com_no + '">Confirm</a>');
             });
-
 
             //수정 버튼 이후 수정확인 클릭했을 때 수정된 내용 서버에 저장
             $(document).on("click", ".update-comment", function() {
-                var ccomno = $(this).data("ccomno");
-                var editedContent = $("#edit-content-" + ccomno).val();
+                var com_no = $(this).data("com_no");
+                var editedContent = $("#edit-content-" + com_no).val();
+                var board_no = $("#board_no").val();
+
                 // Perform AJAX request to update the comment on the server
                 $.ajax({
-                    url: "updateCommuComment.do", // Replace with the URL to your controller method
+                    url: "updateGameComment.do", // Replace with the URL to your controller method
                     type: 'POST',
                     data: {
-                        ccomno: ccomno,
-                        com_contents: editedContent
+                        com_no: com_no,
+                        com_contents : editedContent,
+                        board_no: board_no,
+                        user_id: $("#author-" + com_no).text()
                     },
                     success: function(response) {
                         // Update the content and restore the buttons
-                        $("#content-" + ccomno).text(editedContent);
+                        $("#content-" + com_no).text(editedContent);
                         $(".update-comment").remove();
                         $(".edit-comment").show();
                     },
@@ -56,17 +52,17 @@
             });
 
             $(".delete-comment").on("click", function() {
-                var ccomno = $(this).data("ccomno");
+                var com_no = $(this).data("com_no");
                 // Perform AJAX request to delete the comment on the server
                 $.ajax({
-                    url: 'deleteCommuComment.do', // Replace with the URL to your controller method
+                    url: 'deleteGameComment.do', // Replace with the URL to your controller method
                     type: 'POST',
                     data: {
-                        ccomno: ccomno
+                        com_no: com_no
                     },
                     success: function(response) {
                         // Remove the comment from the page
-                        $("#content-" + ccomno).parent().parent().remove();
+                        $("#content-" + com_no).parent().parent().remove();
                     },
                     error: function() {
                         alert("Failed to delete comment.");
@@ -83,18 +79,18 @@
 <c:forEach var="comment" items="${commentList}" >
     <div class="comment">
         <div class="comment-content">
-            <span class="comment-author" id="author-${comment.ccomno}">${comment.user_id}</span>
-            <span class="comment-date" id="date-${comment.ccomno}">${comment.ccomdate}</span>
-            <h3><p id="content-${comment.ccomno}">${comment.ccomcontent}</p></h3>
+            <span class="comment-author" id="author-${comment.com_no}">${comment.user_id}</span>
+            <span class="comment-date" id="date-${comment.com_no}">${comment.com_date}</span>
+            <h3><p id="content-${comment.com_no}">${comment.com_contents}</p></h3>
         <%--수정삭제버튼--%>
+
             <div class="comment-btn">
-                <a href="javascript:void(0)" class="edit-comment" data-ccomno="${comment.ccomno}">수정</a> &nbsp;
-                <a href="javascript:void(0)" class="delete-comment" data-ccomno="${comment.ccomno}">삭제</a>
+                <a href="javascript:void(0)" class="edit-comment" data-com_no="${comment.com_no}">수정</a> &nbsp;
+                <a href="javascript:void(0)" class="delete-comment" data-com_no="${comment.com_no}">삭제</a>
                 <hr>
-        </div>
+            </div>
     </div>
 </c:forEach>
-
 
 </body>
 </html>

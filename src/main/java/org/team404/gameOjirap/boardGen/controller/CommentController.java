@@ -11,7 +11,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardGen.model.service.BoardGenService;
 import org.team404.gameOjirap.boardGen.model.service.CommentService;
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Controller
 public class CommentController {

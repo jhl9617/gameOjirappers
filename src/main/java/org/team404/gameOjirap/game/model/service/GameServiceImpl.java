@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.Pagingnn;
 import org.team404.gameOjirap.game.model.dao.GameDao;
 import org.team404.gameOjirap.game.model.vo.Game;
@@ -90,6 +91,21 @@ public class GameServiceImpl implements GameService{
 	public ArrayList<Game> selectgameAllSearch(GameSearchs searchs) {
 		return gameDao.selectgameAllSearch(searchs);
 	}
+
+	@Override
+	public Game selectYoutube(String appid) {
+		return gameDao.selectYoutube(appid);
+	}
+
+	@Override
+	public ArrayList<BoardTar> selectTarBoardList(int appid) {
+		return gameDao.selectTarBoardList(appid);
+	}
+
+//	@Override
+//	public String selectYoutube(String appid) {
+//		return gameDao.selectYoutube(appid);
+//	}
 
 	
 

@@ -1,13 +1,17 @@
 package org.team404.gameOjirap.boardGen.model.dao;
 
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.BoardLike;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Repository("boardDao")
 public class BoardGenDao {
@@ -63,4 +67,34 @@ public class BoardGenDao {
 	}
 
 
+	public int genReplyWrite(Comment comment) {
+		return session.insert("boardGenMapper.genReplyWrite", comment);
+	}
+
+	public int selectGenLike(BoardLike blike) {
+		return session.selectOne("boardGenMapper.selectGenLike", blike);
+	}
+
+	public int insertGenLike(BoardLike blike) {
+		return session.insert("boardGenMapper.insertGenLike", blike);
+	}
+
+	public int updateGenLike(int boardNo) {
+		return session.update("boardGenMapper.updateGenLike", boardNo);
+	}
+
+	public int deleteGenLike(BoardLike blike) {
+		return session.delete("boardGenMapper.deleteGenLike", blike);
+	}
+
+	public int updateGenLikedis(int boardNo) {
+		return session.update("boardGenMapper.updateGenLikedis", boardNo);
+	}
+
+	public int updateUserPoint(String user_id, int point) {
+		Map<String, Object> map = new HashMap<String, Object>();
+		map.put("user_id", user_id);
+		map.put("point", point);
+		return session.update("boardGenMapper.updateUserPoint", map);
+	}
 }

@@ -14,13 +14,21 @@
 		<result property="user_id" column="user_id"/>
 	</resultMap>
 
+	<resultMap id="searchtarmap" type="BoardTar">
+		<result property="board_no" column="board_no"/>
+		<result property="board_title" column="board_title"/>
+		<result property="board_date" column="board_date"/>
+		<result property="board_count" column="board_count"/>
+		<result property="user_id" column="user_id"/>
+	</resultMap>
+
 	<!-- 게시물 숫자 카운트 -->
 	<select id="selectListCount" resultType="int">
 		SELECT COUNT(*) FROM tb_board_tar
 	</select>
 
 	<!-- startPage 와 endPage 사이의 appid 가 일치하는 게시물 리스트 최신순-->
-	<select id="" parameterType="Paging" resultMap="pagingmap">
+	<select id="selectList" parameterType="Paging" resultMap="pagingmap">
 		SELECT RNUM, BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_LIKE, USER_ID
 		FROM (
 				 SELECT ROWNUM RNUM, BOARD_NO, BOARD_TITLE, BOARD_CONTENT, BOARD_DATE, BOARD_COUNT, BOARD_LIKE, USER_ID
@@ -31,6 +39,130 @@
 		WHERE RNUM BETWEEN ${startRow} AND ${endRow}
 	</select>
 
+	<!-- 게시글 입력 -->
+	<insert id="insertTarBoard" parameterType="BoardTar">
+		INSERT INTO TB_BOARD_TAR (board_no, board_title, board_content, board_date, board_count, board_like, user_id, appid, board_orifile, board_refile, board_notice)
+		VALUES (seq_board_tar.nextval, #{board_title}, #{board_content}, SYSDATE, 0, 0, #{user_id}, #{appid}, #{board_orifile}, #{board_refile}, #{board_notice})
+	</insert>
+
+	<!-- 조회수 1증가 -->
+	<update id="updateReadCount" parameterType="int">
+		UPDATE TB_BOARD_TAR
+		SET board_count = board_count + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!-- 게임게시판 게시물 상세보기 -->
+	<select id="selectBoard" parameterType="int" resultMap="pagingmap">
+		SELECT *
+		FROM TB_BOARD_TAR
+		WHERE board_no = #{board_no}
+	</select>
+
+	<!-- 좋아요 숫자 체크 -->
+	<select id="selectTarLike" parameterType="BoardLike" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD_like
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</select>
+
+	<!-- 좋아요 숫자 증가 -->
+	<update id="updateTarLike" parameterType="BoardLike">
+		UPDATE TB_BOARD_TAR
+		SET board_like = board_like + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!-- 게시글 삭제 -->
+	<delete id="deleteBoard" parameterType="_int">
+		DELETE FROM TB_BOARD_TAR
+		WHERE BOARD_NO = #{board_no}
+	</delete>
+
+	<!-- 게시글 업데이트 -->
+	<update id="updateBoard" parameterType="BoardTar">
+		UPDATE TB_BOARD_TAR
+		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
+		<if test="board_orifile != null">
+			, BOARD_ORIFILE = #{board_orifile}, BOARD_REFILE = #{board_refile}
+		</if>
+		<if test="board_orifile == null">
+			, BOARD_ORIFILE =null, BOARD_REFILE = null
+		</if>
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!-- 게시글 좋아요 정보 저장 -->
+	<insert id="insertTarLike" parameterType="BoardLike">
+		INSERT INTO TB_BOARD_LIKE (board_no, user_id, like_date)
+		VALUES (#{board_no}, #{user_id}, sysdate)
+	</insert>
+
+	<delete id="deleteTarLike" parameterType="BoardLike">
+		DELETE FROM TB_BOARD_LIKE
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</delete>
+
+	<update id="updateTarLikedis" parameterType="_int">
+	UPDATE TB_BOARD_TAR
+	SET board_like = board_like - 1
+	WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<!--댓글 insert-->
+	<insert id="insertTarReply" parameterType="Comment">
+		INSERT INTO TB_COMMENT (COM_NO, COM_CONTENTS, COM_DATE, COM_LEV, COM_NO2, BOARD_NO, USER_ID)
+		VALUES (seq_comment.nextval, #{com_contents}, SYSDATE, 0, 0, #{board_no}, #{user_id})
+	</insert>
+
+	<!--댓글 리스트 select-->
+	<select id="selectTarReply" parameterType="int" resultType="Comment">
+		SELECT *
+		FROM TB_COMMENT
+		WHERE BOARD_NO = #{board_no}
+		ORDER BY COM_NO
+	</select>
+
+	<!--댓글 수정-->
+	<update id="updateTarReply" parameterType="Comment">
+		UPDATE TB_COMMENT
+		SET COM_CONTENTS = #{com_contents}
+		WHERE COM_NO = #{com_no}
+	</update>
+
+	<!--댓글 삭제-->
+	<delete id="deleteTarReply" parameterType="int">
+		DELETE FROM TB_COMMENT
+		WHERE COM_NO = #{com_no}
+	</delete>
+
+
+
+	<!-- 검색용 리스트 카운트 -->
+	<select id="selectSearchListCount" parameterType="Searchs" resultType="_int">
+		SELECT COUNT(*) FROM TB_BOARD_TAR
+		WHERE appid = #{appid}
+		and ${action} LIKE '%'||#{keyword}||'%'
+	</select>
+
+	<!-- 검색한 리스트 10개 최신순 -->
+	<select id="selectSearchList" parameterType="map" resultMap="searchtarmap">
+		SELECT RNUM, board_count, board_title, board_date, user_id, board_no
+		FROM (
+				 SELECT ROWNUM RNUM, board_count, board_title, board_date, user_id, board_no
+				 FROM TB_BOARD_TAR
+				 WHERE appid = #{appid}
+				 and ${action} LIKE '%'||#{keyword}||'%'
+				 ORDER BY BOARD_DATE DESC
+			 )
+		WHERE RNUM BETWEEN ${startRow} AND ${endRow}
+	</select>
+
+<!--포인트 증가시키기-->
+	<update id="updatePoint" parameterType="map">
+		UPDATE TB_USER
+		SET USER_POINT = USER_POINT + #{point}
+		WHERE USER_ID = #{user_id}
+	</update>
 </mapper>
 
 

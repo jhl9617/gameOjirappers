@@ -1,3 +1,4 @@
+
 package org.team404.gameOjirap.user.controller;
 
 import org.slf4j.Logger;
@@ -81,4 +82,3 @@ public class MoveController {
 	}// method close
 
 }
-

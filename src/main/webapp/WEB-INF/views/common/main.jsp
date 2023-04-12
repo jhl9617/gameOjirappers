@@ -34,6 +34,7 @@
 
 	<!-- Main -->
 	<div id="main">
+	
 		<div class="inner">
 			<!-- Header -->
 			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
@@ -44,53 +45,20 @@
 				</header>	
 				<table id="gameAll" >
 				</table>
-				<div class="paginate" id="paging">
-  </div>
-<script>
-  var pageNum = 1 ;  //현재 페이지 번호
-  var totalPageCnt = 0 ; //전체 페이지 수
-  var totalCnt = 0;  //전체 글 수
-  var listCnt = 10;  //한 화면에 보여질 리스트 수
-  var pageSet = 10;  // 페이징 부부의 카운트 수
-  var searchString = ""; //검색
-$(function(){
-   searchList();  //목록 조회 함수 호출
-});
- 
-  //정보 조회
-searchList = function(){
-  var startNum = (pageNum -1) * listCnt;  //현재 페이지 번호를 가지고 시작 위치를 구한다.    
-  var parameter = {
-    "SearchType" : $("#searchType").val() + ""
-    ,"SearchString" : $("#searchString").val() + ""
-    ,"startNum" : startNum + ""
-    ,"endNum" : listCnt + ""        
-    }
-  util.data.getDatafromUrl("/process/p_list.jsp", parameter, searchListCallback); //호출 주소는 적당히 알아서...
-  }
-   
-searchListCallback = function(resultData){
-    $("#listCont").empty(); //리스트 내용을 지움
-    if (resultData.list != null){
-      totalCnt = resultData.Cnt;
-      util.list.setListContent(resultData,"#listCont", "#listTmpl");  //util.list.setListContent(데이터, 대상 오브젝트, 템플릿스크립트 오브젝트);                   
-    }
-    util.list.paging("#paging", pageNum, listCnt, resultData.Cnt , "searchList()", "pageNum"); //페이징 처리
-  }
-   
-</script>
+				
 							
 				<div>
-					<form name="search-form1" autocomplete="off">
-						<select name="type">
+					<form name="search-game" autocomplete="no">
+					
+						<select name="type" style="width:150px;">
 							<option selected value="name">검색 내용 선택</option>
 							<option value="name">게임이름</option>
 							<option value="genre">게임장르</option>
 							<option value="initialprice">출시가격</option>
 							<option value="finalprice">할인된가격</option>
-							<option value="discountrate">할인율</option>							
+							<option value="discountrate">할인율</option>
 						</select>
-						<input type="text" name="keyword" placeholder="입력하세요" />
+							<input type="text" style="width:150px;" name="keyword" placeholder="입력하세요" />
 						<input type="button" onclick="gameAllSearch()" id="search" value="검색">
 					</form>
 				</div>				
@@ -100,11 +68,11 @@ searchListCallback = function(resultData){
 					$.ajax({
 						type: 'GET',
 						url : "gameAllsearch.do",
-						data : $("form[name=search-form1]").serialize(),
+						data : $("form[name=search-game]").serialize(),
 						success : function(result){
 							//테이블 초기화
 							$('#gameAll').empty();
-							var ge = '<tr><td color="red">게임이름</td><td>게임내용</td><td>게임장르</td><td>좋아요</td><td>출시가격</td><td>할인된가격</td><td>어제 접속자수</td><td>출시일</td><td>평점</td></tr>';
+							var ge = '<tr><td color="red">게임이름</td><td>게임내용</td><td>게임장르</td><td>좋아요</td><td>출시가격</td><td>할인율</td><td>할인된가격</td><td>어제 접속자수</td><td>출시일</td><td>평점</td></tr>';
 							
 							
 							if(result.length>=1){								
@@ -116,7 +84,8 @@ searchListCallback = function(resultData){
 									ge += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
 									+"</td>";
 									ge += "<td>"+item.positive+"</td>";
-									ge += "<td>"+item.initialprice+"</td>";									
+									ge += "<td>"+item.initialprice+"</td>";
+									ge += "<td>"+item.discountrate+"%</td>";
 									ge += "<td>"+item.finalprice+"</td>";
 									ge += "<td>"+item.ccu+"</td>";
 									ge += "<td>"+item.releasedate+"</td>";
@@ -129,10 +98,8 @@ searchListCallback = function(resultData){
 						}
 					});
 				}
-				
-				
 				</script>
-			<section id="banner">
+			<%-- <section id="banner">
 				<div class="content">
 					<header>
 						<h1>겜지라퍼<br />
@@ -147,7 +114,7 @@ searchListCallback = function(resultData){
 				<span class="image object">
 				<img src="<c:url value="/resources/images/main1.webp"/>" alt="" />
 				</span>
-			</section>
+			</section> --%>
 				
 				
 			
@@ -161,10 +128,7 @@ searchListCallback = function(resultData){
 				<div id="toplist" class="posts">
 					
 				</div>
-				
-				<!-- 페이징 처리 -->
-				
-				<c:import url="/WEB-INF/views/common/page.jsp"/>
+				<div id="nav_view" align="center"></div>
 			</section>
 			<script type="text/javascript">
 			$(function(){
@@ -174,10 +138,6 @@ searchListCallback = function(resultData){
 				    dataType: "json",
 				    success: function(data){
 				       console.log("success : " + data);    // Object 로 출력
-//						select * 
-//						from ( select rownum rnum, name, headerimg, short_description , releasedate,ccu,meta
-//								from ( select * from game order by ccu desc ))
-//						where rnum >= 1 and rnum <=6
 				       // 받은 Object => string 으로 바꿈
 				       var jsonStr = JSON.stringify(data);
 				       // sting => json 객체로 바꿈
@@ -188,17 +148,22 @@ searchListCallback = function(resultData){
 
 						for(var i in json.list){
 							
-							gtvalues += "<article style='float:left;' ><a href='#' class='image'><img src='<c:url value='"
+							gtvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
 				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
-				                +"<h3><a href='${pageContext.servletContext.contextPath}/moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3><p>"
-				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
-				                +json.list[i].ccu+"</p>"
+				                +"<h3><a href='moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3>"
+				                		+"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
+				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p></a>"
+				                +"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>어제 접속자수: "
+				                +json.list[i].ccu+"명</p></a>"
+				                +"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>좋아요: "
+				                +json.list[i].positive+"♥</p></a>"
 				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid="+json.list[i].appid+"' class='button'>More</a></li></ul></article>";
 				               
 						}
 
 				       
-				       $('#toplist').html(gtvalues);
+				      /*  $('#toplist').html(gtvalues); */
+						$('#toplist').html(gtvalues);
 				    	},
 				    	error: function(jqXHR, textStatus, errorThrown){
 				       	console.log("gametop6.do error : " + jqXHR + ", " + textStatus + ", " + errorThrown);
@@ -216,9 +181,6 @@ searchListCallback = function(resultData){
 					<div id="newlist" class="posts">
 					
 				</div>
-					<!-- 페이징 처리 -->
-					<c:set var="url" value="/gnlist.do.do"/>
-				<c:import url="/WEB-INF/views/common/page.jsp"/>
 			</section>
 			<script type="text/javascript">
 			$(function(){
@@ -240,10 +202,11 @@ searchListCallback = function(resultData){
 							
 							gnvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
 				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
-				                +"<h3>"+json.list[i].name+"</h3><p>"
-				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p><p>"
-				                +json.list[i].releasedate+"</p>"
-				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"%"+"' class='button'>More</a></li></ul></article>";
+				                +"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><h3>"+json.list[i].name+"</h3></a>"
+				                		+"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
+				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p></a><a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
+				                +json.list[i].releasedate+"</p></a>"
+				                +"<ul class='actions'><li><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='button'>More</a></li></ul></article>";
 							
 							
 						}
@@ -336,7 +299,7 @@ searchListCallback = function(resultData){
 					                     +"</td><td>" + decodeURIComponent(json.list[i].finalprice).replace(/\+/gi, " ")
 					                     +"</td><td>" + json.list[i].ccu
 					                     +"</td><td>" + json.list[i].discountrate
-					                     +"</td></tr>";
+					                     +"%</td></tr>";
 								
 								
 							}
@@ -359,4 +322,5 @@ searchListCallback = function(resultData){
 	</div>
 </div>
 </body>
+
 </html>

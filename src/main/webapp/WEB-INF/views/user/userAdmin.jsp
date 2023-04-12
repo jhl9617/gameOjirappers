@@ -92,6 +92,7 @@ function showDiv(){
 		 </td>
          <td>
 				추가구현
+
          </td>
          
          <td>

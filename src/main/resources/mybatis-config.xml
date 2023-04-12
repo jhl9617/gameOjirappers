@@ -13,7 +13,7 @@
 
 		<typeAlias type="org.team404.gameOjirap.boardGen.model.vo.BoardGen" alias="BoardGen" />
 		<typeAlias type="org.team404.gameOjirap.boardTar.model.vo.BoardTar" alias="BoardTar" />
-		<typeAlias type="org.team404.gameOjirap.boardGen.model.vo.Comment" alias="Comment"/>
+		<typeAlias type="org.team404.gameOjirap.common.board.Comment" alias="Comment"/>
 		<typeAlias type="org.team404.gameOjirap.common.Paging" alias="Paging" />
 		<typeAlias type="org.team404.gameOjirap.common.Pagingnn" alias="Pagingnn" />
 		<typeAlias type="org.team404.gameOjirap.common.Searchs" alias="Searchs" />
@@ -30,7 +30,7 @@
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.CVote" alias="CVote"/>
 		<typeAlias type="org.team404.gameOjirap.user.model.vo.User" alias="User" />
 		<typeAlias type="org.team404.gameOjirap.community.cSchedule.model.vo.ScheduleVote" alias="ScheduleVote" />
-		
+		<typeAlias type="org.team404.gameOjirap.common.BoardLike" alias="BoardLike" />
 	</typeAliases>
 	
 	<!-- mapper : 실행할 쿼리문만 별도로 작성하는 파일을 말함 -->

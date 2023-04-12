@@ -43,7 +43,6 @@ public class CGroupController {
     @Autowired
     private CGroupService cGroupService;
 
-
     @Autowired
     private UserService userService;
    /* @RequestMapping("commuMainList.do")
@@ -87,7 +86,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     //커뮤니티 메인 화면으로 이동하는 method
     @RequestMapping(value = "commuMain.do", method = {RequestMethod.GET, RequestMethod.POST})
     public ModelAndView moveCommuMain(@RequestParam(name = "page", required = false) String page,
-                                      @RequestParam(value = "message", required = false) String message,ModelAndView mv) {
+                                      @RequestParam(name = "message", required = false) String message,ModelAndView mv) {
 
         int currentPage = 1;
         if (page != null) {
@@ -105,14 +104,13 @@ public String commuMainList() throws UnsupportedEncodingException {
         Paging paging = new Paging(listCount, currentPage, limit, url);
         paging.calculator();
         System.out.println(paging);
-
         ArrayList<CGroup> list = cGroupService.selectList(paging);
-
 
         if (list != null && list.size() > 0) {
             mv.addObject("list", list);
             mv.addObject("paging", paging);
             mv.addObject("message", message);
+            mv.addObject("listCount", listCount);
             mv.setViewName("community/commuMain");
         } else {
             mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
@@ -132,8 +130,26 @@ public String commuMainList() throws UnsupportedEncodingException {
 
     //커뮤니티 생성 form에서 submit을 눌렀을때
     @RequestMapping(value = "CommuCreateSubmit.do", method = RequestMethod.POST)
-    public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request) {
-        System.out.println("---------------------------user id check : " + cGroup.getUser_id());
+    public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request,
+                                   @RequestParam(name="mfile", required = false) MultipartFile mfile) {
+        if(mfile != null && !mfile.isEmpty()){
+            String savePath = request.getSession().getServletContext().getRealPath("resources/commuimg");
+            String filename = mfile.getOriginalFilename();
+            System.out.println(filename+ "\n\n\n\n\n");
+
+            if(filename != null && !filename.isEmpty()){
+                String rename = FileNameChange.change(filename, "yyyyMMddHHmmss");
+
+                File renameFile = new File(savePath + "/" + rename);
+                try {
+                    mfile.transferTo(renameFile);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                cGroup.setCommunityimgori(filename);
+                cGroup.setCommunityimgrename(rename);
+            }
+        }
         //이미지 첨부 미구현
         if (cGroupService.selectCGroup(cGroup.getCommunityname()) < 1 && cGroupService.insertCGroup(cGroup) > 0) {
 
@@ -160,7 +176,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping("viewgroup.do")
     public ModelAndView commuDetailMethod(ModelAndView mv, @RequestParam("communityid") int communityid
             , @RequestParam(name = "page", required = false) String page,
-            @RequestParam(value="message", required = false) String message, HttpSession session) {
+            @RequestParam(name="message", required = false) String message, HttpSession session) {
         int currentPage = 1;
         if (page != null) {
             currentPage = Integer.parseInt(page);
@@ -173,6 +189,7 @@ public String commuMainList() throws UnsupportedEncodingException {
             mv.addObject("group", cGroupService.selectSingleCGroup(communityid));
             mv.addObject("currentPage", currentPage);
             mv.addObject("message", message);
+
             mv.setViewName("community/viewGroup");
         } else {
             mv.addObject("message", communityid + "번 커뮤니티 조회 실패!");
@@ -197,8 +214,22 @@ public String commuMainList() throws UnsupportedEncodingException {
 
     // 멤버 목록 페이지 이동
     @RequestMapping("memberinfo.do")
-    public String memberView(){
-        return "";
+    public String memberView(@RequestParam("communityid") int communityid,
+                             @RequestParam(name="page", required = false) String page, Model model) {
+        int currentPage = 1;
+        if (page != null) {
+            currentPage = Integer.parseInt(page);
+        }
+        int limit = 10;
+        int listCount = cGroupService.selectMemberListCount(communityid);
+        String url = "memberinfo.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url, communityid);
+
+        ArrayList<CMember> list = cGroupService.selectMembers(communityid);
+        model.addAttribute("paging", paging);
+        model.addAttribute("list", list);
+        model.addAttribute("communityid", communityid);
+        return "community/memberView";
     }
 
     // 커뮤니티 신고 페이지 이동
@@ -278,6 +309,7 @@ public String commuMainList() throws UnsupportedEncodingException {
         for (CMember member : members) {
             User user = userService.selectUser(member.getUser_id());
             JSONObject job = new JSONObject();
+            job.put("admin_id", user.getAdmin_id());
             job.put("user_id", user.getUser_id());
             job.put("user_nickname", user.getUser_nickname());
             jarr.add(job);
@@ -301,7 +333,7 @@ public String commuMainList() throws UnsupportedEncodingException {
     // 커뮤니티 수정
     @RequestMapping(value = "updatecommu.do", method = RequestMethod.POST)
     public String updateCGroup(CGroup cGroup, Model model,
-                               @RequestParam(value = "delFlag", required = false) String delFlag,
+                               @RequestParam(name = "delFlag", required = false) String delFlag,
                                @RequestParam("orifile") MultipartFile mfile,
                                HttpServletRequest request) throws ServletException, IOException {
         if (!mfile.getContentType().startsWith("image/")) {
@@ -384,4 +416,31 @@ public String commuMainList() throws UnsupportedEncodingException {
         }
     }// reportCGroup
 
+    // 커뮤니티 검색
+    @RequestMapping("commuSearch.do")
+    public ModelAndView searchCGroup(@RequestParam("keyword") String keyword, @RequestParam(name = "page", required = false) String page, ModelAndView mv){
+
+
+        int currentPage = 1;
+
+        int limit = 10; // 한 페이지에 출력할 목록 갯수
+        // 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+        int listCount = cGroupService.searchCGroupCount(keyword);
+        String url = "commuSearch.do";
+        Paging paging = new Paging(listCount, currentPage, limit, url);
+        paging.calculator();
+        ArrayList<CGroup> list = cGroupService.searchCGroup(keyword, paging);
+        if (list != null && list.size() > 0) {
+
+            mv.addObject("list", list);
+            mv.addObject("paging", paging);
+            mv.addObject("listCount", listCount);
+
+            mv.setViewName("community/commuMain");
+        } else {
+            mv.addObject("message", currentPage + " 커뮤니티 조회 실패");
+            mv.setViewName("common/error");
+        }
+        return mv;
+    } // searchCGroup
 } // end of class

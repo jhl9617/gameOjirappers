@@ -4,25 +4,38 @@ import java.util.ArrayList;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
 import org.team404.gameOjirap.user.model.dao.UserDao;
 import org.team404.gameOjirap.user.model.vo.User;
 
-@Service("UserService")	
+
+@Service("UserService")
 public class UserServiceImpl implements UserService{
 
 	@Autowired			//자동 DI 처리됨 : 자동 객체 생성되어 연결된다.
 	UserDao userDao;
 
-	@Override	//mybandtop5 출력 처리용
-	public ArrayList<CGroup> mybandtop5() {
-		return userDao.mybandtop5();
+	@Override
+	public ArrayList<CGroup> mybandtop5(String user_id) {
+		return userDao.mybandtop5(user_id);
 	}
 
+	@Override
+	public ArrayList<BoardGen> boardgentop5(String user_id) {
+		return userDao.boardgentop5(user_id);
+	}
+
+	@Override
+	public ArrayList<Comment> comment_borderTop5(String user_id) {
+		return userDao.comment_borderTop5(user_id);
+	}
 
 	@Override		//1명 정보 조회
-	public User selectUser(String user_id) {		
+	public User selectUser(String user_id) {
 		return userDao.selectUser(user_id);
 	}
 
@@ -30,34 +43,34 @@ public class UserServiceImpl implements UserService{
 	public int userInsertMethod(User user) {
 		return userDao.userInsertMethod(user);
 	}
-	
+
 	@Override
 	public int selectDupCheckId(String user_id) {
 		return userDao.selectDupCheckId(user_id);
 	}
-	
+
 	@Override
 	public int selectDupCheckNick(String user_nickname) {
 		return userDao.selectDupCheckNick(user_nickname);
 	}
-	
+
 	@Override
 	public ArrayList<User> selectUserList(Paging page) {
 		return userDao.selectUserList(page);
 	}
-	
+
 	//회원탈퇴요청처리용
 	@Override
 	public int userDeleteMethod(String user_id) {
 		return userDao.userDeleteMethod(user_id);
 	}
-	
-	
-	
+
+
+
 	@Override
 	public int updateUser(User user)	{
-	return userDao.updateUser(user);
-}
+		return userDao.updateUser(user);
+	}
 
 	@Override
 	public int levelMethod(User user_level) {
@@ -78,13 +91,13 @@ public class UserServiceImpl implements UserService{
 	@Override
 	public void updateBan(User user) {
 		userDao.updateBan(user);
-		
+
 	}
-	
+
 	@Override
 	public void updateBanRelease(User loginUser) {
 		userDao.updateBanRelease(loginUser);
-		
+
 	}
 
 	@Override
@@ -102,13 +115,11 @@ public class UserServiceImpl implements UserService{
 		return null;
 	}
 
-
 	@Override
 	public void updateDecPoint(User user) {
 		userDao.updateDecPoint(user);
 		
 	}
-
 
 	@Override
 	public int selectListCount() {
@@ -129,12 +140,4 @@ public class UserServiceImpl implements UserService{
 
 
 }//class close
-
-
-
-
-
-
-
-
 

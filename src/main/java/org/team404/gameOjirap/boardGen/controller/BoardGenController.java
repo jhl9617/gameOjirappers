@@ -18,7 +18,8 @@ import org.springframework.web.servlet.ModelAndView;
 import org.team404.gameOjirap.boardGen.model.service.BoardGenService;
 import org.team404.gameOjirap.boardGen.model.service.CommentService;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
+import org.team404.gameOjirap.common.BoardLike;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
 
@@ -74,35 +75,40 @@ public class BoardGenController {
 
 	      return mv;
 	   }
-	
 	/*
 	 * 게시글 상세보기용
 	 */
 	@RequestMapping("boardDetailView.do")
-	public ModelAndView boardDetailView(ModelAndView mv, @RequestParam("board_no") int board_no,
-			@RequestParam(name="page", required=false) String page  
-		                                            ) {
+	public ModelAndView boardDetailView(ModelAndView mv, @RequestParam("board_no") int board_no, @RequestParam(name="checked", required = false) String checked,
+			@RequestParam(name="page", required=false) String page, @RequestParam(name="user_id", required = false) String user_id) {
 		int currentPage = 1;
 		if(page != null) {
 			currentPage = Integer.parseInt(page);
 		}
 		boardService.updateBoardReadCount(board_no);  //조회수 1증가 처리
+
+		BoardLike blike = new BoardLike(user_id, board_no);
+
+		checked = "n";
+
+		// 좋아요 체크
+		if (boardService.selectGenLike(blike) > 0) {
+			checked = "y";
+		}
 		
 		BoardGen boardGen = boardService.selectOne(board_no); //해당 게시글 조회
 		
-		  ArrayList<Comment> comment = commentService.selectList(board_no); //해당 댓글 조회
+		ArrayList<Comment> comment = commentService.selectCommentList(board_no); //해당 댓글 조회
 		
 		if(boardGen != null) {
+			mv.addObject("checked", checked);
 			mv.addObject("boardGen", boardGen);
 			mv.addObject("currentPage", currentPage);
-			
 		}
 		
 		  if(comment != null) { 
 	      mv.addObject("comment", comment);
-	   
 		}
-		 
 		
 		if(mv.isEmpty()) {
 			mv.addObject("message", board_no + "번 글은 삭제된 게시글 입니다.");
@@ -194,7 +200,7 @@ public class BoardGenController {
 		} //새로운 첨부파일이 있을 때
 		
 		if(boardService.insertBoard(boardGen) > 0) {
-			
+			boardService.updateUserPoint(boardGen.getUser_id(), 50);
 			return "redirect:blist.do";
 		} else {
 			model.addAttribute("message", "새 게시글 등록 실패");
@@ -300,7 +306,26 @@ public class BoardGenController {
 			return "common/error";
 		}
 	}
-	
+
+	//파일 다운용
+	@RequestMapping("bfdown.do")
+	public ModelAndView fileDown(ModelAndView mv, HttpServletRequest request,
+								 @RequestParam("ofile") String originalFileName, @RequestParam("rfile") String renameFileName){
+		// 저장폴더 path 지정
+		String savePath = request.getSession().getServletContext().getRealPath("resources/boardGen_upfiles");
+
+		// 읽은 파일 이름에 대한 객체 생성
+		File renameFile = new File(savePath + "//" + renameFileName);
+		// 다운시 다시 원래이름으로 변경
+		File originFile = new File(originalFileName);
+
+		// 다운로드 뷰로 전달할 정보 저장
+		mv.setViewName("filedown");
+		mv.addObject("renameFile", renameFile);
+		mv.addObject("originFile", originFile);
+		return mv;
+	}
+
 		
 		
 	
@@ -321,21 +346,86 @@ public class BoardGenController {
 			return "common/error";
 		}
 	}
-	
+
+	/*댓글 insert*/
+	@RequestMapping(value="genReplyWrite.do", method=RequestMethod.POST)
+	public ModelAndView insertReplyMethod(ModelAndView mv, @RequestParam("board_no") int board_no,
+										  @RequestParam(name = "page", required = false) String page,
+										  @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents) {
+		Comment comment = new Comment(board_contents, board_no, user_id);
+		if(boardService.genReplyWrite(comment) > 0) {
+			boardService.updateUserPoint(user_id, 20);
+			mv.addObject("board_no", board_no);
+			mv.addObject("page", page);
+			mv.addObject("user_id", user_id);
+			mv.setViewName("redirect:boardDetailView.do");
+		}else {
+			mv.addObject("board_no", board_no);
+			mv.addObject("page", page);
+			mv.addObject("message", "댓글 등록에 실패했습니다.");
+			mv.setViewName("redirect:boardDetailView.do");
+		}
+		return mv;
+	}
+
+
+	// 게시물 좋아요 증가
+	@RequestMapping("genlike.do")
+	public String tarLike(Model model, @RequestParam("board_no") int board_no,
+						  @RequestParam(name="page", required = false) String page,
+						  @RequestParam("user_id") String user_id) {
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		BoardLike blike = new BoardLike(user_id, board_no);
+		String checked = "n";
+
+		if (boardService.selectGenLike(blike) > 0) {
+			checked = "y";
+		}else{
+			if(boardService.insertGenLike(blike)>0){
+				boardService.updateGenLike(board_no);
+			}
+		}
+		model.addAttribute("checked", checked);
+
+		model.addAttribute("board_no", board_no);
+		model.addAttribute("page", currentPage);
+
+		model.addAttribute("user_id", user_id);
+		return "redirect:boardDetailView.do";
+	}
+
+	// 게시물 좋아요 감소
+	@RequestMapping("genlike2.do")
+	public String tarLike2(Model model, @RequestParam("board_no") int board_no,
+						   @RequestParam(name="page", required = false) String page,
+						   @RequestParam("user_id") String user_id) {
+		int currentPage = 1;
+		if (page != null) {
+			currentPage = Integer.parseInt(page);
+		}
+		BoardLike blike = new BoardLike(user_id, board_no);
+		String checked = "n";
+
+
+		if(boardService.deleteGenLike(blike)>0){
+			boardService.updateGenLikedis(board_no);
+		}
+
+		model.addAttribute("checked", checked);
+
+		model.addAttribute("board_no", board_no);
+		model.addAttribute("page", currentPage);
+
+		model.addAttribute("user_id", user_id);
+		return "redirect:boardDetailView.do";
+
+	}
+
+
+
+
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

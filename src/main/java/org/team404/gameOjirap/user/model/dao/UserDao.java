@@ -7,7 +7,10 @@ import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.community.cGroup.model.vo.CGroup;
+import org.team404.gameOjirap.community.cboard.model.vo.CComment;
 import org.team404.gameOjirap.user.model.vo.User;
 
 @Repository("UserDao")
@@ -48,6 +51,7 @@ public class UserDao {
 		return (ArrayList<User>)list;
 	}
 	
+	//정보수정용
 	public int updateUser(User user) {
 		return session.update("userMapper.updateUser", user);
 	}
@@ -82,10 +86,21 @@ public class UserDao {
 
 	
 
-	public ArrayList<CGroup> mybandtop5() {
-		List<CGroup> list = session.selectList("userMapper.mybandtop5");
+	public ArrayList<CGroup> mybandtop5(String user_id) {
+		List<CGroup> list = session.selectList("userMapper.mybandtop5", user_id);
 		return (ArrayList<CGroup>)list;
 	}
+	
+	public ArrayList<BoardGen> boardgentop5(String user_id) {
+		List<BoardGen> list = session.selectList("userMapper.boardgentop5", user_id);
+		return (ArrayList<BoardGen>)list;
+	}
+ 
+	public ArrayList<Comment> comment_borderTop5(String user_id) {
+		List<Comment> list = session.selectList("userMapper.comment_borderTop5", user_id);
+		return (ArrayList<Comment>)list;
+	}
+
 
 	public void updateDecPoint(User user) {
 		session.update("userMapper.updateDecPoint", user);

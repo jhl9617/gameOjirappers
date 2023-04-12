@@ -17,8 +17,7 @@
 		<result column="user_id" property="user_id"/>
 		<result column="board_notice" property="board_notice"/>
 	</resultMap>
-	
-	
+
 	<select id="selectList" parameterType="Paging" resultMap="resultBoard">
 		<![CDATA[
 		select *  
@@ -86,12 +85,45 @@
 		delete from tb_board_gen
 		where board_no = #{ board_no } 
 	</delete>
-	
-	<delete id="deleteBoardLike"></delete>
 
+	<!--댓글 insert-->
+	<insert id="genReplyWrite" parameterType="Comment">
+		insert into TB_COMMENT(COM_NO, COM_CONTENTS, COM_DATE, BOARD_NO, USER_ID, com_lev)
+		values(seq_comment.nextval,#{com_contents}, sysdate, #{board_no}, #{user_id}, 0)
+	</insert>
+
+	<!-- 게시글 좋아요 정보 저장 -->
+	<insert id="insertGenLike" parameterType="BoardLike">
+		INSERT INTO TB_GENBOARD_LIKE (board_no, user_id, like_date)
+		VALUES (#{board_no}, #{user_id}, sysdate)
+	</insert>
+
+	<delete id="deleteGenLike" parameterType="BoardLike">
+		DELETE FROM TB_GENBOARD_LIKE
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</delete>
+
+	<update id="updateGenLikedis" parameterType="_int">
+		UPDATE TB_BOARD_GEN
+		SET board_like = board_like - 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<update id="updateGenLike" parameterType="_int">
+		UPDATE TB_BOARD_GEN
+		SET board_like = board_like + 1
+		WHERE BOARD_NO = #{board_no}
+	</update>
+
+	<select id="selectGenLike" parameterType="BoardLike" resultType="_int">
+		SELECT COUNT(*) FROM TB_GENBOARD_LIKE
+		WHERE BOARD_NO = #{board_no} AND USER_ID = #{user_id}
+	</select>
+
+	<!--포인트 올리기-->
+	<update id="updateUserPoint" parameterType="map">
+		UPDATE TB_USER
+		SET user_point = user_point + #{point}
+		WHERE USER_ID = #{user_id}
+	</update>
 </mapper>
-
-
-
-
-

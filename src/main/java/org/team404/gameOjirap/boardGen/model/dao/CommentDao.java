@@ -6,9 +6,7 @@ import java.util.List;
 import org.mybatis.spring.SqlSessionTemplate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
-import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
-import org.team404.gameOjirap.boardGen.model.vo.Comment;
-import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Repository("commentDao")
 public class CommentDao {
@@ -43,6 +41,9 @@ public class CommentDao {
 		return session.selectOne("commentMapper.selectUserId", board_no);
 	}
 
-	
-	
+
+    public ArrayList<Comment> selectCommentList(int boardNo) {
+		List<Comment> list = session.selectList("commentMapper.selectCommentList", boardNo);
+		return (ArrayList<Comment>)list;
+    }
 }
