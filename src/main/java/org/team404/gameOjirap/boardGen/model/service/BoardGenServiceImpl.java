@@ -7,6 +7,7 @@ import org.springframework.stereotype.Service;
 import org.team404.gameOjirap.boardGen.model.dao.BoardGenDao;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
 
 @Service("boardGenService")
 public class BoardGenServiceImpl implements BoardGenService {
@@ -67,6 +68,11 @@ public class BoardGenServiceImpl implements BoardGenService {
 	@Override
 	public int updateBoardReadCount(int board_no) {
 		return boardDao.updateBoardReadCount(board_no);
+	}
+
+	@Override
+	public int genReplyWrite(Comment comment) {
+		return boardDao.genReplyWrite(comment);
 	}
 
 }

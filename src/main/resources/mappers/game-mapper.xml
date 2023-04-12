@@ -73,7 +73,7 @@
 		<result property="releasedate" column="releasedate"/>		
 	</resultMap>
 	
-	<resultMap type="Game" id="youtube">
+	<resultMap type="Game" id="column">
 		<result property="appid" column="appid"/>
 		<result property="name" column="name"/>
 	</resultMap>
@@ -110,7 +110,7 @@
 
 	 	<![CDATA[
 	 	select * 
-		from ( select rownum rnum, appid,name, headerimg, short_description , releasedate,ccu,meta
+		from ( select rownum rnum, appid,name, headerimg, short_description , releasedate,ccu,meta,positive
 				from ( select * from game order by ccu desc ))
 		where rnum >= 1 and rnum <=6
 	 	]]>
@@ -142,16 +142,21 @@
 	 	where appid = #{appid}
 	 </select>
 	 
+	 <!-- <![CDATA[
+	 	select * 
+		from ( select rownum rnum, appid ,name, initialprice, finalprice ,ccu ,discountrate
+				from ( select * from game where discountrate is not null order by discountrate desc,finalprice asc  ))
+		where rnum >= 1 and rnum <=10
+	 	]]> -->
 	 <!-- 게임 장르가 같은 것 끼리 출력 -->
 	 <select id="selectSearchGenre" parameterType="Searchs" resultMap="searchGenre">
 	 select*
 		from(select rownum rnum, appid,  name, genre ,positive
-        from (select * from game order by positive desc)
+        from (select * from game order by positive desc
         <if test="keyword !=null and keyword.equals('initialprice')" >
-		where genre like '%' || #{ keyword } || '%'
+		where lower(genre) like '%' || #{ keyword } || '%'
 		</if>
-		)
-		
+		))		
 		<![CDATA[
         where rnum >= 1 and rnum <=10
 		]]>
@@ -159,7 +164,7 @@
 	 
 
 	 
-	 <!-- 게임 가격으로 검 -->
+	 <!-- 게임 가격으로 검색 -->
 	 <select id="selectSearchPrice" parameterType="Searchs" resultMap="searchPrice">
 	 	select appid, name, genre,initialprice, finalprice, discountrate  from game
 	 	where
@@ -179,14 +184,15 @@
 	 
 	 <!-- 게임 검색 모두 갖고 오기 -->
 	<select id="selectgameAllSearch" parameterType="Searchs" resultMap="allGame">
-	 	select  appid, name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta, discountrate
-	 	from game where
+	 	select *
+	 	from (select rownum rnum, appid, name, genre, short_description, initialprice, finalprice, ccu, positive, releasedate, meta, discountrate
+	 	from (select * from game where 
 	 	<choose>
 	 		<when test="type !=null and type.equals('name')" >
-		 	  name like '%' || #{ keyword } || '%'
+		 	  lower(name) like '%' || #{ keyword } || '%' order by name
 		 	</when>
 		 	<when test="type !=null and type.equals('genre')" >
-		 	  genre like '%' || #{ keyword } || '%'
+		 	  lower(genre) like '%' || #{ keyword } || '%' order by genre
 		 	</when>
 		 	<when test="type !=null and type.equals('initialprice')" >
 		 	<![CDATA[
@@ -204,6 +210,10 @@
 		 	  ]]> 
 		 	</when>
 		 </choose>
+		 ))
+		 <![CDATA[
+		 where rnum >= 1 and rnum <=10
+		 ]]>
 	 </select>
 
 
@@ -216,8 +226,14 @@
       from game
       where appid = #{appid}
    </select>
-	 
-	<select id="selectYoutube" resultMap="youtube">
+   
+	<!-- 유튜브 -->
+	<select id="selectYoutube" resultMap="column">
+		select appid, name from game where appid = #{appid}
+	</select>
+	
+	<!-- 뉴스 -->
+	<select id="selectNews" resultMap="column">
 		select appid, name from game where appid = #{appid}
 	</select>
 

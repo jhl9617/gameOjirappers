@@ -44,4 +44,6 @@ public interface BoardTarService {
     int selectSearchListCount(Searchs searchs);
 
     ArrayList<BoardTar> selectSearchList(Map map);
+
+    int deleteTarReply(int comNo);
 }

@@ -14,37 +14,25 @@
 		<result column="user_id" property="user_id"/>
 	</resultMap>
 	
-	<select id="selectList" resultMap="resultComment">
-		<![CDATA[
-		select *
-		from(select rownum rnum, com_no, com_contents, com_date,
-		        com_lev, com_no2, board_no, user_id
-		from(select * from tb_comment
-		order by com_no desc))
-		where rnum >= 1 and rnum <= 10
-		]]>
+	<select id="selectList" parameterType="_int" resultType="Comment">
+		select * from tb_comment
+		where board_no = #{board_no}
 	</select>
 	
- 	<select id="selectUserId" parameterType="_int" resultMap="resultComment">
+ 	<select id="selectUserId" parameterType="_int" resultType="Comment">
 	select * from tb_comment
 	where board_no = #{board_no}
-	</select> 
-	
+	</select>
+
 	<insert id="insertComment" parameterType="Comment">
 		insert into tb_comment(com_no, com_contents, com_date, com_lev, com_no2, board_no, user_id)
 		values( #{com_no}, #{com_contents}, sysdate, #{com_lev}, #{com_no2}, #{board_no}, #{user_id})
 	</insert>
-	
+
+<!--댓글 리스트 불러오기-->
+	<select id="selectCommentList" parameterType="_int" resultType="Comment">
+		select * from tb_comment
+		where board_no = #{board_no}
+	</select>
+
 </mapper>
-
-
-
-
-
-
-
-
-
-
-
-

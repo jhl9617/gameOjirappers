@@ -90,7 +90,7 @@ public class BoardGenController {
 		
 		BoardGen boardGen = boardService.selectOne(board_no); //해당 게시글 조회
 		
-		  ArrayList<Comment> comment = commentService.selectList(board_no); //해당 댓글 조회
+		ArrayList<Comment> comment = commentService.selectCommentList(board_no); //해당 댓글 조회
 		
 		if(boardGen != null) {
 			mv.addObject("boardGen", boardGen);
@@ -300,7 +300,26 @@ public class BoardGenController {
 			return "common/error";
 		}
 	}
-	
+
+	//파일 다운용
+	@RequestMapping("bfdown.do")
+	public ModelAndView fileDown(ModelAndView mv, HttpServletRequest request,
+								 @RequestParam("ofile") String originalFileName, @RequestParam("rfile") String renameFileName){
+		// 저장폴더 path 지정
+		String savePath = request.getSession().getServletContext().getRealPath("resources/boardGen_upfiles");
+
+		// 읽은 파일 이름에 대한 객체 생성
+		File renameFile = new File(savePath + "//" + renameFileName);
+		// 다운시 다시 원래이름으로 변경
+		File originFile = new File(originalFileName);
+
+		// 다운로드 뷰로 전달할 정보 저장
+		mv.setViewName("filedown");
+		mv.addObject("renameFile", renameFile);
+		mv.addObject("originFile", originFile);
+		return mv;
+	}
+
 		
 		
 	
@@ -321,21 +340,25 @@ public class BoardGenController {
 			return "common/error";
 		}
 	}
-	
+
+	/*댓글 insert*/
+	@RequestMapping(value="genReplyWrite.do", method=RequestMethod.POST)
+	public ModelAndView insertReplyMethod(ModelAndView mv, @RequestParam("board_no") int board_no,
+										  @RequestParam(name = "page", required = false) String page,
+										  @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents) {
+		Comment comment = new Comment(board_contents, board_no, user_id);
+		if(boardService.genReplyWrite(comment) > 0) {
+			mv.addObject("board_no", board_no);
+			mv.addObject("page", page);
+			mv.addObject("user_id", user_id);
+			mv.setViewName("redirect:boardDetailView.do");
+		}else {
+			mv.addObject("board_no", board_no);
+			mv.addObject("page", page);
+			mv.addObject("message", "댓글 등록에 실패했습니다.");
+			mv.setViewName("redirect:boardDetailView.do");
+		}
+		return mv;
+	}
 
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

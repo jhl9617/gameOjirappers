@@ -91,4 +91,8 @@ public class BoardTarDao {
         List<BoardTar> list = session.selectList("boardTarMapper.selectSearchList", map);
         return (ArrayList<BoardTar>) list;
     }
+
+    public int deleteTarReply(int comNo) {
+        return session.delete("boardTarMapper.deleteTarReply", comNo);
+    }
 }

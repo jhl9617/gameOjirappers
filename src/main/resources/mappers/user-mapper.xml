@@ -43,7 +43,77 @@
 		<result property="communityname" column="communityname" />
 		<result property="communitydate" column="communitydate" />		
 	</resultMap>
+	
+	<!-- 자유게시판조회용 -->	
+	<resultMap type="BoardGen" id="resultboardgentop5">	
+		<result property="board_date" column="board_date" />	
+		<result property="board_no" column="board_no" />	
+		<result property="board_title" column="board_title" />	
+		<result property="board_count" column="board_count" />	
+		<result property="board_like" column="board_like" />	
+	</resultMap>
+	<!-- 게임게시판조회용 -->	
+<!-- 	<resultMap type="BoardTar" id="resultboardtartop5">	 -->
+<!-- 		<result property="board_date" column="board_date" />	 -->
+<!-- 		<result property="board_no" column="board_no" />	 -->
+<!-- 		<result property="board_title" column="board_title" />	 -->
+<!-- 		<result property="board_count" column="board_count" />	 -->
+<!-- 		<result property="board_like" column="board_like" />	 -->
+<!-- 	</resultMap> -->
+	<!-- 게시글 댓글 top5 조회용-->	
+	<resultMap type="Comment" id="resultcomment_borderTop5">	
+		<result property="com_date" column="com_date" />	
+		<result property="com_contents" column="com_contents" />	
+	</resultMap>	
+	
+	
+<!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
 
+	<!-- 게시판 댓글 5개 출력 처리용 -->
+	<select id="comment_borderTop5" resultMap="resultcomment_borderTop5">
+		<![CDATA[
+		select *
+		from (select rownum rnum, com_date, com_contents
+		        from (select * 
+		                from tb_comment
+		                where user_id = #{ user_id }
+		                order by com_no))
+		where rnum >= 1 and rnum <= 5
+		]]>
+	</select>
+
+
+	
+	<!-- mybandtop5 출력 처리용 -->
+	<select id="mybandtop5" resultMap="resultmybandtop5">
+		<![CDATA[
+		select *
+		from (select rownum rnum, communityid, communityname, communitydate
+		        from (select * 
+		                from tb_community
+		                where user_id = #{ user_id }
+		                order by communitydate desc, communityid desc))
+		where rnum >= 1 and rnum <= 5
+		]]>
+	</select>
+	
+	<!-- boardgentop5 출력 처리용 -->
+	<select id="boardgentop5" resultMap="resultboardgentop5">
+		<![CDATA[
+		select *
+		from (select rownum rnum, board_date, board_no, board_title, board_count, board_like
+		        from (select * 
+		                from tb_board_gen
+		                where user_id = #{ user_id }
+		                order by board_no))
+		where rnum >= 1 and rnum <= 5
+		]]>
+	</select>
+	
+	
+	
+	
+	
 <!-- 즐찾 ////////////////////////////////////////////////////////////////////////////////////////////////  -->
 	<!-- 즐찾등록  -->
 	<select id="insertFavorite" resultMap="hotlist">
@@ -80,24 +150,6 @@
 
 
 
-<!--////////////////////////////////////////////////////////////////////////////////////////////////  -->
-
-	<!-- mybandtop5 출력 처리용 -->
-	<select id="mybandtop5" resultMap="resultmybandtop5">
-		<![CDATA[
-		select *
-		from (select rownum rnum, communityid, communityname, communitydate
-		        from (select * 
-                from tb_community
-                order by communitydate desc, communityid desc))
-		where rnum >= 1 and rnum <= 5
-		]]>
-	</select>
-	
-	
-	
-	
-	
 	
 	<!-- 회원탈퇴 처리용 -->
 	<delete id="userDeleteMethod" parameterType="string">		<!-- insert & delete는 기본이 int로 리턴하기때문에  resultType이나 resultMap 작성할 수 없음 -->
@@ -112,7 +164,7 @@
 		update tb_user
 		set user_pwd= #{user_pwd},
 			 user_phone= #{user_phone}, 
-			 email= #{email},
+			 user_email= #{user_email}
 		where user_id = #{user_id}		
 	</update>
 

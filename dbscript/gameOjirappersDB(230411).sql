@@ -1,37 +1,20 @@
-drop table tb_board_like cascade constraints;
-
-create table tb_board_like(
-                              user_id VARCHAR2(50 BYTE) ,
-                              board_no number not null,
-                              like_date date not null,
-                              constraint pk_board_like primary key (user_id, board_no),
-                              constraint fk_board_like foreign key (user_id) references tb_user(user_id)
-);
-
-comment on column tb_board_like.user_id is '좋아요누른회원';
-comment on column tb_board_like.board_no is '좋아요누른게시물';
-comment on column tb_board_like.like_date is '좋아요누른날짜';
-
 DROP TABLE TB_USER cascade constraints;
 -- 소셜로그인시 회원가입을 이용할 경우의 회원 테이블
 CREATE TABLE TB_USER (
-                         USER_ID 		    VARCHAR2(50) 				    NOT NULL,
-                         ADMIN_ID 		    VARCHAR2(20) DEFAULT 'N'        NOT NULL,
-                         USER_PWD		    VARCHAR2(100) 			        NOT NULL,
-                         USER_NICKNAME		VARCHAR2(30)			        NOT NULL,
-                         USER_NAME 		    VARCHAR2(100)			        NOT NULL,
-                         USER_PHONE 		VARCHAR2(13) 			        NOT NULL,
-                         USER_EMAIL 		VARCHAR2(100) 			        NOT NULL,
-                         USER_BIRTH 		DATE 	                            NULL,
+                         USER_ID 		 VARCHAR2(50) 				NOT NULL,
+                         ADMIN_ID 		VARCHAR2(20) DEFAULT 'N' 		NOT NULL,
+                         USER_PWD		VARCHAR2(100) 			NOT NULL,
+                         USER_NICKNAME		VARCHAR2(30)			NOT NULL,
+                         USER_NAME 		VARCHAR2(100)			NOT NULL,
+                         USER_PHONE 		VARCHAR2(13) 			NOT NULL,
+                         USER_EMAIL 		VARCHAR2(100) 			NOT NULL,
+                         USER_BIRTH 		DATE 	NULL,
                          USER_LEVEL 		VARCHAR2(20)	DEFAULT '새싹'	NOT NULL,
                          USER_STATUS		VARCHAR2(30) 	DEFAULT 'run'	NOT NULL,
-                         BAN_RELEASE_DATE  DATE,
-                         USER_POINT 		NUMBER		DEFAULT 0		    NOT NULL,
-                         USER_ENROLLDATE 	DATE 		DEFAULT             SYSDATE,
-
+                         USER_POINT 		NUMBER		DEFAULT 0		NOT NULL,
                          USER_ACCESS 		DATE 		DEFAULT SYSDATE,
-                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'	NULL,
-                         CONFIRM_ANSWER 	VARCHAR2(100) 			            NULL
+                         USER_ORIGINAL_PROFILE 	VARCHAR2(30) 	DEFAULT '기본'		NULL,
+                         CONFIRM_ANSWER 	VARCHAR2(100) 			NULL
 );
 
 
@@ -45,7 +28,6 @@ comment on column TB_USER.user_email is '회원이메일';
 comment on column TB_USER.user_birth is '회원생일';
 comment on column TB_USER.user_level is '회원등급';
 comment on column TB_USER.user_status is '회원 활동상태';
-comment on column TB_USER.ban_release_date is '정지 해제일';
 comment on column TB_USER.user_point is '보유포인트';
 comment on column TB_USER.user_access is '접속기록';
 comment on column TB_USER.user_original_profile is '프로필이미지';
@@ -185,14 +167,12 @@ CREATE TABLE TB_Community_REPORT (
                                      user_id	VARCHAR2(20)		NOT NULL,
                                      communityId	NUMBER		NOT NULL,
                                      c_report_time	DATE		,
-                                     c_report_desc	VARCHAR2(500),
-                                     c_rep_type varchar2(50) not null
+                                     c_report_desc	VARCHAR2(500)
 );
 comment on column TB_Community_REPORT.user_id is '사용자 ID';
-comment on column TB_Community_REPORT.communityId is '커뮤니티번호';
-comment on column TB_Community_REPORT.c_report_time is '커뮤니티신고 시간';
-comment on column TB_Community_REPORT.c_report_desc is '커뮤니티신고 내용';
-comment on column TB_Community_REPORT.c_rep_type is '커뮤니티신고유형';
+comment on column TB_Community_REPORT.communityId is '밴드 번호';
+comment on column TB_Community_REPORT.c_report_time is '밴드 신고 시간';
+comment on column TB_Community_REPORT.c_report_desc is '밴드 신고 내용';
 
 DROP TABLE TB_Community_LIKE cascade constraints;
 
@@ -213,7 +193,6 @@ CREATE TABLE TB_Community_REQ (
                                   communityId	NUMBER NOT NULL,
                                   requestDes	Varchar2(1000)		,
                                   requestDate	Date
-
 );
 
 comment on column TB_Community_REQ.user_id is '사용자 ID';
@@ -221,7 +200,7 @@ comment on column TB_Community_REQ.communityId is '밴드 ID';
 comment on column TB_Community_REQ.requestDes is '밴드 가입 신청 내용';
 comment on column TB_Community_REQ.requestDate is '밴드 가입 신청 날짜';
 
-
+DROP TABLE GAME cascade constraints;
 DROP TABLE GAME cascade constraints;
 
 CREATE TABLE GAME (
@@ -327,12 +306,18 @@ comment on column TB_BOARD_GEN.board_notice is '공지글 제목';
 DROP TABLE TB_HOTLIST cascade constraints;
 
 CREATE TABLE TB_HOTLIST (
+                            favo_id   VARCHAR2(30)		NOT NULL,
+                            appid	    VARCHAR2(30)		NOT NULL,
                             user_id	VARCHAR2(20)		NOT NULL,
-                            appid	VARCHAR2(30 BYTE)		NOT NULL
+                            like_dt    VARCHAR2(30)		NOT NULL
 );
 
+comment on column TB_HOTLIST.favo_id is '좋아요 ID';
+comment on column TB_HOTLIST.appid is '좋아요누른 게임ID';
 comment on column TB_HOTLIST.user_id is '사용자 ID';
-comment on column TB_HOTLIST.appid is '게임 ID';
+comment on column TB_HOTLIST.like_dt is '좋아요누른날짜';
+
+
 
 DROP TABLE TB_USER_LIKE cascade constraints;
 
@@ -407,7 +392,7 @@ CREATE TABLE TB_BOARD_TAR (
                               board_orifile	VARCHAR2(500)		,
                               board_refile	VARCHAR2(500)		NULL,
                               user_id	VARCHAR2(20)		NOT NULL,
-                            board_notice VARCHAR2(50)
+					board_notice VARCHAR2(50)
 );
 
 comment on column TB_BOARD_TAR.board_no is '게시글 번호';
@@ -765,28 +750,29 @@ alter table tb_community_req add reqno number default 1 not null unique;
 comment on column tb_community_req.reqno is '신청번호';
 
 
-drop sequence req_seq;
+DROP SEQUENCE favo_id_seq;
+
+CREATE SEQUENCE favo_id_seq
+INCREMENT BY 1
+START WITH 1
+NOCYCLE
+NOCACHE;
+
+
+DROP SEQUENCE req_seq;
+
 create SEQUENCE req_seq
     start with 1
-    increment by 1;
+    increment by 1
 
-drop sequence seq_comment;
+
+DROP SEQUENCE seq_comment;
 create SEQUENCE seq_comment
     start with 1
     increment by 1;
 
 
 
-
-
-
-
-
-
-drop sequence seq_board_tar;
-create sequence seq_board_tar
-    start with 1
-    increment by 1;
 
 commit;
    

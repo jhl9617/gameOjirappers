@@ -25,7 +25,6 @@ import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 import org.team404.gameOjirap.game.model.vo.GameSearchs;
 import org.team404.gameOjirap.game.model.vo.Youtube;
-import org.team404.gameOjirap.game.model.vo.Youtube;
 
 @Controller("gameController")
 public class GameController {
@@ -171,6 +170,7 @@ public class GameController {
 			job.put("releasedate", game.getReleasedate().toString());
 			job.put("ccu", game.getCcu());
 			job.put("meta", game.getMeta());
+			job.put("positive", game.getPositive());
 
 			jarr.add(job); // job 를 jarr 에 추가함
 		}
@@ -272,7 +272,6 @@ public class GameController {
 
 	}
 
-
 	// 게임 장르 할인 검색 처리용
 	@RequestMapping(value = "ggsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
 	@ResponseBody
@@ -326,53 +325,58 @@ public class GameController {
 
 	}
 
-	
-	//게임 전체 검색용 페이지
-		@RequestMapping(value = "gameAllsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
-		@ResponseBody
-		public ArrayList<Game> gameAllsearchMethod(HttpServletRequest request, @RequestParam("keyword") String keyword,
-				@RequestParam("type") String type, Model model) throws Exception {
+	// 게임 전체 검색용 페이지
+	@RequestMapping(value = "gameAllsearch.do", method = { RequestMethod.POST, RequestMethod.GET })
+	@ResponseBody
+	public ArrayList<Game> gameAllsearchMethod(HttpServletRequest request, @RequestParam("keyword") String keyword,
+			@RequestParam("type") String type, Model model) throws Exception {
 
-			GameSearchs searchs = new GameSearchs();
-			searchs.setType(type);
-			searchs.setKeyword(keyword);
+		GameSearchs searchs = new GameSearchs();
+		searchs.setType(type);
+		searchs.setKeyword(keyword);
 
-			return gameService.selectgameAllSearch(searchs);
+		return gameService.selectgameAllSearch(searchs);
 
-		}
-		
-	//유튜브 영상 넣기
-		@RequestMapping(value ="youTube.do",method = { RequestMethod.POST, RequestMethod.GET })
-		public ModelAndView moveYouTubeView(HttpServletRequest request, @RequestParam("appid") String appid, ModelAndView mv) throws Exception {
-		//public String moveYouTubeView() throws Exception {
-	
-			Game game = gameService.selectYoutube(appid);
-			if(game != null) {
-				mv.addObject("game", game);
-				
-				mv.setViewName("youTube/youTubepage");
-			}else {
-				mv.addObject("message", appid + "번 게임 유튜 조회 실패");
-				mv.setViewName("common/error");
-			}
-			
-			return mv;
-			//Youtube youtubeurl = new Youtube();
-			//return "youTube/youTubepage";
-			
-			/*
-			 * if (game != null) {
+	}
+
+	// 유튜브 영상 넣기
+	@RequestMapping(value = "youTube.do", method = { RequestMethod.POST, RequestMethod.GET })
+	public ModelAndView moveYouTubeView(HttpServletRequest request, @RequestParam("appid") String appid,
+			ModelAndView mv) throws Exception {
+		// public String moveYouTubeView() throws Exception {
+
+		Game game = gameService.selectYoutube(appid);
+		if (game != null) {
 			mv.addObject("game", game);
-			mv.addObject("currentPage", currentPage);
 
-			mv.setViewName("game/gameDetailView");
+			mv.setViewName("youTube/youTubepage");
 		} else {
-			mv.addObject("message", appid + "번 게임 정보 조회 실패");
+			mv.addObject("message", appid + "번 게임 유튜 조회 실패");
 			mv.setViewName("common/error");
 		}
-		return mv;
-			 * */
-		}
 
+		return mv;
+
+	}
+
+	/*
+	 * @RequestMapping(value = "news.do", method = { RequestMethod.POST,
+	 * RequestMethod.GET }) public ModelAndView moveNewsView(HttpServletRequest
+	 * request,
+	 * 
+	 * @RequestParam("appid") String appid,
+	 * 
+	 * @RequestParam("page") String page,
+	 * 
+	 * ModelAndView mv) {
+	 * 
+	 * Game game = gameService.selectNews(appid); if(game != null) {
+	 * mv.addObject("game",game); mv.setViewName("news/newsViewPage"); }else {
+	 * mv.addObject("message", appid + "번 게임뉴스 조회 실패");
+	 * mv.setViewName("common/error"); } return mv;
+	 * 
+	 * 
+	 * }
+	 */
 
 }

@@ -77,22 +77,22 @@
             cursor: pointer;
         }
     </style>
-<script>
-    function btdelcheck() {
-        if (confirm("정말 삭제하시겠습니까?")) {
-            return true;
-        } else {
-            return false;
+    <script>
+        function btdelcheck() {
+            if (confirm("정말 삭제하시겠습니까?")) {
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
-    function btupcheck(){
-        if (confirm("정말 수정하시겠습니까?")) {
-            return true;
-        } else {
-            return false;
+        function btupcheck(){
+            if (confirm("정말 수정하시겠습니까?")) {
+                return true;
+            } else {
+                return false;
+            }
         }
-    }
-</script>
+    </script>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
@@ -187,18 +187,18 @@
 </form>
 <br>
 <br>
-<%--커뮤니티 댓글 리스트로 불러와서 보여주기--%>
+<%-- 댓글 리스트로 불러와서 보여주기--%>
 <c:import url="/WEB-INF/views/boardTar/gameReplyList.jsp"/>
 <div id="comments-end"></div>
 <%--댓글 입력 form--%>
-<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
+<form action="<c:url value="/genReplyWrite.do"/>" method="post">
     <input type="hidden" name="board_no" value="${boardTar.board_no}">
     <input type="hidden" name="user_id" value="${boardTar.user_id}">
     <input type="hidden" name="appid" value="${appid}">
     <input type="hidden" name="name" value="${name}">
     <div class="form-group">
-        <label for="reply_content">댓글 내용</label>
-        <textarea class="form-control" id="reply_content" name="reply_content" rows="3"></textarea>
+        <label for="reply_contents">댓글 내용</label>
+        <textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">댓글 작성</button>
 </form>

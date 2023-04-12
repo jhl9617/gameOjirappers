@@ -82,9 +82,9 @@
 	<update id="updateBoard" parameterType="BoardTar">
 		UPDATE TB_BOARD_TAR
 		SET BOARD_TITLE = #{board_title}, BOARD_CONTENT = #{board_content}
-		  <if test="board_orifile != null">
-		  , BOARD_ORIFILE = #{board_orifile}, BOARD_REFILE = #{board_refile}
-		  </if>
+		<if test="board_orifile != null">
+			, BOARD_ORIFILE = #{board_orifile}, BOARD_REFILE = #{board_refile}
+		</if>
 		<if test="board_orifile == null">
 			, BOARD_ORIFILE =null, BOARD_REFILE = null
 		</if>
@@ -103,10 +103,11 @@
 	</delete>
 
 	<update id="updateTarLikedis" parameterType="_int">
-		UPDATE TB_BOARD_TAR
-		SET board_like = board_like - 1
-		WHERE BOARD_NO = #{board_no}
+	UPDATE TB_BOARD_TAR
+	SET board_like = board_like - 1
+	WHERE BOARD_NO = #{board_no}
 	</update>
+
 	<!--댓글 insert-->
 	<insert id="insertTarReply" parameterType="Comment">
 		INSERT INTO TB_COMMENT (COM_NO, COM_CONTENTS, COM_DATE, COM_LEV, COM_NO2, BOARD_NO, USER_ID)
@@ -127,6 +128,14 @@
 		SET COM_CONTENTS = #{com_contents}
 		WHERE COM_NO = #{com_no}
 	</update>
+
+	<!--댓글 삭제-->
+	<delete id="deleteTarReply" parameterType="int">
+		DELETE FROM TB_COMMENT
+		WHERE COM_NO = #{com_no}
+	</delete>
+
+
 
 	<!-- 검색용 리스트 카운트 -->
 	<select id="selectSearchListCount" parameterType="Searchs" resultType="_int">
