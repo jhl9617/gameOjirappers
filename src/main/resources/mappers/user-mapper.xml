@@ -172,9 +172,18 @@
 
 	
 	<!-- 회원 전체 조회용 -->
-	<select id = "selectUserList" resultType="User">
+	<select id = "selectUserList" parameterType="Paging" resultType="User">
+	<![CDATA[
 		select *
-		from tb_user
+		from (select rownum rnum, USER_ID, ADMIN_ID, USER_NICKNAME, USER_NAME, USER_PHONE, 
+			 USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, BAN_RELEASE_DATE, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE
+			 from (select * from tb_user order by user_id desc))
+		where rnum >= #{startRow} and rnum <= #{endRow}
+		]]>
+	</select>
+	
+	<select id="selectUserListCount" resultType="User">
+		select * from tb_user
 	</select>
 	
 	
@@ -230,7 +239,22 @@
 		where user_id = #{user_id}
 	</update>
 	
+	<update id="updateDecPoint">
+		update tb_user
+		set user_point = #{user_point},
+			 user_level = #{user_level}
+		where user_id = #{user_id}
+	</update>
 	
+	<select id="selectSearchUID" parameterType="string" resultType="User">
+		select * from tb_user
+		where user_id like '%' || #{keyword} || '%'
+	</select>
+	
+	<select id="selectSearchUN" parameterType="string" resultType="User">
+		select * from tb_user
+		where user_nickname like '%' || #{keyword} || '%'
+	</select>
 	
 	
 	

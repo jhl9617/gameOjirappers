@@ -2,6 +2,7 @@ package org.team404.gameOjirap.game.model.service;
 
 import java.util.ArrayList;
 
+import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.Pagingnn;
 import org.team404.gameOjirap.game.model.vo.Game;
 import org.team404.gameOjirap.game.model.vo.GameSearchs;
@@ -42,6 +43,8 @@ public interface GameService {
 	ArrayList<Game> selectgameAllSearch(GameSearchs searchs);
 
 	Game selectYoutube(String appid); //youTube 영상 갖어오기
+
+    ArrayList<BoardTar> selectTarBoardList(int appid);
 
 //	String selectYoutube(String appid);  //youTube 로 영상 갖고오기
 

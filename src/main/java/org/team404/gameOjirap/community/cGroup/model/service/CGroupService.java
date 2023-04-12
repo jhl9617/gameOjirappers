@@ -46,5 +46,9 @@ public interface CGroupService {
 
     int insertReport(CReport cReport);
 
+
+	ArrayList<CReport> selectCReportList();
+
     int selectMemberListCount(int communityid);
+
 }

@@ -21,6 +21,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.servlet.ModelAndView;
+import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
+import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.game.model.service.GameService;
 import org.team404.gameOjirap.game.model.vo.Game;
 import org.team404.gameOjirap.game.model.vo.GameSearchs;
@@ -50,6 +52,10 @@ public class GameController {
 			mv.addObject("game", game);
 			mv.addObject("currentPage", currentPage);
 
+
+			//게임 페이지에서 해당 게임 게시물 보여주기
+			ArrayList<BoardTar> list = gameService.selectTarBoardList(Integer.parseInt(appid));
+			mv.addObject("list", list);
 			mv.setViewName("game/gameDetailView");
 		} else {
 			mv.addObject("message", appid + "번 게임 정보 조회 실패");

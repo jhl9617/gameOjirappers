@@ -132,14 +132,15 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping(value = "CommuCreateSubmit.do", method = RequestMethod.POST)
     public String creatCommuMethod(CGroup cGroup, Model model, HttpServletRequest request,
                                    @RequestParam(name="mfile", required = false) MultipartFile mfile) {
-        if(!mfile.isEmpty()){
+        if(mfile != null && !mfile.isEmpty()){
             String savePath = request.getSession().getServletContext().getRealPath("resources/commuimg");
             String filename = mfile.getOriginalFilename();
+            System.out.println(filename+ "\n\n\n\n\n");
 
-            if(filename != null){
+            if(filename != null && !filename.isEmpty()){
                 String rename = FileNameChange.change(filename, "yyyyMMddHHmmss");
 
-                File renameFile = new File(savePath + "\\" + rename);
+                File renameFile = new File(savePath + "/" + rename);
                 try {
                     mfile.transferTo(renameFile);
                 } catch (Exception e) {

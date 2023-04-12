@@ -6,6 +6,7 @@ import java.util.List;
 import org.apache.ibatis.session.SqlSession;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
+import org.team404.gameOjirap.boardTar.model.vo.BoardTar;
 import org.team404.gameOjirap.common.Pagingnn;
 import org.team404.gameOjirap.game.model.vo.Game;
 import org.team404.gameOjirap.game.model.vo.GameSearchs;
@@ -91,14 +92,16 @@ public class GameDao {
 	}
 
 	public Game selectYoutube(String appid) {
-		// TODO Auto-generated method stub
+
 		return session.selectOne("gameMapper.selectYoutube", appid);
 	}
 
+    public ArrayList<BoardTar> selectTarBoardList(int appid) {
+		List<BoardTar> list = session.selectList("gameMapper.selectTarBoardList", appid);
+		return (ArrayList<BoardTar>)list;
+    }
 
-//	public String selectYoutube(String appid) {
-//		return session.selectOne("gameMapper.selectYoutube", appid);
-//	}
+
 
 	
 

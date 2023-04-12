@@ -3,6 +3,7 @@ package org.team404.gameOjirap.boardGen.model.service;
 import java.util.ArrayList;
 
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
+import org.team404.gameOjirap.common.BoardLike;
 import org.team404.gameOjirap.common.Paging;
 import org.team404.gameOjirap.common.board.Comment;
 
@@ -20,4 +21,16 @@ public interface BoardGenService {
 	int updateBoardReadCount(int board_no);  //게시글 상세보기시 조회수 1증가 처리용
 
     int genReplyWrite(Comment comment);
+
+	int selectGenLike(BoardLike blike);
+
+	int insertGenLike(BoardLike blike);
+
+	int updateGenLike(int boardNo);
+
+	int deleteGenLike(BoardLike blike);
+
+	int updateGenLikedis(int boardNo);
+
+	int updateUserPoint(String user_id, int point);
 }

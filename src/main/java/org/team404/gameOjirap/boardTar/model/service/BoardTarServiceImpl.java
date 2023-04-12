@@ -107,4 +107,9 @@ import java.util.Map;
         return boardTarDao.deleteTarReply(comNo);
     }
 
+    @Override
+    public void updatePoint(String user_id, int point) {
+        boardTarDao.updatePoint(user_id, point);
+    }
+
 }
