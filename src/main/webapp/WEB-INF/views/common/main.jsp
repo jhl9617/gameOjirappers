@@ -13,7 +13,6 @@
 <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />		<%--css 스타일 가져오기--%>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 
-
 </head>
 	<!-- Scripts -->
 <%--	<script type="text/javascript" src="<c:url value="/resources/js/jquery-3.6.3.min.js">"></script>
@@ -23,6 +22,7 @@
 	<script type="text/javascript" src="<c:url value="/resources/js/main.js">"></script>
 --%>
 <body class="is-preload">
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <c:if test="${!empty message}">
    <script>
       alert("${message}");
@@ -37,7 +37,6 @@
 	
 		<div class="inner">
 			<!-- Header -->
-			<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 			<!-- Banner -->
 			<div>
 				<header class="major">
@@ -149,7 +148,7 @@
 						for(var i in json.list){
 							
 							gtvalues += "<article style='float:left;' ><a href='moveGameDetail.do?appid=" + json.list[i].appid+"' class='image'><img src='<c:url value='"
-				                + decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
+							+ decodeURIComponent(json.list[i].headerimg).replace(/\+/gi, "/") +"'/>' alt='"+json.list[i].name+"' /></a>"
 				                +"<h3><a href='moveGameDetail.do?appid="+json.list[i].appid+"'>"+json.list[i].name+"</a></h3>"
 				                		+"<a href='moveGameDetail.do?appid=" + json.list[i].appid+"'><p>"
 				                +decodeURIComponent(json.list[i].short_description).replace(/\+/gi, " ")+"</p></a>"
@@ -255,8 +254,8 @@
 				</tr> -->
 				<table id="disclist">
 				<tr><td class='table-title' colspan='2'>game name</td>
-				<td>초기 가격</td><td>최종가격</td><td>전일 접속</td><td>할인율</td></td></table>
-				
+				<td>초기 가격</td><td>최종가격</td><td>전일 접속</td><td>할인율</td></tr></table>
+
 				
 				</thead>
 				</tbody>

@@ -4,7 +4,7 @@
 <html>
 <head>
     <title>Title</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
+
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
     <style>
 

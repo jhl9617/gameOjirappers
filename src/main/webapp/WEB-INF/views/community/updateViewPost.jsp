@@ -5,7 +5,6 @@
 <html>
 <head>
     <title>수정:${cBoard.cBoardTitle}</title>
-    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
 </head>
 <body>
 <div class="container">

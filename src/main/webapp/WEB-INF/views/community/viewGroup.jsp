@@ -7,7 +7,6 @@
     <title>${group.communityname}</title>
 
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
-    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
     <script>
         function reqjoin() {
             location.href = "movejoinpage.do?communityid=" + ${communityid};
