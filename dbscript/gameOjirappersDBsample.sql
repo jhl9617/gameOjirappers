@@ -1,0 +1,2 @@
+INSERT INTO TB_GRADE (  ) VALUES ();
+
