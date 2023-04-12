@@ -3,7 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
-<link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" /><%--css 스타일 가져오기--%>
+
 
 
 <%--<c:set var="communityName" value="${ communityName }" />--%>
@@ -15,7 +15,7 @@
 </head>
 <body>
 <h1>커뮤니티 생성하기</h1>
-<form action="CommuCreateSubmit.do" method="post" <%--enctype="multipart/form-data"--%>>
+<form action="CommuCreateSubmit.do" method="post" enctype="multipart/form-data">
     <input type="hidden" name="user_id" value="${loginUser.user_id}"/>
     <table>
         <tr>

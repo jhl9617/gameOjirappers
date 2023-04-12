@@ -11,7 +11,6 @@
 <head>
     <title>새로운 글작성</title>
 
-    <link rel="stylesheet" href="<c:url value='/resources/css/main.css'/>" />
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
     <script>
         function showAlertMessage() {

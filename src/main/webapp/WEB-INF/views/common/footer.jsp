@@ -10,12 +10,16 @@
 <style type="text/css">
 footer {
 	text-align: center;
-	background-color: #1b1b1b;
-	color: azure;
+	background-color: #000000;
+	color: #fef2dc;
 	font-size: 10px;
 	margin: 5px;
 	padding: 5px;
 	font-weight: bold;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    right: 0;
 }
 
 </style>

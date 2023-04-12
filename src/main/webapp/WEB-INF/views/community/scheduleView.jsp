@@ -7,7 +7,6 @@
 <head>
     <meta charset="UTF-8">
     <title>커뮤니티 허브</title>
-    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>"/>
 
     <style type="text/css">
         #asch {

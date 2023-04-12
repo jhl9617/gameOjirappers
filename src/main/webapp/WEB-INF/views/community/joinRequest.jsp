@@ -5,7 +5,7 @@
 <head>
     <title></title>
   <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
-  <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />
+
   <style>
     textarea {
       all: inherit;
