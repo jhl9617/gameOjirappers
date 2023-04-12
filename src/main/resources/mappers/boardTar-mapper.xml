@@ -156,6 +156,13 @@
 			 )
 		WHERE RNUM BETWEEN ${startRow} AND ${endRow}
 	</select>
+
+<!--포인트 증가시키기-->
+	<update id="updatePoint" parameterType="map">
+		UPDATE TB_USER
+		SET USER_POINT = USER_POINT + #{point}
+		WHERE USER_ID = #{user_id}
+	</update>
 </mapper>
 
 

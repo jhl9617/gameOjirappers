@@ -145,7 +145,6 @@ public class BoardTarController {
             model.addAttribute("message", "게시글 수정 페이지 이동 실패");
             return "redirect:movetarboarddetail.do";
         }
-
     }
 
     //게시글 등록
@@ -175,6 +174,9 @@ public class BoardTarController {
         }
 
         if (boardTarService.insertTarBoard(boardTar) > 0) {
+            //포인트 증가
+            boardTarService.updatePoint(boardTar.getUser_id(), 50);
+
             model.addAttribute("message", "게시글 등록 성공");
         } else {
             model.addAttribute("message", "게시글 등록 실패");
@@ -182,8 +184,6 @@ public class BoardTarController {
         model.addAttribute("page", currentPage);
         model.addAttribute("appid", boardTar.getAppid());
         return "redirect:movegameboard.do";
-
-
     }
 
     // 게시물 좋아요 증가
@@ -233,6 +233,7 @@ public class BoardTarController {
 
         Comment comment = new Comment(board_contents, board_no, user_id);
         if (boardTarService.insertTarReply(comment) > 0) {
+            boardTarService.updatePoint(user_id, 20);
             mv.addObject("message", "댓글 등록 성공");
         } else {
             mv.addObject("message", "댓글 등록 실패");
@@ -268,7 +269,6 @@ public class BoardTarController {
         }
         BoardLike blike = new BoardLike(user_id, board_no);
         String checked = "n";
-
 
         if(boardTarService.deleteTarLike(blike)>0){
             boardTarService.updateTarLikedis(board_no);

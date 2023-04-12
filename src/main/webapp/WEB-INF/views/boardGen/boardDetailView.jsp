@@ -137,7 +137,7 @@
      text-transform: uppercase;
      white-space: nowrap; }
 
-	}
+
 	a {
 		background-color: #008CBA;
 		color: white;
@@ -157,9 +157,23 @@
 <body>
 <!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 
-<hr>
-<h2 align="center">${ requestScope.boardGen.board_no } 번 게시글 </h2>
-<br>
+<!-- 좋아요 수 증가용 url -->
+<c:url value="/genlike.do" var="likeUrl">
+	<c:param name="board_no" value="${boardGen.board_no}"/>
+	<c:param name="user_id" value="${loginUser.user_id}"/>
+</c:url>
+<!-- 좋아요 수 감소용 url -->
+<c:url value="/genlike2.do" var="likeUrl2">
+	<c:param name="board_no" value="${boardGen.board_no}"/>
+	<c:param name="user_id" value="${loginUser.user_id}"/>
+</c:url>
+
+	<h2>${boardGen.board_no}번 게시물</h2>
+	<h4>조회수 : [${boardGen.board_count}]</h4>
+	<h4>좋아요 수 : [${boardGen.board_like}]</h4> &nbsp;
+	<c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
+	<c:if test="${checked ne 'n'}"><a href="${likeUrl2}">좋아요취소</a></c:if>
+	<br><br>
 <table align="center" width="50" border="1" cellspacing="0"
 cellpadding="50">
 	<tr><th>제목</th><td>${ boardGen.board_title }</td></tr>

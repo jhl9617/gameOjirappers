@@ -46,4 +46,6 @@ public interface BoardTarService {
     ArrayList<BoardTar> selectSearchList(Map map);
 
     int deleteTarReply(int comNo);
+
+    void updatePoint(String userId, int point);
 }
