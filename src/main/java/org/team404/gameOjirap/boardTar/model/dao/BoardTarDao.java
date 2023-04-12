@@ -95,4 +95,11 @@ public class BoardTarDao {
     public int deleteTarReply(int comNo) {
         return session.delete("boardTarMapper.deleteTarReply", comNo);
     }
+
+    public void updatePoint(String use_id, int point) {
+        Map<String, Object> map = new java.util.HashMap<String, Object>();
+        map.put("use_id", use_id);
+        map.put("point", point);
+        session.update("boardTarMapper.updatePoint", map);
+    }
 }
