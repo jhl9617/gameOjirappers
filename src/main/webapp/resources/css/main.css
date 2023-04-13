@@ -10,12 +10,12 @@ html, body, div, span, applet, object,
 iframe, h1, h2, h3, h4, h5, h6, p, blockquote,
 pre, a, abbr, acronym, address, big, cite,
 code, del, dfn, em, img, ins, kbd, q, s, samp,
-small, strike, strong, sub, sup, tt, var, b,
+small, strike, sub, sup, tt, var, b,
 u, i, center, dl, dt, dd, ol, ul, li, fieldset,
 form, label, legend, table, caption, tbody,
 tfoot, thead, tr, th, td, article, aside,
 canvas, details, embed, figure, figcaption,
-footer, hgroup, menu, nav, output, ruby,
+hgroup, menu, nav, output, ruby,
 section, summary, time, mark, audio, video {
   margin: 0;
   padding: 0;
@@ -25,7 +25,7 @@ section, summary, time, mark, audio, video {
   vertical-align: baseline; }
 
 article, aside, details, figcaption, figure,
-footer, hgroup, menu, nav, section {
+hgroup, menu, nav, section {
   display: block; }
 
 body {
@@ -127,9 +127,7 @@ a {
     a:hover strong {
       color: inherit; }
 
-strong, b {
-  color: snow;
-  font-weight: 600; }
+
 
 em, i {
   font-style: italic; }
@@ -2155,12 +2153,6 @@ ccomcontent {
     #banner .image {
       max-height: 35vh; } }
 
-/* Footer */
-#footer .copyright {
-  color: #9fa3a6;
-  font-size: 0.9em; }
-  #footer .copyright a {
-    color: inherit; }
 
 /* Menu */
 #menu ul {

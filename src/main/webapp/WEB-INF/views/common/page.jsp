@@ -7,8 +7,12 @@
 <c:set var="maxPage" value="${ requestScope.paging.maxPage }"/>
 <c:set var="currentPage" value="${ requestScope.paging.currentPage }"/>
 <c:set var="url" value="${ requestScope.paging.url }"/>
+<c:if test="${!empty requestScope.paging.appid}">
 <c:set var="appid" value="${ requestScope.paging.appid }"/>
+    </c:if>
+<c:if test="${!empty requestScope.paging.communityid}">
 <c:set var="communityid" value="${ requestScope.paging.communityid }"/>
+    </c:if>
 <!DOCTYPE html>
 <html>
 <head>
