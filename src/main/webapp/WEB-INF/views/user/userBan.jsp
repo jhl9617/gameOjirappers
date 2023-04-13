@@ -77,6 +77,7 @@ function adminBanR() {
 </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 <h1>회원 활동정지 처리 페이지</h1>
 <hr>
 <br>
@@ -126,9 +127,13 @@ function adminBanR() {
 </form>
 <button id="banbtn" onclick="banFunc();">정지</button>
 
-<form action="adminDel.do?user_id=${ user.user_id }" id="delete" >
+<form action="adminDel.do?user_id=${ user.user_id }" method="post" id="delete" >
 </form>
-<br><button onclick="deletefunc();">강제탈퇴</button>
+<br><button onclick="deletefunc();">강제탈퇴</button><br>
+<form action="uadmin.do?page=1">
+	<br><input type="submit" value="이전 페이지로 이동">
+</form>
+<br><br>
 
 	<!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>

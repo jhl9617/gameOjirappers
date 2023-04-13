@@ -6,6 +6,7 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+
    <link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet">
    <style>
       * {
@@ -13,6 +14,7 @@
       }
    </style>
 </head>
+
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -42,7 +44,8 @@ function showDiv(){
 
 </script>
 <body>
-<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
+
 <h1 align="center">회원 관리 페이지</h1>
 <h3 align="center">총 회원수 : ${ listCount }명</h3>
 <center>
@@ -73,11 +76,13 @@ function showDiv(){
 </center>
 
 <!-- 목록 출력 영역 -->
+
 <center style="text-align: center;">
    <form action="showCReportAdmin.do" style="float: left;">
       <input class="button" type="submit" value="커뮤니티 신고글 보기">
    </form>
-   <button class="button" onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=${currentPage}';">목록 보기</button>
+   <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=1';">목록 보기</button>   
+
 </center>
 <br>
 <table class="table-fill" align="center" >
