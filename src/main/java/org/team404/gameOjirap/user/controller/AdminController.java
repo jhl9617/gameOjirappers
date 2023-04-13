@@ -204,39 +204,61 @@ public class AdminController {
 			GregorianCalendar cal = new GregorianCalendar();
 			java.util.Date UDate;
 			
-			if(user.getBan_release_date() != null) {
-				UDate = new java.util.Date(user.getBan_release_date().getTime());
-				cal.setTime(UDate);
-			}
-			
-			switch(selecttinput) {
-			case "1day" : cal.add(GregorianCalendar.DATE, 1); break;
-			case "1week" : cal.add(GregorianCalendar.WEEK_OF_MONTH, 1); break;
-			case "1month" : cal.add(GregorianCalendar.MONTH, 1); break;
-			case "1year" : cal.add(GregorianCalendar.YEAR, 1);  break;
-			}
-			
-			UDate = cal.getTime();
-			java.sql.Date ban_release_date = new java.sql.Date(UDate.getTime());
-			
-			if(user != null) {
-				user.setUser_status("pause");
-				user.setBan_release_date(ban_release_date);
-				
-				int i = UserService.updateBan(user);
-				
-				if(i > 0) {
-					mv.addObject("user", user);
-					mv.setViewName("user/userBan");
-					mv.addObject("message", "회원 활동정지 처리 완료.");
+			if(selecttinput.equalsIgnoreCase("f")) {
+				System.out.println("ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ");
+				if(user != null) {
+					user.setUser_status("pause");
+					int i = UserService.updateBanF(user);
+					
+					if(i > 0) {
+						mv.addObject("user", user);
+						mv.setViewName("user/userBan");
+						mv.addObject("message", "회원 활동정지 처리 완료.");
+					}else {
+						mv.addObject("message", "회원 활동정지 처리 실패.");
+				         mv.setViewName("common/error");
+					}
 				}else {
-					mv.addObject("message", "회원 활동정지 처리 실패.");
+			         mv.addObject("message", "회원 활동정지 처리 실패.");
 			         mv.setViewName("common/error");
-				}
+			    }
 			}else {
-		         mv.addObject("message", "회원 활동정지 처리 실패.");
-		         mv.setViewName("common/error");
-		    }
+				System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
+				if(user.getBan_release_date() != null) {
+					UDate = new java.util.Date(user.getBan_release_date().getTime());
+					cal.setTime(UDate);
+				}
+				
+				switch(selecttinput) {
+				case "1day" : cal.add(GregorianCalendar.DATE, 1); break;
+				case "1week" : cal.add(GregorianCalendar.WEEK_OF_MONTH, 1); break;
+				case "1month" : cal.add(GregorianCalendar.MONTH, 1); break;
+				case "1year" : cal.add(GregorianCalendar.YEAR, 1);  break;
+				}
+				
+				UDate = cal.getTime();
+				java.sql.Date ban_release_date = new java.sql.Date(UDate.getTime());
+					
+				if(user != null) {
+					user.setUser_status("pause");
+					user.setBan_release_date(ban_release_date);
+					
+					int i = UserService.updateBan(user);
+					
+					if(i > 0) {
+						mv.addObject("user", user);
+						mv.setViewName("user/userBan");
+						mv.addObject("message", "회원 활동정지 처리 완료.");
+					}else {
+						mv.addObject("message", "회원 활동정지 처리 실패.");
+				         mv.setViewName("common/error");
+					}
+				}else {
+			         mv.addObject("message", "회원 활동정지 처리 실패.");
+			         mv.setViewName("common/error");
+			    }
+				
+			}
 			
 			return mv;
 			

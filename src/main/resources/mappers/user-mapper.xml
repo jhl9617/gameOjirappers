@@ -232,6 +232,13 @@
 		where user_id = #{user_id}
 	</update>
 	
+	<update id="updateBanF" parameterType="User">
+		update tb_user
+		set user_status = #{user_status},
+			 ban_release_date = null
+		where user_id = #{user_id}
+	</update>
+	
 	<update id="updateBanRelease" parameterType="User">
 		update tb_user
 		set user_status = #{user_status},
