@@ -20,10 +20,6 @@
 
 
 
-
-<div class="container" style="text-align: center;">
-  <div class="tab-content" id="communityTabsContent">
-    <div class="tab-pane fade show active" id="community-info" role="tabpanel" aria-labelledby="community-info-tab">
       <table class="table table-bordered">
     <ul class="list-unstyled">
       <c:url var="commuBoardListUrl" value="commuBoardList.do">
@@ -40,10 +36,6 @@
       </c:if>
     </ul>
       </table>
-    </div>
-
-  </div>
-</div>
 
 <%--<script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.3/dist/umd/popper.min.js"></script>

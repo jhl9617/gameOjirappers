@@ -114,7 +114,7 @@ function showDiv(){
 
             <form action="uban.do?user_id=${ u.user_id }" method="post">
 
-               <input type="submit" value="활동정지/포인트차감">
+               <input type="submit" style="color: #000;" value="활동정지/포인트차감">
             </form>
          </td>
 

@@ -7,7 +7,24 @@
 
 <script type="text/javascript" src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
     <style>
+        textarea {
+            background: #dcd3d8;
+            box-shadow: 1px 1px 1px #555555;
+        }
+        h3 {
+            color: #fef2dc;
+        }
 
+        #comtitable {
+            text-align: center;
+            color: #fef2dc;
+            margin: 0 auto;
+            height: 50%;
+        }
+
+        #comtitable td {
+            background: inherit;
+        }
     </style>
 </head>
 <body>
@@ -21,7 +38,7 @@
         <input type="hidden" name="communityId" value="${communityid}">
 
         <h3 style="align-items: center">커뮤니티 신고</h3>
-        <table>
+        <table id="comtitable">
             <tr><th>신고자 아이디</th><td>${loginUser.user_id}</td></tr>
             <tr><th>신고 대상 커뮤니티</th><td>${communityname}</td></tr>
             <tr><th>신고 유형</th>
@@ -34,7 +51,7 @@
                     </select>
                 </td>
             </tr>
-            <tr><td colspan="2"><textarea rows="5" cols="30" name="c_report_desc"></textarea></td></tr>
+            <tr><td colspan="2"><textarea rows="5" cols="30" name="c_report_desc" placeholder="신고내용 입력하세요"></textarea></td></tr>
             <tr><td colspan="2"><input type="submit" value="신고"></td></tr>
         </table>
 

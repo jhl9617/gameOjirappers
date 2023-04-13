@@ -10,7 +10,7 @@
 <style type="text/css">
 footer {
 	text-align: center;
-	background-color: #000000;
+	background-color: #0e151a;
 	color: #fef2dc;
 	font-size: 10px;
 	margin: 0px;
@@ -20,9 +20,7 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
-
     height: 65px;
-
 }
 
 </style>

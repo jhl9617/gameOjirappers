@@ -3,92 +3,44 @@
 <html>
 <head>
     <title></title>
-
+    <link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet">
     <style>
-        @import url(https://fonts.googleapis.com/css?family=Roboto:400,500,700,300,100);
-
-        body {
-            background-color: #020d21;
-            font-family: "Roboto", helvetica, arial, sans-serif;
-            font-size: 16px;
-            font-weight: 400;
-            text-rendering: optimizeLegibility;
+        #bodytable{
+            height: 50vh;
+            width: 100vw;
+            margin: 0 auto;
+            border-collapse: separate;
+            background: inherit;
+        }
+        #bodytable tr{
+            background: inherit;
         }
 
-        div.table-title {
-            display: block;
-            margin: auto;
-            max-width: 600px;
-            padding:5px;
-            width: 100%;
+        #bodytable td {
+            text-align: center;
+            margin: 0 auto;
+            padding: 0;
+            background: #3a3a3a;
+            border-radius: 30px;
+        }
+        #bodytable td:first-child{
+            width: 20%;
+            padding: 0;
         }
 
-        .table-title h3 {
-            color: #dcd9d9;
-            font-size: 30px;
-            font-weight: 400;
-            font-style:normal;
-            font-family: "Roboto", helvetica, arial, sans-serif;
-            text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
-            text-transform:uppercase;
+        #menulist li{
+            margin-bottom: 20px;
+
         }
 
-
-        /*** Table Styles **/
-
-        .table-fill {
-            background: #b6b6b8;
-            border: 2px solid #ffd0e4;
-            border-radius:3px;
-            border-collapse: collapse;
-            margin: auto;
-            max-width: 600px;
-            padding:5px;
-            width: 100%;
-            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
-            animation: float 5s infinite;
-        }
-
-        th {
-            color:#fef2dc;;
-            background:#343a45;
-            border-bottom:4px solid #9ea7af;
-            border-right: 1px solid #343a45;
-            border-left: 2px solid #ffd0e4;
-            border-bottom: #ffd0e4;
-            font-size:23px;
-            font-weight: 100;
-            padding:24px;
-            text-align:left;
-            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
-            vertical-align:middle;
-        }
-
-        th:first-child {
-            border-top-left-radius:5px;
-        }
-
-        th:last-child {
-            border-top-right-radius:5px;
-            border-right:none;
-        }
-
-        tr {
-            border-bottom-: 1px solid #ffd0e4;
-            border-top: 1px solid #ffd0e4;
-            color:#666B85;
-            font-size:16px;
-            font-weight:normal;
-            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        #menulist li span{
+            background: #000000;
+            box-shadow: 1px 1px 1px 1px #c01111;
+            color: #bfc1ce;
         }
 
 
-        td {
-            background:#4E5066;
-            color:#fef2dc;
-            border-top: 1px solid #ffd0e4;
-            border-left: 2px solid #ffd0e4;
-        }
+
     </style>
 </head>
 <body>
@@ -104,16 +56,16 @@
 </script>
 <br>
 <br>
-<table>
+<table id="bodytable">
     <tr>
         <td>
-            <nav style=" margin: 0; padding: 0; width: 30%;">
-                <ul style="list-style: none; padding: 0;">
+
+                <ul id="menulist" style="list-style: none; padding: 0;">
                     <li><span class="button" onclick="showDiv(1);">가입신청 관리</span></li>
                     <li><span class="button" onclick="showDiv(2);">커뮤니티 멤버 관리</span></li>
                     <li><span class="button" onclick="showDiv(3);">커뮤니티 정보 수정</span></li>
                 </ul>
-            </nav>
+
         </td>
         <td>
             <div id="mdiv1">
@@ -186,12 +138,12 @@
                         <td><img src="${pageContext.servletContext.contextPath}/resources/commuimg/${group.communityimgrename}" width="100px" height="100px"></td>
                         </c:if>
                     </tr>
-                    <tr>
+                    <td>
                         <th colspan="2" style="align-items: center">
                             <button onclick="updateform();">수정</button> &nbsp;
                             <button onclick="deletecommu();">삭제</button>
                         </th>
-                    </tr>
+                    </td>
                 </table>
                 <form action="updatecommu.do" method="post" enctype="multipart/form-data">
                     <input type="hidden" name="communityid" value="${group.communityid}">
@@ -223,10 +175,10 @@
                                 </td>
                         </tr>
                         <tr>
-                            <th colspan="2" style="align-items: center">
+                            <td colspan="2" style="align-items: center">
                                 <input type="submit" value="수정확인"> &nbsp;&nbsp; <input type="button" value="수정취소"
                                     onclick="updateform();">
-                            </th>
+                            </td>
                         </tr>
                     </table>
                 </form>

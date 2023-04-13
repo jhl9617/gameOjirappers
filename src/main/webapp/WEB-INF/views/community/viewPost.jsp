@@ -5,7 +5,45 @@
 <html>
 <head>
     <title>${cBoard.cBoardTitle}</title>
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/table.css">
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <style>
+        * {
+            margin: 0 auto;
+        }
+        body {
+            height: 90vh;
+        }
+
+        #comtitable {
+            text-align: center;
+            color: #fef2dc;
+            margin: 0 auto;
+            height: 50%;
+        }
+        h1{
+            color: #fef2dc;
+        }
+        #comtitable td {
+            background: #333341;
+            width: 500px;
+        }
+
+        #comtitable tr:first-child td{
+            border-top-right-radius: 20px;
+        }
+        #comtitable tr:last-child td{
+            border-bottom-right-radius: 20px;
+        }
+
+        #boardbody tr:hover td {
+            background: #3a3a3a;
+        }
+
+        #menup {
+            text-align: center;
+        }
+    </style>
     <script>
         function showAlertMessage() {
             <c:if test="${not empty message}">
@@ -39,18 +77,20 @@
 </head>
 <body>
 <%--게시글 내용 보여주는 테이블--%>
-
-
-<div class="container">
-
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
+<br><br>
+<div id="menup">
     <c:import url="/WEB-INF/views/community/commuDetailMenu.jsp"/>
-
+</div>
+    <br>
+    <br>
+    <br>
 
 
     <div class="tab-content" id="communityTabsContent">
         <div class="tab-pane fade show active" id="community-info" role="tabpanel" aria-labelledby="community-info-tab">
             <!-- Community information content goes here -->
-            <table class="table table-bordered">
+            <table id="comtitable">
                 <tbody>
                 <tr>
                     <th>글제목</th>
@@ -59,7 +99,10 @@
                 <tr>
                     <th height="200px">글내용</th>
                     <td><c:out value="${cBoard.cBoardContent}" escapeXml="false"/>
-                    <img src="${pageContext.servletContext.contextPath}/resources/community_upfiles/${cBoard.cBoardRefile}"></td>
+                    <c:if test="${not empty cBoard.cBoardRefile}">
+                            <br>
+                        <img src="${pageContext.servletContext.contextPath}/resources/commuimg/${cBoard.cBoardRefile}"></td>
+                    </c:if>
                 </tr>
                 <tr>
                     <th>작성일</th>
@@ -70,7 +113,7 @@
                     <td>${cBoard.user_id}</td>
                 </tr>
                 <tr>
-                    <th>글 번호</th>
+                    <th style="border-bottom-left-radius: 20px;">글 번호</th>
                     <td>${cBoard.cBoardNo}</td>
                 </tr>
                 </tbody>
@@ -78,16 +121,18 @@
         </div>
 
     </div>
+<br><b>r</b>
     <%--수정 삭제 버튼--%>
     <%--modify delete button--%>
-    <div class="btn-group" role="group" aria-label="Basic example">
+    <div style="text-align: center;">
         <form action="deleteCommuPost.do" method="post">
             <input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}">
-            <input type="hidden" name="cBoardNo" value="${cBoard.cBoardNo}">
+            <input type="hidden" name="cBoardNo" value="${cBoard.cBoardNo}">          
             <c:if test="${sessionScope.loginUser.user_id == cBoard.user_id}">
-            <a href="updateViewPost.do?cBoardNo=${cBoard.cBoardNo}&user_id=${sessionScope.loginUser.user_id}" class="btn btn-secondary">글 수정</a>
-            <a href="#" onclick="confirmDelete()" class="btn btn-secondary">삭제</a>
+            <a href="updateViewPost.do?cBoardNo=${cBoard.cBoardNo}&user_id=${sessionScope.loginUser.user_id}" class="button">글 수정</a>
+            <a href="#" onclick="confirmDelete()" class="button">삭제</a>
             </c:if>
+
         </form>
         <hr>
     </div>
@@ -110,7 +155,8 @@
     </form>
 </body>
 
-</div>
+
         <a href="<c:url value="/commuMain.do"/>" class="btn btn-secondary">커뮤니티 메인으로 돌아가기</a>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>
