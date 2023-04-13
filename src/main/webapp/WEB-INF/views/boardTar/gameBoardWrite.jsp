@@ -7,18 +7,20 @@
 <head>
 <meta charset="UTF-8">
 <title>boardWriteForm</title>
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/table.css">
 	<style>
-		tr {
-			border-bottom: 1px solid orangered;
+		.table-fill tr td{
+			background: #555;
 		}
-		th{
-			width: 100px;
+		.table-fill{
 			text-align: center;
-			background-color: #f5f5f5;
 		}
-		td{
-			width: 500px;
-			text-align: center;
+		.infilebtn {
+			padding: 6px 25px;
+			background-color: #d06c2e;
+			border-radius: 5px;
+			color: white;
+			cursor: pointer;
 		}
 	</style>
 </head>
@@ -27,10 +29,11 @@
 <br>
 <br>
 <center>
+	<h1 style="color: gray;">게시글 작성</h1>
 <form action="inserttarboard.do" method="post" enctype="multipart/form-data">
 	<input type="hidden" name="appid" value="${appid}">
 	<input type="hidden" name="user_id" value="${loginUser.user_id}"/>
-	<table style="border:1px solid orangered;">
+	<table class="table-fill">
 		<tr >
 			<th>게시글 제목</th>
 			<td>
@@ -48,7 +51,10 @@
 		<tr>
 			<th>첨부파일</th>
 			<td>
-				<input type="file" name="upfile">
+				<label class="infilebtn" for="input-file">
+					파일등록
+				</label>
+				<input style="display: none;" type="file" name="upfile" id="input-file">
 			</td>
 		</tr>
 		<tr>
@@ -66,14 +72,12 @@
 			</td>
 		</tr>
 		</c:if>
-		<tr>
-			<td colspan="2">
-				<input type="submit" value="작성">
-				<input type="reset" value="취소">
-			</td>
-		</tr>
+
 	</table>
+	<input class="button" style="width:50px;" type="submit" value="작성"> &nbsp;
+	<input class="button" style="width:50px;" type="reset" value="취소">
 </form>
+
 </center>
 
 <br>
