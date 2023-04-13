@@ -77,7 +77,7 @@ public String commuMainList() throws UnsupportedEncodingException {
         sendJson.put("list", jarr);
 
         // json을 json string 타입으로 바꿔서 전송되게 함
-        return sendJson.toJSONString(); // 뷰리졸버로 리턴함
+        return sendJson.toJSONString(); // 뷰리졸버로 리턴함ㅕ
         // servlet-context.xml 에 json string 내보내는
         // JsonView 라는 뷰리졸버 추가 등록해야 함
 

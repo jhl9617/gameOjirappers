@@ -17,7 +17,6 @@ $(function() {
 	$('#ban').css('display','none');
 	$('#decpointbtn').css('display','none');
 	$('#banbtn').css('display','none');
-	
  }); 
 
 function showDecP(){
