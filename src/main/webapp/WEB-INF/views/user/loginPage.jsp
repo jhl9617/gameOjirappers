@@ -84,7 +84,7 @@
 
 
 <body bgcolor= '#081c2b'>
-<%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br><br>
 <br><br>
 <br><br><br>
