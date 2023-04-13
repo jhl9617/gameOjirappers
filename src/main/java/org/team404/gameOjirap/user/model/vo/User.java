@@ -20,6 +20,8 @@ public class User implements java.io.Serializable{
 	private java.sql.Date user_access;		//접속기록
 	private String user_original_profile;	//원본프로필이미지
 	private String confirm_answer;  			 //본인확인용 질문
+	private Date user_enrolldate;
+
 	
 	//즐겨찾기
 	private String favo_id; 						//즐찾번호
@@ -234,7 +236,17 @@ public class User implements java.io.Serializable{
 	public void setBoard_title(String board_title) {
 		this.board_title = board_title;
 	}
-	
+
+
+	public Date getUser_enrolldate() {
+		return user_enrolldate;
+	}
+
+	public void setUser_enrolldate(Date user_enrolldate) {
+		this.user_enrolldate = user_enrolldate;
+	}
+
+
 }//class close
 
 

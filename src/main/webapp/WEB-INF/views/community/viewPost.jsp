@@ -127,11 +127,12 @@
     <div style="text-align: center;">
         <form action="deleteCommuPost.do" method="post">
             <input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}">
-            <input type="hidden" name="cBoardNo" value="${cBoard.cBoardNo}">
+            <input type="hidden" name="cBoardNo" value="${cBoard.cBoardNo}">          
+            <c:if test="${sessionScope.loginUser.user_id == cBoard.user_id}">
+            <a href="updateViewPost.do?cBoardNo=${cBoard.cBoardNo}&user_id=${sessionScope.loginUser.user_id}" class="button">글 수정</a>
+            <a href="#" onclick="confirmDelete()" class="button">삭제</a>
+            </c:if>
 
-            <a class="button" style="width: 100px;" href="updateViewPost.do?cBoardNo=${cBoard.cBoardNo}&user_id=${sessionScope.loginUser.user_id}" class="btn btn-secondary">Edit post</a>
-            &nbsp; &nbsp; &nbsp; &nbsp;
-            <a class="button" style="width: 100px;" href="#" onclick="confirmDelete()" class="btn btn-secondary">Delete</a>
         </form>
         <hr>
     </div>

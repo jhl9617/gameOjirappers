@@ -74,13 +74,13 @@ public class UserDao {
 	}
 	
 	// 유저 활동정지 처리용-------------------------------------------------
-	public void updateBan(User user) {
-		session.update("userMapper.updateBan", user);
+	public int updateBan(User user) {
+		return session.update("userMapper.updateBan", user);
 	}
 
 	// 유저 활동정지 해제처리용------------------------------------
-	public void updateBanRelease(User loginUser) {
-		session.update("userMapper.updateBanRelease", loginUser);
+	public int updateBanRelease(User loginUser) {
+		return session.update("userMapper.updateBanRelease", loginUser);
 		
 	}
 
@@ -102,8 +102,8 @@ public class UserDao {
 	}
 
 
-	public void updateDecPoint(User user) {
-		session.update("userMapper.updateDecPoint", user);
+	public int updateDecPoint(User user) {
+		return session.update("userMapper.updateDecPoint", user);
 		
 	}
 
@@ -120,6 +120,10 @@ public class UserDao {
 	public ArrayList<User> selectSearchUN(String keyword) {
 		List<User> list = session.selectList("userMapper.selectSearchUN", keyword);
 		return (ArrayList<User>)list;
+	}
+
+	public int updateBanF(User user) {
+		return session.update("userMapper.updateBanF", user);
 	}
 
 

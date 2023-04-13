@@ -110,14 +110,26 @@
 			<c:param name="board_no" value="${boardGen.board_no}"/>
 			<c:param name="page" value="${ currentPage }"/>
 		</c:url>
+<<<<<<< 낙현
 			<a style="width: 85px; box-shadow: 1px 1px 1px black;" class="button" href="${ bup }">수정페이지</a> &nbsp;
 			
+=======
+		<c:if test="${ loginUser.user_id eq boardGen.user_id }">
+			<a href="${ bup }">[수정페이지]</a> &nbsp;
+		</c:if>
+>>>>>>> master
 			<c:url var="bdl" value="/bgdelete.do">
 				<c:param name="board_no" value="${boardGen.board_no}" />
 				<c:param name="board_refile" value="${ boardGen.board_refile }" />
 		</c:url>
+<<<<<<< 낙현
 			<a style="width: 85px; box-shadow: 1px 1px 1px black;" class="button" href="${ bdl }">삭제</a>
 		
+=======
+		<c:if test="${ loginUser.user_id eq boardGen.user_id or loginUser.admin_id == 'Y'}">
+			<a href="${ bdl }">[삭제]</a>
+		</c:if>
+>>>>>>> master
 	</th></tr>
 </table>
 
@@ -127,8 +139,6 @@
 <c:import url="/WEB-INF/views/boardGen/genReplyList.jsp"/>
 <br>
 
-
-
 <div id="comments-end"></div>
 <%--댓글 입력 form--%>
 <form action="<c:url value="/genReplyWrite.do"/>" method="post">
@@ -137,7 +147,13 @@
 	<div class="form-group">
 		<textarea style="background: #b6b6b8" class="form-control" placeholder="댓글 내용" id="reply_contents" name="reply_contents" rows="3"></textarea>
 	</div>
+<<<<<<< 낙현
 	<button class="button" style="width: 65px;" type="submit" class="btn btn-primary">댓글 작성</button>
+=======
+	<c:if test="${ loginUser.user_status eq run }">
+		<button type="submit" class="btn btn-primary">댓글 작성</button>
+	</c:if>
+>>>>>>> master
 </form>
 
 		
