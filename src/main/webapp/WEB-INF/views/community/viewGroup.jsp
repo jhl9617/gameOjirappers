@@ -12,6 +12,7 @@
             color: #fef2dc;
         }
     </style>
+
     <script>
         function reqjoin() {
             location.href = "movejoinpage.do?communityid=" + ${communityid};

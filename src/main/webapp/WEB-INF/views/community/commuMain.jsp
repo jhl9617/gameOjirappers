@@ -19,6 +19,8 @@
     }
 
 
+
+
     .commtable {
         border-collapse: separate;
         border-spacing: 20px;
@@ -98,6 +100,7 @@
         text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
         text-transform: uppercase;
     }
+
 </style>
     <script>
         $(function() {
@@ -124,18 +127,22 @@
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 
 <div class="commucon">
+
     <h1 class="my-4" style="color: #f56a6a;">커뮤니티 허브</h1>
 <table class="commtable" style="margin: 0 auto;">
     <tr>
         <td>
             <h2 class="my-4" style="color: #f56a6a;">커뮤니티 찾아보기</h2>
 
+
             <div class="search-window">
                 <form action="commuSearch.do" method="post">
                     <div class="search-wrap">
                         <label for="search" >커뮤니티 검색</label>
+
                         <input id="search" size="15" maxlength="30" style="background: lightgray;" type="keyword" name="keyword" placeholder="이름으로 검색하세요." value=""><br><br>
                         <button class="button" type="submit" style="border-radius:20px;">커뮤니티 검색</button>
+
                     </div>
                 </form>
             </div>
@@ -149,6 +156,7 @@
                 </div>
                 <br>
                 <button class="button" type="submit" style="border-radius: 20px; ">커뮤니티 생성</button>
+
             </form>
         </td>
     </tr>
