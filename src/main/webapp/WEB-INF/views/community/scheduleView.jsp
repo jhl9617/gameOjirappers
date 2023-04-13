@@ -12,8 +12,9 @@
         #asch {
             display: none;
             width: 500px;
-            height: 150px;
-            margin: 0;
+            height: 300px;
+            margin:0 auto;
+            text-align: center;
         }
 
         #calendar{
@@ -21,27 +22,8 @@
             margin: 0 auto;
         }
 
-        .fc-view-container {
-            background-color: #3a3a3a;
-            margin: 0;
-        }
-        #schlist td {
-            background-color: white;
-        }
-
-        #schlist {
-            border: 1px solid black;
-            margin: 0;
-            padding: 0;
-            text-align: center;
-        }
-
-        #schlist tr th {
-            border-left: 1px solid black;
-            text-align: center;
-            padding-top: 5%;
-            background-color: #f56a6a;
-            color: unset;
+        #calendar a {
+            background: #f56a6a;
         }
 
         #tn {
@@ -111,14 +93,11 @@
             color: #fef2dc;
         }
 
-        .table-fill tbody tr:hover td {
-            background: #3a3a3a;
-        }
-
         .table-fill tr:last-child{
             border-bottom-right-radius: 20px;
             border-bottom-left-radius: 20px;
         }
+
     </style>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'/>
     <script type="text/javascript"
@@ -130,7 +109,7 @@
         function addsch() {
             const asch = document.getElementById('asch');
 
-            if (asch.style.display === 'none') {
+            if (asch.style.display == 'none') {
                 asch.style.display = 'block';
             } else {
                 asch.style.display = 'none';
@@ -181,8 +160,8 @@
                             + json.list[i].schEnd + "</td><td>"
                             + json.list[i].votePart
                             + "</td></tr>"
-                            + "<tr><td colspan=\"5\"><span class=\"button\" onclick=\"voting1(" + json.list[i].schId + ");\">참가</span>"
-                            + "&nbsp; &nbsp; <span class=\"button\" onclick=\"voting2(" + json.list[i].schId + ");\">불참</span></td>"
+                            + "<tr style='text-align: center;'><td colspan=\"5\"><span class=\"button\" style='width:50px;' onclick=\"voting1(" + json.list[i].schId + ");\">참가</span>"
+                            + "&nbsp; &nbsp; <span class=\"button\" style='width:50px;'  onclick=\"voting2(" + json.list[i].schId + ");\">불참</span></td>"
                             + "</tr>"
                         ;
                     }
@@ -235,7 +214,7 @@
 
     <%--css 스타일 가져오기--%>
 </head>
-<body>
+<body style="padding: 0 0 70px 0;">
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
 <br>
@@ -251,27 +230,36 @@
             <span onclick="addsch();" class="button">새로운 일정 등록</span>
         </div>
     </c:if>
-
-    <div id="asch">
+<br>
+    <br>
+    <table id="asch" class="table-fill" style="padding-left: 10%">
         <form action="insertsch.do" method="post">
+            <tr>
+                <th> <!-- 일정명 -->
+                    일정이름 </th>
+                <td><input type="text" name="schName" id="tn"></td>
+            </tr>
+            <tr>
+                <th>일정내용</th>
+                <td> <textarea name="schDes" rows="5" cols="30" id="td"></textarea></td>
+            </tr>
+            <tr>
+                <th>일정시작일</th>
+                <td><input type="date" name="schStart"></td>
+            </tr>
+            <tr>
+                <th>일정종료일</th>
+                <td><input type="date" name="schEnd"></td>
+            </tr>
             <input type="hidden" name="communityid" value="${communityid}">
-            <!-- 일정명 -->
-            <label>일정이름 : <input type="text" name="schName" id="tn"></label>
-            <!-- 일정 설명 -->
-            <label>일정내용 : <textarea name="schDes" rows="5" cols="30"
-                                    id="td"></textarea></label>
-            <!-- 일정 시작일 -->
-            <label>일정시작일 : &nbsp; <input type="date" name="schStart"></label>
-            <!-- 일정 종료일 -->
-            <label>일정종료일 : &nbsp; <input type="date" name="schEnd"></label>
-            <input type="submit">
+            <tr><td colspan="2"><input class="button" style="width: 70px;" type="submit"></td></tr>
         </form>
-    </div>
+    </table>
 
 
     <hr>
 
-    <table style=" max-width: 900px;" class="table-fill">
+    <table style=" max-width: 900px;" id="schlist" class="table-fill">
         <tr>
             <th><h5>일정이름</h5></th>
             <th><h5>일정내용</h5></th>
@@ -283,7 +271,6 @@
 </center>
 <br>
 <br>
-<hr>
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

@@ -71,11 +71,11 @@ tr:hover td a {
             <table class="table-fill">
                 <thead>
                 <tr>
-                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-num">조회수</th>
                     <th scope="col" class="th-title">제목</th>
                     <th scope="col" class="th-date">등록일</th>
                     <th scope="col" class="th-id">ID</th>
-                    <th scope="col" class="th-num">조회수</th>
+                    <th scope="col" class="th-num">번호</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -86,27 +86,20 @@ tr:hover td a {
                         <c:param name="page" value="${ currentPage }"/>
                     </c:url>
                     
-
                     <td>${ boardGen.board_count }</td>
                     <td>
-
                       <a href="${ dtview }">${ boardGen.board_title }</a>
                     </td>
                     <td><fmt:formatDate value="${ boardGen.board_date }" pattern="yyyy-MM-dd" /></td>
                     <td>${ boardGen.user_id }</td>
-                    <td>${ boardGen.board_count }</td>
+                    <td>${ boardGen.board_no }</td>
                 </tr>
                 
                 
                 </c:forEach>
                 </tbody>
                 <br>
-        <div id="write" style="float:right;">
-        	<c:if test="${ loginUser.user_status eq 'run' }">
-        		<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">글작성</button>
-        	</c:if>
-        	<br>
-        </div>
+
             </table>
 
         >

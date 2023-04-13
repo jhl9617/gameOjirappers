@@ -135,22 +135,16 @@ function adminBanR() {
 		<option value="1week">1주</option>
 		<option value="1month">1달</option>
 		<option value="1year">1년</option>
-		<option value="f">무기한</option>
 	</select>
 	<input type="hidden" id="selecttinput" name="selecttinput">
 	<br>정지사유 : <input name="causeb">
 </form>
 <button id="banbtn" onclick="banFunc();">정지</button>
 
-<form action="adminDel.do?user_id=${ user.user_id }" method="post" id="delete" >
+<form action="adminDel.do?user_id=${ user.user_id }" id="delete" >
 </form>
-
-<br><button onclick="deletefunc();">강제탈퇴</button><br>
-<form action="uadmin.do?page=1">
-	<br><input type="submit" value="이전 페이지로 이동">
-</form>
-<br><br>
-
+<br><button onclick="deletefunc();">강제탈퇴</button>
+</div>
 	<!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
