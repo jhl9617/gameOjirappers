@@ -89,14 +89,14 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateBan(User user) {
-		userDao.updateBan(user);
+	public int updateBan(User user) {
+		return userDao.updateBan(user);
 
 	}
 
 	@Override
-	public void updateBanRelease(User loginUser) {
-		userDao.updateBanRelease(loginUser);
+	public int updateBanRelease(User loginUser) {
+		return userDao.updateBanRelease(loginUser);
 
 	}
 
@@ -116,8 +116,8 @@ public class UserServiceImpl implements UserService{
 	}
 
 	@Override
-	public void updateDecPoint(User user) {
-		userDao.updateDecPoint(user);
+	public int updateDecPoint(User user) {
+		return userDao.updateDecPoint(user);
 		
 	}
 

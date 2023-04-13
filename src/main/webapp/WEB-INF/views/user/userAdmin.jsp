@@ -6,7 +6,11 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+<style type="text/css">
+
+</style>
 </head>
+
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <script type="text/javascript">
 $(function() {
@@ -36,6 +40,7 @@ function showDiv(){
 
 </script>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp" />
 <h1 align="center">회원 관리 페이지</h1>
 <h3 align="center">총 회원수 : ${ listCount }명</h3>
 <center>
@@ -67,7 +72,7 @@ function showDiv(){
 
 <!-- 목록 출력 영역 -->
 <center>
-   <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=${currentPage}';">목록 보기</button>   
+   <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=1';">목록 보기</button>   
 </center>
 <br>
 <table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
@@ -110,6 +115,7 @@ function showDiv(){
 <form action="showCReportAdmin.do">
 	<input type="submit" value="커뮤니티 신고글 보기">
 </form>
+<br><br><br>
 
 <!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
