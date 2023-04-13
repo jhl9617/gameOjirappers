@@ -13,13 +13,16 @@ footer {
 	background-color: #000000;
 	color: #fef2dc;
 	font-size: 10px;
-	margin: 5px;
-	padding: 5px;
+	margin: 0px;
+	padding: 0px;
 	font-weight: bold;
     position: fixed;
     bottom: 0;
     left: 0;
     right: 0;
+
+    height: 65px;
+
 }
 
 </style>
