@@ -122,6 +122,10 @@ public class UserDao {
 		return (ArrayList<User>)list;
 	}
 
+	public int updateBanF(User user) {
+		return session.update("userMapper.updateBanF", user);
+	}
+
 
 
 }//class close

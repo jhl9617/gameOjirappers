@@ -138,6 +138,11 @@ public class UserServiceImpl implements UserService{
 		return userDao.selectSearchUN(keyword);
 	}
 
+	@Override
+	public int updateBanF(User user) {
+		return userDao.updateBanF(user);
+	}
+
 
 }//class close
 

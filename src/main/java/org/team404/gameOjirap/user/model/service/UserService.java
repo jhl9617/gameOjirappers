@@ -44,5 +44,6 @@ public interface UserService {
 
 	ArrayList<User> selectSearchUID(String keyword);
 	ArrayList<User> selectSearchUN(String keyword);
+	int updateBanF(User user);
 
 }

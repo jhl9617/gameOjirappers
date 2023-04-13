@@ -121,6 +121,7 @@ function adminBanR() {
 		<option value="1week">1주</option>
 		<option value="1month">1달</option>
 		<option value="1year">1년</option>
+		<option value="f">무기한</option>
 	</select>
 	<input type="hidden" id="selecttinput" name="selecttinput">
 	<br>정지사유 : <input name="causeb">
