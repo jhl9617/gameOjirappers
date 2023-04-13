@@ -205,7 +205,6 @@ public class AdminController {
 			java.util.Date UDate;
 			
 			if(selecttinput.equalsIgnoreCase("f")) {
-				System.out.println("ㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗㅗ");
 				if(user != null) {
 					user.setUser_status("pause");
 					int i = UserService.updateBanF(user);
@@ -223,7 +222,6 @@ public class AdminController {
 			         mv.setViewName("common/error");
 			    }
 			}else {
-				System.out.println("ㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋㅋ");
 				if(user.getBan_release_date() != null) {
 					UDate = new java.util.Date(user.getBan_release_date().getTime());
 					cal.setTime(UDate);
