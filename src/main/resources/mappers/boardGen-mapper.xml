@@ -25,7 +25,7 @@
 		            board_date, board_count, board_like, board_orifile,
 		            board_refile, appid, user_id, board_notice
 		    from (select * from tb_board_gen
-		              order by board_count desc))
+		              order by board_no desc))
 		where rnum >= #{ startRow } and rnum <= #{endRow} 
 		]]>
 	</select>

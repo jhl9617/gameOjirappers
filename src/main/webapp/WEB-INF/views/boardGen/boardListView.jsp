@@ -249,11 +249,11 @@ section.notice {
             <table class="board-table">
                 <thead>
                 <tr>
-                    <th scope="col" class="th-num">조회수</th>
+                    <th scope="col" class="th-num">번호</th>
                     <th scope="col" class="th-title">제목</th>
                     <th scope="col" class="th-date">등록일</th>
                     <th scope="col" class="th-id">ID</th>
-                    <th scope="col" class="th-num">번호</th>
+                    <th scope="col" class="th-num">조회수</th>
                 </tr>
                 </thead>
                 <tbody>
@@ -264,14 +264,14 @@ section.notice {
                         <c:param name="page" value="${ currentPage }"/>
                     </c:url>
                     
-                    <td>${ boardGen.board_count }</td>
+                    <td>${ boardGen.board_no }</td>
                     <th>
                       <a href="${ dtview }">${ boardGen.board_title }</a>
                       <p>테스트</p>
                     </th>
                     <td><fmt:formatDate value="${ boardGen.board_date }" pattern="yyyy-MM-dd" /></td>
                     <td>${ boardGen.user_id }</td>
-                    <td>${ boardGen.board_no }</td>
+                    <td>${ boardGen.board_count }</td>
                 </tr>
                 
                 

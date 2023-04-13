@@ -210,14 +210,16 @@ cellpadding="50">
 			<c:param name="board_no" value="${boardGen.board_no}"/>
 			<c:param name="page" value="${ currentPage }"/>
 		</c:url>
+		<c:if test="${ loginUser.user_id eq boardGen.user_id }">
 			<a href="${ bup }">[수정페이지]</a> &nbsp;
-			
+		</c:if>
 			<c:url var="bdl" value="/bgdelete.do">
 				<c:param name="board_no" value="${boardGen.board_no}" />
 				<c:param name="board_refile" value="${ boardGen.board_refile }" />
 		</c:url>
+		<c:if test="${ loginUser.user_id eq boardGen.user_id or loginUser.admin_id == 'Y'}">
 			<a href="${ bdl }">[삭제]</a>
-		
+		</c:if>
 	</th></tr>
 </table>
 
@@ -226,8 +228,6 @@ cellpadding="50">
 <!-- 댓글 리스트 -->
 <c:import url="/WEB-INF/views/boardGen/genReplyList.jsp"/>
 <br>
-
-
 
 <div id="comments-end"></div>
 <%--댓글 입력 form--%>
