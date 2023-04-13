@@ -8,7 +8,7 @@
     <link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet">
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
     <style>
-        h1{
+        h1, h3{
             color: #fef2dc;
         }
     </style>
@@ -49,10 +49,12 @@
 <div class="container" style="text-align: center;">
 
     <div style="text-align: center;">
-        <h1 class="my-4">${group.communityname}</h1>
+        <h1 class="my-4" style="margin-left: 20px;">${group.communityname}</h1>
         <c:if test="${sessionScope.loginUser.user_id ne group.user_id}">
-            <button style="width: 100px;" class="button" onclick="reqjoin();">가입신청</button>
-            <button style="width: 100px;" class="button" onclick="report();">신고하기</button>
+            <div style="text-align: center;">
+            <button style="width: 100px; margin-left: 20px;" class="button" onclick="reqjoin();">가입신청</button>
+            <button style="width: 100px; margin-left: 20px;" class="button" onclick="report();">신고하기</button>
+            </div>
         </c:if>
 
     </div>
@@ -64,8 +66,13 @@
         <c:if test="${!empty group.communityimgori}">
             <img src="${pageContext.servletContext.contextPath}/resources/commuimg/${group.communityimgrename}" style="width: 15%; height: 100%; border-radius: 20px;">
         </c:if>
+        <c:if test="${empty group.communityimgori}">
+            <h3>대표이미지가 없습니다.</h3>
+        </c:if>
+        <br>
+        <br>
         <!-- Community information content goes here -->
-        <table class="table table-bordered" style="margin:0 auto;">
+        <table class="table table-bordered" style="margin:0 auto; border: 1px solid #555555; border-radius: 20px; box-shadow: 1px 1px 1px #555;">
             <tbody>
             <tr>
                 <th>커뮤니티 ID</th>

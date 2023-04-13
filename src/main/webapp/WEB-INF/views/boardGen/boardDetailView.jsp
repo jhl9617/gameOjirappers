@@ -10,69 +10,28 @@
 <head>
 
 <meta charset="UTF-8">
+	<title></title>
+	<link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/table.css">
 	<style>
-		table {
-			border-collapse: collapse;
-			width: 40%;
-			margin: auto;
-		}
-
-		th, td {
-			padding: 10px;
+		.table-fill {
 			text-align: center;
-			border: 1px solid #ddd;
 		}
 
-		th {
-			background-color: #f2f2f2;
+		.table-fill tr td {
+			background: #555;
 		}
 
-		td:first-child {
-			font-weight: bold;
+		.table-fill tr:first-child td {
+			border-top-right-radius: 20px;
 		}
-
-		button {
-			-moz-appearance: none;
-			-webkit-appearance: none;
-			-ms-appearance: none;
-			appearance: none;
-			-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			background-color: transparent;
-			border-radius: 0.375em;
-			border: 0;
-			box-shadow: inset 0 0 0 2px #f56a6a;
-			color: #f56a6a !important;
-			cursor: pointer;
-			display: inline-block;
-			font-family: "Roboto Slab", serif;
-			font-size: 0.8em;
-			font-weight: 700;
-			height: 3.5em;
-			letter-spacing: 0.075em;
-			line-height: 3.5em;
-			padding: 0 2.25em;
+		h2, h4 {
 			text-align: center;
-			text-decoration: none;
-			text-transform: uppercase;
-			white-space: nowrap;
+			color: #fef2dc;
 		}
-
-
-		a {
-			background-color: #008CBA;
-			color: white;
-			border: none;
-			padding: 10px 20px;
+		#likediv {
 			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 14px;
-			margin: 4px 2px;
-			cursor: pointer;
 		}
+
 	</style>
 	<script>
 		function btdelcheck() {
@@ -90,71 +49,11 @@
 			}
 		}
 	</script>
-<title></title>
 
-<style>
-	table {
-		border-collapse: collapse;
-		width: 40%;
-		margin: auto;
-	}
-	th, td {
-		padding: 10px;
-		text-align: center;
-		border: 1px solid #ddd;
-	}
-	th {
-		background-color: #f2f2f2;
-	}
-	td:first-child {
-		font-weight: bold;
-	}
-	button {
-     -moz-appearance: none;
-     -webkit-appearance: none;
-     -ms-appearance: none;
-     appearance: none;
-     -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-     -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-     -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-     transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-     background-color: transparent;
-     border-radius: 0.375em;
-     border: 0;
-     box-shadow: inset 0 0 0 2px #f56a6a;
-     color: #f56a6a !important;
-     cursor: pointer;
-     display: inline-block;
-     font-family: "Roboto Slab", serif;
-     font-size: 0.8em;
-     font-weight: 700;
-     height: 3.5em;
-     letter-spacing: 0.075em;
-     line-height: 3.5em;
-     padding: 0 2.25em;
-     text-align: center;
-     text-decoration: none;
-     text-transform: uppercase;
-     white-space: nowrap; }
-
-
-	a {
-		background-color: #008CBA;
-		color: white;
-		border: none;
-		padding: 10px 20px;
-		text-align: center;
-		text-decoration: none;
-		display: inline-block;
-		font-size: 14px;
-		margin: 4px 2px;
-		cursor: pointer;
-	}
-	
-</style>
 
 </head>
-<body>
+<body style="margin:0; padding: 0 0 70px 0;">
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <!-- 상대경로로 대상 파일의 위치를 지정한 경우 -->
 
 <!-- 좋아요 수 증가용 url -->
@@ -169,13 +68,14 @@
 </c:url>
 
 	<h2>${boardGen.board_no}번 게시물</h2>
-	<h4>조회수 : [${boardGen.board_count}]</h4>
-	<h4>좋아요 수 : [${boardGen.board_like}]</h4> &nbsp;
-	<c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
-	<c:if test="${checked ne 'n'}"><a href="${likeUrl2}">좋아요취소</a></c:if>
+	<h4>조회수 : [<span style="color: #d06c2e">${boardGen.board_count}</span>]</h4>
+	<h4>좋아요 수 : [<span style="color: #d06c2e">${boardGen.board_like}</span>]</h4> &nbsp;
+<div id="likediv">
+	<c:if test="${checked eq 'n'}"><a style="width: 100px; height: 48px;" class="button" href="${likeUrl}">좋아요</a></c:if>
+	<c:if test="${checked ne 'n'}"><a style="width: 100px; height: 48px;" class="button" href="${likeUrl2}">좋아요취소</a></c:if>
+</div>
 	<br><br>
-<table align="center" width="50" border="1" cellspacing="0"
-cellpadding="50">
+<table style="width:600px;" class="table-fill">
 	<tr><th>제목</th><td>${ boardGen.board_title }</td></tr>
 	<tr><th>작성자</th><td>${ boardGen.user_id }</td></tr>
 	
@@ -202,21 +102,21 @@ cellpadding="50">
 	</tr>
 	
 	<tr><th>내용</th><td>${ boardGen.board_content }</td></tr>
-	<tr><th colspan="2">
-		<button onclick="javascript:location.href='blist.do?page=${ currentPage }';">목록</button>
+	<tr><th style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" colspan="2">
+		<button style="width: 85px; box-shadow: 1px 1px 1px black;" class="button" onclick="javascript:location.href='blist.do?page=${ currentPage }';">목록</button>
 		&nbsp; 
 		
 		<c:url var="bup" value="bgupdate.do">
 			<c:param name="board_no" value="${boardGen.board_no}"/>
 			<c:param name="page" value="${ currentPage }"/>
 		</c:url>
-			<a href="${ bup }">[수정페이지]</a> &nbsp;
+			<a style="width: 85px; box-shadow: 1px 1px 1px black;" class="button" href="${ bup }">수정페이지</a> &nbsp;
 			
 			<c:url var="bdl" value="/bgdelete.do">
 				<c:param name="board_no" value="${boardGen.board_no}" />
 				<c:param name="board_refile" value="${ boardGen.board_refile }" />
 		</c:url>
-			<a href="${ bdl }">[삭제]</a>
+			<a style="width: 85px; box-shadow: 1px 1px 1px black;" class="button" href="${ bdl }">삭제</a>
 		
 	</th></tr>
 </table>
@@ -235,10 +135,9 @@ cellpadding="50">
 	<input type="hidden" name="board_no" value="${boardGen.board_no}">
 	<input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}">
 	<div class="form-group">
-		<label for="reply_contents">댓글 내용</label>
-		<textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
+		<textarea style="background: #b6b6b8" class="form-control" placeholder="댓글 내용" id="reply_contents" name="reply_contents" rows="3"></textarea>
 	</div>
-	<button type="submit" class="btn btn-primary">댓글 작성</button>
+	<button class="button" style="width: 65px;" type="submit" class="btn btn-primary">댓글 작성</button>
 </form>
 
 		

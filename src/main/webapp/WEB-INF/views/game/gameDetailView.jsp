@@ -174,6 +174,7 @@
                </c:if>
 
             </div>
+
             <div>
                <div align="center">
                   <span class="button" onclick="genreSearch();">장르로 검색하세요</span>
@@ -198,58 +199,6 @@
                   <div id="priceSearch" style="display: none;">
                      <table style="border:none;">
                         <form name="search-price" autocomplete="off">
-                        <td style="height: 100%; padding: 0;">
-                           <div id="languagediv">
-                              <c:if test="${requestScope.game.supported_languages != null}">
-                                 <h3 style="margin: 0;">${requestScope.game.supported_languages}</h3>
-                              </c:if>
-                              <c:if test="${requestScope.game.supported_languages == null}">
-                                 <h3 style="margin: 0;">지원하는 언어가 없습니다!</h3>
-                              </c:if>
-                           </div>
-                        </td>
-                        <td style="height: 100%; padding: 0;">
-                           <c:if test="${requestScope.game.pcminimum != null}">
-                              <div style="float: left;">
-                                 <h3 style="margin: 0;">
-                                    <script type="text/javascript">
-                                       pcminimumReplace();
-
-                                       function pcminimumReplace() {
-                                          var pcminimumRe = '${requestScope.game.pcminimum}';
-                                          pcminimum = pcminimumRe.replace("<strong>최소:</strong>", "");
-                                          document.write(pcminimum);
-                                       }
-                                    </script>
-                                 </h3>
-                              </div>
-                           </c:if>
-                           <c:if test="${requestScope.game.pcminimum == null}">
-                              <h3 style="margin: 0;">게임 최소 사양이 없습니다!</h3>
-                           </c:if>
-                        </td>
-                        <td style="height: 100%; padding: 0;">
-                           <c:if test="${requestScope.game.pcrecommended != null}">
-                              <div style="float: left;">
-                                 <h3 style="margin: 0;">
-                                    <script type="text/javascript">
-                                       pcrecommendedReplace();
-
-                                       function pcrecommendedReplace() {
-                                          var pcrecommendedRe = '${requestScope.game.pcrecommended}';
-                                          pcrecommended = pcrecommendedRe.replace("<strong>권장:</strong>", "");
-                                          document.write(pcrecommended);
-                                       }
-                                    </script>
-                                 </h3>
-                              </div>
-                           </c:if>
-                           <c:if test="${requestScope.game.pcrecommended == null}">
-                              <h3 style="margin: 0;">게임의 권장 사양이 없습니다!</h3>
-                           </c:if>
-                        </td>
-                        </tr>
-                        ch-price" autocomplete="off">
                            <td style="width:200px; color:#C0C0C0; background-color:#000; border:none;">
                               <select name="type">
                                  <option selected value="initialprice">출시가격</option>
@@ -302,9 +251,9 @@
                            if(result.length>=1){
                               result.forEach(function(item){
                                  genre +="<tr><td><a href='moveGameDetail.do?appid="
-                                       +item.appid+ "'>"+item.name+"</td>";
+                                         +item.appid+ "'>"+item.name+"</td>";
                                  genre += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
-                                       +"</td>";
+                                         +"</td>";
                                  genre += "<td>"+item.positive+"</td>";
                                  genre +="</tr>"
                               });
@@ -326,9 +275,9 @@
                            if(result.length>=1){
                               result.forEach(function(item){
                                  price +="<tr><td><a href='moveGameDetail.do?appid="
-                                       +item.appid+ "'>"+item.name+"</td>";
+                                         +item.appid+ "'>"+item.name+"</td>";
                                  price += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
-                                       +"</td>";
+                                         +"</td>";
                                  price += "<td>"+item.initialprice+"</td>";
                                  price += "<td>"+item.finalprice+"</td>";
                                  price += "<td>"+item.discountrate+"</td>";
@@ -434,7 +383,7 @@
          <!-- 게임 소개글 -->
          <div>
             <c:choose>
-               <c:when test="${ requestScope.game.description != null}">
+                 <c:when test="${ requestScope.game.description != null}">
                   <header class="major">
                      <h2> 게임 소개글 </h2>
                   </header>
@@ -513,39 +462,7 @@
          </div>
 
 
-         <div align="center">
-            <header class="major">
-               <h2><a onclick="movegameboard();"> 유저게시판 </a></h2>
-            </header>
-            <div class="bbborad">
-               <table class="table-products table-hover">
-                  <colgroup>
-                     <col style="width:119px">
-                     <col style="width:120px">
-                     <col style="width:100px">
-                  </colgroup>
-                  <thead>
-                  <tr>
-                     <th class="table-title">
-                        <a href="">번호</a>
-                     </th>
-                     <th>제목</th>
-                     <th>조회수</th>
-                  </tr>
-                  </thead>
-                  <tbody>
-                  <tr class="boraddd">
 
-                     <!-- <th><a href="" class="css-truncate">번호</a></th>
-                            <th class="text-center green">제목</td>
-                            <th class="text-center">조회수</td> -->
-
-                  </tr>
-                  </tbody>
-               </table>
-            </div>
-
-         </div>
          <!-- <section>
                   <h2>댓글 처리할거임</h2>
                   <p></p>

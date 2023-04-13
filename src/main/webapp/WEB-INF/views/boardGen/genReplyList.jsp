@@ -4,6 +4,14 @@
 <head>
   <title></title>
   <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+  <style>
+    .comment-content * {
+      color: #fef2dc;
+    }
+    .comment-author, .comment-date {
+      color: #ad7c8c;
+    }
+  </style>
   <script>
     $(document).ready(function() {
 

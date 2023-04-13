@@ -7,6 +7,12 @@
 <head>
 <meta charset="UTF-8">
 <title>boardWriteForm</title>
+	<link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet" type="text/css">
+	<style>
+		.table-fill {
+			text-align: center;
+		}
+	</style>
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
@@ -16,7 +22,7 @@
 	<form action="bginsert.do" method="post" enctype="multipart/form-data">
 
 		<input type="hidden" name="user_id" value="${loginUser.user_id}"/>
-		<table style="border:1px solid orangered;">
+		<table class="table-fill">
 			<tr >
 				<th>게시글 제목</th>
 				<td>
@@ -43,18 +49,15 @@
 				<tr>
 					<th>공지 여부</th>
 					<td>
-						<input type="radio" name="board_notice" value="N" checked>일반g
+						<input type="radio" name="board_notice" value="N" checked>일반
 						<input type="radio" name="board_notice" value="Y">공지
 					</td>
 				</tr>
 			</c:if>
-			<tr>
-				<td colspan="2">
-					<input type="submit" value="작성">
-					<input type="reset" value="취소">
-				</td>
-			</tr>
+
 		</table>
+		<input style="box-shadow: 1px 1px 1px black;" class="button" type="submit" value="작성">
+		<input style="box-shadow: 1px 1px 1px black;" class="button" type="reset" value="취소">
 	</form>
 </center>
 <br>
