@@ -20,7 +20,7 @@
         var content = htmlDecode(contentElem.html());
         contentElem.html('<textarea id="edit-content-' + com_no + '" class="form-control" rows="3">' + content + '</textarea>');
         $(this).hide();
-        $(this).after('<a href="javascript:void(0)" class="update-comment" data-com_no="' + com_no + '">Confirm</a>');
+        $(this).after('<a href="javascript:void(0)" class="update-comment" data-com_no="' + com_no + '">수정완료</a>');
       });
 
       //수정 버튼 이후 수정확인 클릭했을 때 수정된 내용 서버에 저장
@@ -83,7 +83,7 @@
     <h3><p id="content-${comment.com_no}">${comment.com_contents}</p></h3>
       <%--수정삭제버튼 if 문 확인해야함--%>
     <div class="comment-btn">
-      <c:if test="${comment.user_id == sessionScope.loginUser.user_id} || ${sessionScope.loginUser.admin_id == 'Y'}">
+      <c:if test="${comment.user_id eq sessionScope.loginUser.user_id}">
         <a href="javascript:void(0)" class="edit-comment" data-com_no="${comment.com_no}">수정</a> &nbsp;
         <a href="javascript:void(0)" class="delete-comment" data-com_no="${comment.com_no}">삭제</a>
       </c:if>

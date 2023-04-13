@@ -23,6 +23,7 @@
   </script>
 </head>
 <body>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <div class="container">
 <h1 class="my-4">${group.communityname} 게시판</h1>
 <c:import url="/WEB-INF/views/community/commuDetailMenu.jsp"/>
@@ -71,6 +72,6 @@
     <c:param name="communityid" value="${ communityid }" />
   </c:url>
   <a href="${cbd}"><button type="button" class="btn btn-primary">글 작성</button></a>
-
+    <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

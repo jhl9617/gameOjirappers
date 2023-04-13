@@ -9,9 +9,15 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
+    <c:import url="/WEB-INF/views/common/menubar.jsp"/>
     <title>새로운 글작성</title>
 
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <style>
+        .tab-content {
+            text-align: center;
+        }
+    </style>
     <script>
         function showAlertMessage() {
             <c:if test="${not empty message}">
@@ -63,5 +69,6 @@
         <a href="<c:url value="/commuMain.do"/>" class="btn btn-secondary">커뮤니티 메인으로 돌아가기</a>
     </div>
 </div>
+<c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
 </html>

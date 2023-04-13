@@ -5,33 +5,13 @@
 <head>
   <meta charset="UTF-8">
   <style>
-    .menu-buttons {
-      display: flex;
-      flex-direction: row;
-      flex-wrap: nowrap;
-      justify-content: space-around;
-      list-style-type: none;
-      padding: 0;
-      margin: 0;
+    .list-unstyled li {
+      margin: 0 auto;
+      list-style: none;
     }
-    .menu-buttons li {
-      flex: 1;
+    .list-unstyled li a {
+      width: 500px;
     }
-    .button.large {
-      display: block;
-      width: 100%;
-      text-align: center;
-      text-decoration: none;
-    }
-    ul {
-      list-style-type: none;
-      margin: 0;
-      padding: 0;
-      overflow: hidden;
-      width: 30%;
-      height: 30%;
-    }
-
   </style>
 </head>
 
@@ -41,15 +21,11 @@
 
 
 
-<div class="container">
+<div class="container" style="text-align: center;">
   <div class="tab-content" id="communityTabsContent">
     <div class="tab-pane fade show active" id="community-info" role="tabpanel" aria-labelledby="community-info-tab">
       <table class="table table-bordered">
     <ul class="list-unstyled">
-      <c:url var="cdt" value="/viewgroup.do">
-        <c:param name="communityid" value="${ communityid }" />
-      </c:url>
-      <li><a href="${cdt}" class="button large">커뮤니티 정보</a></li>
       <c:url var="commuBoardListUrl" value="commuBoardList.do">
         <c:param name="communityid" value="${communityid}" />
       </c:url>
