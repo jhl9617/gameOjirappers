@@ -153,8 +153,8 @@
 	 select*
 		from(select rownum rnum, appid,  name, genre ,positive
         from (select * from game order by positive desc
-        <if test="keyword !=null and keyword.equals('initialprice')" >
-		where lower(genre) like '%' || #{ keyword } || '%'
+        <if test="keyword !=null and keyword.equals('genre')" >
+		where lower(genre) like lower('%' || #{ keyword } || '%')
 		</if>
 		))		
 		<![CDATA[
@@ -189,10 +189,10 @@
 	 	from (select * from game where 
 	 	<choose>
 	 		<when test="type !=null and type.equals('name')" >
-		 	  lower(name) like '%' || #{ keyword } || '%' order by name
+		 	  lower(name) like  lower('%' || #{ keyword } || '%' ) order by name
 		 	</when>
 		 	<when test="type !=null and type.equals('genre')" >
-		 	  lower(genre) like '%' || #{ keyword } || '%' order by genre
+		 	  lower(genre) like lower('%' || #{ keyword } || '%' ) order by genre
 		 	</when>
 		 	<when test="type !=null and type.equals('initialprice')" >
 		 	<![CDATA[

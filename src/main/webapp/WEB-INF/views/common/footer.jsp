@@ -20,7 +20,9 @@ footer {
     bottom: 0;
     left: 0;
     right: 0;
+
     height: 65px;
+
 }
 
 </style>
