@@ -57,52 +57,134 @@
                   </select>
                </td>
                <td  colspan='3' style="background-color:#000;border:none;">
-                  <input type="text" style="align:center; width:100%;" name="keyword" placeholder="입력하세요" />
+                  <input type="text" style="align:center; width:100%; color: #000" name="keyword" placeholder="입력하세요" />
                </td>
                <td align="center"  style="width:150px; background-color:#000; border:none;">
                   <input type="button"  align="center" style="width:100px;" onclick="gameAllSearch()" id="search" value="검색">
+                  <!-- <input type="button"  align="center" style="width:100px;" onclick="searchBoard()" id="search2" value="검색"> -->
                </td>   
                </form>
                </table>
                <table id="gameAll" >
-               </table>      
+               </table>
+               <table id="page"></table>
             </div>
             <script type="text/javascript">
             function gameAllSearch(){
-               $.ajax({
-                  type: 'GET',
-                  url : "gameAllsearch.do",
-                  data : $("form[name=search-game]").serialize(),
-                  success : function(result){
-                     //테이블 초기화
-                     $('#gameAll').empty();
-                     var ge = '<tr><td color="red">게임이름</td><td>게임내용</td><td>게임장르</td><td>좋아요</td><td>출시가격</td><td>할인율</td><td>할인된가격</td><td>어제 접속자수</td><td>출시일</td><td>평점</td></tr>';
-                     
-                     
-                     if(result.length>=1){                        
-                        result.forEach(function(item){
-                           ge +="<tr><td><a href='moveGameDetail.do?appid="
-                              +item.appid
-                              + "'>"+item.name+"</td>";
-                           ge += "<td>"+item.short_description+"</td>";
-                           ge += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
-                           +"</td>";
-                           ge += "<td>"+item.positive+"</td>";
-                           ge += "<td>"+item.initialprice+"</td>";
-                           ge += "<td>"+item.discountrate+"%</td>";
-                           ge += "<td>"+item.finalprice+"</td>";
-                           ge += "<td>"+item.ccu+"</td>";
-                           ge += "<td>"+item.releasedate+"</td>";
-                           ge += "<td>"+item.meta+"</td>";
-                           ge +="</tr>"         
-                          });
-                          $('#gameAll').append(ge);
-                     }
-                     
-                  }
-               });
-            }
+                $.ajax({
+                   type: 'GET',
+                   url : "gameAllsearch.do",
+                   data : $("form[name=search-game]").serialize(),
+                   success : function(result){
+                      //테이블 초기화
+                      $('#gameAll').empty();
+                      var ge = '<tr><td color="red">게임이름</td><td>게임내용</td><td>게임장르</td><td>좋아요</td><td>출시가격</td><td>할인율</td><td>할인된가격</td><td>어제 접속자수</td><td>출시일</td><td>평점</td></tr>';
+                      
+                      
+                      if(result.length>=1){                        
+                         result.forEach(function(item){
+                            ge +="<tr><td><a href='moveGameDetail.do?appid="
+                               +item.appid
+                               + "'>"+item.name+"</td>";
+                            ge += "<td>"+item.short_description+"</td>";
+                            ge += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
+                            +"</td>";
+                            ge += "<td>"+item.positive+"</td>";
+                            ge += "<td>"+item.initialprice+"</td>";
+                            ge += "<td>"+item.discountrate+"%</td>";
+                            ge += "<td>"+item.finalprice+"</td>";
+                            ge += "<td>"+item.ccu+"</td>";
+                            ge += "<td>"+item.releasedate+"</td>";
+                            ge += "<td>"+item.meta+"</td>";
+                            ge +="</tr>"         
+                           });
+                           $('#gameAll').append(ge);
+                      }
+                      
+                   }
+                });
+             }
             </script>
+            <!-- <script type="text/javascript">
+            function searchBoard(keyword, pageIndex){  // 검색어, 현재 페이지 번호
+            	$.ajax({
+                    type : 'get',
+                    url : "gameAllsearch.do",
+                    dataType : "json",
+                    data : {
+                        keyword : keyword,
+                        pageIndex : pageIndex
+                    },
+                    success : function(res) {
+                    	$("#gameAll").empty();
+                    	$("#page").remove();
+                    	
+                    	var resultList = res.boardSearchList;
+                    	var resultCnt = res.boardSearchListCnt;
+                    	var ge2 = "";
+                    	if(resultCnt > 0){
+            	        	// 게시물
+            	        	for(var i in resultList) {
+            	        		ge2 +="<tr><td><a href='moveGameDetail.do?appid="
+                                    +item.appid
+                                    + "'>"+item.name+"</td>";
+                                 ge2 += "<td>"+item.short_description+"</td>";
+                                 ge2 += "<td>"+item.genre.replace(/\//g, ",").slice(0,-1)
+                                 +"</td>";
+                                 ge2 += "<td>"+item.positive+"</td>";
+                                 ge2 += "<td>"+item.initialprice+"</td>";
+                                 ge2 += "<td>"+item.discountrate+"%</td>";
+                                 ge2 += "<td>"+item.finalprice+"</td>";
+                                 ge2 += "<td>"+item.ccu+"</td>";
+                                 ge2 += "<td>"+item.releasedate+"</td>";
+                                 ge2 += "<td>"+item.meta+"</td>";
+                                 ge2 +="</tr>"     // 게시물 디자인에 따라 변경해서 사용
+            	        	}
+            	        	$("#gameAll").append(ge);
+            	    		
+            	    		// 페이징
+            	    		paginationInfo(searchKeyword, res.pageIndex, res.recordCountPerPage, res.pageSize, resultCnt, "searchBoard", "gameAll");
+                    	}else{
+                    		ge2 += "검색결과 오류!";  // 게시물 디자인에 따라 변경해서 사용
+                    		$("#gameAll").append(ge);
+                    	}
+                    }
+            	});
+            }
+            
+            
+            function paginationInfo(kyword, pageIndex, recordCountPerPage, pageSize, resultCnt, fnName, listName){
+            	var totalPageCount = parseInt(((resultCnt-1)/recordCountPerPage) + 1);
+
+            	var firstPageNoOnPageList = pageIndex-(pageIndex%10)+1;
+            	if(pageIndex%10==0) firstPageNoOnPageList = pageIndex-10+1;
+            	var lastPageNoOnPageList = firstPageNoOnPageList+pageSize-1
+            	if(lastPageNoOnPageList > totalPageCount) lastPageNoOnPageList = totalPageCount;
+            	
+            	var prevPage = firstPageNoOnPageList-1;
+            	if(prevPage < 1) prevPage = 1;
+            	var nextPage = lastPageNoOnPageList+1;
+            	if(nextPage > totalPageCount) nextPage = totalPageCount;
+            	
+            	var html = "<p class=\"pagenation "+listName+"_page\">";
+            	if(pageSize < totalPageCount){  // 이전, 처음 버튼이 생기는 경우
+            		html += "<button class=\"prev end\" onclick=\""+fnName+"('"+kyword+"', "+1+");\">처음</button>";
+            		html += "<button class=\"prev\" onclick=\""+fnName+"('"+kyword+"', "+prevPage+");\">이전</button>";
+            	}
+            	for(var j=firstPageNoOnPageList; j<=lastPageNoOnPageList; j++){
+            		if(j == pageIndex) html += "<a href=\"javascript:;\" class=\"on\">"+j+"</a>"; 
+            		else html += "<a href=\"javascript:;\" onclick=\""+fnName+"('"+kyword+"', "+j+");\">"+j+"</a>";
+            	}
+            	if(pageSize < totalPageCount){  // 다음, 마지막 버튼이 생기는 경우
+            		html += "<button class=\"next\" onclick=\""+fnName+"('"+kyword+"', "+nextPage+");\">다음</button>";
+            		html += "<button class=\"next end\" onclick=\""+fnName+"('"+kyword+"', "+totalPageCount+");\">맨 마지막</button>";
+            	}
+            	html += "</p>";
+            	
+            	$("."+listName).after(html);
+            }
+            [출처] ajax로 리스트뽑고, 페이징처리 하는법|작성자 Luna
+            </script> -->
          <%-- <section id="banner">
             <div class="content">
                <header>

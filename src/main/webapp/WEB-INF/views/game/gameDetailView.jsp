@@ -135,28 +135,40 @@ function movegameboard(){
             <span class="button" onclick="genreSearch();">장르로 검색하세요</span>
             <span class="button" onclick="priceSearch();">가격으로 검색하기</span>
             <br>
-            <div id="genreSearch" style="display: none;">         
+            <div id="genreSearch" style="display: none;">
+            <table style="border:none;">               
             <form name="search-genre" autocomplete="off">
+            	<td colspan='3' style="background-color:#000; color:#C0C0C0; border:none;">
                   <input type="text" name="keyword" placeholder="검색할 장르를 입력하세요" />
+            	</td>
+            	<td align="center"  style="width:150px; background-color:#000; border:none;">
                   <input type="button" onclick="gamegSearch();" id="search" value="검색">
+                </td>
             </form>
+            </table> 
                <table id="genre" >
                </table>
             </div>
             <br>
+            
             <div id="priceSearch" style="display: none;">
+            <table style="border:none;">
             <form name="search-price" autocomplete="off">
+            	<td style="width:200px; color:#C0C0C0; background-color:#000; border:none;">
                   <select name="type">
                      <option selected value="initialprice">출시가격</option>
                      <option value="finalprice">할인된가격</option>
                      <option value="discountrate">할인율</option>               
                   </select>
-                  <td>
+                  </td>
+                  <td  colspan='3' style="background-color:#000; color:#C0C0C0; border:none;">
                   <input type="text" id="keyword" name="keyword" placeholder="검색할 가격 또는 할인율을 입력하세요" />
-                  </td><td>
+                  </td>
+					<td align="center"  style="width:150px; background-color:#000; border:none;">
                   <input type="button" onclick="gamepSearch();" id="search" value="검색">
                		</td>
                </form>
+               </table>
                <table id="price" >
                </table>
             </div>
@@ -351,6 +363,7 @@ function movegameboard(){
 	            			<div align="center"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 보러가기</a></div>
                      		<div align="center"><a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button">유튜브 영상 보러가기</a></div>
                      		<div align="center"><a href="${ pageContext.servletContext.contextPath }/movegameboard.do?appid=${ requestScope.game.appid }&page=1" class="button">유저게시판 가기</a></div>
+                     		<div align="center"><a href="https://www.inven.co.kr/webzine/news/" class="button">게임뉴스 보러 가기</a></div>
                      	</td>
 	            	</tr>
             	</table>
@@ -396,29 +409,37 @@ function movegameboard(){
                
                <c:if test="${ requestScope.game.platform != null}"></c:if>
                </td> --%>
-               <td>
-               <c:if test="${ requestScope.game.supported_languages != null}">
-               <div>         
-               <header class="major">
-                  <h2 align="left"> 게임 지원언어 </h2>
+               <tr style="margin: 0px;">
+               	<td style="margin: 0px;">        
+               <header style="margin: 0px;">
+                  <h2 align="center" style="margin: 0px;"> 게임 지원언어 </h2>
                </header>
-               <div style="float:left; border:1px solid black;">
-               <c:if test=""></c:if>         
-               <h3>${ requestScope.game.supported_languages }</h3>
-               </div>
-               </div>
-               </c:if>
-               <c:if test="${ requestScope.game.supported_languages == null}"></c:if>
-               </td>
-               <td>
-            <c:if test="${ requestScope.game.pcminimum != null}">
-               <div>            
-                  <header class="major">
-                     <h2 align="left"> 게임 최소사양 </h2>
+               	</td>
+               	<td style="margin: 0px;">           
+                  <header  style="margin: 0px;">
+                     <h2 align="center" style="margin: 0px;"> 게임 최소사양 </h2>
                   </header>
+               	</td>
+               	<td style="margin: 0px;">
+               	<header  style="margin: 0px;">
+                     <h2 align="center" style="margin: 0px;"> 게임 권장사양 </h2>
+               </header>
+               	</td>
+               </tr>
+               <tr style="margin: 0px; padding: 0px;">
+               <td style="margin: 0px; padding: 0px;">
+               <c:if test="${ requestScope.game.supported_languages != null}">      
+               <h3 style="margin: 0px; padding: 0px;">${ requestScope.game.supported_languages }
+               </h3>
+               </c:if>
+               <c:if test="${ requestScope.game.supported_languages == null}">
+               <h3 style="margin: 0px; padding: 0px;">지원하는 언어가 없습니다!</h3>
+               </c:if>
+               </td>
+               <td style="margin: 0px; padding: 0px;">
+           		 <c:if test="${ requestScope.game.pcminimum != null}">
                   <div style="float:left;">
-                        
-                  <h3>                     
+                  <h3 style="margin: 0px; padding: 0px;">                     
                   <script type="text/javascript">
                   pcminimumReplace();
                   function pcminimumReplace(){
@@ -427,20 +448,17 @@ function movegameboard(){
                      document.write(pcminimum);
                   }
                   </script></h3></div>
-               </div>
                </c:if>
-               <c:if test="${ requestScope.game.pcminimum == null}"></c:if>
+               <c:if test="${ requestScope.game.pcminimum == null}">
+               <h3 style="margin: 0px; padding: 0px;">게임 최소 사양이 없습니다!</h3>
+               </c:if>
                
                </td>
-               <td>
+               <td style="margin: 0px; padding: 0px;">
             <c:if test="${ requestScope.game.pcrecommended != null}">
-               <div>
-               <header class="major">
-                     <h2 align="left"> 게임 권장사양 </h2>
-                  </header>
                   <div style="float:left;">
                      
-                  <h3>
+                  <h3 style="margin: 0px; padding: 0px;">
                   <script type="text/javascript">
                   pcminimumReplace();
                   function pcrecommendedReplace(){
@@ -451,11 +469,12 @@ function movegameboard(){
                   </script>
                   </h3>
                   </div>
-               </div>
                </c:if>
                <c:if test="${ requestScope.game.pcrecommended == null}">
+               		<h3 style="margin: 0px; padding: 0px;">게임의 권장 사양이 없습니다!</h3>
                </c:if>
                </td>
+               </tr>
             </table>
             </div>
             
