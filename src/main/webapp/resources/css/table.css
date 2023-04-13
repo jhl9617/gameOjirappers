@@ -98,9 +98,7 @@ td {
     color: #fef2dc;
 }
 
-tbody tr:hover td {
-    background: #3a3a3a;
-}
+
 
 tr:last-child{
     border-bottom-right-radius: 20px;

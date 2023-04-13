@@ -12,69 +12,10 @@
     <meta charset="UTF-8">
 
     <title></title>
-
+    <link rel="stylesheet" href="${pageContext.servletContext.contextPath}/resources/css/table.css">
     <style>
-        table {
-            border-collapse: collapse;
-            width: 40%;
-            margin: auto;
-        }
-
-        th, td {
-            padding: 10px;
-            text-align: center;
-            border: 1px solid #ddd;
-        }
-
-        th {
-            background-color: #f2f2f2;
-        }
-
-        td:first-child {
-            font-weight: bold;
-        }
-
-        button {
-            -moz-appearance: none;
-            -webkit-appearance: none;
-            -ms-appearance: none;
-            appearance: none;
-            -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-            background-color: transparent;
-            border-radius: 0.375em;
-            border: 0;
-            box-shadow: inset 0 0 0 2px #f56a6a;
-            color: #f56a6a !important;
-            cursor: pointer;
-            display: inline-block;
-            font-family: "Roboto Slab", serif;
-            font-size: 0.8em;
-            font-weight: 700;
-            height: 3.5em;
-            letter-spacing: 0.075em;
-            line-height: 3.5em;
-            padding: 0 2.25em;
-            text-align: center;
-            text-decoration: none;
-            text-transform: uppercase;
-            white-space: nowrap;
-        }
-
-
-        a {
-            background-color: #008CBA;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            text-align: center;
-            text-decoration: none;
-            display: inline-block;
-            font-size: 14px;
-            margin: 4px 2px;
-            cursor: pointer;
+        h2, h4{
+            color: #fef2dc;
         }
     </style>
     <script>
@@ -118,7 +59,7 @@
     <c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
     <c:if test="${checked ne 'n'}"><a href="${likeUrl2}">좋아요취소</a></c:if>
     <br>
-    <table>
+    <table style="width:600px; ">
 
         <tr>
             <th>제목</th>
@@ -191,8 +132,8 @@
 <c:import url="/WEB-INF/views/boardTar/gameReplyList.jsp"/>
 <div id="comments-end"></div>
 <%--댓글 입력 form--%>
-<form action="<c:url value="/genReplyWrite.do"/>" method="post">
-    <input type="hidden" name="board_no" value="${boardTar.board_no}">
+<form action="<c:url value="/gameReplyWrite.do"/>" method="post">
+    <input type="hidden" name="board_no" value="${board_no}">
     <input type="hidden" name="user_id" value="${boardTar.user_id}">
     <input type="hidden" name="appid" value="${appid}">
     <input type="hidden" name="name" value="${name}">
