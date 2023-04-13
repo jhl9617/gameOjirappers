@@ -158,7 +158,7 @@
 
 
 <body bgcolor= '#081c2b'>
-<%-- <c:import url="/WEB-INF/views/common/menubar.jsp"/> --%>
+<c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br><br><br>
 
     <div class="table-container">
@@ -323,16 +323,6 @@ $(function(){
 </script>           
       
       
-      
-      <div class="div_table"> <%-- class명 수정하지말것 --%>
-        <h5  style="color:Lightgray;">&nbsp;&nbsp; 게임 즐겨찾기</h5>
-         <table class="user_gamelist">
-          <tr>
-				<th>즐찾번호</th>
-				<th>즐찾게임제목</th>
-          </tr>
-        </table>
-      </div>
       </div>
     </div><%-- all div close --%>
     
