@@ -12,8 +12,19 @@
         #asch {
             display: none;
             width: 500px;
+            height: 150px;
+            margin: 0;
         }
 
+        #calendar{
+            color: #f56a6a;
+            margin: 0 auto;
+        }
+
+        .fc-view-container {
+            background-color: #3a3a3a;
+            margin: 0;
+        }
         #schlist td {
             background-color: white;
         }
@@ -45,6 +56,68 @@
             max-width: 900px;
             max-height: 600px;
             margin-bottom: 200px;
+        }
+
+        .table-fill {
+            background: #081c2b;
+            border: 2px;
+            border-radius: 20px;
+            border-collapse: collapse;
+            margin: 0 auto;
+            max-width: 600px;
+            padding: 5px;
+            width: 100%;
+            box-shadow: 0 5px 10px rgba(0, 0, 0, 0.1);
+            animation: float 5s infinite;
+        }
+
+        .table-fill th {
+            color: #fef2dc !important;
+            background: #282828;
+            border-bottom: 4px ;
+            border-right: 1px;
+            border-left: 2px;
+            border-bottom: #ece8dd;
+            padding: 5px;
+            text-align: center;
+            text-shadow: 0 1px 1px rgba(0, 0, 0, 0.1);
+            vertical-align: middle;
+            background-clip: padding-box;
+        }
+
+        .table-fill tr:first-child {
+            border-top-left-radius: 20px;
+            border-top-right-radius: 20px;
+        }
+
+        .table-fill th:first-child {
+            border-top-left-radius: inherit;
+        }
+
+        .table-fill th:last-child {
+            border-top-right-radius: inherit;
+        }
+
+        .table-fill tr {
+            border-bottom: 2px;
+            border-top: 2px;
+            color: #666B85;
+            text-shadow: 0 1px 1px rgba(256, 256, 256, 0.1);
+        }
+
+
+        .table-fill td {
+            background: #081c2b;
+            color: #fef2dc;
+        }
+
+        .table-fill tbody tr:hover td {
+            background: #3a3a3a;
+        }
+
+        .table-fill tr:last-child{
+            border-bottom-right-radius: 20px;
+            border-bottom-left-radius: 20px;
         }
     </style>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/fullcalendar/3.10.2/fullcalendar.min.css'/>
@@ -198,7 +271,7 @@
 
     <hr>
 
-    <table style=" max-width: 900px;" id="schlist">
+    <table style=" max-width: 900px;" class="table-fill">
         <tr>
             <th><h5>일정이름</h5></th>
             <th><h5>일정내용</h5></th>

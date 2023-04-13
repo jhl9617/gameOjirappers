@@ -23,8 +23,9 @@
 	</resultMap>
 
 	<!-- 게시물 숫자 카운트 -->
-	<select id="selectListCount" resultType="int">
+	<select id="selectListCount" parameterType="string" resultType="_int">
 		SELECT COUNT(*) FROM tb_board_tar
+		where appid = #{appid}
 	</select>
 
 	<!-- startPage 와 endPage 사이의 appid 가 일치하는 게시물 리스트 최신순-->

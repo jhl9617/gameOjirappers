@@ -6,9 +6,13 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
-<style type="text/css">
 
-</style>
+   <link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet">
+   <style>
+      * {
+         color: #fef2dc;
+      }
+   </style>
 </head>
 
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
@@ -41,6 +45,7 @@ function showDiv(){
 </script>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
+
 <h1 align="center">회원 관리 페이지</h1>
 <h3 align="center">총 회원수 : ${ listCount }명</h3>
 <center>
@@ -71,11 +76,16 @@ function showDiv(){
 </center>
 
 <!-- 목록 출력 영역 -->
-<center>
+
+<center style="text-align: center;">
+   <form action="showCReportAdmin.do" style="float: left;">
+      <input class="button" type="submit" value="커뮤니티 신고글 보기">
+   </form>
    <button onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=1';">목록 보기</button>   
+
 </center>
 <br>
-<table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
+<table class="table-fill" align="center" >
    <tr>
       <th>회원아이디</th>
       <th>회원이름</th>
@@ -111,12 +121,10 @@ function showDiv(){
       </tr>
    </c:forEach>
 </table>
-<hr>
-<form action="showCReportAdmin.do">
-	<input type="submit" value="커뮤니티 신고글 보기">
-</form>
-<br><br><br>
 
+
+<c:import url="/WEB-INF/views/common/page.jsp"/>
+<hr>
 <!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>
