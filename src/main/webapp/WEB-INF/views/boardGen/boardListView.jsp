@@ -279,7 +279,7 @@ section.notice {
                 </tbody>
                 <br>
         <div id="write" style="float:right;">
-        	<c:if test="${ loginUser.user_status eq run }">
+        	<c:if test="${ loginUser.user_status eq 'run' }">
         		<button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">글작성</button>
         	</c:if>
         	<br>

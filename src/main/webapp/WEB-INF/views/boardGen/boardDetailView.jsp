@@ -238,13 +238,11 @@ cellpadding="50">
 		<label for="reply_contents">댓글 내용</label>
 		<textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
 	</div>
-	<c:if test="${ loginUser.user_status eq run }">
+	<c:if test="${ loginUser.user_status eq 'run' }">
 		<button type="submit" class="btn btn-primary">댓글 작성</button>
 	</c:if>
 </form>
 
-		
-    
 </ul>
 
 

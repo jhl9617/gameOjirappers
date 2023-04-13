@@ -19,9 +19,11 @@ import org.team404.gameOjirap.boardGen.model.service.BoardGenService;
 import org.team404.gameOjirap.boardGen.model.service.CommentService;
 import org.team404.gameOjirap.boardGen.model.vo.BoardGen;
 import org.team404.gameOjirap.common.BoardLike;
-import org.team404.gameOjirap.common.board.Comment;
 import org.team404.gameOjirap.common.FileNameChange;
 import org.team404.gameOjirap.common.Paging;
+import org.team404.gameOjirap.common.board.Comment;
+import org.team404.gameOjirap.user.model.service.UserService;
+import org.team404.gameOjirap.user.model.vo.User;
 
 @Controller
 public class BoardGenController {
@@ -29,6 +31,9 @@ public class BoardGenController {
 		
 	@Autowired
 	private BoardGenService boardService;
+	
+	@Autowired
+	private UserService userService;
 	
 	@Autowired
 	private CommentService commentService;  //댓글 서비스 의존성 주입
@@ -200,8 +205,28 @@ public class BoardGenController {
 		} //새로운 첨부파일이 있을 때
 		
 		if(boardService.insertBoard(boardGen) > 0) {
-			boardService.updateUserPoint(boardGen.getUser_id(), 50);
-			return "redirect:blist.do";
+			
+			User user = userService.selectUser(boardGen.getUser_id());
+			int updateP = user.getUser_point() + 50;
+			String updateUL;
+			switch((int)(updateP / 500)) {
+			case 0 : updateUL = "새싹"; break;
+			case 1 : updateUL = "싹"; break;
+			case 2 : updateUL = "줄기"; break;
+			case 3 : updateUL = "나무"; break;
+			case 4 : updateUL = "잎"; break;
+			default : updateUL = "열매"; break;
+			}	
+			user.setUser_point(updateP);
+			user.setUser_level(updateUL);
+							
+			int i = userService.updateDecPoint(user);
+			if(i > 0) {
+				return "redirect:blist.do";
+			}else {
+				model.addAttribute("message", "새 게시글 등록 실패");
+				return "common/error";
+			}
 		} else {
 			model.addAttribute("message", "새 게시글 등록 실패");
 			return "common/error";
@@ -354,11 +379,32 @@ public class BoardGenController {
 										  @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents) {
 		Comment comment = new Comment(board_contents, board_no, user_id);
 		if(boardService.genReplyWrite(comment) > 0) {
-			boardService.updateUserPoint(user_id, 20);
-			mv.addObject("board_no", board_no);
-			mv.addObject("page", page);
-			mv.addObject("user_id", user_id);
-			mv.setViewName("redirect:boardDetailView.do");
+			User user = userService.selectUser(user_id);
+			int updateP = user.getUser_point() + 20;
+			String updateUL;
+			switch((int)(updateP / 500)) {
+			case 0 : updateUL = "새싹"; break;
+			case 1 : updateUL = "싹"; break;
+			case 2 : updateUL = "줄기"; break;
+			case 3 : updateUL = "나무"; break;
+			case 4 : updateUL = "잎"; break;
+			default : updateUL = "열매"; break;
+			}	
+			user.setUser_point(updateP);
+			user.setUser_level(updateUL);
+							
+			int i = userService.updateDecPoint(user);
+			if(i > 0) {
+				mv.addObject("board_no", board_no);
+				mv.addObject("page", page);
+				mv.addObject("user_id", user_id);
+				mv.setViewName("redirect:boardDetailView.do");
+			}else {
+				mv.addObject("board_no", board_no);
+				mv.addObject("page", page);
+				mv.addObject("message", "댓글 등록에 실패했습니다.");
+				mv.setViewName("redirect:boardDetailView.do");
+			}
 		}else {
 			mv.addObject("board_no", board_no);
 			mv.addObject("page", page);
