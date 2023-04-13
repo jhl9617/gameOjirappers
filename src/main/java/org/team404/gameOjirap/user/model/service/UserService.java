@@ -30,9 +30,9 @@ public interface UserService {
 	int levelMethod(User user_level);     							// 현재등급 출력용
 	int checkanswer(String confirm_answer);						//본인확인 질문 확인용
 	int updateLoginok (User user);										//로그인가능 확인용
-	void updateBan(User user);									// 유저 정지용
-	void updateBanRelease(User loginUser);					// 유저 정지 해제용
-	void updateDecPoint(User user);								// 유저 포인트 차감용
+	int updateBan(User user);									// 유저 정지용
+	int updateBanRelease(User loginUser);					// 유저 정지 해제용
+	int updateDecPoint(User user);								// 유저 포인트 차감용
 
 	
 	int insertFavorite(User user);										//즐찾등록요청처리용
@@ -44,5 +44,6 @@ public interface UserService {
 
 	ArrayList<User> selectSearchUID(String keyword);
 	ArrayList<User> selectSearchUN(String keyword);
+	int updateBanF(User user);
 
 }

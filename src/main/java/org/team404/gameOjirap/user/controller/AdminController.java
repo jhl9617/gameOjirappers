@@ -32,18 +32,61 @@ public class AdminController {
 	private BCryptPasswordEncoder bcryptPasswordEncoder;
 	
 	//회원탈퇴 (삭제)요청 처리용  메소드
-		//삭제일때는 따로 정보를 보낼필요가 없음 (자동 로그아웃 처리) => String을 리턴한다.
+		
 		@RequestMapping("adminDel.do")
-		public String userDeleteMethod(@RequestParam(value="user_id", required=false) String user_id, 
-														Model model) {
-			logger.info("삭제할 회원아이디 : " + user_id);
+		public ModelAndView userDeleteMethod(@RequestParam(value="user_id", required=false) String user_id, 
+														ModelAndView mv, String page) {
+			int currentPage = 1;
+
+			if (page != null) {
+				System.out.println("page : " + page);
+				currentPage = Integer.parseInt(page);
+			}
+
+			// 한 페이지에 게시글 10개씩 출력되게 하는 경우 :
+			// 페이징 계산 처리 - 별도의 클래스로 작성해서 이용해도 됨
+			int limit = 15; // 한페이지에 출력할 목록 갯수
+			// 총 페이지 수 계산을 위해 게시글 총 갯수 조회해 옴
+			int listCount = UserService.selectListCount();
+			// 페이지 수 계산
+			// 주의 : 목록이 11개이면 페이지 수는 2개가 됨
+			// 나머지 목록 1개도 한 페이지가 필요함
+			int maxPage = (int) ((double) listCount / limit + 0.9);
+			// 현재 페이지가 포함된 페이지 그룹의 시작값과 끝값 계산
+			// => 뷰 페이지 아래쪽에 표시할 페이지 숫자를 10개 한다면
+			// 현재 페이지가 95라면 91과 100 을 계산해 냄
+			int startPage = ((currentPage - 1) / 10) * 10 + 1;
+			int endPage = startPage + 10 - 1;
+
+			if (maxPage < endPage) {
+				endPage = maxPage;
+			}
+
+			String url = "uadmin.do";
+			Paging paging = new Paging(listCount, currentPage, limit, url);
 			
-			if(UserService.userDeleteMethod(user_id) > 0 ) {			//회원 탈퇴 성공했을때 (자동 로그아웃 처리해야함) 
-				return "redirect:logout.do"; //Controller메소드에서 다른 Controller메소드 호출할 수 있음 (앞에  [    redirect:  ] 를 붙여준다
+			paging.calculator();
+
+			// 페이징 계산 끝 : new Paging(limit,
+			// currentPage)-------------------------------------------
+	      
+		  
+			
+			int i = UserService.userDeleteMethod(user_id);
+			
+			ArrayList<User> list = UserService.selectUserList(paging);
+			
+			if(i > 0 ) {	
+				mv.addObject("list", list);
+				mv.addObject("paging", paging);
+				mv.addObject("listCount", list.size());
+				mv.addObject("message", "회원 강제탈퇴 완료.");
+				mv.setViewName("user/userAdmin");
 			}else {		//회원 탈퇴 실패했을때
-				model.addAttribute("message", user_id + " : 회원 삭제 실패! 요청사항을 다시 확인해주세요!");			//이 메세지를 message에 담아서 리턴함
-				return "common/error";
+				mv.addObject("message", "회원 강제탈퇴 실패.");
+				mv.setViewName("common/error"); 
 			}//if
+			return mv;
 		}//method close
 		
 		//회원관리 페이지 이동 처리용 ------
@@ -89,6 +132,7 @@ public class AdminController {
 	      
 	      if(list != null && list.size() > 0){
 	         mv.addObject("list", list);
+	         mv.addObject("listCount", list.size());
 	         mv.addObject("paging", paging);
 	         
 	         mv.setViewName("user/userAdmin");
@@ -160,34 +204,59 @@ public class AdminController {
 			GregorianCalendar cal = new GregorianCalendar();
 			java.util.Date UDate;
 			
-			if(user.getBan_release_date() != null) {
-				UDate = new java.util.Date(user.getBan_release_date().getTime());
-				cal.setTime(UDate);
-			}
-			
-			switch(selecttinput) {
-			case "1day" : cal.add(GregorianCalendar.DATE, 1); break;
-			case "1week" : cal.add(GregorianCalendar.WEEK_OF_MONTH, 1); break;
-			case "1month" : cal.add(GregorianCalendar.MONTH, 1); break;
-			case "1year" : cal.add(GregorianCalendar.YEAR, 1);  break;
-			}
-			
-			UDate = cal.getTime();
-			java.sql.Date ban_release_date = new java.sql.Date(UDate.getTime());
-			
-			if(user != null) {
-				user.setUser_status("pause");
-				user.setBan_release_date(ban_release_date);
-				
-				UserService.updateBan(user);
-				
-				mv.addObject("user", user);
-				mv.setViewName("user/userBan");
-				mv.addObject("message", "회원 활동정지 처리 완료.");
+			if(selecttinput.equalsIgnoreCase("f")) {
+				if(user != null) {
+					user.setUser_status("pause");
+					int i = UserService.updateBanF(user);
+					
+					if(i > 0) {
+						mv.addObject("user", user);
+						mv.setViewName("user/userBan");
+						mv.addObject("message", "회원 활동정지 처리 완료.");
+					}else {
+						mv.addObject("message", "회원 활동정지 처리 실패.");
+				         mv.setViewName("common/error");
+					}
+				}else {
+			         mv.addObject("message", "회원 활동정지 처리 실패.");
+			         mv.setViewName("common/error");
+			    }
 			}else {
-		         mv.addObject("message", "회원 활동정지 처리 실패.");
-		         mv.setViewName("common/error");
-		    }
+				if(user.getBan_release_date() != null) {
+					UDate = new java.util.Date(user.getBan_release_date().getTime());
+					cal.setTime(UDate);
+				}
+				
+				switch(selecttinput) {
+				case "1day" : cal.add(GregorianCalendar.DATE, 1); break;
+				case "1week" : cal.add(GregorianCalendar.WEEK_OF_MONTH, 1); break;
+				case "1month" : cal.add(GregorianCalendar.MONTH, 1); break;
+				case "1year" : cal.add(GregorianCalendar.YEAR, 1);  break;
+				}
+				
+				UDate = cal.getTime();
+				java.sql.Date ban_release_date = new java.sql.Date(UDate.getTime());
+					
+				if(user != null) {
+					user.setUser_status("pause");
+					user.setBan_release_date(ban_release_date);
+					
+					int i = UserService.updateBan(user);
+					
+					if(i > 0) {
+						mv.addObject("user", user);
+						mv.setViewName("user/userBan");
+						mv.addObject("message", "회원 활동정지 처리 완료.");
+					}else {
+						mv.addObject("message", "회원 활동정지 처리 실패.");
+				         mv.setViewName("common/error");
+					}
+				}else {
+			         mv.addObject("message", "회원 활동정지 처리 실패.");
+			         mv.setViewName("common/error");
+			    }
+				
+			}
 			
 			return mv;
 			
@@ -221,11 +290,16 @@ public class AdminController {
 				user.setUser_point(updateP);
 				user.setUser_level(updateUL);
 				
-				UserService.updateDecPoint(user);
+				int i = UserService.updateDecPoint(user);
 				
-				mv.addObject("user", user);
-				mv.setViewName("user/userBan");
-				mv.addObject("message", "회원 포인트차감 처리 완료.");
+				if(i > 0) {
+					mv.addObject("user", user);
+					mv.setViewName("user/userBan");
+					mv.addObject("message", "회원 포인트차감 처리 완료.");
+				}else {
+					mv.addObject("message", "회원 포인트차감 처리 실패");
+			        mv.setViewName("common/error");
+				}
 			}else {
 		         mv.addObject("message", "회원 포인트차감 처리 실패");
 		         mv.setViewName("common/error");
@@ -244,11 +318,16 @@ public class AdminController {
 				user.setUser_status("run");
 				user.setBan_release_date(null);
 				
-				UserService.updateBanRelease(user);
+				int i = UserService.updateBanRelease(user);
 				
-				mv.addObject("user", user);
-				mv.setViewName("user/userBan");
-				mv.addObject("message", "회원 정지 해제처리 성공.");
+				if(i > 0) {
+					mv.addObject("user", user);
+					mv.setViewName("user/userBan");
+					mv.addObject("message", "회원 정지 해제처리 성공.");
+				}else {
+					mv.addObject("message", "회원 정지 해제처리 실패.");
+			         mv.setViewName("common/error");
+				}
 			}else {
 		         mv.addObject("message", "회원 정지 해제처리 실패.");
 		         mv.setViewName("common/error");
@@ -273,3 +352,4 @@ public class AdminController {
 		}
 		
 }
+        
