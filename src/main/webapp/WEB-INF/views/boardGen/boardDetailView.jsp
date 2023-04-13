@@ -138,15 +138,13 @@
 	<div class="form-group">
 		<textarea style="background: #b6b6b8" class="form-control" placeholder="댓글 내용" id="reply_contents" name="reply_contents" rows="3"></textarea>
 	</div>
+	<c:if test="${ loginUser.user_status eq 'run' }">
+		<button type="submit" class="btn btn-primary">댓글 작성</button>
 
-	<c:if test="${ loginUser.user_status eq run }">
-	<button class="button" style="width: 65px;" type="submit" class="btn btn-primary">댓글 작성</button>
 	</c:if>
 
 </form>
 
-		
-    
 </ul>
 
 
