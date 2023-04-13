@@ -99,7 +99,7 @@ function adminBanR() {
 <br>
 <h2>닉네임 : ${ user.user_nickname }</h2>
 <br>
-<h3>가입일 : 추가예정</h3>
+<h3>가입일 : ${ user.user_enrolldate }</h3>
 <br>
 <h3>회원등급 : ${ user.user_level }</h3><br>
 
