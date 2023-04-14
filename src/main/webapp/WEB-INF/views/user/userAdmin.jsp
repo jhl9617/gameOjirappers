@@ -1,6 +1,7 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -106,15 +107,14 @@ function showDiv(){
 		 <c:if test="${ u.user_status eq 'pause' }">활동불가</c:if>
 		 </td>
          <td>
-				추가구현
-
+			<fmt:formatDate value="${ u.user_enrolldate }" pattern="yyyy-MM-dd"/>
          </td>
          
          <td>
 
             <form action="uban.do?user_id=${ u.user_id }" method="post">
 
-               <input type="submit" value="활동정지/포인트차감">
+               <input type="submit" style="color: #000;" value="활동정지/포인트차감">
             </form>
          </td>
 

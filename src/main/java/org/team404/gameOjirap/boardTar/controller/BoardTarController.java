@@ -91,6 +91,7 @@ public class BoardTarController {
         if (boardTar != null) {
             model.addAttribute("checked", checked);
             model.addAttribute("boardTar", boardTar);
+            model.addAttribute("board_no", board_no);
             model.addAttribute("name", name);
             model.addAttribute("appid", appid);
             model.addAttribute("page", currentPage);
@@ -222,7 +223,7 @@ public class BoardTarController {
         <textarea class="form-control" id="gamecomment" name="gamecomment" rows="3"></textarea>
 */
     //Tar 게시판 댓글 등록
-    @RequestMapping("gameReplyWrite.do")
+    @RequestMapping(value="gameReplyWrite.do", method=RequestMethod.POST)
     public ModelAndView gameReplyWrite(ModelAndView mv, @RequestParam("board_no") int board_no,
                                        @RequestParam(name = "page", required = false) String page, @RequestParam("appid") String appid,
                                        @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents, @RequestParam("name") String name){
@@ -230,7 +231,6 @@ public class BoardTarController {
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
-
         Comment comment = new Comment(board_contents, board_no, user_id);
         if (boardTarService.insertTarReply(comment) > 0) {
             boardTarService.updatePoint(user_id, 20);
@@ -238,7 +238,9 @@ public class BoardTarController {
         } else {
             mv.addObject("message", "댓글 등록 실패");
         }
-        mv.addObject("board_no", board_no);
+        System.out.println("작동했음");
+        BoardTar boardTar = boardTarService.selectBoard(board_no);
+        mv.addObject("board_no", boardTar.getBoard_no());
         mv.addObject("name", name);
         mv.addObject("page", currentPage);
         mv.addObject("appid", appid);

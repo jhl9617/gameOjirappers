@@ -4,6 +4,14 @@
 <head>
     <title></title>
     <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+    <style>
+        .comment-content * {
+            color: #fef2dc;
+        }
+        .comment-author, .comment-date {
+            color: #ad7c8c;
+        }
+    </style>
     <script>
         $(document).ready(function() {
 
@@ -85,9 +93,10 @@
         <%--수정삭제버튼--%>
 
             <div class="comment-btn">
-                <a href="javascript:void(0)" class="edit-comment" data-com_no="${comment.com_no}">수정</a> &nbsp;
-                <a href="javascript:void(0)" class="delete-comment" data-com_no="${comment.com_no}">삭제</a>
+                <a href="javascript:void(0)" style="color: #555555;" class="edit-comment" data-com_no="${comment.com_no}">수정</a> &nbsp;
+                <a href="javascript:void(0)" style="color: #555555;" class="delete-comment" data-com_no="${comment.com_no}">삭제</a>
                 <hr>
+                <br><br>
             </div>
     </div>
 </c:forEach>

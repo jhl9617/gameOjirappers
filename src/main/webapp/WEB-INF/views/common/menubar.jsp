@@ -39,10 +39,10 @@
 
 		#headermenu {
 			display:flex;
-			border-bottom: solid 5px azure;
 			padding: 0;
 			position: relative;
-			background: #000;
+			height: 155px;
+			background: #0e151a;
 
 		}
 
@@ -65,12 +65,13 @@
 			padding-top: 32px;
 			padding-bottom: 32px;
 		}
+
 		#headermenu ul li {
-			margin-right: 40px;
+			margin-right: 10px;
 			padding:0;
 			vertical-align: center;
-			margin-bottom: 3%;
-			margin-top: 3%;
+			margin-bottom: 1%;
+			margin-top: 1%;
 		}
 
 		.icons li {
@@ -160,9 +161,8 @@
 <body>
 
 <header id="headermenu">
-
 	<h3 style="margin-top:0; "><a href="${ pageContext.servletContext.contextPath }/main.do" class="lll">
-		<img src="<c:url value="/resources/images/gggggg.png"/>" style="width: 15%; height:100%"  alt="로그" />
+		<img src="<c:url value="/resources/images/gggggg.png"/>" style="width: 200px; height:154px;"  alt="로그" />
 	</a> </h3>
 	<!-- 로그인 안한 경우 -->
 	<%-- <% if(loginMember == null){ %> --%>
@@ -182,20 +182,19 @@
 			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" ><span class="label">커뮤니티</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do"><span class="label">자유게시판</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/moveup.do?user_id=${ sessionScope.loginUser.user_id }" ><span class="label">마이페이지</span></a></li> <%--임시--%>
-			<li><a href="${ pageContext.servletContext.contextPath }/uadmin.do?page=1" ><span class="label">관리자</span></a></li> 
+			<li><a href="${ pageContext.servletContext.contextPath }/uadmin.do?page=1" ><span class="label">회원관리</span></a></li> 
  		</ul> 
  	</c:if> 
 	<!-- 로그인한 경우 : 일반회원인 경우 -->
 	<c:if test="${ !empty sessionScope.loginUser and loginUser.admin_id ne 'Y' }">
 		<ul class="icons">
-			<li id="us">${ loginUser.user_name}님 로긘중!</li>
+			<li id="us">${ loginUser.user_name}님 로긘중!</li><br>
 			<li><a href="${ pageContext.servletContext.contextPath }/logout.do"><span class="label">로그아웃하기</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/commuMain.do?page=1" ><span class="label">커뮤니티</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/blist.do"><span class="label">자유게시판</span></a></li>
 			<li><a href="${ pageContext.servletContext.contextPath }/moveup.do?user_id=${ sessionScope.loginUser.user_id }" ><span class="label">마이페이지</span></a></li> <%--임시--%>
 		</ul>
 	</c:if>
-	
 </header>
 
 </body>

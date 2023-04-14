@@ -8,8 +8,11 @@
 
   <style>
     textarea {
-      all: inherit;
-      border: 1px solid #f56a6a;
+      background: #dcd3d8;
+      box-shadow: 1px 1px 1px #555555;
+    }
+    h2 {
+      color: #fef2dc;
     }
   </style>
 </head>
@@ -20,14 +23,13 @@
 
 
   <center>
-
     <form action="req.do" method="post">
       <input type="hidden" name="user_id" value="${sessionScope.loginUser.user_id}"/>
       <input type="hidden" name="communityid" value="${communityid}"/>
-      <label for="request_des"><h2>[${communityname}]</h2> 가입 신청</label><br>
-
+      <label for="request_des"><h2>[${communityname}] 가입 신청</h2></label><br>
+      <br>
       <textarea id="request_des" name="requestdes" rows="5" cols="50"></textarea><br><br>
-      <input type="submit" value="신청">
+      <input class="button" style="width: 50px; height: 40px;" type="submit" value="신청">
     </form>
   </center>
 

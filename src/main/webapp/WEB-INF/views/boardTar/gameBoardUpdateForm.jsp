@@ -12,71 +12,59 @@
 	<meta charset="UTF-8">
 
 	<title></title>
-
+	<link href="${pageContext.request.contextPath}/resources/css/table.css" rel="stylesheet">
 	<style>
-		table {
-			border-collapse: collapse;
-			width: 40%;
-			margin: auto;
-		}
 
-		th, td {
-			padding: 10px;
+		.table-fill{
+			margin: 0 auto;
+			color: #fef2dc;
+			border-collapse: separate;
 			text-align: center;
-			border: 1px solid #ddd;
+		}
+		.infilebtn {
+			padding: 6px 25px;
+			background-color: #d06c2e;
+			border-radius: 5px;
+			color: white;
+			cursor: pointer;
 		}
 
-		th {
-			background-color: #f2f2f2;
+		td {
+			background: #555;
 		}
 
-		td:first-child {
-			font-weight: bold;
+		h4 {
+			color: #fef2dc;
 		}
 
-		button {
-			-moz-appearance: none;
-			-webkit-appearance: none;
-			-ms-appearance: none;
+		h2 {
+			color: #3a3a3a;
+		}
+
+		.updatebtn {
 			appearance: none;
-			-moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			-webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
-			-ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
 			background-color: transparent;
-			border-radius: 0.375em;
-			border: 0;
-			box-shadow: inset 0 0 0 2px #f56a6a;
-			color: #f56a6a !important;
+			border-radius: 8px;
+			border-top: 1px dimgray solid;
+			border-left: 1px dimgray solid;
+			box-shadow: 1px 1px 1px 1px #4d4848;
+			color: Lightgray ;
 			cursor: pointer;
 			display: inline-block;
-			font-family: "Roboto Slab", serif;
 			font-size: 0.8em;
 			font-weight: 700;
-			height: 3.5em;
+			height: max-content;
+			width: max-content;
 			letter-spacing: 0.075em;
 			line-height: 3.5em;
-			padding: 0 2.25em;
+			padding: 0;
 			text-align: center;
 			text-decoration: none;
 			text-transform: uppercase;
 			white-space: nowrap;
+			vertical-align: center;
 		}
-
-
-		a {
-			background-color: #008CBA;
-			color: white;
-			border: none;
-			padding: 10px 20px;
-			text-align: center;
-			text-decoration: none;
-			display: inline-block;
-			font-size: 14px;
-			margin: 4px 2px;
-			cursor: pointer;
-		}
-
 	</style>
 	<script>
 
@@ -98,7 +86,7 @@
 		<input type="hidden" name="user_id" value="${boardTar.user_id}">
 		<input type="hidden" name="board_date" value="${boardTar.board_date}">
 		<input type="hidden" name="appid" value="${appid}">
-	<table>
+	<table class="table-fill">
 
 		<tr>
 			<th>제목</th>
@@ -124,7 +112,10 @@
 					${boardTar.board_orifile} &nbsp; <input type="checkbox" name="delflag" value="yes"> 파일삭제<br>
 					<input type="hidden" name="refile" value="${boardTar.board_refile}">
 				</c:if>
-				<input type="file" name="upfile" value="새로 첨부">
+				<label class="infilebtn" for="input-file">
+					파일등록
+				</label>
+				<input style="display: none;" type="file" name="upfile" id="input-file">
 			</td>
 		</tr>
 		<tr>
@@ -132,21 +123,21 @@
 			<td><textarea name="board_content"></textarea></td>
 		</tr>
 		<tr>
-			<td colspan="2">
-				<button type="submit">수정</button> &nbsp; &nbsp;
+			<th style="border-bottom-left-radius: 20px;" colspan="2">
+				<button class="updatebtn" style="width: 80px;" type="submit">수정</button> &nbsp; &nbsp;
 				<c:url var="bdt" value="/movetarboarddetail.do">
 					<c:param name="board_no" value="${boardTar.board_no}"/>
 					<c:param name="page" value="${page}"/>
 					<c:param name="appid" value="${appid}"/>
 					<c:param name="name" value="${name}"/>
 				</c:url>
-				<button type="reset" onclick="javascript:location.href='${bdt}'">취소</button> &nbsp; &nbsp;
+				<button class="updatebtn" style="width: 80px;" type="reset" onclick="javascript:location.href='${bdt}'">취소</button> &nbsp; &nbsp;
 				<c:url var="btl" value="/movegameboard.do">
 					<c:param name="page" value="${page}"/>
 					<c:param name="appid" value="${appid}"/>
 				</c:url>
-				<a href="${btl}">목록으로</a>
-			</td>
+				<a class="updatebtn" style="width: 80px;" href="${btl}">목록으로</a>
+			</th>
 		</tr>
 	</table>
 </form>

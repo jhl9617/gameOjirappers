@@ -6,6 +6,20 @@
 <head>
 <meta charset="UTF-8">
 <title></title>
+	<style>
+		#userst {
+			text-align: center;
+			margin: 0 auto;
+		}
+		h1, h2, h3 {
+			color: #fef2dc;
+		}
+		body {
+			margin: 0;
+			padding: 155px 0 70px 0;
+		}
+
+	</style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js" ></script>
 <script type="text/javascript">
 $(function() {
@@ -78,13 +92,13 @@ function adminBanR() {
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
 <h1>회원 활동정지 처리 페이지</h1>
-<hr>
+<div id="userst">
 <br>
 <h1 align="left">${ user.user_name }(${ user.user_id }) 님</h1>
 <br>
 <h2>닉네임 : ${ user.user_nickname }</h2>
 <br>
-<h3>가입일 : 추가예정</h3>
+<h3>가입일 : ${ user.user_enrolldate }</h3>
 <br>
 <h3>회원등급 : ${ user.user_level }</h3><br>
 
@@ -126,14 +140,10 @@ function adminBanR() {
 </form>
 <button id="banbtn" onclick="banFunc();">정지</button>
 
-<form action="adminDel.do?user_id=${ user.user_id }" method="post" id="delete" >
+<form action="adminDel.do?user_id=${ user.user_id }" id="delete" >
 </form>
-<br><button onclick="deletefunc();">강제탈퇴</button><br>
-<form action="uadmin.do?page=1">
-	<br><input type="submit" value="이전 페이지로 이동">
-</form>
-<br><br>
-
+<br><button onclick="deletefunc();">강제탈퇴</button>
+</div>
 	<!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>
 </body>

@@ -12,6 +12,13 @@
    <title>GameOjirap</title>
    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />      <%--css 스타일 가져오기--%>
    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
+<style>
+   .actions li a {
+      width: 500px;
+   }
+
+
+</style>
 
 </head>
 <!-- Scripts -->
@@ -34,7 +41,7 @@
    <!-- Main -->
    <div id="main">
 
-      <div class="inner">
+      <div class="inner" style="padding: 0 !important">
          <!-- Header -->
          <c:import url="/WEB-INF/views/common/menubar.jsp"/>
          <!-- Banner -->
