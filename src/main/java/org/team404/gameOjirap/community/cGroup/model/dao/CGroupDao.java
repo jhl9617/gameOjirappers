@@ -115,4 +115,7 @@ public class CGroupDao {
         return session.selectOne("CGroupMapper.selectMemberListCount", communityid);
     }
 
+    public int deleteCMember(int communityid) {
+        return session.delete("CGroupMapper.deleteCMember", communityid);
+    }
 }

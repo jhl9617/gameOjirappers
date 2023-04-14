@@ -125,6 +125,10 @@
     </update>
 
     <!-- 커뮤니티 삭제 -->
+    <delete id="deleteCMember" parameterType="_int">
+        delete from tb_community_member
+        where communityid = #{communityid}
+    </delete>
     <delete id="deleteCGroup" parameterType="_int">
         delete from tb_community
         where communityid = #{communityid}

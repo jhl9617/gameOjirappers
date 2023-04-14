@@ -223,11 +223,13 @@
                                     var role = '';
                                     if (json.list[i].user_id == "${group.user_id}" || json.list[i].admin_id  == 'Y') {
                                         role = '관리자';
+                                        members += "<tr><td>" + json.list[i].user_id + "</td><td>" + json.list[i].user_nickname + "</td><td>" + role + "</td><td></td></tr>";
                                     } else {
                                         role = '회원';
+                                        members += "<tr><td>" + json.list[i].user_id + "</td><td>" + json.list[i].user_nickname + "</td><td>" + role + "</td><td>" + "<button onclick=\"deletemember('"+user_id+"');\">탈퇴</button></td></tr>";
                                     }
                                     var user_id = json.list[i].user_id;
-                                    members += "<tr><td>" + json.list[i].user_id + "</td><td>" + json.list[i].user_nickname + "</td><td>" + role + "</td><td>" + "<button onclick=\"deletemember('"+user_id+"');\">탈퇴</button></td></tr>";
+
 
                                 }
                                 $("#membertable").html(members);

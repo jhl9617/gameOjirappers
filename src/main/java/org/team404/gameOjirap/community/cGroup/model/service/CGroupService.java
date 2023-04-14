@@ -51,4 +51,5 @@ public interface CGroupService {
 
     int selectMemberListCount(int communityid);
 
+    int deleteCMember(int communityid);
 }
