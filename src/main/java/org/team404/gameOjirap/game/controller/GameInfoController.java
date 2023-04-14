@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
+import java.util.concurrent.atomic.AtomicBoolean;
 
 import org.codehaus.jackson.map.ObjectMapper;
 import org.json.simple.JSONArray;
@@ -14,6 +15,7 @@ import org.json.simple.parser.ParseException;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -33,6 +35,8 @@ public class GameInfoController {
 	@Autowired
 	private GameService gameService;
 
+	private AtomicBoolean stopInserting = new AtomicBoolean(false);
+
 	@RequestMapping(value = "insertAllGameInfo.do", method = { RequestMethod.GET, RequestMethod.POST })
 	@ResponseBody
 	public ModelAndView insertAllGameInfo(ModelAndView mv) throws ParseException, InterruptedException {
@@ -44,7 +48,12 @@ public class GameInfoController {
 			int num = 0;
 			int requstTime = 3000; // 요청횟수제한 피하기 위한 설정 시간
 			Set<String> keys = spjob.keySet();
+			stopInserting.set(false);
 			for (String key : keys) {
+				// 정보 가져오기 멈춤버튼 눌리면 멈추기
+				if (stopInserting.get()) {
+					break;
+				}
 				// 이미 db에 게임정보가 있다면 넘어가기
 				if (gameService.selectGameCount(key) > 0) {
 					continue;
@@ -68,6 +77,12 @@ public class GameInfoController {
 		}
 	} // updateGameInfo 메소드
 
+	@RequestMapping(value = "stopInserting.do", method = { RequestMethod.GET, RequestMethod.POST })
+	@ResponseBody
+	public String stopInserting() {
+		stopInserting.set(true);
+		return "Stopped";
+	}
 // ------------------------------------------------------------------------------------------
 
 	@RequestMapping(value = "insertGameInfo.do", method = { RequestMethod.POST, RequestMethod.GET })
