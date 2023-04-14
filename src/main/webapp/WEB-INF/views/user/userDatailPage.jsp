@@ -167,7 +167,7 @@
    		<input type="hidden" name="user_id" value="${requestScope.user.user_id }">	<%--value가 암호화되어있는 값임 --%>
         <br> <br>  <br><%-- 이 br은 안지움 --%>
 			<p style="color:#f56a6a; font-size: 15pt;" > ${ sessionScope.loginUser.user_nickname } 님</p>
-			<p style="color:#f56a6a; font-size: 15pt;" > 내 등급 : ${ sessionScope.loginUser.user_level } </p>
+			<p style="color:#f56a6a; font-size: 15pt;" > 내 등급 : ${ requestScope.user.user_level } </p>
 		<div class="menuButton">
 			<input type="button" onclick="location.href = 'moveUpdatePage.do?user_id=${ sessionScope.loginUser.user_id }'"  value="내 정보수정"><br><br>
 			<input type="button" onclick="location.href = 'main.do'"  value="메인화면으로"><br><br>
@@ -182,7 +182,7 @@
         <h5  style="color:Lightgray;" >&nbsp;&nbsp; 현재 포인트</h5>
         <table class="user_point">
           <tr>
-            <th style="color:#f56a6a; font-size: 20pt; " align=left>&nbsp;&nbsp; ${ sessionScope.loginUser.user_point } Point </th>
+            <th style="color:#f56a6a; font-size: 20pt; " align=left>&nbsp;&nbsp; ${ requestScope.user.user_point } Point </th>
           </tr>
         </table>
       </div>

@@ -13,10 +13,50 @@
    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />      <%--css 스타일 가져오기--%>
    <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js"></script>
 <style>
+
+    <style>
+   @font-face {
+       font-family: 'GyeonggiTitleM';      /* 글씨체: 경기천년제목 */
+       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+       font-weight: normal;
+       font-style: normal;
+   }
+   
    .actions li a {
       width: 500px;
    }
 
+	input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 40px;
+	  width: 150px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
+	  
 
 </style>
 
@@ -29,6 +69,8 @@
    <script type="text/javascript" src="<c:url value="/resources/js/main.js">"></script>
 --%>
 <body class="is-preload">
+<br>
+<br>
 <c:if test="${!empty message}">
    <script>
       alert("${message}");
@@ -39,7 +81,7 @@
 <div id="wrapper">
 
    <!-- Main -->
-   <div id="main">
+   <div id="main" >
 
       <div class="inner" style="padding: 0 !important">
          <!-- Header -->
@@ -47,7 +89,7 @@
          <!-- Banner -->
          <div>
             <header class="major">
-               <h2> 게임검색하기 </h2>
+               <h2 style="color:Lightgray; font-family:'GyeonggiTitleM' "> 게임검색하기 </h2>
             </header>
             <!-- <table id="gameAll" >
             </table> -->
@@ -62,11 +104,13 @@
                         <option value="discountrate">할인율로 검색</option>
                      </select>
                   </td>
+
                   <td  colspan='3' style="background-color:#000;border:none;">
                      <input type="text" style="align:center; width:100%; color: #fef2dc" name="keyword" placeholder="입력하세요" />
+
                   </td>
                   <td align="center"  style="width:150px; background-color:#000; border:none;">
-                     <input type="button"  align="center" style="width:100px;" onclick="gameAllSearch()" id="search" value="검색">
+                     <input type="button"  align="left" style="width:300px;" onclick="gameAllSearch()" id="search" value="검색">
                      <!-- <input type="button"  align="center" style="width:100px;" onclick="searchBoard()" id="search2" value="검색"> -->
                   </td>
                </form>
@@ -215,7 +259,7 @@
          <!-- Section -->
          <section>
             <header class="major">
-               <h2>Best Game</h2>
+               <h2 style="color:Lightgray; font-family:'GyeonggiTitleM' ">Best Game</h2>
             </header>
             <div id="toplist" class="posts">
 
@@ -268,9 +312,9 @@
          <section>
 
             <header class="major">
-               <h2> New Game </h2>
+               <h2 style="color:Lightgray; font-family:'GyeonggiTitleM' "> New Game </h2>
             </header>
-            <div id="newlist" class="posts">
+            <div id="newlist" class="posts"  >
 
             </div>
          </section>
@@ -317,7 +361,7 @@
          <!-- 순위 아래  -->
          <section>
             <header class="major">
-               <h2> 할인율 </h2>
+               <h2 style="color:Lightgray; font-family:'GyeonggiTitleM' "> 할인율 </h2>
             </header>
             <div class="discount">
                <table class="table-products table-hover">
@@ -347,7 +391,10 @@
                   </tr> -->
                   <table id="disclist">
                      <tr align="center"><td class='table-title' colspan='2'>game name</td>
-                        <td>출시가격</td><td>할인율</td><td>할인한가격</td></table>
+                        <td>출시가격</td>
+                        <td>할인율</td>
+                        <td>할인한가격</td>
+                  </table>
 
 
                   </thead>

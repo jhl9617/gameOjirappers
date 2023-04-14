@@ -10,9 +10,23 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title>boardDetailView</title>
+<title>boardListView</title>
     <link href="${pageContext.servletContext.contextPath}/resources/css/table.css" rel="stylesheet">
 <style type="text/css">
+
+	@font-face {
+	    font-family: 'GyeonggiTitleM';      /* 글씨체: 경기천년제목 */
+	    src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+	    font-weight: normal;
+	    font-style: normal;
+	}
+	
+	* { 
+	color: Lightgray ;
+	font-family: 'GyeonggiTitleM';
+	}   
+      
+   
 .page-title {
     text-align: center;
 }
@@ -29,6 +43,38 @@ tr:hover td {
 tr:hover td a {
     color: #000000;
 }
+
+	input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 40px;
+	  width: 150px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
+	  
 </style>
 </head>
 <body style="padding: 0 0 70px 0;">
@@ -54,8 +100,9 @@ tr:hover td a {
             <div class="search-window">
                 <form action="bgsearchTitle.do" method="post">
                     <div class="search-wrap">
-                        <input id="search" type="search" name="search" placeholder="제목으로 검색하세요." value="">
-                        <button type="submit" class="btn btn-dark">검색</button>
+                        <input id="search" type="search" name="search" placeholder="제목으로 검색하세요." value=""
+                        style="width:365px; height:37px; font-size:13px; border-radius: 8px;">
+                        <input value="검색" type="submit" class="btn btn-dark">
                     </div>
                 </form>
             </div>
@@ -63,15 +110,16 @@ tr:hover td a {
     </div>
     <br>
     <div id="write" align="center">
-        <button onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">글작성</button>
+        <input type="button" value="글작성" style="color:Lightgray; font-family:'GyeonggiTitleM' " 
+        onclick="javascript:location.href='${ pageContext.servletContext.contextPath }/bgwriteform.do';">
         <br>
     </div>
   <!-- board list area -->
 
-            <table class="table-fill">
+            <table class="table-fill" style="height: 40px; ">
                 <thead>
                 <tr>
-                    <th scope="col" class="th-num">조회수</th>
+                    <th scope="col" class="th-num" style="height: 40px; ">조회수</th>
                     <th scope="col" class="th-title">제목</th>
                     <th scope="col" class="th-date">등록일</th>
                     <th scope="col" class="th-id">ID</th>
@@ -80,16 +128,14 @@ tr:hover td a {
                 </thead>
                 <tbody>
                 <c:forEach items="${ requestScope.list }" var="boardGen">
-                <tr>
+                <tr style="height: 40px; ">
                      <c:url var="dtview" value="/boardDetailView.do">
                         <c:param name="board_no" value="${ boardGen.board_no }" />
                         <c:param name="page" value="${ currentPage }"/>
                     </c:url>
                     
-                    <td>${ boardGen.board_count }</td>
-                    <td>
-                      <a href="${ dtview }">${ boardGen.board_title }</a>
-                    </td>
+                    <td >${ boardGen.board_count }</td>
+                    <td> <a href="${ dtview }">${ boardGen.board_title }</a>  </td>
                     <td><fmt:formatDate value="${ boardGen.board_date }" pattern="yyyy-MM-dd" /></td>
                     <td>${ boardGen.user_id }</td>
                     <td>${ boardGen.board_no }</td>

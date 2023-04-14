@@ -176,7 +176,7 @@
 	<![CDATA[
 		select *
 		from (select rownum rnum, USER_ID, ADMIN_ID, USER_NICKNAME, USER_NAME, USER_PHONE, 
-			 USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, BAN_RELEASE_DATE, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE
+			 USER_EMAIL, USER_BIRTH, USER_LEVEL, USER_STATUS, BAN_RELEASE_DATE, USER_POINT, USER_ACCESS, USER_ORIGINAL_PROFILE, USER_ENROLLDATE
 			 from (select * from tb_user order by user_id desc))
 		where rnum >= #{startRow} and rnum <= #{endRow}
 		]]>

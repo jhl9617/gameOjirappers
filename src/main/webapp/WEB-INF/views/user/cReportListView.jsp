@@ -29,7 +29,7 @@
 <body>
 <h1>신고글리스트(관리자) 페이지</h1><br><br>
 
-<form action="" method="post">
+<form action="viewgroup.do" method="post">
  <table align="center" width="700" border="1" cellspacing="0" cellpadding="1">
  	<tr>
  		<th>신고자아이디</th>
@@ -39,7 +39,8 @@
  		<th></th>
  	</tr>
  	<c:forEach items="${ requestScope.list }" var="cr" varStatus="status">
- 		
+ 		<input type="hidden" name="communityid" value="${ cr.communityid }">
+ 		<input type="hidden" name="page" value="1">
  		<tr>
  			<td>${ cr.user_id }</td>
   			<td>${ cr.communityid }</td>
