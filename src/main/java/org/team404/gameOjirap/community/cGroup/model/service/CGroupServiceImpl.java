@@ -121,4 +121,9 @@ public class CGroupServiceImpl implements CGroupService{
         return cGroupDao.selectMemberListCount(communityid);
     }
 
+    @Override
+    public int deleteCMember(int communityid) {
+        return cGroupDao.deleteCMember(communityid);
+    }
+
 }

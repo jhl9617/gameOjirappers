@@ -107,9 +107,9 @@
 
       // 게임정보 가져오기 멈춤
       function stopinsertgame(){
-         fetch('stopInserting.do').catch(error) => {
+         return fetch('stopInserting.do').catch((error) => {
             location.href = "main.do";
-         }
+         });
       }
 
       //게시판이동

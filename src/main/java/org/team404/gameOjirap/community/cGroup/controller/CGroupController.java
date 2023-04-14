@@ -388,7 +388,8 @@ public String commuMainList() throws UnsupportedEncodingException {
     @RequestMapping("deletecommu.do")
 
     public String deleteCGroup(@RequestParam("communityid") int communityid, Model model) {
-        if (cGroupService.deleteCGroup(communityid) > 0) {
+
+        if (cGroupService.deleteCMember(communityid) > 0 && cGroupService.deleteCGroup(communityid) > 0) {
 
             return "redirect:commuMain.do";
         } else {
