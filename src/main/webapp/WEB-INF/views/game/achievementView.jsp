@@ -35,7 +35,7 @@ td {
 	content="width=device-width, initial-scale=1, user-scalable=no" />
 
 </head>
-<body class="is-preload">
+<body class="is-preload" style="padding:0 0 70px 0;">
 	<!-- Wrapper -->
 	<div id="wrapper">
 

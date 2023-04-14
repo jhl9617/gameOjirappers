@@ -15,6 +15,7 @@
 
 		body {
 			background: #081c2b;
+			overflow-x: hidden;
 		}
 
 
@@ -43,7 +44,6 @@
 			position: relative;
 			height: 155px;
 			background: #0e151a;
-
 		}
 
 		#headermenu.icons {

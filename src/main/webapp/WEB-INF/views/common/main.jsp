@@ -104,8 +104,10 @@
                         <option value="discountrate">할인율로 검색</option>
                      </select>
                   </td>
-                  <td  colspan='3' style="background-color:#000; border:none;">
-                     <input type="text" name="keyword" style="align:center; width:100%; color: #000; " placeholder="입력하세요" />
+
+                  <td  colspan='3' style="background-color:#000;border:none;">
+                     <input type="text" style="align:center; width:100%; color: #fef2dc" name="keyword" placeholder="입력하세요" />
+
                   </td>
                   <td align="center"  style="width:150px; background-color:#000; border:none;">
                      <input type="button"  align="left" style="width:300px;" onclick="gameAllSearch()" id="search" value="검색">

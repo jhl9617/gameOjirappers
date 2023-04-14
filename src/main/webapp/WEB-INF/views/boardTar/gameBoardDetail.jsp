@@ -17,6 +17,13 @@
         h2, h4{
             color: #fef2dc;
         }
+
+        td {
+            background: #555;
+        }
+        tr{
+            text-align: center;
+        }
     </style>
     <script>
         function btdelcheck() {
@@ -35,7 +42,7 @@
         }
     </script>
 </head>
-<body>
+<body style="padding:0 0 70px 0;">
 <c:import url="/WEB-INF/views/common/menubar.jsp"/>
 <br>
 <br>
@@ -53,7 +60,7 @@
 </c:url>
 <center>
 
-    <h2>${boardTar.board_no}번 게시물</h2>
+    <h2 style="color: #8c7474">${boardTar.board_no}번 게시물</h2>
     <h4>조회수 : [${boardTar.board_count}]</h4>
     <h4>좋아요 수 : [${boardTar.board_like}]</h4> &nbsp;
     <c:if test="${checked eq 'n'}"><a href="${likeUrl}">좋아요</a></c:if>
@@ -63,7 +70,7 @@
 
         <tr>
             <th>제목</th>
-            <td>${boardTar.board_title}</td>
+            <td style="border-top-right-radius: 20px;">${boardTar.board_title}</td>
         </tr>
 
         <tr>
@@ -99,27 +106,27 @@
             <td>${boardTar.board_content}</td>
         </tr>
         <tr>
-            <td colspan="2">
+            <td style="border-bottom-left-radius: 20px; border-bottom-right-radius: 20px;" colspan="2">
                 <c:if test="${loginUser.user_id eq boardTar.user_id}">
                     <c:url var="btd" value="/btdelete.do">
                         <c:param name="board_no" value="${boardTar.board_no}"/>
                         <c:param name="page" value="${page}"/>
                         <c:param name="appid" value="${appid}"/>
                     </c:url>
-                    <a href="${btd}" onclick="return btdelcheck();">삭제</a>
+                    <a href="${btd}" class="button" style="width: 60px;" onclick="return btdelcheck();">삭제</a>
                     <c:url var="btu" value="/btupdate.do">
                         <c:param name="board_no" value="${boardTar.board_no}"/>
                         <c:param name="page" value="${page}"/>
                         <c:param name="appid" value="${appid}"/>
                         <c:param name="name" value="${name}"/>
                     </c:url>
-                    <a href="${btu}" onclick="return btupcheck();">수정</a>
+                    <a href="${btu}" class="button" style="width: 60px;"  onclick="return btupcheck();">수정</a>
                 </c:if>
                 <c:url var="btl" value="/movegameboard.do">
                     <c:param name="page" value="${page}"/>
                     <c:param name="appid" value="${appid}"/>
                 </c:url>
-                <a href="${btl}">목록으로</a>
+                <a class="button" style="width: 60px;"  href="${btl}">목록으로</a>
             </td>
         </tr>
 
@@ -138,8 +145,7 @@
     <input type="hidden" name="appid" value="${appid}">
     <input type="hidden" name="name" value="${name}">
     <div class="form-group">
-        <label for="reply_contents">댓글 내용</label>
-        <textarea class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
+        <textarea placeholder="댓글 내용" class="form-control" id="reply_contents" name="reply_contents" rows="3"></textarea>
     </div>
     <button type="submit" class="btn btn-primary">댓글 작성</button>
 </form>

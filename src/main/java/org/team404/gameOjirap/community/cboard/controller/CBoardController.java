@@ -50,7 +50,6 @@ public class CBoardController {
         ArrayList<CBoard> list = cBoardService.selectCommuBList(paging, communityid);
 
         if (list != null && list.size() > 0) {
-
             mv.addObject("communityid", communityid);
             mv.addObject("list", list);
             mv.addObject("paging", paging);
@@ -137,10 +136,11 @@ public class CBoardController {
         return mv;
     }
     //게시글 수정
-    @RequestMapping("updateCommuPost.do")
+    @RequestMapping(value="updateCommuPost.do", method=RequestMethod.POST)
     public ModelAndView updateCommuPost(ModelAndView mv, CBoard cBoard, HttpSession session, RedirectAttributes redirectAttributes, HttpServletRequest request,
                                         @RequestParam(name = "delflag", required = false) String delFlag,
-                                        @RequestParam(name = "upfile", required = false) MultipartFile mfile) {
+                                        @RequestParam(name = "upfile", required = false) MultipartFile mfile,
+                                        @RequestParam("communityid") int communityid) {
         if(!mfile.getContentType().startsWith("image/")) {
             redirectAttributes.addFlashAttribute("message", "이미지 파일만 업로드 가능합니다.");
             mv.setViewName("redirect:/commuBoardList.do"); // Set the redirect to an appropriate error page
@@ -148,7 +148,7 @@ public class CBoardController {
         }
 
         // 저장 폴더 경로 설정
-        String savePath = request.getSession().getServletContext().getRealPath("resources/board_upfiles");
+        String savePath = request.getSession().getServletContext().getRealPath("resources/commuimg");
 
         //\n문자 <br>로 바꿔서 저장
         String contentWithLineBreaks = cBoard.getcBoardContent().replace("\n", "<br>");
@@ -196,7 +196,7 @@ public class CBoardController {
                 } catch (Exception e) {
                     e.printStackTrace();
                     redirectAttributes.addFlashAttribute("message", "Failed to save attachment!");
-                    mv.setViewName("redirect:/error"); // Set the redirect to an appropriate error page
+                    mv.setViewName("common/error"); // Set the redirect to an appropriate error page
                     return mv;
                 }
 
@@ -208,6 +208,7 @@ public class CBoardController {
 
 
         int result = cBoardService.updateCommuPost(cBoard); // Assuming you have a method to update the post in your service
+        mv.addObject("communityid", communityid);
         if (result > 0) {
             redirectAttributes.addFlashAttribute("message", "수정 완료!");
             mv.setViewName("redirect:/commuBoardList.do"); // Set the redirect to the appropriate page
