@@ -15,6 +15,13 @@
    <link rel="stylesheet" href="<c:url value="/resources/css/main.css"/>" />      <%--css 스타일 가져오기--%>
    <link rel="stylesheet" href="<c:url value="/resources/css/table.css"/>" />      <%--css 스타일 가져오기--%>
    <style type="text/css">
+      @font-face {
+       font-family: 'GyeonggiTitleM';      /* 글씨체: 경기천년제목 */
+       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+       font-weight: normal;
+       font-style: normal;
+   		}
+   		
       #updateinfo {
          display: none;
       }
@@ -76,6 +83,37 @@
          vertical-align: middle;
          background-clip: padding-box;
       }
+      
+    input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 50px;
+	  width: 170px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
 
    </style>
    <script type="text/javascript">
@@ -128,14 +166,16 @@
 
    <!-- Main -->
    <div id="main">
-
+	<br>
       <div class="inner" align="left">
          <c:if test="${sessionScope.loginUser.admin_id eq 'Y'}">
-            <span class="button" onclick="updateinfo();">게임정보 업데이트</span>
-            <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
+            <span class="button" onclick="updateinfo();" style="width: 150px; " >게임정보 업데이트</span>
+            <span class="button" onclick="deleteinfo();" style="width: 150px; " >게임정보 삭제</span>
             <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
+
                class="button"><span class="label">게임정보 갖고오기</span></a>
             <span class="button" onclick="stopinsertgame();">정보 가져오기 멈춤</span>
+
             <div id="updateinfo">
                <form action="updateGameInfo.do" method="post">
                   <input name="appid"> <input type="submit" value="업데이트">
@@ -147,6 +187,7 @@
                </form>
             </div>
          </c:if>
+         
          <hr clear="both">
 
          <!-- Header -->
@@ -156,11 +197,11 @@
 
 
             <header class="main">
-               <h1 align="center">${ requestScope.game.name }</h1>
+               <h1 align="center" style="color:Lightgray; font-family:'GyeonggiTitleM' " >${ requestScope.game.name }</h1>
             </header>
             <div>
                <c:if test="${ requestScope.game.genre != null}">
-                  <h3 align="center">
+                  <h3 align="center" style="color:Lightgray; font-family:'GyeonggiTitleM' " >
                      <script type="text/javascript">
                         function genrenReplace(){
                            var genreRe = '${ requestScope.game.genre }';
@@ -185,8 +226,8 @@
 
             <div>
                <div align="center">
-                  <span class="button" onclick="genreSearch();">장르로 검색하세요</span>
-                  <span class="button" onclick="priceSearch();">가격으로 검색하기</span>
+                  <span class="button" onclick="genreSearch();" style="width: 150px; " >장르로 검색하세요</span>
+                  <span class="button" onclick="priceSearch();" style="width: 150px; " >가격으로 검색하기</span>
                   <br>
                   <div id="genreSearch" style="display: none;">
                      <table style="border:none;">
@@ -354,7 +395,7 @@
                <source src="${ requestScope.game.movie }" type="video/mp4">
             </video>
             </div>
-            <div style="text-align: center;">
+            <div style="text-align: center; ">
             <table id="table55" style="margin: 0; display: inline-block;">
                <tr>
                   <td colspan="2"><a href="${ requestScope.game.headerimg }">
@@ -363,25 +404,29 @@
                </tr>
                <tr>
                   <td id="gamedetd">
-                     <h3 align="center">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
-                     <h3 align="center">게임 출시일: [${ requestScope.game.releasedate }]</h3>
+                     <h3 align="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' ">메타크리틱 게임 평점: [${ requestScope.game.meta }]</h3>
+                     <h3 align="center" style="color:Lightgray; font-family:'GyeonggiTitleM' ">게임 출시일: [${ requestScope.game.releasedate }]</h3>
                      <c:if test="${ requestScope.game.positive !=0 }">
-                        <h3 align="center">positive: [${ requestScope.game.positive }]</h3>
+                        <h3 align="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' ">positive: [${ requestScope.game.positive }]</h3>
                      </c:if>
                      <c:if test="${ requestScope.game.positive ==0 }">
                      </c:if>
                      <c:if test="${ requestScope.game.ccu !=0}">
-                        <h3 align="center">Concurrent Users: [${ requestScope.game.ccu }]</h3>
+                        <h3 align="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' ">Concurrent Users: [${ requestScope.game.ccu }]</h3>
                      </c:if>
                      <c:if test="${ requestScope.game.ccu == 0}"></c:if>
-                     <h3 align="center">개발자:[${ requestScope.game.developer }]</h3>
-                     <h3 align="center">배급사:[${ requestScope.game.publisher }]</h3>
+                     <h3 align="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' ">개발자:[${ requestScope.game.developer }]</h3>
+                     <h3 align="center"  style="color:Lightgray; font-family:'GyeonggiTitleM' ">배급사:[${ requestScope.game.publisher }]</h3>
                   </td>
                   <td style="text-align: center;">
-                     <div class="menudiv"><a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button">도전과제 보러가기</a></div>
-                     <div class="menudiv">   <a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button">유튜브 영상 보러가기</a></div>
-                     <div class="menudiv">   <a href="${ pageContext.servletContext.contextPath }/movegameboard.do?appid=${ requestScope.game.appid }&page=1" class="button">유저게시판 가기</a></div>
-                     <div class="menudiv">   <a href="https://www.inven.co.kr/webzine/news/" class="button">게임뉴스 보러 가기</a></div>
+                     <div class="menudiv">
+                     	<a href="${ pageContext.servletContext.contextPath }/goChallenge.do?appid=${ requestScope.game.appid }" class="button" style="width: 150px; ">도전과제 보러가기</a></div>
+                     <div class="menudiv">   
+                     	<a href="${ pageContext.servletContext.contextPath }/youTube.do?appid=${ requestScope.game.appid }" class="button" style="width: 150px; ">유튜브 영상 보러가기</a></div>
+                     <div class="menudiv">   
+                     	<a href="${ pageContext.servletContext.contextPath }/movegameboard.do?appid=${ requestScope.game.appid }&page=1" class="button" style="width: 150px; ">유저게시판 가기</a></div>
+                     <div class="menudiv">   
+                     	<a href="https://www.inven.co.kr/webzine/news/" class="button" style="width: 150px; ">게임뉴스 보러 가기</a></div>
                   </td>
                </tr>
             </table>
@@ -404,9 +449,10 @@
          </div>
 
          <div align="center">
-            <table id="pctable">
+            <table id="pctable"  >
                <tr>
-                  <th colspan="2"><h2 align="center" style="margin: 0px;"> 게임 지원언어 </h2></th>
+                  <th colspan="2"><h2 align="center" 
+                  style="margin: 0px; color: #f56a6a; font-family:'GyeonggiTitleM';" > 게임 지원언어 </h2></th>
                </tr>
                <tr>
                   <td colspan="2">
@@ -422,8 +468,10 @@
                </tr>
 
                <tr>
-                  <th><h2 align="center" style="margin: 0px;"> 게임 최소사양 </h2></th>
-                  <th><h2 align="center" style="margin: 0px;"> 게임 권장사양 </h2></th>
+                  <th><h2 align="center" 
+                  style="margin: 0px; color: #f56a6a; font-family:'GyeonggiTitleM';"> 게임 최소사양 </h2></th>
+                  <th><h2 align="center" 
+                  style="margin: 0px; color: #f56a6a; font-family:'GyeonggiTitleM';"> 게임 권장사양 </h2></th>
                </tr>
                <tr>
                   <td>
