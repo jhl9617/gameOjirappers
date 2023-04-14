@@ -77,7 +77,7 @@ public String commuMainList() throws UnsupportedEncodingException {
         sendJson.put("list", jarr);
 
         // json을 json string 타입으로 바꿔서 전송되게 함
-        return sendJson.toJSONString(); // 뷰리졸버로 리턴함
+        return sendJson.toJSONString(); // 뷰리졸버로 리턴함ㅕ
         // servlet-context.xml 에 json string 내보내는
         // JsonView 라는 뷰리졸버 추가 등록해야 함
 
@@ -92,7 +92,6 @@ public String commuMainList() throws UnsupportedEncodingException {
         if (page != null) {
             currentPage = Integer.parseInt(page);
         }
-
 
 // 한 페이지에 게시글 10개씩 출력되게 하는 경우 :
         // 페이징 계산 처리 - 별도의 클래스로 작성해서 이용해도 됨
@@ -189,7 +188,6 @@ public String commuMainList() throws UnsupportedEncodingException {
             mv.addObject("group", cGroupService.selectSingleCGroup(communityid));
             mv.addObject("currentPage", currentPage);
             mv.addObject("message", message);
-
             mv.setViewName("community/viewGroup");
         } else {
             mv.addObject("message", communityid + "번 커뮤니티 조회 실패!");
@@ -349,14 +347,14 @@ public String commuMainList() throws UnsupportedEncodingException {
         System.out.println(cGroupService.selectSingleCGroup(cGroup.getCommunityid()).getCommunityname() + "++++++" + cGroup.getCommunitydesc());
         String savePath = request.getSession().getServletContext().getRealPath("resources/commuimg");
         if (cGroup.getCommunityimgori() != null && delFlag != null && delFlag.equals("yes")) {
-            new File(savePath + "\\" + cGroup.getCommunityimgrename()).delete();
+            new File(savePath + "/" + cGroup.getCommunityimgrename()).delete();
             cGroup.setCommunityimgori(null);
             cGroup.setCommunityimgrename(null);
         }
 
         if (!mfile.isEmpty()) {
             if (cGroup.getCommunityimgori() != null) {
-                new File(savePath + "\\" + cGroup.getCommunityimgrename()).delete();
+                new File(savePath + "/" + cGroup.getCommunityimgrename()).delete();
                 cGroup.setCommunityimgori(null);
                 cGroup.setCommunityimgrename(null);
             }
@@ -365,7 +363,7 @@ public String commuMainList() throws UnsupportedEncodingException {
 
             if (fileName != null && fileName.length() > 0) {
                 String rename = FileNameChange.change(fileName, "yyyyMMddHHmmss");
-                File renameFile = new File(savePath + "\\" + rename);
+                File renameFile = new File(savePath + "/" + rename);
                 try {
                     mfile.transferTo(renameFile);
                 } catch (Exception e) {

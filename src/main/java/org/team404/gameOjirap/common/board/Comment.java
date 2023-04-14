@@ -7,7 +7,7 @@ public class Comment implements java.io.Serializable{
 
 	private int com_no;	
 	private String com_contents;	//댓글내용
-	private Date com_date;				//댓글작성날짜
+	private Date com_date;			//댓글작성날짜
 	private int com_lev;
 	private int com_no2;
 	private int board_no;
