@@ -114,7 +114,7 @@ function showDiv(){
 <div id="usernameDiv">
    <form action="aSearchUN.do" method="post">
       <label>검색할 회원닉네임을 입력하세요 : 
-         <input type="seach" name="keyword">
+         <input type="search" name="keyword">
       </label>
       <input type="submit" value="검색">
    </form>
