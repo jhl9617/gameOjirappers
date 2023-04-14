@@ -7,18 +7,54 @@
 <meta charset="UTF-8">
 <title></title>
 	<style>
+	   @font-face {
+       font-family: 'GyeonggiTitleM';      /* 글씨체: 경기천년제목 */
+       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+       font-weight: normal;
+       font-style: normal;
+  	   }
+  	   
 		#userst {
 			text-align: center;
 			margin: 0 auto;
 		}
-		h1, h2, h3 {
-			color: #fef2dc;
-		}
-		body {
-			margin: 0;
-			padding: 155px 0 70px 0;
-		}
 
+      * { 
+      color: Lightgray ;
+      font-family: 'GyeonggiTitleM';
+      }   
+      
+      
+	input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 40px;
+	  width: 150px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
 	</style>
 <script type="text/javascript" src="${ pageContext.servletContext.contextPath }/resources/js/jquery-3.6.3.min.js" ></script>
 <script type="text/javascript">
@@ -91,18 +127,14 @@ function adminBanR() {
 </head>
 <body>
 <c:import url="/WEB-INF/views/common/menubar.jsp" />
-<h1>회원 활동정지 처리 페이지</h1>
+<h1 align="center">회원 활동정지 처리 페이지</h1>
 <div id="userst">
 <br>
-<h1 align="left">${ user.user_name }(${ user.user_id }) 님</h1>
-<br>
+<h1 align="center">${ user.user_name }(${ user.user_id }) 님</h1>
 <h2>닉네임 : ${ user.user_nickname }</h2>
-<br>
-<h3>가입일 : ${ user.user_enrolldate }</h3>
-<br>
-<h3>회원등급 : ${ user.user_level }</h3><br>
-
-<h3>포인트 : ${ user.user_point }</h3> &nbsp; <button id="sdpdtn" onclick="showDecP();">포인트차감</button> 
+<p>가입일 : ${ user.user_enrolldate }</p>
+<p>현재 회원등급 : ${ user.user_level }</p>
+<p>포인트 : ${ user.user_point }&nbsp; <input type="button" id="sdpdtn" onclick="showDecP();" value="포인트차감하기"> </p> 
 
 <form action="adminUDecPoint.do?user_id=${ user.user_id }" method="post" id="decpoint" name="decpoint" >
 	차감할 포인트 : 
@@ -116,7 +148,7 @@ function adminBanR() {
 	<input type="hidden" id="selectpinput" name="selectpinput">
 	<br>차감사유 : <input name="causep">
 </form>
-<button id="decpointbtn" onclick="decpFunc();">차감</button>
+<input type="button" value="차감" id="decpointbtn" onclick="decpFunc();" >
 
 <c:if test="${ user.user_status eq 'run' }"><h3>활동상태 : 활동가능</h3></c:if>
 <c:if test="${ user.user_status eq 'pause' && user.ban_release_date ne null }">
@@ -125,9 +157,8 @@ function adminBanR() {
 <form action="adminUBanR.do?user_id=${ user.user_id }"  method="post" id="banr"></form>
 <c:if test="${ user.user_status eq 'pause' && user.ban_release_date eq null }">
 	<h3>활동상태 : 활동불가(영구) &nbsp; <button onclick="adminBanR();">활동정지해제</button></h3> </c:if>
-<br><br><button id="sbbtn" onclick="showUBan();">활동정지</button> 
-<form action="adminUBan.do?user_id=${ user.user_id }"  method="post" id="ban" name="ban">
-	정지일
+<input type="button" value="활동정지" id="sbbtn" onclick="showUBan();">
+<form action="adminUBan.do?user_id=${ user.user_id }"  method="post" id="ban" name="ban">정지일
 	<select id="selectt">
 		<option value="">선택</option>
 		<option value="1day">1일</option>
@@ -138,11 +169,12 @@ function adminBanR() {
 	<input type="hidden" id="selecttinput" name="selecttinput">
 	<br>정지사유 : <input name="causeb">
 </form>
-<button id="banbtn" onclick="banFunc();">정지</button>
+<input type="button" value="정지"  id="banbtn" onclick="banFunc();"> &nbsp;
+<input type="button" value="강제탈퇴" onclick="deletefunc();">
 
 <form action="adminDel.do?user_id=${ user.user_id }" id="delete" >
 </form>
-<br><button onclick="deletefunc();">강제탈퇴</button>
+<br>
 </div>
 	<!-- Footer -->
 <c:import url="/WEB-INF/views/common/footer.jsp"/>

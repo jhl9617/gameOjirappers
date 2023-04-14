@@ -17,10 +17,10 @@ footer {
 	padding: 0px;
 	font-weight: bold;
     position: fixed;
-    bottom: 0;
+    bottom: 2px;
     left: 0;
     right: 0;
-    height: 65px;
+    height: 100px;
 }
 
 </style>
@@ -31,10 +31,12 @@ footer {
 <br>
 <br>
 <footer>
+ <br>
 Gemejirapper(주) | 사업자등록번호: 404-00-04040 | 대표: 이종하 <br>
 서울특별시 마포구 백범로 23, 3층 (신수동, 케이터틀)<br>
 Tel. 02-739-7235 | Fax. 02-733-3460 | 개인정보관리 책임자 : 김오지라퍼<br>
 Copyright 2023. gamejirapper Inc. All Rights Reserved.<br>
+
 </footer>
 </body>
 </html>
