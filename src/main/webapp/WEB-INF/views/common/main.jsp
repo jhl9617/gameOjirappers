@@ -63,7 +63,7 @@
                      </select>
                   </td>
                   <td  colspan='3' style="background-color:#000;border:none;">
-                     <input type="text" style="align:center; width:100%; color: #000" name="keyword" placeholder="입력하세요" />
+                     <input type="text" style="align:center; width:100%; color: #fef2dc" name="keyword" placeholder="입력하세요" />
                   </td>
                   <td align="center"  style="width:150px; background-color:#000; border:none;">
                      <input type="button"  align="center" style="width:100px;" onclick="gameAllSearch()" id="search" value="검색">

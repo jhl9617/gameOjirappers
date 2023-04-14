@@ -105,6 +105,13 @@
          return false;
       }
 
+      // 게임정보 가져오기 멈춤
+      function stopinsertgame(){
+         fetch('stopInserting.do').catch(error) => {
+            location.href = "main.do";
+         }
+      }
+
       //게시판이동
       function movegameboard(){
          location.href = "movegameboard.do?appid=${ requestScope.game.appid }&page=1";
@@ -128,6 +135,7 @@
             <span class="button" onclick="deleteinfo();">게임정보 삭제</span>
             <a href="${ pageContext.servletContext.contextPath }/insertAllGameInfo.do"
                class="button"><span class="label">게임정보 갖고오기</span></a>
+            <span class="button" onclick="stopinsertgame();">정보 가져오기 멈춤</span>
             <div id="updateinfo">
                <form action="updateGameInfo.do" method="post">
                   <input name="appid"> <input type="submit" value="업데이트">

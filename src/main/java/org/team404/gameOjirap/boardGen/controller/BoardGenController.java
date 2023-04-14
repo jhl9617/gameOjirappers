@@ -352,20 +352,28 @@ public class BoardGenController {
 	public ModelAndView insertReplyMethod(ModelAndView mv, @RequestParam("board_no") int board_no,
 										  @RequestParam(name = "page", required = false) String page,
 										  @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents) {
-		Comment comment = new Comment(board_contents, board_no, user_id);
-		if(boardService.genReplyWrite(comment) > 0) {
-			boardService.updateUserPoint(user_id, 20);
-			mv.addObject("board_no", board_no);
-			mv.addObject("page", page);
-			mv.addObject("user_id", user_id);
-			mv.setViewName("redirect:boardDetailView.do");
-		}else {
+		try {
+			Comment comment = new Comment(board_contents, board_no, user_id);
+			if (boardService.genReplyWrite(comment) > 0) {
+				boardService.updateUserPoint(user_id, 20);
+				mv.addObject("board_no", board_no);
+				mv.addObject("page", page);
+				mv.addObject("user_id", user_id);
+				mv.setViewName("redirect:boardDetailView.do");
+			} else {
+				mv.addObject("board_no", board_no);
+				mv.addObject("page", page);
+				mv.addObject("message", "댓글 등록에 실패했습니다.");
+				mv.setViewName("redirect:boardDetailView.do");
+			}
+			return mv;
+		}catch (Exception e) {
 			mv.addObject("board_no", board_no);
 			mv.addObject("page", page);
 			mv.addObject("message", "댓글 등록에 실패했습니다.");
 			mv.setViewName("redirect:boardDetailView.do");
+			return mv;
 		}
-		return mv;
 	}
 
 
