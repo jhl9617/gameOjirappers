@@ -13,6 +13,18 @@
     <script src="${pageContext.servletContext.contextPath}/resources/js/jquery-3.6.3.min.js"></script>
 
 <style>
+   @font-face {
+       font-family: 'GyeonggiTitleM';      /* 글씨체: 경기천년제목 */
+       src: url('https://cdn.jsdelivr.net/gh/projectnoonnu/noonfonts_one@1.0/GyeonggiTitleM.woff') format('woff');
+       font-weight: normal;
+       font-style: normal;
+   }
+   
+         * { 
+      color: Lightgray ;
+      font-family: 'GyeonggiTitleM';
+      }   
+      
     .commucon {
         text-align: center;
 
@@ -96,6 +108,38 @@
         text-shadow: -1px -1px 1px rgba(0, 0, 0, 0.1);
         text-transform: uppercase;
     }
+    
+    	input[type="submit"],
+	input[type="button"], 
+	.button {
+	font-family: 'GyeonggiTitleM';
+	  -moz-appearance: none;
+	  -webkit-appearance: none;
+	  -ms-appearance: none;
+	  appearance: none;
+	  -moz-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -webkit-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  -ms-transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  transition: background-color 0.2s ease-in-out, color 0.2s ease-in-out;
+	  background-color: transparent;
+	  border-radius: 8px;
+	  border: 1;
+	  box-shadow: 1px 1px 1px 1px #f56a6a;
+	  color: Lightgray ;
+	  cursor: pointer;
+	  display: inline-block;
+	  font-size: 0.8em;
+	  font-weight: 700;
+	  height: 40px;
+	  width: 150px;
+	  letter-spacing: 0.075em;
+	  line-height: 3.5em;
+	  padding: 0;
+	  text-align: center;
+	  text-decoration: none;
+	  text-transform: uppercase;
+	  white-space: nowrap; }
+	  
 
 </style>
     <script>
@@ -128,7 +172,7 @@
 <table class="commtable" style="margin: 0 auto;">
     <tr>
         <td>
-            <h2 class="my-4" style="color: #f56a6a;">커뮤니티 찾아보기</h2>
+            <h2 class="my-4" style="color:#f56a6a; font-family:'GyeonggiTitleM' " >커뮤니티 찾아보기</h2>
 
 
             <div class="search-window">
@@ -136,22 +180,24 @@
                     <div class="search-wrap">
                         <label for="search" >커뮤니티 검색</label>
 
-                        <input id="search" size="15" maxlength="30" style="background: lightgray;" type="keyword" name="keyword" placeholder="이름으로 검색하세요." value=""><br><br>
-                        <button class="button" type="submit" style="border-radius:20px; width: 100px;">커뮤니티 검색</button>
+                        <input id="search" size="15" maxlength="30" 
+                        style="background: lightgray; width:200px; height:30px; font-size:13px; border-radius: 8px;" type="keyword" name="keyword" placeholder="이름으로 검색하세요." value=""><br><br>
+                        <button class="button" type="submit" style="width: 100px;">커뮤니티 검색</button>
 
                     </div>
                 </form>
             </div>
         </td>
         <td>
-            <h2 style="color: #f56a6a;">나만의 커뮤니티 생성</h2>
+            <h2 style="color:#f56a6a; font-family:'GyeonggiTitleM' " >나만의 커뮤니티 생성</h2>
             <form action="commuCreate.do" method="post">
                 <div class="form-group">
                     <label for="communityname">Group Name:</label>
-                    <input type="text" class="pos" style="background: lightgray;" id="communityname" name="communityname" placeholder="생성할 커뮤니티 이름 입력" required>
+                    <input type="text" class="pos" 
+                    style="background: lightgray; width:200px; height:30px; font-size:13px; border-radius: 8px;" id="communityname" name="communityname" placeholder="생성할 커뮤니티 이름 입력" required>
                 </div>
                 <br>
-                <button class="button" type="submit" style="border-radius: 20px; width: 100px;">커뮤니티 생성</button>
+                <button class="button" type="submit" style="width: 100px;">커뮤니티 생성</button>
 
             </form>
         </td>
@@ -160,13 +206,13 @@
         <td colspan="2">
             <div class="big-table">
                 <h3 align="center">총 커뮤니티 수 : ${listCount} 개</h3>
-                <table class="table-fill">
+                <table class="table-fill" style="height: 40px; " >
                     <thead>
                     <tr>
-                        <th scope="col">커뮤니티 이름</th>
-                        <th scope="col">생성자</th>
-                        <th scope="col">커뮤 생성일</th>
-                        <th scope="col"></th>
+                        <th scope="col" style="height: 40px; ">커뮤니티 이름</th>
+                        <th scope="col" >생성자</th>
+                        <th scope="col" >커뮤 생성일</th>
+                        <th scope="col" ></th>
                     </tr>
                     </thead>
                     <tbody>
