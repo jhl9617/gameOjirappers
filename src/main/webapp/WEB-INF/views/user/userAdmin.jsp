@@ -100,8 +100,8 @@ function showDiv(){
    <input type="radio" name="item" value="username" style="color:Lightgray; font-family:'GyeonggiTitleM' " > 이름 &nbsp; &nbsp;
    <input type="button" style="color:Lightgray; font-family:'GyeonggiTitleM' " 
    onclick="javascript:location.href='${pageContext.servletContext.contextPath}/uadmin.do?page=1';" value="전체목록"> &nbsp; &nbsp; 
-   <input  class="button" type="submit" value="커뮤니티 신고글 보기"
-   onclick="showCReportAdmin.do" >
+   <input  class="button" type="button" value="커뮤니티 신고글 보기"
+   onclick="javascript:location.href='${pageContext.servletContext.contextPath}/showCReportAdmin.do';" >
 </div>
 <div id="useridDiv">
    <form action="aSearchUID.do" method="post">
