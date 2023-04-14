@@ -378,25 +378,37 @@ public class BoardGenController {
 										  @RequestParam(name = "page", required = false) String page,
 										  @RequestParam("user_id") String user_id, @RequestParam("reply_contents") String board_contents) {
 
-		try {
+
     Comment comment = new Comment(board_contents, board_no, user_id);
 		if(boardService.genReplyWrite(comment) > 0) {
 			User user = userService.selectUser(user_id);
 			int updateP = user.getUser_point() + 20;
 			String updateUL;
-			switch((int)(updateP / 500)) {
-			case 0 : updateUL = "새싹"; break;
-			case 1 : updateUL = "싹"; break;
-			case 2 : updateUL = "줄기"; break;
-			case 3 : updateUL = "나무"; break;
-			case 4 : updateUL = "잎"; break;
-			default : updateUL = "열매"; break;
-			}	
+			switch ((int) (updateP / 500)) {
+				case 0:
+					updateUL = "새싹";
+					break;
+				case 1:
+					updateUL = "싹";
+					break;
+				case 2:
+					updateUL = "줄기";
+					break;
+				case 3:
+					updateUL = "나무";
+					break;
+				case 4:
+					updateUL = "잎";
+					break;
+				default:
+					updateUL = "열매";
+					break;
+			}
 			user.setUser_point(updateP);
 			user.setUser_level(updateUL);
-							
+
 			int i = userService.updateDecPoint(user);
-			if(i > 0) {
+			if (i > 0) {
 				mv.addObject("board_no", board_no);
 				mv.addObject("page", page);
 				mv.addObject("user_id", user_id);
@@ -408,15 +420,10 @@ public class BoardGenController {
 				mv.addObject("page", page);
 				mv.addObject("message", "댓글 등록에 실패했습니다.");
 				mv.setViewName("redirect:boardDetailView.do");
-			}	
-      return mv;
-		  }catch (Exception e) {
-			mv.addObject("board_no", board_no);
-			mv.addObject("page", page);
-			mv.addObject("message", "댓글 등록에 실패했습니다.");
-			mv.setViewName("redirect:boardDetailView.do");
-			return mv;
+			}
+
 		}
+		return mv;
 	}
 
 

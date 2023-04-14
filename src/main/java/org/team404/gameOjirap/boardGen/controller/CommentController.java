@@ -30,7 +30,6 @@ public class CommentController {
 	public ModelAndView commentWriteMethod(Comment comment, Model model, 
 			@RequestParam(name="incoment") String com,
 			ModelAndView mv) {
-		System.out.println("여기까진 왔니?");
 		if(commentService.insertComment(comment) > 0) {
 			
 //			mv.addObject("user_id", user_id);
